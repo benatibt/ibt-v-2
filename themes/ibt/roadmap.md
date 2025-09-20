@@ -18,7 +18,7 @@ Phase 0 — Setup & Foundation
 
         X enqueue style.css + future assets/css/ibt.css.
 
-    0.6 Minimal TT5 Files to Copy
+    0.6 X Minimal TT5 Files to Copy
 
         X theme.json (root only, delete styles/)
 
@@ -36,19 +36,19 @@ Phase 0 — Setup & Foundation
 
         X parts/footer.html
 
-    0.7 Prune & Merge
+    0.7 X Prune & Merge
 
-        Remove all style variations, demo patterns, gradients.
+        X Remove all style variations, demo patterns, gradients.
 
-        Merge good settings from v1 theme.json (spacing, widths, typography, temp AAA palette).
+        X Merge good settings from v1 theme.json (spacing, widths, typography, temp AAA palette).
 
     0.8 Git
 
-        Initialise Git in ibt folder.
+        x Initialise Git in ibt folder.
 
-        Create branch v2-foundation.
+        N/A Create branch v2-foundation.
 
-        Commit minimal scaffold.
+        N/A Commit minimal scaffold.
 
 Phase 1 — Core Structure
 
