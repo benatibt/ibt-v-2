@@ -16,7 +16,7 @@ add_action( 'after_setup_theme', function () {
 	add_theme_support( 'wp-block-styles' );
 	add_theme_support( 'responsive-embeds' );
 	add_theme_support( 'editor-styles' );
-	add_editor_style( [ 'assets/css/editor.css', 'assets/css/ibt.css' ] );
+	add_editor_style( 'assets/css/ibt.css' );
 	add_theme_support( 'align-wide' );
 	add_theme_support( 'comments' );
 
