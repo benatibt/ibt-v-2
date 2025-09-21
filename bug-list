@@ -1,7 +1,5 @@
 Bugs
 
-Heading sizes need fine tuning
-Heading spacing isn't quite right
-Errors in template.html other than page.html which is fixed
+Errors in template.html other than page.html which is fixed. See notes on how to fix.
 Test plugin functionality after move to 0.2.0
 
