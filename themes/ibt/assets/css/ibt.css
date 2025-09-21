@@ -1,19 +1,71 @@
 /* =================================================
-   IBT – Front-end stylesheet
+   IBT – MINIMAL FRONT END STYLE SHEET
    Purpose: minimal structural helpers only.
-   Keep colours, typography and hover effects in theme.json.
+   Keep colours, typography and hover effects in
+   theme.json where ever possible.
    ================================================= */
 
 
-/* Enforce content widths */
+   /* =================================================
+   IBT – WordPress 6.8 Safe Defaults
+   Purpose: small helpers to avoid common layout
+   gotchas while keeping most design in theme.json.
+   ================================================= */
+
+/* 1. Responsive media
+   Make sure images, videos, iframes never overflow
+   their container even if a block forgets to set width.
+   Core tries to do this, but some embeds slip through. */
+img, video, iframe, embed, object {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* 2. Block gap fallback
+   Guarantee a minimal vertical gap between direct
+   children of a Group if the blockGap variable
+   isn’t applied (old content, rogue plugins, etc.). */
+.wp-block-group > * + * {
+    margin-top: var(--wp--preset--spacing--m);
+}
+
+/* 3. Default margin reset
+   Strip default top/bottom margins from basic text
+   elements so spacing is always controlled by
+   theme.json or blockGap, not browser defaults. */
+p, h1, h2, h3, h4, h5, h6, ul, ol {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+/* 4. Anchor scroll margin
+   Prevent headings with IDs from hiding under the
+   sticky header when used as anchor targets. Adjust
+   the value if the sticky header height changes. */
+h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {
+    scroll-margin-top: var(--wp--preset--spacing--l);
+}
+
+/* 5. Wide/Full width support
+   WordPress 6.8 core doesn’t yet apply wide/full
+   widths automatically. These rules enforce the
+   container size and also let inner blocks expand
+   when the parent Group is set to Wide or Full. */
 .alignwide{max-width:var(--wp--style--global--wide-size);margin-left:auto;margin-right:auto}
 .alignfull{max-width:none}
 .wp-block-group.alignwide > * { max-width: none; }
 .wp-block-group.alignfull > * { max-width: none; }
 
+/* =================================================
+   End of safe defaults
+   Keep colours, typography and most spacing in
+   theme.json for easy future changes.
+   ================================================= */
+
 
 
 
 /* =================================================
-   End of minimal stylesheet
+   END OF MINIMAL FRONT END STYLE SHEET
    ================================================= */
