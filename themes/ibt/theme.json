@@ -203,6 +203,7 @@
 					"fontStyle": "italic",
 					"lineHeight": "1.6"
 				},
+				"border": {"left": {"width":"0", "style":"none"}},
 				"spacing": {
 					"margin": {
 						"top": "var(--wp--preset--spacing--s)",
