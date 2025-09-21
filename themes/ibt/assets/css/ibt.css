@@ -107,9 +107,7 @@ h5 {
 }
 
 h6 {
-    font-size: var(--wp--preset--font-size--xl); /* intentionally large per your test */
-    font-weight: 300;
-    letter-spacing: 0.02em;
+    font-size: var(--wp--preset--font-size--m);
     margin-top: var(--wp--preset--spacing--m);
     margin-bottom: 0;
 }
