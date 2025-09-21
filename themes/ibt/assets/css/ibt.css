@@ -5,6 +5,10 @@
    ================================================= */
 
 
+.wp-block-group.alignwide > * { max-width: none; }
+.wp-block-group.alignfull > * { max-width: none; }
+
+
 
 
 /* =================================================
