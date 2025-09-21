@@ -1,15 +1,14 @@
-/* =================================================
-   IBT – MINIMAL FRONT END STYLE SHEET
-   Purpose: minimal structural helpers only.
-   Keep colours, typography and hover effects in
-   theme.json where ever possible.
-   ================================================= */
+/* **********************************************************************************************************
+                                         IBT – MINIMAL FRONT END STYLE SHEET
+   Purpose: minimal structural helpers only. Keep colours, typography and hover effects in
+   theme.json where ever possible. Temporary test rules allowed if clearly marked and cleaned up as you go.
+  *********************************************************************************************************** */
 
+/* ===========================================================================================================
+            IBT – WordPress 6.8 helpers to prevent core "features" causing problems                         */
 
-   /* ===========================================================================================================
-   IBT – WordPress 6.8 helpers to prevent core "features" causing problems                                      */
-
-/* 1. Responsive media - Ensure images, videos, iframes never overflow their container. Core lets some through */
+/* 1. Ensure images, videos, iframes, etc. never overflow their container.
+Core handles most cases but some embeds still slip through. */
 img, video, iframe, embed, object { max-width: 100%; height: auto; display: block;}
 
 /* 2. Anchor scroll margin -  Prevent headings with IDs from hiding under the sticky header when used as anchor targets.
@@ -18,56 +17,19 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {
     scroll-margin-top: var(--wp--preset--spacing--l);
 }
 
-/* 3. Set heading sizes & margin (other than H1) in css because 6.8 json doesn't suppot list yet. */
+/* Set per-level heading styles that cannot yet be expressed in theme.json (WP 6.8 limitation). Remove or migrate when core
+adds level-specific controls. */
 h2 {font-size: var(--wp--preset--font-size--l); font-weight: 600; margin-top: var(--wp--preset--spacing--l); margin-bottom: 0;}
 h3 {font-size: var(--wp--preset--font-size--m); font-weight: 600; margin-top: var(--wp--preset--spacing--m); margin-bottom: 0;}
 h4 {font-size: var(--wp--preset--font-size--m); font-weight: 500; margin-top: var(--wp--preset--spacing--m); margin-bottom: 0;}
 h5 {font-size: var(--wp--preset--font-size--m); font-weight: 400; margin-top: var(--wp--preset--spacing--m); margin-bottom: 0;}
 h6 {font-size: var(--wp--preset--font-size--m); font-weight: 300; margin-top: var(--wp--preset--spacing--m); margin-bottom: 0;}
 
-/* End IBT - Wordpress 6.8 helpers
-   ============================================================================================================== */
-
-/* =================================================
-   IBT – Implement heading size & spacing.
-   In css as WP6.8 doesn't support level in json
-   ================================================= */
-/*
-h1 {
-    font-size: var(--wp--preset--font-size--xl);
-    font-weight: 700;
-    margin-top: var(--wp--preset--spacing--xl);
-    margin-bottom: 0;
-}
+/* End IBT - Wordpress 6.8 helpers   
+============================================================================================================== */
 
 
 
-h4 {
-    font-size: var(--wp--preset--font-size--m);
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    margin-top: var(--wp--preset--spacing--m);
-    margin-bottom: 0;
-}
-
-h5 {
-    font-size: var(--wp--preset--font-size--m);
-    font-weight: 400;
-    letter-spacing: 0.02em;
-    margin-top: var(--wp--preset--spacing--m);
-    margin-bottom: 0;
-}
-
-h6 {
-    font-size: var(--wp--preset--font-size--m);
-    font-weight: 300;
-    margin-top: var(--wp--preset--spacing--m);
-    margin-bottom: 0;
-}
-
-
-
-
-/* =================================================
-   END OF MINIMAL FRONT END STYLE SHEET
-   ================================================= */
+/* *************************************************************************************************************
+                                       END OF MINIMAL FRONT END STYLE SHEET
+   ************************************************************************************************************* */
