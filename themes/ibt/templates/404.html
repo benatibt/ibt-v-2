@@ -1,13 +1,17 @@
-<!-- wp:template-part {"slug":"header"} /-->
+<!-- wp:template-part {"slug":"header","theme":"ibt"} /-->
 
 <!-- wp:group {"tagName":"main","align":"full","layout":{"type":"constrained","inherit":true}} -->
-<main class="wp-block-group alignfull">
-	<!-- wp:group {"layout":{"type":"constrained"}} -->
-		<!-- wp:heading {"level":1} -->Page not found<!-- /wp:heading -->
-		<!-- wp:paragraph -->Sorry, we can’t find what you’re looking for. Try searching below.<!-- /wp:paragraph -->
-		<!-- wp:search {"label":"Search","showLabel":false} /-->
-	<!-- /wp:group -->
-</main>
+<main class="wp-block-group alignfull"><!-- wp:group {"layout":{"type":"constrained"}} -->
+<div class="wp-block-group"><!-- wp:heading {"level":1} -->
+<h1 class="wp-block-heading">Sorry - Page Not Found.</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Unfortunately we can not find the page you requested. Please try searching for the content you are looking for.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:search {"label":"Search","showLabel":false,"buttonText":"Search"} /--></div>
+<!-- /wp:group --></main>
 <!-- /wp:group -->
 
-<!-- wp:template-part {"slug":"footer"} /-->
+<!-- wp:template-part {"slug":"footer","theme":"ibt"} /-->
