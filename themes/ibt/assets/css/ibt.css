@@ -54,8 +54,8 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {
    when the parent Group is set to Wide or Full. */
 .alignwide{max-width:var(--wp--style--global--wide-size);margin-left:auto;margin-right:auto}
 .alignfull{max-width:none}
-.wp-block-group.alignwide > * { max-width: none; }
-.wp-block-group.alignfull > * { max-width: none; }
+.is-layout-constrained > .alignwide { max-width: none; }
+.is-layout-constrained > .alignfull { max-width: none; }
 
 /* =================================================
    End of safe defaults
