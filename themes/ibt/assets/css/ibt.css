@@ -26,7 +26,7 @@ img, video, iframe, embed, object {
    Guarantee a minimal vertical gap between direct
    children of a Group if the blockGap variable
    isn’t applied (old content, rogue plugins, etc.). */
-.wp-block-group > * + * {
+/*.wp-block-group > * + * {
     margin-top: var(--wp--preset--spacing--m);
 }
 
