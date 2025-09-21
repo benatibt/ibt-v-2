@@ -81,7 +81,7 @@
 			"custom": true,
 			"defaultPalette": false,
 			"palette": [
-				{ "slug": "background",     "name": "Background",       "color": "#fefefe" },
+				{ "slug": "background",     "name": "Background",       "color": "#ffffff" },
 				{ "slug": "text",           "name": "Text",             "color": "#000000" },
 				{ "slug": "alt-background", "name": "Alt Background",   "color": "#f0f0f0" },
 				{ "slug": "alt-text",       "name": "Alt Text",         "color": "#505050" },
