@@ -115,7 +115,7 @@
 					"fontSize": "var(--wp--preset--font-size--m)",
 					"lineHeight": "1.6"
 				},
-				"spacing": { "margin": { "top": "0", "bottom": "0" } },
+				"spacing": { "margin": { "top": "0.5rem", "bottom": "0.5rem" } },
 				"elements": { "link": {} }
 			},
 			"core/list": {
