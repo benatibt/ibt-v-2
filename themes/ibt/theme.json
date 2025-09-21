@@ -78,6 +78,7 @@
 			]
 		},
 		"color": {
+			"custom": true,
 			"defaultPalette": false,
 			"palette": [
 				{ "slug": "background",     "name": "Background",       "color": "#fefefe" },
