@@ -4,12 +4,10 @@
    Keep colours, typography and hover effects in theme.json.
    ================================================= */
 
-.wp-block-post-content > * {
-    max-width: var(--wp--style--global--content-size);
-    margin-left: auto;
-    margin-right: auto;
-}
 
+/* Enforce content widths */
+.alignwide{max-width:var(--wp--style--global--wide-size);margin-left:auto;margin-right:auto}
+.alignfull{max-width:none}
 .wp-block-group.alignwide > * { max-width: none; }
 .wp-block-group.alignfull > * { max-width: none; }
 
