@@ -4,7 +4,7 @@
    Keep colours, typography and hover effects in theme.json.
    ================================================= */
 
-.is-layout-constrained > * {
+.wp-block-post-content > * {
     max-width: var(--wp--style--global--content-size);
     margin-left: auto;
     margin-right: auto;
