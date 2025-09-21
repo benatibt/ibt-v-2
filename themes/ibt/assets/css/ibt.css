@@ -50,8 +50,7 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {
 /* 5. Content width + wide/full support for WP6.8 */
 .alignwide{max-width:var(--wp--style--global--wide-size);margin-left:auto;margin-right:auto}
 .alignfull{max-width:none}
-.wp-block-group.alignwide > * { max-width: none; }
-.wp-block-group.alignfull > * { max-width: none; }
+.wp-block-group.alignfull > *{max-width:none}
 
 
 /* =================================================
