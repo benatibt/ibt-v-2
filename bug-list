@@ -1,0 +1,5 @@
+Bugs
+
+Plugin crashes website if Woo isn't installed or is deactivated. Probably missing class_exists( 'WooCommerce' ) guard
+Heading sizes
+Errors in template.html other than page.html (fixed)
