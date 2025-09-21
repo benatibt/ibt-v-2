@@ -4,7 +4,7 @@
    theme.json where ever possible. Temporary test rules allowed if clearly marked and cleaned up as you go.
   *********************************************************************************************************** */
 
-/* ===========================================================================================================
+/* ============================================================================================================
             IBT – WordPress 6.8 helpers to prevent core "features" causing problems                         */
 
 /* 1. Ensure images, videos, iframes, etc. never overflow their container.
