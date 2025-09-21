@@ -5,9 +5,7 @@
    ================================================= */
 
 
-/* Allow wide/full groups to control inner width */
-.wp-block-group.alignwide > * { max-width: none; }
-.wp-block-group.alignfull > * { max-width: none; }
+
 
 /* =================================================
    End of minimal stylesheet
