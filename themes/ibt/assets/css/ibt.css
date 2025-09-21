@@ -19,8 +19,8 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {
 
 /* 3. Set per-level heading styles that cannot yet be expressed in theme.json (WP 6.8 limitation). Remove or migrate when core
 adds level-specific controls. !important required on font-weight and margin-top to beat WP generated CSS*/
-h2 {font-size: var(--wp--preset--font-size--l); font-weight: 600 !important; margin-top: var(--wp--preset--spacing--xl) !important;}
-h3 {font-size: var(--wp--preset--font-size--m); font-weight: 600 !important; margin-top: var(--wp--preset--spacing--l) !important;}
+h2 {font-size: var(--wp--preset--font-size--xl); font-weight: 600 !important; margin-top: var(--wp--preset--spacing--l) !important;}
+h3 {font-size: var(--wp--preset--font-size--l); font-weight: 600 !important; margin-top: var(--wp--preset--spacing--m) !important;}
 h4 {font-size: var(--wp--preset--font-size--m); font-weight: 600 !important; margin-top: var(--wp--preset--spacing--m) !important;}
 h5 {font-size: var(--wp--preset--font-size--m); font-weight: 500 !important; margin-top: var(--wp--preset--spacing--m) !important;}
 h6 {font-size: var(--wp--preset--font-size--m); font-weight: 400 !important; margin-top: var(--wp--preset--spacing--m) !important;}

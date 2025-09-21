@@ -129,9 +129,9 @@
 				"elements": { "link": {} }
 			},
 			"core/heading": {
-				"typography": { "lineHeight": "1.2", "fontWeight": "700" }, 
+				"typography": { "lineHeight": "1.2", "fontWeight": "700", "fontSize":"var(--wp--preset--font-size--2xl)" }, 
 				"spacing": {
-					"margin": { "top": "var(--wp--preset--spacing--2xl)", "bottom": "0" }
+					"margin": { "top": "var(--wp--preset--spacing--l)", "bottom": "0" }
 				}
 			},
 			"core/image": {
