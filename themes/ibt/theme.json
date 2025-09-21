@@ -71,7 +71,7 @@
 				{ "name": "S",  "slug": "s",  "size": "1rem" },
 				{ "name": "M",  "slug": "m",  "size": "1.2rem" },
 				{ "name": "L",  "slug": "l",  "size": "2rem",   "fluid": { "min": "1.44rem", "max": "2rem" } },
-				{ "name": "XL", "slug": "xl", "size": "2.5rem", "fluid": { "min": "1.73rem", "max": "2.5rem" } },
+				{ "name": "XL", "slug": "xl", "size": "2.34rem", "fluid": { "min": "2.13rem", "max": "2.82rem" } },
 				{ "name": "XXL","slug": "xxl","size": "3.75rem","fluid": { "min": "2.25rem", "max": "3.75rem" } }
 			]
 		},
