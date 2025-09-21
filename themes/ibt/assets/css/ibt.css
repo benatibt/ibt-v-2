@@ -3,6 +3,15 @@
    Purpose: minimal structural helpers only.
    Keep colours, typography and hover effects in theme.json.
    ================================================= */
+.alignwide {
+	max-width: var(--wp--style--global--wide-size);
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.alignfull {
+	max-width: none;
+}
 
 
 
