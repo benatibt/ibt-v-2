@@ -1,5 +1,6 @@
 Bugs
 
 Plugin crashes website if Woo isn't installed or is deactivated. Probably missing class_exists( 'WooCommerce' ) guard
-Heading sizes
+Heading sizes need fine tuning
+Heading spacing isn't quite right
 Errors in template.html other than page.html (fixed)
