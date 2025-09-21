@@ -89,7 +89,7 @@
 				{ "slug": "border",         "name": "Border/Divider",   "color": "#e5e5e5" }
 			]
 		},
-		"shadow": true
+		"shadow": {"defaultPresets": true}
 	},
 	"styles": {
 		"spacing": {
