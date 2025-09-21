@@ -12,7 +12,73 @@
    gotchas while keeping most design in theme.json.
    ================================================= */
 
-/
+/* 1. Responsive media
+   Make sure images, videos, iframes never overflow
+   their container even if a block forgets to set width.
+   Core tries to do this, but some embeds slip through. */
+img, video, iframe, embed, object {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* 2. Block gap fallback
+   Guarantee a minimal vertical gap between direct
+   children of a Group if the blockGap variable
+   isn’t applied (old content, rogue plugins, etc.). */
+.wp-block-group > * + * {
+    margin-top: var(--wp--preset--spacing--m);
+}
+
+/* 3. Default margin reset
+   Strip default top/bottom margins from basic text
+   elements so spacing is always controlled by
+   theme.json or blockGap, not browser defaults. */
+p, h1, h2, h3, h4, h5, h6, ul, ol {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+/* 4. Anchor scroll margin
+   Prevent headings with IDs from hiding under the
+   sticky header when used as anchor targets. Adjust
+   the value if the sticky header height changes. */
+h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {
+    scroll-margin-top: var(--wp--preset--spacing--l);
+}
+
+/* 5. Content width + wide/full support for WP6.8 */
+.alignwide{max-width:var(--wp--style--global--wide-size);margin-left:auto;margin-right:auto}
+.alignfull{max-width:none}
+.is-layout-constrained > .alignwide > *{max-width:inherit}
+.is-layout-constrained > .alignfull > *{max-width:none}
+
+/* Logic of 5
+IF block has class "alignwide"
+    // Container grows to wideSize
+    container width = wideSize
+    IF child has no explicit alignment
+        // Child inherits parent width (wideSize)
+        child max-width = inherit
+    ELSE
+        // Child aligned normal or full => follow its own alignment rules
+        (handled by core/global styles)
+
+ELSE IF block has class "alignfull"
+    // Container spans full viewport
+    container width = 100% (no max)
+    IF child has no explicit alignment
+        // Let child also span full width
+        child max-width = none
+    ELSE
+        // Child aligned normal or wide => follow its own alignment rules
+        (handled by core/global styles)
+
+ELSE
+    // No wide/full class
+    container width = contentSize (core default)
+    children stay at contentSize unless explicitly aligned
+*/
 
 
 
