@@ -8,6 +8,8 @@
 .wp-block-post-content .alignwide{max-width:var(--wp--style--global--wide-size);margin-inline:auto}
 .wp-block-post-content .alignfull{max-width:none}
 
+body{outline:2px solid lime}; r
+
 /* =================================================
    End of minimal stylesheet
    ================================================= */
