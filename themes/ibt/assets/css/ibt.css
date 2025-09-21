@@ -23,7 +23,14 @@ h2 {font-size: var(--wp--preset--font-size--l); font-weight: 600; margin-top: va
 h3 {font-size: var(--wp--preset--font-size--m); font-weight: 600; margin-top: var(--wp--preset--spacing--m); margin-bottom: 0;}
 h4 {font-size: var(--wp--preset--font-size--m); font-weight: 500; margin-top: var(--wp--preset--spacing--m); margin-bottom: 0;}
 h5 {font-size: var(--wp--preset--font-size--m); font-weight: 400; margin-top: var(--wp--preset--spacing--m); margin-bottom: 0;}
-h6 {font-size: var(--wp--preset--font-size--m); font-weight: 300; margin-top: var(--wp--preset--spacing--m); margin-bottom: 0;}
+/* h6 {font-size: var(--wp--preset--font-size--m); font-weight: 300; margin-top: var(--wp--preset--spacing--m); margin-bottom: 0;}*/
+
+body h6 {
+    font-size: var(--wp--preset--font-size--m);
+    font-weight: 300;
+    margin-top: var(--wp--preset--spacing--m);
+    margin-bottom: 0;
+}
 
 /* End IBT - Wordpress 6.8 helpers   
 ============================================================================================================== */
