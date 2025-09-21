@@ -169,7 +169,7 @@
 					},
 					"6": {
 						"typography": {
-							"fontSize": "var(--wp--preset--font-size--m)",
+							"fontSize": "var(--wp--preset--font-size--xl)",
 							"fontWeight": "300",
 							"letterSpacing": "0.02em"
 						},
