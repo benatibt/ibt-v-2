@@ -22,8 +22,8 @@ adds level-specific controls. !important required on font-weight and margin-top 
 h2 {font-size: var(--wp--preset--font-size--l); font-weight: 600 !important; margin-top: var(--wp--preset--spacing--xl) !important;}
 h3 {font-size: var(--wp--preset--font-size--m); font-weight: 600 !important; margin-top: var(--wp--preset--spacing--l) !important;}
 h4 {font-size: var(--wp--preset--font-size--m); font-weight: 600 !important; margin-top: var(--wp--preset--spacing--m) !important;}
-h5 {font-size: var(--wp--preset--font-size--m); font-weight: 450 !important; margin-top: var(--wp--preset--spacing--m) !important;}
-h6 {font-size: var(--wp--preset--font-size--m); font-weight: 350 !important; margin-top: var(--wp--preset--spacing--m) !important;}
+h5 {font-size: var(--wp--preset--font-size--m); font-weight: 500 !important; margin-top: var(--wp--preset--spacing--m) !important;}
+h6 {font-size: var(--wp--preset--font-size--m); font-weight: 400 !important; margin-top: var(--wp--preset--spacing--m) !important;}
 
 /* End IBT - Wordpress 6.8 helpers   
 ============================================================================================================== */
