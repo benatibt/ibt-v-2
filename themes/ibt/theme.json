@@ -96,7 +96,7 @@
 	},
 	"styles": {
 		"spacing": {
-			"blockGap": "var(--wp--preset--spacing--m)",
+			"blockGap": "var(--wp--preset--spacing--s)",
 			"margin": {
 				"top":"0",
 				"bottom":"0",
