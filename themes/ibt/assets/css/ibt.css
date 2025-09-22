@@ -19,12 +19,12 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {
 
 /* 3. Set per-level heading styles that cannot yet be expressed in theme.json (WP 6.8 limitation). Remove or migrate when core
 adds level-specific controls. !important required on font-weight and margin-top to beat WP generated CSS*/
-h1 {font-size: var(--wp--preset--font-size--xxl); font-weight: 700 ; padding-top: var(--wp--preset--spacing--xl) ;}
-h2 {font-size: var(--wp--preset--font-size--xl); font-weight: 600 ; padding-top: var(--wp--preset--spacing--xl) ;}
-h3 {font-size: var(--wp--preset--font-size--l); font-weight: 600 ; padding-top: var(--wp--preset--spacing--l) ;}
-h4 {font-size: var(--wp--preset--font-size--m); font-weight: 600 ; padding-top: var(--wp--preset--spacing--l) ;}
-h5 {font-size: var(--wp--preset--font-size--m); font-weight: 500 ; padding-top: var(--wp--preset--spacing--l) ;}
-h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: var(--wp--preset--spacing--l) ;}
+h1 {font-size: var(--wp--preset--font-size--xxl); font-weight: 700 ; margin-top: var(--wp--preset--spacing--xl) ;}
+h2 {font-size: var(--wp--preset--font-size--xl); font-weight: 600 ; margin-top: var(--wp--preset--spacing--xl) ;}
+h3 {font-size: var(--wp--preset--font-size--l); font-weight: 600 ; margin-top: var(--wp--preset--spacing--l) ;}
+h4 {font-size: var(--wp--preset--font-size--m); font-weight: 600 ; margin-top: var(--wp--preset--spacing--l) ;}
+h5 {font-size: var(--wp--preset--font-size--m); font-weight: 500 ; margin-top: var(--wp--preset--spacing--l) ;}
+h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; margin-top: var(--wp--preset--spacing--l) ;}
 
 /* End IBT - Wordpress 6.8 helpers   
 ============================================================================================================== */
