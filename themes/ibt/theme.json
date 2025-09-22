@@ -160,7 +160,8 @@
 			"core/group": {
 				"spacing": {
 					"padding": {
-
+						"left":"0",
+						"right":"0"
 					}
 				}
 			},
