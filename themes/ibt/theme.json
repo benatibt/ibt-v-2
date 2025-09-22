@@ -69,8 +69,8 @@
 				}
 			],
 			"fontSizes": [
-				{ "name": "S",  "slug": "s",  "size": "0.95rem" },
-				{ "name": "M",  "slug": "m",  "size": "1.2rem" },
+				{ "name": "S",  "slug": "s",  "size": "0.95rem", "fluid": false },
+				{ "name": "M",  "slug": "m",  "size": "1.2rem", "fluid": false },
 				{ "name": "L",  "slug": "l",  "size": "1.5rem",   "fluid": { "min": "1.36rem", "max": "1.6rem" } },
 				{ "name": "XL", "slug": "xl", "size": "1.88rem", "fluid": { "min": "1.70rem", "max": "2.12rem" } },
 				{ "name": "XXL","slug": "xxl","size": "2.34rem","fluid": { "min": "2.13rem", "max": "2.82rem" } },
