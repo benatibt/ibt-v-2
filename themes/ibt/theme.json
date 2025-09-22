@@ -141,9 +141,9 @@
 			"core/categories": {},
 			"core/columns": {
 				"spacing": {
-					"margin": {
-						"top": "0",
-						"bottom": "var(--wp--preset--spacing--m)"
+					"padding": {
+						"left": "0",
+						"right": "0"
 					}
 				}
 			},
@@ -159,9 +159,9 @@
 			},
 			"core/group": {
 				"spacing": {
-					"margin": {
-						"top": "0",
-						"bottom": "var(--wp--preset--spacing--m)"
+					"padding": {
+						"left":"0",
+						"right":"0"
 					}
 				}
 			},
