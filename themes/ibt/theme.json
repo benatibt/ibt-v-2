@@ -184,7 +184,13 @@
 				"spacing": {
 					"margin": {
 						"top": "var(--wp--preset--spacing--s)",
-						"bottom": "var(--wp--preset--spacing--s)"
+						"bottom": "var(--wp--preset--spacing--l)"
+					},
+					"padding": {
+						"top": "var(--wp--preset--spacing--m)",
+						"bottom": "var(--wp--preset--spacing--m)",
+						"left": "var(--wp--preset--spacing--m)",
+						"right": "var(--wp--preset--spacing--m)"
 					}
 				},
 				"elements": { "link": {} }
@@ -262,7 +268,13 @@
 				"spacing": {
 					"margin": {
 						"top": "var(--wp--preset--spacing--s)",
-						"bottom": "var(--wp--preset--spacing--s)",
+						"bottom": "var(--wp--preset--spacing--l)",
+						"left": "var(--wp--preset--spacing--m)",
+						"right": "var(--wp--preset--spacing--m)"
+					},
+					"padding": {
+						"top": "var(--wp--preset--spacing--m)",
+						"bottom": "var(--wp--preset--spacing--m)",
 						"left": "var(--wp--preset--spacing--m)",
 						"right": "var(--wp--preset--spacing--m)"
 					}
