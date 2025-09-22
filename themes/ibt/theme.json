@@ -239,8 +239,8 @@
 				"color": { "background": "var(--wp--preset--color--alt-background)" },
 				"spacing": {
 					"margin": {
-						"top": "var(--wp--preset--spacing--m)",
-						"bottom": "var(--wp--preset--spacing--m)",
+						"top": "var(--wp--preset--spacing--s)",
+						"bottom": "var(--wp--preset--spacing--l)",
 						"left": "var(--wp--preset--spacing--m)",
 						"right": "var(--wp--preset--spacing--m)"
 					},
