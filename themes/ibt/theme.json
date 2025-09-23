@@ -222,7 +222,7 @@
 					"lineHeight": "1.6"
 				},
 				"spacing": {
-					"margin": {
+					"padding": {
 						"top": "var(--wp--preset--spacing--s)",
 						"bottom": "var(--wp--preset--spacing--s)"
 					}
