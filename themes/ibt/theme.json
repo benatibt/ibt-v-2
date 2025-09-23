@@ -17,6 +17,7 @@
 			"padding": true,
 			"units": [ "rem", "%", "px" ],
 			"spacingSizes": [
+				{ "slug": "xxs", "name": "XXS", "size": "0.3rem" },
 				{ "slug": "xs", "name": "XS", "size": "0.6rem" },
 				{ "slug": "s",  "name": "S",  "size": "1.2rem" },
 				{ "slug": "m",  "name": "M",  "size": "1.8rem" },
@@ -223,8 +224,8 @@
 				},
 				"spacing": {
 					"padding": {
-						"top": "var(--wp--preset--spacing--xs)",
-						"bottom": "var(--wp--preset--spacing--xs)"
+						"top": "var(--wp--preset--spacing--xxs)",
+						"bottom": "var(--wp--preset--spacing--xxs)"
 					}
 				},
 				"elements": { "link": {} }
