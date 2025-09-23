@@ -13,12 +13,10 @@ img, video, iframe, embed, object { max-width: 100%; height: auto; display: bloc
 
 /* 2. Anchor scroll margin -  Prevent headings with IDs from hiding under the sticky header when used as anchor targets.
 !!!!!!! ADJUST TO MATCH HEADER WHEN DESIGNED. !!!!!!!!!!*/
-h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {
-    scroll-margin-top: var(--wp--preset--spacing--l);
-}
+h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: var(--wp--preset--spacing--l);}
 
-/* 3. Set per-level heading styles that cannot yet be expressed in theme.json (WP 6.8 limitation). Remove or migrate when core
-adds level-specific controls. !important required on font-weight and margin-top to beat WP generated CSS*/
+/* 3. Set per-level heading styles that cannot yet be expressed in theme.json (WP 6.8 limitation). 
+Migrate when core adds level-specific controls to json.                                                                                                 */
 h1 {font-size: var(--wp--preset--font-size--xxl); font-weight: 700 ; margin-top: var(--wp--preset--spacing--xl) ;}
 h2 {font-size: var(--wp--preset--font-size--xl); font-weight: 600 ; margin-top: var(--wp--preset--spacing--xl) ;}
 h3 {font-size: var(--wp--preset--font-size--l); font-weight: 600 ; margin-top: var(--wp--preset--spacing--l) ;}
