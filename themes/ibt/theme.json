@@ -224,8 +224,8 @@
 				},
 				"spacing": {
 					"padding": {
-						"top": "var(--wp--preset--spacing--xxs)",
-						"bottom": "var(--wp--preset--spacing--xxs)"
+						"top": "var(--wp--preset--spacing--xs)",
+						"bottom": "var(--wp--preset--spacing--xs)"
 					}
 				},
 				"elements": { "link": {} }
