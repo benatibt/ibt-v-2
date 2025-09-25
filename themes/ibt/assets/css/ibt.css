@@ -34,14 +34,14 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
 
 /* HEADER TEST CODE */
 
-/* == Sticky Header == */
-.ibt-header{
+/* Sticky header wrapper */
+.ibt-header-wrap{
   position: sticky;
-  top: var(--wp-admin--admin-bar--height, 0px); /* offset for WP admin bar */
+  top: var(--wp-admin--admin-bar--height, 0px);
   z-index: 1000;
   background: var(--wp--preset--color--background, #fff);
-  border-bottom: 1px solid var(--wp--preset--color--contrast-3, #e5e5e5);
 }
+
 
 /* Guard against ancestor overflow breaking sticky */
 .wp-site-blocks{
