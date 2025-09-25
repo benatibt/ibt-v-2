@@ -28,45 +28,67 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
 ============================================================================================================== */
 
 
+
+
+
+
 /* HEADER TEST CODE */
 
-/* == IBT Sticky 2-Column Header (WP6.8 + Woo10.2) == */
-.ibt-header{
+/* =========================================================
+   IBT Header – 2-Column Layout with Sticky Wrapper
+   ========================================================= */
+
+/* === Sticky via Template-Part Wrapper ==================== */
+/* Make the template-part itself sticky when it contains .ibt-header */
+header.wp-block-template-part:has(>.ibt-header){
   position: sticky;
-  top: 0;
-  z-index: 1000;
+  top: var(--wp-admin--admin-bar--height, 0px); /* auto offset if logged in */
+  z-index: 1000; /* stay above page content */
   background: var(--wp--preset--color--background, #fff);
   border-bottom: 1px solid var(--wp--preset--color--contrast-3, #e5e5e5);
 }
-/* WP admin bar offset */
-body.admin-bar .ibt-header{ top:32px; }
-@media (max-width:782px){
-  body.admin-bar .ibt-header{ top:46px; }
+
+/* Safety: prevent ancestors from killing sticky with overflow */
+.wp-site-blocks,
+header.wp-block-template-part{
+  overflow: visible;
 }
 
-/* Grid specifics */
-.ibt-header__logo-col{ flex:0 0 140px; }
-
-/* Row spacing */
-.ibt-header__utility,
-.ibt-header__main{
-  padding-block: var(--wp--preset--spacing--s, 0.75rem);
-}
-.ibt-header__utility{
-  border-bottom: 1px solid var(--wp--preset--color--contrast-3, #e5e5e5);
+/* Optional tweak if admin-bar offset misbehaves on small screens */
+@media (max-width: 600px){
+  header.wp-block-template-part:has(>.ibt-header){ top: 0; }
 }
 
-/* Utility row layout: keep search truly centered */
+/* === Layout ============================================== */
+.ibt-header__grid{
+  /* Columns block already provides flex; no extra grid needed */
+}
+
+.ibt-header__logo-col{
+  flex: 0 0 140px;      /* fixed column width */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ibt-header__right-col{
+  flex: 1 1 auto;
+}
+
+/* === Utility Row (search + icons) ======================== */
 .ibt-header__utility{
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: var(--wp--preset--spacing--s, 0.75rem);
+  border-bottom: 1px solid var(--wp--preset--color--contrast-3, #e5e5e5);
   gap: var(--wp--preset--spacing--s, 0.75rem);
 }
-.ibt-header__u-left{
-  flex: 1 1 0; /* spacer */
-}
+
+.ibt-header__u-left{ flex: 1 1 0; }       /* spacer */
 .ibt-header__u-search{
-  flex: 0 1 600px; /* search width cap; shrinks on small screens */
-  margin-inline: auto; /* centers the search */
+  flex: 0 1 600px;      /* keep search roughly centred */
+  margin-inline: auto;
 }
 .ibt-header__u-icons{
   flex: 1 1 0;
@@ -76,10 +98,7 @@ body.admin-bar .ibt-header{ top:32px; }
   gap: var(--wp--preset--spacing--s, 0.75rem);
 }
 
-/* Tidy site title + nav */
-.ibt-header__main .wp-block-site-title{ margin:0; }
-
-/* Woo blocks: normalize icon/button sizing a bit */
+/* Normalise Woo account & mini-cart icons */
 .wp-block-woocommerce-customer-account,
 .wp-block-woocommerce-mini-cart{
   line-height: 1;
@@ -90,24 +109,19 @@ body.admin-bar .ibt-header{ top:32px; }
   align-items: center;
 }
 
-
-/* == Sticky Header Base == */
-.ibt-header{
-  position: sticky;
-  top: 0;
-  z-index: 1000; /* keep above content but below any mobile overlay */
-  background: var(--wp--preset--color--background, #fff);
+/* === Main Row (title + nav) ============================== */
+.ibt-header__main{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: var(--wp--preset--spacing--s, 0.75rem);
 }
+.ibt-header__main .wp-block-site-title{ margin: 0; }
 
-/* WordPress admin bar offset */
-body.admin-bar .ibt-header{ top: 32px; }
-@media (max-width: 782px){
-  body.admin-bar .ibt-header{ top: 46px; }
+/* Minor nav gap tidy */
+.ibt-header__main .wp-block-navigation{
+  gap: var(--wp--preset--spacing--s, 0.75rem);
 }
-
-
-
-
 
 
 
