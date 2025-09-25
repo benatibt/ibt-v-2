@@ -91,7 +91,19 @@ body.admin-bar .ibt-header{ top:32px; }
 }
 
 
+/* == Sticky Header Base == */
+.ibt-header{
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* keep above content but below any mobile overlay */
+  background: var(--wp--preset--color--background, #fff);
+}
 
+/* WordPress admin bar offset */
+body.admin-bar .ibt-header{ top: 32px; }
+@media (max-width: 782px){
+  body.admin-bar .ibt-header{ top: 46px; }
+}
 
 
 
@@ -105,3 +117,4 @@ body.admin-bar .ibt-header{ top:32px; }
 /* *************************************************************************************************************
                                        END OF MINIMAL FRONT END STYLE SHEET
    ************************************************************************************************************* */
+ 
