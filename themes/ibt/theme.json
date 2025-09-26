@@ -152,7 +152,16 @@
 					"fontWeight": "600"
 				},
 				"border": { "radius": "8px" },
-				"elements": { "link": {} },
+				"elements": { 
+					"link": {
+						"color": {
+      						"text": "var(--wp--preset--color--emphasis-primary)"
+    					},
+						"typography": {
+							"textDecoration": "underline"
+						}
+					}
+				 },
 				"variations": {
 					"outline": {},
 					"solid-accent": {},
