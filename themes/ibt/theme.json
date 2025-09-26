@@ -230,7 +230,7 @@
 				"elements": { "link": {} }
 			},
 			"core/navigation": {
-				"typography": {"fontWeight": "700"},
+				"typography": {"fontWeight": "600"},
 				"color": {"text": "var(--wp--preset--color--emphasis-primary)"},
 				"spacing": {},
 				"elements": {
