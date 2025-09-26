@@ -136,7 +136,7 @@
 			
 		},
 		"color": {
-			"text": "var(--wp--preset--color--text)",
+			"text": "var(--wp--preset--color--text-normal)",
 			"background": "var(--wp--preset--color--background)"
 		},
 		"typography": {
