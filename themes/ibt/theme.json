@@ -230,10 +230,12 @@
 				"elements": { "link": {} }
 			},
 			"core/navigation": {
-				"typography": {},
-				"color": {},
+				"typography": {"fontWeight": "700"},
+				"color": {"text": "var(--wp--preset--color--emphasis-primary)"},
 				"spacing": {},
-				"elements": { "link": {} }
+				"elements": {
+					"link": {"typography": { "textDecoration": "none" }}
+			 	}
 			},
 			"core/navigation-link": {
 				"typography": {},
