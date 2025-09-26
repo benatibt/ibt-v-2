@@ -92,6 +92,30 @@
 				{ "slug": "emphasis-secondary", "name": "Emphasis · Secondary (Ocean-Strong)","color": "#243E7D" }
 			]
 		},
+		"custom": {
+			"color":{
+				"color-primary": "#5C554E",
+				"color-primary-hover": "#2F2B27",
+				"color-primary-strong": "#4A443E",
+
+				"color-secondary": "#315FA3",
+				"color-secondary-hover": "#243E7D",
+				"color-secondary-strong": "#243E7D",
+
+				"color-header-bg": "#ECE7E1",
+				"color-header-border": "#7A7168",
+				"color-border": "#D0D7DD",
+
+				"color-success": "#1B5C55",
+				"color-success-tint": "#E4EBEB",
+				"color-warning": "#805D25",
+				"color-warning-tint": "#F0ECE5",
+				"color-error": "#6E2B2B",
+				"color-error-tint": "#EEE6E6",
+				"color-info": "#465059",
+				"color-info-tint": "#E9EAEB"
+			}
+		},
 		"shadow": {"defaultPresets": true}
 	},
 	"styles": {
