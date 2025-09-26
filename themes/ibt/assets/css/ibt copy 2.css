@@ -28,6 +28,95 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
 ============================================================================================================== */
 
 
+
+
+
+
+/* HEADER TEST CODE */
+
+/* Sticky header wrapper */
+.ibt-header-wrap{
+  position: sticky;
+  top: var(--wp-admin--admin-bar--height, 0px);
+  z-index: 1000;
+  background: var(--wp--preset--color--background, #fff);
+}
+
+
+/* Guard against ancestor overflow breaking sticky */
+.wp-site-blocks{
+  overflow: visible;
+}
+
+
+/* === Layout ============================================== */
+.ibt-header__grid{
+  /* Columns block already provides flex; no extra grid needed */
+}
+
+.ibt-header__logo-col{
+  flex: 0 0 140px;      /* fixed column width */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ibt-header__right-col{
+  flex: 1 1 auto;
+}
+
+/* === Utility Row (search + icons) ======================== */
+.ibt-header__utility{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: var(--wp--preset--spacing--s, 0.75rem);
+  gap: var(--wp--preset--spacing--s, 0.75rem);
+}
+
+.ibt-header__u-left{ flex: 1 1 0; }       /* spacer */
+.ibt-header__u-search{
+  flex: 0 1 600px;      /* keep search roughly centred */
+  margin-inline: auto;
+}
+.ibt-header__u-icons{
+  flex: 1 1 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--wp--preset--spacing--s, 0.75rem);
+}
+
+/* Normalise Woo account & mini-cart icons */
+.wp-block-woocommerce-customer-account,
+.wp-block-woocommerce-mini-cart{
+  line-height: 1;
+}
+.wp-block-woocommerce-customer-account a,
+.wp-block-woocommerce-mini-cart .wc-block-mini-cart__button{
+  display: inline-flex;
+  align-items: center;
+}
+
+/* === Main Row (title + nav) ============================== */
+.ibt-header__main{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: var(--wp--preset--spacing--s, 0.75rem);
+}
+.ibt-header__main .wp-block-site-title{ margin: 0; }
+
+/* Minor nav gap tidy */
+.ibt-header__main .wp-block-navigation{
+  gap: var(--wp--preset--spacing--s, 0.75rem);
+}
+
+
+
+
+
+
 /* *************************************************************************************************************
                                        END OF MINIMAL FRONT END STYLE SHEET
    ************************************************************************************************************* */

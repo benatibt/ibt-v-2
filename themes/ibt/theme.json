@@ -82,15 +82,14 @@
 			"custom": true,
 			"defaultPalette": false,
 			"palette": [
-				{ "slug": "background",     "name": "Background",       "color": "#ffffff" },
-				{ "slug": "text",           "name": "Text",             "color": "#000000" },
-				{ "slug": "alt-background", "name": "Alt Background",   "color": "#f0f0f0" },
-				{ "slug": "alt-text",       "name": "Alt Text",         "color": "#505050" },
-				{ "slug": "primary",        "name": "Primary (Brand Navy)", "color": "#000080" },
-				{ "slug": "primary-hover",  "name": "Primary Hover",    "color": "#000060" },
-				{ "slug": "accent",         "name": "Accent (Teal)",    "color": "#1F635B" },
-				{ "slug": "accent-hover",   "name": "Accent Hover",     "color": "#174E44" },
-				{ "slug": "border",         "name": "Border/Divider",   "color": "#e5e5e5" }
+				{ "slug": "background",  "name": "Background (Paper)",          "color": "#FAF9F7" },
+				{ "slug": "surface",     "name": "Surface (White cards)",       "color": "#FFFFFF" },
+				{ "slug": "text-black",  "name": "Text Black (exposed)",        "color": "#000000" },
+				{ "slug": "text-normal", "name": "Text Normal",                 "color": "#1C1B1A" },
+				{ "slug": "text-muted",  "name": "Text Muted (meta)",           "color": "#5F6366" },
+				{ "slug": "border-grey", "name": "Border Grey",                 "color": "#D0D7DD" },
+				{ "slug": "emphasis-primary",   "name": "Emphasis · Primary (Stone-Strong)",  "color": "#4A443E" },
+				{ "slug": "emphasis-secondary", "name": "Emphasis · Secondary (Ocean-Strong)","color": "#243E7D" }
 			]
 		},
 		"shadow": {"defaultPresets": true}
