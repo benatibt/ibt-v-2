@@ -181,7 +181,17 @@
 					}
 				},
 				"variations": {
-					"outline": {},
+					"outline": {
+						"color": {
+							"text": "var(--wp--custom--color--color-primary)",
+							"background": "transparent"
+						},
+						"border": {
+							"color": "var(--wp--custom--color--color-primary)",
+							"width": "2px",
+							"style": "solid"
+						}
+					},
 					"solid-accent": {},
 					"outline-accent": {}
 				}
