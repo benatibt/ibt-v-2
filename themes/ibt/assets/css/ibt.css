@@ -1,3 +1,14 @@
+/* TEMP debug: allow sticky by removing overflow limits */
+html, body, .wp-site-blocks {
+  overflow: visible !important;
+}/* TEMP debug: allow sticky by removing overflow limits */
+html, body, .wp-site-blocks {
+  overflow: visible !important;
+}
+
+
+
+
 /* **********************************************************************************************************
                                          IBT – MINIMAL FRONT END STYLE SHEET
    Purpose: minimal structural helpers only. Keep colours, typography and hover effects in
