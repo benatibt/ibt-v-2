@@ -46,9 +46,9 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
 ============================================================================================================== */
 
 
-/* IBT Status Colour Utilities
-   Apply via Advanced → Additional CSS class(es), e.g.:
-   ibt-notice ibt-notice--success   or   ibt-status--error ibt-status-bg--error  */
+/* ===== DEV / TESTING =====
+   Status & disabled colour utilities for quick visual checks.
+   Safe to delete or comment out before production. */
 
 /* Text colour only */
 .ibt-status--success { color: var(--wp--custom--color--color-success); }
