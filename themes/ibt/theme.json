@@ -192,8 +192,28 @@
 							"style": "solid"
 						}
 					},
-					"solid-accent": {},
-					"outline-accent": {}
+					"buy": {
+						"color": {
+							"text": "#FFFFFF",
+							"background": "var(--wp--custom--color--color-secondary)"
+						},
+						"border": {
+							"color": "var(--wp--custom--color--color-secondary)",
+							"width": "2px",
+							"style": "solid"
+						}
+					},
+					"buy-outline": {
+						"color": {
+							"text": "var(--wp--custom--color--color-secondary)",
+							"background": "transparent"
+						},
+						"border": {
+							"color": "var(--wp--custom--color--color-secondary)",
+							"width": "2px",
+							"style": "solid"
+						}
+					}
 				}
 			},
 			"core/buttons": {
