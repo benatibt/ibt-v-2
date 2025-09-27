@@ -31,7 +31,7 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
       for WP6.8 even when provided with examples of it working in other themes!!!                      */
 .wp-block-button.is-style-buy-solid .wp-block-button__link {
   background-color: var(--wp--custom--color--color-secondary);
-  color: #000000;
+  color: #FFFFFF;
   border: 2px solid var(--wp--custom--color--color-secondary);
 }
 
