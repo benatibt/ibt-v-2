@@ -27,6 +27,19 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
 /* 4. Give visual clue of visited links for body text only. No json option to do this. */
 :where(p, li, .rich-text) a:visited {color: var(--wp--custom--color--color-text-emphasis-primary-visited);}
 
+/* 5. Style custom button variants in CSS. Chat GPT is adamant that this can not be done in theme.json
+      for WP6.8 even when provided with examples of it working in other themes!!!                      */
+.wp-block-button.is-style-buy-solid .wp-block-button__link {
+  background-color: var(--wp--custom--color--color-secondary);
+  color: #FFFFFF;
+  border: 2px solid var(--wp--custom--color--color-secondary);
+}
+
+.wp-block-button.is-style-buy-outline .wp-block-button__link {
+  background-color: transparent;
+  color: var(--wp--custom--color--color-secondary);
+  border: 2px solid var(--wp--custom--color--color-secondary);
+}
 
 /* End IBT - Wordpress 6.8 helpers   
 ============================================================================================================== */

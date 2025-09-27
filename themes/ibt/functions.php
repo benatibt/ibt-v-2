@@ -46,12 +46,12 @@ add_action( 'wp_enqueue_scripts', function () {
 	);
 }, 20 );
 
-// Register custom Button style variations (neutral labels)
+// Register custom Button style variations
 add_action( 'init', function() {
 	register_block_style(
 		'core/button',
 		array(
-			'name'  => 'buy',
+			'name'  => 'buy-solid',
 			'label' => __( 'Buy Solid', 'ibt' )
 		)
 	);
