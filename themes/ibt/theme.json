@@ -146,9 +146,7 @@
 		},
 		"elements": {
 			"link": {
-				"color": {
-				"text": "var(--wp--preset--color--emphasis-primary)"
-				},
+				"color": {"text": "var(--wp--preset--color--emphasis-primary)"}
 			}
 		},
 		"blocks": {
