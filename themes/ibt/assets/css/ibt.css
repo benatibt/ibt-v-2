@@ -42,6 +42,37 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
   border: 2px solid var(--wp--custom--color--color-secondary);
 }
 
+/* 5a. Add hover/focus-visible  effects for all 4 IBT button types. */
+
+/* Shared behaviour for all buttons */
+.wp-block-button__link {transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;}
+.wp-block-button__link:hover {transform: translateY(-1px);}  /* Adds a non-colour cue (slight scale) and token-based colour shifts */
+.wp-block-button__link:focus-visible {outline: 2px solid var(--wp--custom--color--color-primary); outline-offset: 2px;}
+
+/* Primary Solid (default core) */
+.wp-block-button:not(.is-style-outline):not(.is-style-buy-solid):not(.is-style-buy-outline) .wp-block-button__link:hover {
+  background-color: var(--wp--custom--color--color-primary-hover);
+  border-color: var(--wp--custom--color--color-primary-hover);
+}
+
+/* Prinmary Outline */
+.wp-block-button.is-style-outline .wp-block-button__link:hover {
+  color: var(--wp--custom--color--color-primary-hover);
+  border-color: var(--wp--custom--color--color-primary-hover);
+}
+
+/* Buy Solid (Commercial) */
+.wp-block-button.is-style-buy-solid .wp-block-button__link:hover {
+  background-color: var(--wp--custom--color--color-secondary-hover);
+  border-color: var(--wp--custom--color--color-secondary-hover);
+}
+
+/* Buy Outline (Commercial) */
+.wp-block-button.is-style-buy-outline .wp-block-button__link:hover {
+  color: var(--wp--custom--color--color-secondary-hover);
+  border-color: var(--wp--custom--color--color-secondary-hover);
+}
+
 /* 6. Style all link hover effects in css because WP6.8 doesn't support specific styling (e.g. Nav)
 and it makes more  sense to have it all in one place. */
 
