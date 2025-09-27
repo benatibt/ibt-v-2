@@ -54,7 +54,7 @@ and it makes more  sense to have it all in one place. */
 }
 
 :where(a[href]):not(.wp-element-button):not(.wp-block-button__link):focus-visible {
-  outline: 2px solid currentColor;
+  outline: 2px solid var(--wp--custom--color--color-primary-strong);
   outline-offset: 2px;
 }
 
@@ -73,7 +73,7 @@ and it makes more  sense to have it all in one place. */
 
 /* Keyboard focus: add the box */
 .ibt-header-nav .wp-block-navigation a:focus-visible {
-  color: var(--wp--custom--color--color-primary-hover);
+  color: var(--wp--custom--color--color-primary-strong);
   border-color: currentColor;
 }
 
