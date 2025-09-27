@@ -84,11 +84,11 @@
 			"palette": [
 				{ "slug": "background",  "name": "Background (Paper)",          "color": "#FAF9F7" },
 				{ "slug": "surface",     "name": "Surface (White cards)",       "color": "#FFFFFF" },
-				{ "slug": "text-black",  "name": "Text Black (exposed)",        "color": "#000000" },
-				{ "slug": "text-normal", "name": "Text Normal",                 "color": "#1C1B1A" },
+				{ "slug": "black",  "name": "Black", "color": "#000000" },
+				{ "slug": "text-normal", "name": "Text Normal",                 "color": "#000000" },
 				{ "slug": "text-muted",  "name": "Text Muted (meta)",           "color": "#5F6366" },
 				{ "slug": "border-grey", "name": "Border Grey",                 "color": "#D0D7DD" },
-				{ "slug": "emphasis-primary",   "name": "Emphasis · Primary (Stone-Strong)",  "color": "#4A443E" },
+				{ "slug": "emphasis-primary",   "name": "Emphasis · Primary (Stone-Strong)",  "color": "#5D5248" },
 				{ "slug": "emphasis-secondary", "name": "Emphasis · Secondary (Ocean-Strong)","color": "#243E7D" }
 			]
 		},
@@ -113,7 +113,8 @@
 				"color-error": "#6E2B2B",
 				"color-error-tint": "#EEE6E6",
 				"color-info": "#465059",
-				"color-info-tint": "#E9EAEB"
+				"color-info-tint": "#E9EAEB",
+				"color-text-emphasis-primary-visited": "#4E443C"
 			}
 		},
 		"shadow": {"defaultPresets": true}
