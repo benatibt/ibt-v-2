@@ -119,6 +119,8 @@
 				"color-error-tint": "#EEE6E6",
 				"color-info": "#465059",
 				"color-info-tint": "#E9EAEB",
+				"color-disabled": "#C8C8C8",
+				"color-disabled-tint": "#F0F1F2",
 				"color-text-emphasis-primary-visited": "#312B25"
 			}
 		},
@@ -349,16 +351,6 @@
 				"spacing": {},
 				"border": {},
 				"color": {}
-			},
-			"core/template-part": {
-				"color": {"background": "var(--wp--custom--color--color-header-bg)"},
-				"border": {
-					"bottom": {
-						    "color": "var(--wp--custom--color--color-header-border)",
-							"width": "1.5px",
-							"style": "solid"
-					}
-				}
 			}
 		}
 	}
