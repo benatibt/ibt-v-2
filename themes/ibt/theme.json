@@ -219,14 +219,7 @@
 				"color": {},
 				"elements": { "link": {} }
 			},
-			"core/group": {
-				"spacing": {
-					"padding": {
-						"left":"0",
-						"right":"0"
-					}
-				}
-			},
+			"core/group": {},
 			"core/heading": {
 				"typography": { "lineHeight": "1.2" },
 				"spacing": { "padding": { "bottom": "0" } }
