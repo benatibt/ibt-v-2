@@ -78,6 +78,11 @@
 				{ "name": "XXXL","slug": "xxxl","size": "2.93rem","fluid": { "min": "2.66rem", "max": "3.75rem" } }
 			]
 		},
+		"blocks": {
+			"core/button":{
+				"color": {"custom": false}
+			}
+		},
 		"color": {
 			"custom": true,
 			"defaultPalette": false,
