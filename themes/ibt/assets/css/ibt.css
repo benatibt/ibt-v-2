@@ -168,63 +168,63 @@ and it makes more  sense to have it all in one place. */
    ************************************************************************************************************* */
  
 
-   /* === Global group side-padding reset (preserve WP root padding) === */
-/* Zero side padding on all groups EXCEPT:
-   1) WP root padding (.has-global-padding)
-   2) Custom outer wrappers we mark (.ibt-outer-wrap) */
+/* === Global group side-padding reset ======================================
+   Zero side padding on all groups EXCEPT:
+   1) WordPress root padding (.has-global-padding)
+   2) Custom outer wrappers we mark (.ibt-outer-wrap)
+   This keeps clamp padding where we explicitly allow it. */
 :root :where(.wp-block-group):not(.has-global-padding):not(.ibt-outer-wrap) {
   padding-left: 0;
   padding-right: 0;
 }
 
-/* Header band must never add extra padding (full-bleed background) */
-.ibt-header-band {
-  padding-left: 0 !important;
-  padding-right: 0 !important;
+/* === Outer wrapper clamp ===================================================
+   Apply root-style clamp padding only to wrappers we tag as ibt-outer-wrap.
+   Example: the full-width header band. */
+.ibt-outer-wrap {
+  padding-left: clamp(1rem, 4vw, 3rem);
+  padding-right: clamp(1rem, 4vw, 3rem);
 }
 
-
-
-   /* ===== IBT Header (sticky, wide container, 2-row) ===== */
-
-/* Sticky band */
+/* === Sticky header band ====================================================
+   Full-width colour band that stays fixed to the top of the viewport. */
 .ibt-sticky {
   position: sticky;
   top: 0;
-  z-index: 50; /* above content, below modals; we can tweak later */
-  background: inherit;
+  z-index: 50;               /* above content, below modals */
+  background: inherit;       /* use block background */
 }
 
-/* WP admin bar offsets */
+/* Offset for WordPress admin bar so sticky header never hides beneath it. */
 .admin-bar .ibt-sticky { top: 32px; }
 @media (max-width: 782px) {
   .admin-bar .ibt-sticky { top: 46px; }
 }
 
-/* Inner container: force wide width + clamp padding inside full-bleed band */
-/* Inner wrapper of header: max-width wideSize + clamp padding */
+/* === Inner header wrapper ==================================================
+   Width-only container inside the full-bleed band.
+   Constrains content to theme wide size while leaving side padding
+   to the outer wrapper. */
 .ibt-header-inner {
   box-sizing: border-box;
   width: 100%;
-  max-width: 80rem;
+  max-width: 80rem;          /* match theme.json wideSize */
   margin-left: auto;
   margin-right: auto;
 
-  /* no side padding here – outer band already provides root clamp padding */
   display: grid;
-  grid-template-columns: 1fr auto;
-  grid-template-rows: auto auto;
+  grid-template-columns: 1fr auto;  /* Row 1: logo left, utility right */
+  grid-template-rows: auto auto;    /* Row 2: primary navigation */
   align-items: center;
   gap: var(--wp--preset--spacing--s);
 }
 
+/* === Grid children =========================================================
+   Ensure Row 1 and the primary navigation both span the full inner width. */
+.ibt-header-row1 { grid-column: 1 / -1; }
+.ibt-primary-nav { grid-column: 1 / -1; }
 
-
-/* Place row blocks on the grid */
-.ibt-header-row1 { grid-column: 1 / -1; } /* full width on row 1 */
-.ibt-primary-nav { grid-column: 1 / -1; } /* full width on row 2 */
-
-/* Optional: prevent header flicker when printing */
+/* === Print safeguard ======================================================= */
 @media print {
   .ibt-sticky { position: static !important; }
 }
