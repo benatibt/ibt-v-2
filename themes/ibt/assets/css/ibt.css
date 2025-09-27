@@ -82,6 +82,7 @@ and it makes more  sense to have it all in one place. */
 /* On hover */
 :where(a[href]):not(.wp-element-button):not(.wp-block-button__link):not(.ibt-header-pages a):hover,
 .wp-block-navigation:not(.ibt-header-pages) a:hover {
+  text-decoration: underline;
   color: var(--wp--custom--color--color-primary-hover);
   text-decoration-thickness: 2px;
   text-underline-offset: 0.25em;
@@ -90,7 +91,6 @@ and it makes more  sense to have it all in one place. */
 /* On Focus-Visible */
 :where(a[href]):not(.wp-element-button):not(.wp-block-button__link):not(.ibt-header-pages a):focus-visible,
 .wp-block-navigation:not(.ibt-header-pages) a:focus-visible {
-  text-decoration: underline;
   outline: 2px solid var(--wp--custom--color--color-primary);
   outline-offset: 2px;
 }
