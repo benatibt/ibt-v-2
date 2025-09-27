@@ -100,7 +100,7 @@
 		"custom": {
 			"color":{
 				"color-primary": "#5C554E",
-				"color-primary-hover": "#2F2B27",
+				"color-primary-hover": "#000000",
 				"color-primary-strong": "#4A443E",
 
 				"color-secondary": "#315FA3",
