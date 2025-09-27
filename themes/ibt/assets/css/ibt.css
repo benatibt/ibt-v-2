@@ -187,18 +187,39 @@ and it makes more  sense to have it all in one place. */
 }
 
 /* === Sticky header band ====================================================
-   Full-width colour band that stays fixed to the top of the viewport. */
+   Full-width colour band inside the template part. */
 .ibt-sticky {
   position: sticky;
   top: 0;
-  z-index: 50;               /* above content, below modals */
+  z-index: 50;               /* sits above content */
   background: inherit;       /* use block background */
 }
 
-/* Offset for WordPress admin bar so sticky header never hides beneath it. */
+/* WP admin bar offsets */
 .admin-bar .ibt-sticky { top: 32px; }
 @media (max-width: 782px) {
   .admin-bar .ibt-sticky { top: 46px; }
+}
+
+/* === Robust wrapper fix using :has() ======================================
+   If the template-part wrapper contains a sticky group (our header),
+   make the wrapper itself sticky. This works around the Site Editor
+   container issue while remaining future-proof. */
+.wp-block-template-part:has(> .is-position-sticky),
+.wp-block-template-part:has(> .ibt-sticky) {
+  position: sticky;
+  top: 0;
+  z-index: 49; /* just under the header itself */
+}
+.admin-bar .wp-block-template-part:has(> .is-position-sticky),
+.admin-bar .wp-block-template-part:has(> .ibt-sticky) {
+  top: 32px;
+}
+@media (max-width: 782px) {
+  .admin-bar .wp-block-template-part:has(> .is-position-sticky),
+  .admin-bar .wp-block-template-part:has(> .ibt-sticky) {
+    top: 46px;
+  }
 }
 
 /* === Inner header wrapper ==================================================
@@ -227,10 +248,4 @@ and it makes more  sense to have it all in one place. */
 /* === Print safeguard ======================================================= */
 @media print {
   .ibt-sticky { position: static !important; }
-}
-
-/* === FIX: allow sticky header to escape template-part wrapper === */
-.wp-block-template-part {
-  height: auto !important;     /* remove inline fixed height */
-  min-height: auto !important; /* be safe with min-height */
 }
