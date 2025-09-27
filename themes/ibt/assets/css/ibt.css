@@ -168,6 +168,18 @@ and it makes more  sense to have it all in one place. */
    ************************************************************************************************************* */
  
 
+   /* === Global group side-padding reset (preserve WP root padding) === */
+:root :where(.wp-block-group):not(.has-global-padding) {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* Header band must never add extra padding (full-bleed background) */
+.ibt-header-band {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
 
 
    /* ===== IBT Header (sticky, wide container, 2-row) ===== */
@@ -191,18 +203,18 @@ and it makes more  sense to have it all in one place. */
 .ibt-header-inner {
   box-sizing: border-box;
   width: 100%;
-  max-width: 80rem; /* same as theme.json wideSize */
+  max-width: 80rem;
   margin-left: auto;
   margin-right: auto;
-  padding-left: clamp(1rem, 4vw, 3rem);
-  padding-right: clamp(1rem, 4vw, 3rem);
 
+  /* no side padding here – outer band already provides root clamp padding */
   display: grid;
   grid-template-columns: 1fr auto;
   grid-template-rows: auto auto;
   align-items: center;
   gap: var(--wp--preset--spacing--s);
 }
+
 
 
 /* Place row blocks on the grid */
