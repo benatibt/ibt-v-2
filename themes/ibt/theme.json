@@ -114,7 +114,7 @@
 				"color-error-tint": "#EEE6E6",
 				"color-info": "#465059",
 				"color-info-tint": "#E9EAEB",
-				"color-text-emphasis-primary-visited": "#4E443C"
+				"color-text-emphasis-primary-visited": "#312B25"
 			}
 		},
 		"shadow": {"defaultPresets": true}
