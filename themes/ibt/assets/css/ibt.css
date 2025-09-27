@@ -42,6 +42,42 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
   border: 2px solid var(--wp--custom--color--color-secondary);
 }
 
+/* 6. Style all link hover effects in css because WP6.8 doesn't support specific styling (e.g. Nav)
+and it makes more  sense to have it all in one place. */
+
+/*6a ===== Global link interactions (non-button anchors) =====
+   Hover: color shift; Focus-visible: accessible outline box.
+   Excludes block buttons and wp-element-button anchors. */
+
+:where(a[href]):not(.wp-element-button):not(.wp-block-button__link):hover {
+  color: var(--wp--custom--color--color-primary-hover);
+}
+
+:where(a[href]):not(.wp-element-button):not(.wp-block-button__link):focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* 6b. ===== Header nav link outline/border effect (no layout shift) ===== */
+.ibt-header-nav .wp-block-navigation__container > .wp-block-navigation-item > .wp-block-navigation-item__content {
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding: 0.25rem 0.5rem;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+/* Color change on hover; keep it obvious */
+.ibt-header-nav .wp-block-navigation a:hover {
+  color: var(--wp--custom--color--color-primary-hover);
+}
+
+/* Keyboard focus: add the box */
+.ibt-header-nav .wp-block-navigation a:focus-visible {
+  color: var(--wp--custom--color--color-primary-hover);
+  border-color: currentColor;
+}
+
+
 /* End IBT - Wordpress 6.8 helpers   
 ============================================================================================================== */
 
