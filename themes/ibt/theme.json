@@ -149,9 +149,6 @@
 				"color": {
 				"text": "var(--wp--preset--color--emphasis-primary)"
 				},
-				"typography": {
-				"textDecoration": "underline"
-				}
 			}
 		},
 		"blocks": {
