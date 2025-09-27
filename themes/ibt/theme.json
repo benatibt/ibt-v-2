@@ -162,8 +162,24 @@
 					"fontFamily": "var(--wp--preset--font-family--title-font)",
 					"fontWeight": "600"
 				},
-				"border": { "radius": "8px" },
-				"elements": { "link": {} },
+				"color": {
+					"text":"#FFFFFF",
+					"background": "var(--wp--custom--color-primary)"
+				},
+				"border": {
+					"radius": "8px",
+					"width": "2px",
+					"style": "solid",
+					"color": "var(--wp--custom--color-primary)"
+				},
+				"spacing": {
+					"padding": {
+					"top": "0.75rem",
+					"right": "1.25rem",
+					"bottom": "0.75rem",
+					"left": "1.25rem"
+					}
+				},
 				"variations": {
 					"outline": {},
 					"solid-accent": {},
