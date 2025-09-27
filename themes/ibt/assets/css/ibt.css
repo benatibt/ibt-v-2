@@ -187,20 +187,16 @@ and it makes more  sense to have it all in one place. */
 }
 
 /* Inner container: force wide width + clamp padding inside full-bleed band */
-.ibt-header-grid {
+/* Inner wrapper of header: max-width wideSize + clamp padding */
+.ibt-header-inner {
   box-sizing: border-box;
   width: 100%;
-  /* lock to theme wide size with our own value */
-  max-width: 80rem;
+  max-width: 80rem; /* same as theme.json wideSize */
   margin-left: auto;
   margin-right: auto;
-  /* use the same clamp padding as root for small screens */
   padding-left: clamp(1rem, 4vw, 3rem);
   padding-right: clamp(1rem, 4vw, 3rem);
 
-  /* two-row grid: 
-     row 1 = logo + utility icons,
-     row 2 = primary navigation spanning full width */
   display: grid;
   grid-template-columns: 1fr auto;
   grid-template-rows: auto auto;
