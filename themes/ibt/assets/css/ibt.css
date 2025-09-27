@@ -167,3 +167,47 @@ and it makes more  sense to have it all in one place. */
                                        END OF MINIMAL FRONT END STYLE SHEET
    ************************************************************************************************************* */
  
+
+
+
+   /* ===== IBT Header (sticky, wide container, 2-row) ===== */
+
+/* Sticky band */
+.ibt-sticky {
+  position: sticky;
+  top: 0;
+  z-index: 50; /* above content, below modals; we can tweak later */
+  background: inherit;
+}
+
+/* WP admin bar offsets */
+.admin-bar .ibt-sticky { top: 32px; }
+@media (max-width: 782px) {
+  .admin-bar .ibt-sticky { top: 46px; }
+}
+
+/* Inner container: force wide width + clamp padding inside full-bleed band */
+.ibt-header-grid {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--wp--style--global--wide-size);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--wp--style--root--padding-left);
+  padding-right: var(--wp--style--root--padding-right);
+
+  display: grid;
+  grid-template-columns: 1fr auto; /* left area + right utilities on row 1 */
+  grid-template-rows: auto auto;   /* row 1 (logo+utils), row 2 (primary nav) */
+  align-items: center;
+  gap: var(--wp--preset--spacing--s);
+}
+
+/* Place row blocks on the grid */
+.ibt-header-row1 { grid-column: 1 / -1; } /* full width on row 1 */
+.ibt-primary-nav { grid-column: 1 / -1; } /* full width on row 2 */
+
+/* Optional: prevent header flicker when printing */
+@media print {
+  .ibt-sticky { position: static !important; }
+}
