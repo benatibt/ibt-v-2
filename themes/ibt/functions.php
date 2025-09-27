@@ -45,3 +45,21 @@ add_action( 'wp_enqueue_scripts', function () {
 		$ver
 	);
 }, 20 );
+
+// Register custom Button style variations (neutral labels)
+add_action( 'init', function() {
+	register_block_style(
+		'core/button',
+		array(
+			'name'  => 'buy',
+			'label' => __( 'Buy Solid', 'ibt' )
+		)
+	);
+	register_block_style(
+		'core/button',
+		array(
+			'name'  => 'buy-outline',
+			'label' => __( 'Buy Outline', 'ibt' )
+		)
+	);
+} );
