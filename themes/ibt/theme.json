@@ -349,6 +349,16 @@
 				"spacing": {},
 				"border": {},
 				"color": {}
+			},
+			"core/template-part": {
+				"color": {"background": "var(--wp--custom--color--color-header-bg)"},
+				"border": {
+					"bottom": {
+						    "color": "var(--wp--custom--color--color-header-border)",
+							"width": "1.5px",
+							"style": "solid"
+					}
+				}
 			}
 		}
 	}
