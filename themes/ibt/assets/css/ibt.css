@@ -1,14 +1,3 @@
-/* TEMP debug: allow sticky by removing overflow limits */
-html, body, .wp-site-blocks {
-  overflow: visible !important;
-}/* TEMP debug: allow sticky by removing overflow limits */
-html, body, .wp-site-blocks {
-  overflow: visible !important;
-}
-
-
-
-
 /* **********************************************************************************************************
                                          IBT – MINIMAL FRONT END STYLE SHEET
    Purpose: minimal structural helpers only. Keep colours, typography and hover effects in
@@ -238,4 +227,10 @@ and it makes more  sense to have it all in one place. */
 /* === Print safeguard ======================================================= */
 @media print {
   .ibt-sticky { position: static !important; }
+}
+
+/* === FIX: allow sticky header to escape template-part wrapper === */
+.wp-block-template-part {
+  height: auto !important;     /* remove inline fixed height */
+  min-height: auto !important; /* be safe with min-height */
 }
