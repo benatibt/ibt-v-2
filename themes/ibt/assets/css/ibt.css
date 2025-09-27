@@ -80,19 +80,21 @@ and it makes more  sense to have it all in one place. */
    EXCEPT header page list (ibt-header-pages css tag on navigation container) */
 
 /* On hover */
-:where(a[href]):not(.wp-element-button):not(.wp-block-button__link):hover,
+:where(a[href]):not(.wp-element-button):not(.wp-block-button__link):not(.ibt-header-pages a):hover,
 .wp-block-navigation:not(.ibt-header-pages) a:hover {
-  color: var(--wp--custom--color--color-primary-hover); /* Changre color */
-  text-decoration-thickness: 2px; /* Thicken underline */
-  text-underline-offset: 0.25em; /* Move the underline down a bit */
+  color: var(--wp--custom--color--color-primary-hover);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.25em;
 }
 
-/* On focus-visible */
-:where(a[href]):not(.wp-element-button):not(.wp-block-button__link):focus-visible,
+/* On Focus-Visible */
+:where(a[href]):not(.wp-element-button):not(.wp-block-button__link):not(.ibt-header-pages a):focus-visible,
 .wp-block-navigation:not(.ibt-header-pages) a:focus-visible {
+  text-decoration: underline;
   outline: 2px solid var(--wp--custom--color--color-primary);
   outline-offset: 2px;
 }
+
 
 /* 6b. Give different styling treatement to navigations with css tag ibt-header-pages 
       for header links                                                                */
