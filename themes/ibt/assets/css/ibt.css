@@ -5,7 +5,7 @@
   *********************************************************************************************************** */
 
 /* ===========================================================================================================
-            IBT – WordPress 6.8 helpers to prevent core "features" causing problems                         */
+     IBT – WordPress 6.8 helpers to prevent core "features" causing problems and do things json can't yet.     */
 
 /* 1. Ensure images, videos, iframes, etc. never overflow their container.
 Core handles most cases but some embeds still slip through. */
@@ -42,7 +42,7 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
   border: 2px solid var(--wp--custom--color--color-secondary);
 }
 
-/* 5a. Add hover/focus-visible  effects for all 4 IBT button types. */
+/* 5a. Add hover/focus-visible  effects for all four IBT button types. */
 
 /* Shared behaviour for all buttons */
 .wp-block-button__link {transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;}
