@@ -80,8 +80,8 @@ and it makes more  sense to have it all in one place. */
    EXCEPT header page list (ibt-header-pages css tag on navigation container) */
 
 /* On hover */
-:where(a[href]):not(.wp-element-button):not(.wp-block-button__link):not(.ibt-header-pages a):hover,
-.wp-block-navigation:not(.ibt-header-pages) a:hover {
+:where(a[href]):not(.wp-element-button):not(.wp-block-button__link):not(.ibt-header-nav a):hover,
+.wp-block-navigation:not(.ibt-header-nav) a:hover {
   text-decoration: underline;
   color: var(--wp--custom--color--color-primary-hover);
   text-decoration-thickness: 2px;
@@ -89,18 +89,17 @@ and it makes more  sense to have it all in one place. */
 }
 
 /* On Focus-Visible */
-:where(a[href]):not(.wp-element-button):not(.wp-block-button__link):not(.ibt-header-pages a):focus-visible,
-.wp-block-navigation:not(.ibt-header-pages) a:focus-visible {
+:where(a[href]):not(.wp-element-button):not(.wp-block-button__link):not(.ibt-header-nav a):focus-visible,
+.wp-block-navigation:not(.ibt-header-nav) a:focus-visible {
   outline: 2px solid var(--wp--custom--color--color-primary);
   outline-offset: 2px;
 }
-
 
 /* 6b. Give different styling treatement to navigations with css tag ibt-header-pages 
       for header links                                                                */
 
 /* Add transparent box as default to avoid layout shift */      
-.ibt-header-pages .wp-block-navigation-item__content {
+.ibt-header-nav .wp-block-navigation-item__content {
   border: 1.5px solid transparent;
   border-radius: 6px;
   padding: 0.25rem 0.5rem;
@@ -108,8 +107,8 @@ and it makes more  sense to have it all in one place. */
 }
 
 /* On hover OR focus-visible change box color to brand color */
-.ibt-header-pages .wp-block-navigation-item__content:hover,
-.ibt-header-pages .wp-block-navigation-item__content:focus-visible {
+.ibt-header-nav .wp-block-navigation-item__content:hover,
+.ibt-header-nav .wp-block-navigation-item__content:focus-visible {
   color: var(--wp--custom--color--color-primary-hover);
   border-color: currentColor;
 }
@@ -225,25 +224,25 @@ and it makes more  sense to have it all in one place. */
 /* === Inner header wrapper ==================================================
    Width-only container inside the full-bleed band.
    Constrains content to theme wide size while leaving side padding
-   to the outer wrapper. */
+   to the outer wrapper. 
 .ibt-header-inner {
   box-sizing: border-box;
   width: 100%;
-  max-width: 80rem;          /* match theme.json wideSize */
+  max-width: 80rem;          
   margin-left: auto;
   margin-right: auto;
 
   display: grid;
-  grid-template-columns: 1fr auto;  /* Row 1: logo left, utility right */
-  grid-template-rows: auto auto;    /* Row 2: primary navigation */
+  grid-template-columns: 1fr auto;  
+  grid-template-rows: auto auto;    
   align-items: center;
   gap: var(--wp--preset--spacing--s);
 }
 
 /* === Grid children =========================================================
    Ensure Row 1 and the primary navigation both span the full inner width. */
-.ibt-header-row1 { grid-column: 1 / -1; }
-.ibt-primary-nav { grid-column: 1 / -1; }
+/*.ibt-header-row1 { grid-column: 1 / -1; } 
+.ibt-header-nav { grid-column: 1 / -1; }
 
 /* === Print safeguard ======================================================= */
 @media print {
