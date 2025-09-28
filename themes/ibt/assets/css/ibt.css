@@ -167,92 +167,50 @@ and it makes more  sense to have it all in one place. */
    ************************************************************************************************************* */
  
 
-/* === Global group side-padding reset ======================================
-   Zero side padding on all groups EXCEPT:
-   1) WordPress root padding (.has-global-padding)
-   2) Custom outer wrappers we mark (.ibt-outer-wrap)
-   This keeps clamp padding where we explicitly allow it. 
-   BEN - We are not using the .ibt-outer-wrap anymore but it makes sense to leave it in for future use I think*/
-:root :where(.wp-block-group):not(.has-global-padding):not(.ibt-outer-wrap) {
-  padding-left: 0;
-  padding-right: 0;
-}
+/* ========= Keep root padding without adding padding to all groups =========
+   theme.json applies padding to all groups to make root padding work.
+   Remove it for all groups except wp-block-group where it is required 
+   for root padding and groups with .ibt-root-margin css class               */
+:root :where(.wp-block-group):not(.has-global-padding):not(.ibt-outer-wrap) {padding-left: 0; padding-right: 0;}
 
-/* === Outer wrapper clamp ===================================================
-   Apply root-style clamp padding only to wrappers we tag as ibt-outer-wrap.
-   Example: the full-width header band. 
-   BEN - This is reappling something we are already doing in theme.json, I think it can go. Note commented now.
-.ibt-outer-wrap {
-  padding-left: clamp(1rem, 4vw, 3rem);
-  padding-right: clamp(1rem, 4vw, 3rem);
-}
 
-/* === Sticky header band ====================================================
-   Full-width colour band inside the template part. 
-   BEN - I would like your thoughts on what is still required with Has() version */
-.ibt-sticky {
-  position: sticky;
-  top: 0;
-  z-index: 50;               /* sits above content */
-  background: inherit;       /* use block background */
-}
-
-/* WP admin bar offsets */
-.admin-bar .ibt-sticky { top: 32px; }
-@media (max-width: 782px) {
-  .admin-bar .ibt-sticky { top: 46px; }
-}
-
-/* === Robust wrapper fix using :has() ======================================
-   If the template-part wrapper contains a sticky group (our header),
-   make the wrapper itself sticky. This works around the Site Editor
-   container issue while remaining future-proof. */
-.wp-block-template-part:has(> .is-position-sticky),
-.wp-block-template-part:has(> .ibt-sticky) {
-  position: sticky;
-  top: 0;
-  z-index: 49; /* just under the header itself */
-}
-.admin-bar .wp-block-template-part:has(> .is-position-sticky),
-.admin-bar .wp-block-template-part:has(> .ibt-sticky) {
-  top: 32px;
-}
-@media (max-width: 782px) {
-  .admin-bar .wp-block-template-part:has(> .is-position-sticky),
-  .admin-bar .wp-block-template-part:has(> .ibt-sticky) {
-    top: 46px;
-  }
-}
 
 /* === Inner header wrapper ==================================================
-   Width-only container inside the full-bleed band.
-   Constrains content to theme wide size while leaving side padding
-   to the outer wrapper. 
-   BEN - How many of these settings, eg Margin, etc. are required*/
+   Constrain header wide width with standard root padding                     */
 .ibt-header-inner {
   box-sizing: border-box;
   width: 100%;
-  max-width: 80rem;          
-  margin-left: auto; 
-  margin-right: auto;
-
-}
-  /*
-  BEN - Commented out, all good
-  display: grid;
-  grid-template-columns: 1fr auto;  
-  grid-template-rows: auto auto;    
-  align-items: center;
-  gap: var(--wp--preset--spacing--s);
+  max-width: var(--wp--style--global--wide-size);
+  margin-inline: auto;
+  padding-inline: var(--wp--style--root--padding-left);
 }
 
-/* === Grid children =========================================================
-   Ensure Row 1 and the primary navigation both span the full inner width. */
-/* BEN - Commented out all good
-.ibt-header-row1 { grid-column: 1 / -1; } 
-.ibt-header-nav { grid-column: 1 / -1; }
+/* === Sticky header for modern browsers (with :has()) ===================== */
 
-/* === Print safeguard ======================================================= */
+/* Calculate offset for any WP admin bar */
+:root { --ibt-adminbar-offset: 0px; }
+.admin-bar { --ibt-adminbar-offset: 32px; }
+@media (max-width: 782px) {
+  .admin-bar { --ibt-adminbar-offset: 46px; }
+}
+
+/* Make the header sticky with calculated offset */
+.ibt-sticky,
+.wp-block-template-part:has(> .ibt-sticky) {
+  position: sticky;
+  top: var(--ibt-adminbar-offset);
+  z-index: 50; /* header sits above content */
+}
+
+/* If the template-part wrapper is also sticky, keep it just under the header */
+.wp-block-template-part:has(> .ibt-sticky) { z-index: 49; }
+
+/* Print safeguard: disable sticky for both header and wrapper */
 @media print {
-  .ibt-sticky { position: static !important; }
+  .ibt-sticky,
+  .wp-block-template-part:has(> .ibt-sticky) {
+    position: static !important;
+    top: auto !important;
+  }
 }
+
