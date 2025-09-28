@@ -184,15 +184,15 @@ and it makes more  sense to have it all in one place. */
   display: block !important;
 }
 
-/* 11. Force core Navigation to collapse at ≤782px for IBT header only */
+/* 11. Force core Navigation to collapse at ≤782px for IBT header only 
 @media (max-width: 782px) {
-  /* Show the hamburger toggle */
+  /* Show the hamburger toggle 
   .ibt-header-nav .wp-block-navigation__responsive-container-open {
     display: flex !important;
     align-items: center;
   }
 
-  /* Hide the desktop list to avoid wrap confusion */
+  /* Hide the desktop list to avoid wrap confusion 
   .ibt-header-nav .wp-block-navigation__container {
     display: none !important;
   }
