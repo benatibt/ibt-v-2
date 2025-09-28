@@ -184,6 +184,27 @@ and it makes more  sense to have it all in one place. */
   display: block !important;
 }
 
+/* 11. Force core Navigation to collapse at ≤782px for IBT header only */
+@media (max-width: 782px) {
+  /* Show the hamburger toggle */
+  .ibt-header-nav .wp-block-navigation__responsive-container-open {
+    display: flex !important;
+    align-items: center;
+  }
+
+  /* Hide the desktop list to avoid wrap confusion */
+  .ibt-header-nav .wp-block-navigation__container {
+    display: none !important;
+  }
+}
+
+/* (Optional) Prevent early wrapping above the breakpoint; if it overflows, we’ll handle via medium-width tweaks later
+.ibt-header-nav .wp-block-navigation__container {
+  flex-wrap: nowrap;
+}
+
+
+
 
 /* End IBT - Wordpress 6.8 helpers   
 ============================================================================================================== */
