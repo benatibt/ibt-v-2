@@ -201,14 +201,7 @@
 				"spacing": { "blockGap": "var(--wp--preset--spacing--s)" }
 			},
 			"core/categories": {},
-			"core/columns": {
-				"spacing": {
-					"padding": {
-						"left": "0",
-						"right": "0"
-					}
-				}
-			},
+			"core/columns": {},
 			"core/cover": {
 				"spacing": {},
 				"color": {},
