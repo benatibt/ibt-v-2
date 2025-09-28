@@ -227,16 +227,18 @@ and it makes more  sense to have it all in one place. */
 /* === Inner header wrapper ==================================================
    Width-only container inside the full-bleed band.
    Constrains content to theme wide size while leaving side padding
-   to the outer wrapper. */
+   to the outer wrapper. 
+   BEN - How many of these settings, eg Margin, etc. are required*/
 .ibt-header-inner {
   box-sizing: border-box;
   width: 100%;
   max-width: 80rem;          
-  margin-left: auto;
+  margin-left: auto; 
   margin-right: auto;
 
 }
   /*
+  BEN - Commented out, all good
   display: grid;
   grid-template-columns: 1fr auto;  
   grid-template-rows: auto auto;    
@@ -246,7 +248,8 @@ and it makes more  sense to have it all in one place. */
 
 /* === Grid children =========================================================
    Ensure Row 1 and the primary navigation both span the full inner width. */
-/*.ibt-header-row1 { grid-column: 1 / -1; } 
+/* BEN - Commented out all good
+.ibt-header-row1 { grid-column: 1 / -1; } 
 .ibt-header-nav { grid-column: 1 / -1; }
 
 /* === Print safeguard ======================================================= */
