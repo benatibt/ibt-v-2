@@ -164,7 +164,7 @@ and it makes more  sense to have it all in one place. */
 .ibt-title--mobile  { display: none; }
 
 /* Narrow width ≤800px — swap titles */
-@media (max-width: 800px) {
+@media (max-width: 850px) {
   .ibt-title--desktop { display: none; }
   .ibt-title--mobile  { display: block; }
 }
