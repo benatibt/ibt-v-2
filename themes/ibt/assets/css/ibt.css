@@ -178,6 +178,14 @@ and it makes more  sense to have it all in one place. */
   }
 }
 
+/* Editor view: always show BOTH site titles, even at small widths/heights */
+body.is-site-editor .ibt-title--desktop,
+body.is-site-editor .ibt-title--mobile,
+body.block-editor-page .ibt-title--desktop,
+body.block-editor-page .ibt-title--mobile {
+  display: block !important;
+}
+
 
 /* End IBT - Wordpress 6.8 helpers   
 ============================================================================================================== */
