@@ -163,8 +163,8 @@ and it makes more  sense to have it all in one place. */
 .ibt-title--desktop { display: block; }
 .ibt-title--mobile  { display: none; }
 
-/* Narrow width ≤???px — swap titles */
-@media (max-width: 400px) {
+/* Narrow width ≤780px — swap titles */
+@media (max-width: 780px) {
   .ibt-title--desktop { display: none; }
   .ibt-title--mobile  { display: block; }
 }
