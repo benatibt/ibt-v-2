@@ -171,7 +171,8 @@ and it makes more  sense to have it all in one place. */
    Zero side padding on all groups EXCEPT:
    1) WordPress root padding (.has-global-padding)
    2) Custom outer wrappers we mark (.ibt-outer-wrap)
-   This keeps clamp padding where we explicitly allow it. */
+   This keeps clamp padding where we explicitly allow it. 
+   BEN - We are not using the .ibt-outer-wrap anymore but it makes sense to leave it in for future use I think*/
 :root :where(.wp-block-group):not(.has-global-padding):not(.ibt-outer-wrap) {
   padding-left: 0;
   padding-right: 0;
@@ -179,14 +180,16 @@ and it makes more  sense to have it all in one place. */
 
 /* === Outer wrapper clamp ===================================================
    Apply root-style clamp padding only to wrappers we tag as ibt-outer-wrap.
-   Example: the full-width header band. */
+   Example: the full-width header band. 
+   BEN - This is reappling something we are already doing in theme.json, I think it can go. Note commented now.
 .ibt-outer-wrap {
   padding-left: clamp(1rem, 4vw, 3rem);
   padding-right: clamp(1rem, 4vw, 3rem);
 }
 
 /* === Sticky header band ====================================================
-   Full-width colour band inside the template part. */
+   Full-width colour band inside the template part. 
+   BEN - I would like your thoughts on what is still required with Has() version */
 .ibt-sticky {
   position: sticky;
   top: 0;
