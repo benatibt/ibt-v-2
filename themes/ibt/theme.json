@@ -142,7 +142,6 @@
 				"left":  "clamp(1rem, 4vw, 3rem)",
 				"right": "clamp(1rem, 4vw, 3rem)"
 			}
-			
 		},
 		"color": {
 			"text": "var(--wp--preset--color--text-normal)",
