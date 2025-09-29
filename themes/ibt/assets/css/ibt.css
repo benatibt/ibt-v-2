@@ -163,7 +163,7 @@ and it makes more  sense to have it all in one place. */
 .ibt-title--desktop { display: block; }
 .ibt-title--mobile  { display: none; }
 
-/* Narrow width ≤780px — swap titles */
+/* Narrow width ≤780px — swap titles 
 @media (max-width: 780px) {
   .ibt-title--desktop { display: none; }
   .ibt-title--mobile  { display: block; }
@@ -178,11 +178,47 @@ and it makes more  sense to have it all in one place. */
   }
 }
 
-/* 10b. Editor preview: force BOTH titles visible inside the editor iframe */
+/* 10b. Editor preview: force BOTH titles visible inside the editor iframe
 .editor-styles-wrapper .ibt-title--desktop,
 .editor-styles-wrapper .ibt-title--mobile {
   display: block !important;
 }
+
+/* === Dual Navigation breakpoint === */
+/* Desktop nav visible above 780px, mobile nav below */
+
+@media (max-width: 780px) {
+  /* Hide desktop menu and desktop title */
+  .ibt-nav-dual .ibt-nav-desktop { display: none; }
+  .ibt-title--desktop { display: none; }
+
+  /* Show mobile menu and mobile title */
+  .ibt-nav-dual .ibt-nav-mobile { display: block; }
+  .ibt-title--mobile { display: block; }
+}
+
+@media (min-width: 781px) {
+  .ibt-nav-dual .ibt-nav-desktop { display: block; }
+  .ibt-title--desktop { display: block; }
+
+  .ibt-nav-dual .ibt-nav-mobile { display: none; }
+  .ibt-title--mobile { display: none; }
+}
+
+/* Optional – keep both navs visible inside the Site Editor for easier selection */
+body.editor-styles-wrapper .ibt-nav-dual .ibt-nav-desktop,
+body.editor-styles-wrapper .ibt-nav-dual .ibt-nav-mobile {
+  display: block !important;
+}
+
+/* Optional – print: show desktop menu only */
+@media print {
+  .ibt-nav-dual .ibt-nav-desktop { display: block !important; }
+  .ibt-nav-dual .ibt-nav-mobile { display: none !important; }
+}
+
+
+
 
 /* 11. Force core Navigation to collapse at ≤782px for IBT header only 
 @media (max-width: 782px) {
