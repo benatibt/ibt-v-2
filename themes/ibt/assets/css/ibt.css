@@ -225,6 +225,12 @@ and it makes more  sense to have it all in one place. */
     flex-direction: column;
     flex-wrap: nowrap;
   }
+
+    /* Reduce logo column width */
+  .ibt-header-inner > .wp-block-column:first-child {
+    flex-basis: 70px;
+    max-width: 70px;
+  }
 }
 
 /* ---------- Short viewport height ≤600px ---------- */
