@@ -160,21 +160,25 @@ and it makes more  sense to have it all in one place. */
 
 /* 10. Responsive header behaviour */
 
-/* Default: desktop title visible implicitly; just hide the mobile title */
-.ibt-title--mobile { display: none; }
+/* 10. Responsive header behaviour */
 
-/* Default: show desktop nav, hide mobile nav */
-.ibt-nav-dual .ibt-nav-desktop { display: block; }
-.ibt-nav-dual .ibt-nav-mobile  { display: none; }
+/* Titles: default shows desktop, hides mobile */
+.ibt-title--desktop { visibility: visible; pointer-events: auto; opacity: 1; }
+.ibt-title--mobile  { visibility: hidden; pointer-events: none; opacity: 0; }
+
+/* Navs: default shows desktop, hides mobile */
+.ibt-nav-dual .ibt-nav-desktop { visibility: visible; pointer-events: auto; opacity: 1; }
+.ibt-nav-dual .ibt-nav-mobile  { visibility: hidden; pointer-events: none; opacity: 0; }
 
 /* Swap at ~780px */
 @media (max-width: 780px) {
-  .ibt-title--mobile  { display: block; }
-  .ibt-title--desktop { display: none; }
+  .ibt-title--desktop { visibility: hidden; pointer-events: none; opacity: 0; }
+  .ibt-title--mobile  { visibility: visible; pointer-events: auto; opacity: 1; }
 
-  .ibt-nav-dual .ibt-nav-desktop { display: none; }
-  .ibt-nav-dual .ibt-nav-mobile  { display: block; }
+  .ibt-nav-dual .ibt-nav-desktop { visibility: hidden; pointer-events: none; opacity: 0; }
+  .ibt-nav-dual .ibt-nav-mobile  { visibility: visible; pointer-events: auto; opacity: 1; }
 }
+
 
 /* Short height ≤600px — disable sticky entirely */
 @media (max-height: 600px) {
