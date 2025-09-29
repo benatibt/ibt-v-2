@@ -236,13 +236,13 @@ and it makes more  sense to have it all in one place. */
 
 /* Desktop dropdown sub-menus */
 .wp-block-navigation__submenu-container {
-  background-color: var(--wp--custom--color--color-header-bg);
+  background-color: var(--wp--custom--color--color-header-bg) !important;
 }
 
 /* Mobile overlay drawer (container + dialog) */
 .wp-block-navigation__responsive-container,
 .wp-block-navigation__responsive-dialog {
-  background-color: var(--wp--custom--color--color-header-bg);
+  background-color: var(--wp--custom--color--color-header-bg) !important;
 }
 
 /* 13. === Print safeguards === */
