@@ -259,12 +259,12 @@ and it makes more  sense to have it all in one place. */
  
 /* === Debug: visual indicator of core Navigation breakpoint === */
 
-/* Wide ≥783px */
+/* Wide ≥783px 
 @media (min-width: 783px) {
   body::after {
     content: "WIDE ≥783px";
     position: fixed;
-    bottom: 20px;   /* move to bottom-right corner */
+    bottom: 20px;   
     right: 20px;
     background: red;
     color: white;
@@ -275,7 +275,7 @@ and it makes more  sense to have it all in one place. */
   }
 }
 
-/* Narrow ≤782px */
+/* Narrow ≤782px 
 @media (max-width: 782px) {
   body::after {
     content: "NARROW ≤782px";
@@ -291,4 +291,4 @@ and it makes more  sense to have it all in one place. */
   }
 }
 
-
+/* */
