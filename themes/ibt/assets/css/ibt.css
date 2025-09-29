@@ -237,8 +237,13 @@ and it makes more  sense to have it all in one place. */
   background-color: var(--wp--custom--color--color-header-bg) !important;
 }
 
-/* Mobile hamburger / overlay panel */
+/* Mobile hamburger / overlay panel 
 .wp-block-navigation__container.has-background.is-responsive {
+  background-color: var(--wp--custom--color--color-header-bg) !important;
+}
+
+/* Mobile responsive nav (hamburger drawer) */
+.wp-block-navigation__container.is-responsive.has-background {
   background-color: var(--wp--custom--color--color-header-bg) !important;
 }
 
