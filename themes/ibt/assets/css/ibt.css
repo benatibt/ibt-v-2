@@ -176,13 +176,20 @@ and it makes more  sense to have it all in one place. */
 }
 
 /* ---------- Narrow width ≤780px ---------- */
-/* Swap titles and navs */
 @media (max-width: 780px) {
+  /* Swap titles */
   .ibt-title--desktop { display: none; }
   .ibt-title--mobile  { display: block; }
 
+  /* Swap navs */
   .ibt-nav-dual .ibt-nav-desktop { display: none; }
   .ibt-nav-dual .ibt-nav-mobile  { display: block; }
+
+  /* Align right when only one child remains in either header row */
+  .ibt-row1.is-layout-flex,
+  .ibt-nav-dual.is-layout-flex {
+    justify-content: flex-end;
+  }
 
   /* Ensure mobile nav stacks vertically if overlay is not used */
   .ibt-nav-dual .ibt-nav-mobile .wp-block-navigation__container {
