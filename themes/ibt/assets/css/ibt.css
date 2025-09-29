@@ -242,8 +242,9 @@ and it makes more  sense to have it all in one place. */
   background-color: var(--wp--custom--color--color-header-bg) !important;
 }
 
-/* Mobile responsive nav (hamburger drawer) */
-.wp-block-navigation__container.is-responsive.has-background {
+/* Mobile overlay drawer (container + dialog) */
+.wp-block-navigation__responsive-container,
+.wp-block-navigation__responsive-dialog {
   background-color: var(--wp--custom--color--color-header-bg) !important;
 }
 
