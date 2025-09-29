@@ -231,24 +231,23 @@ and it makes more  sense to have it all in one place. */
 /* Set in css as not reliable in theme.json as at WP6.8 */
 
 
-/* === Global navigation backgrounds === */
-/* Desktop dropdown sub-menus */
-.wp-block-navigation__submenu-container.has-background {
-  background-color: var(--wp--custom--color--color-header-bg) !important;
-}
+/* 12. === Global navigation backgrounds === */
+/* Can not reliably be set from theme.json with WP6.8 */
 
-/* Mobile hamburger / overlay panel 
-.wp-block-navigation__container.has-background.is-responsive {
-  background-color: var(--wp--custom--color--color-header-bg) !important;
+/* Desktop dropdown sub-menus */
+.wp-block-navigation__submenu-container {
+  background-color: var(--wp--custom--color--color-header-bg);
 }
 
 /* Mobile overlay drawer (container + dialog) */
 .wp-block-navigation__responsive-container,
 .wp-block-navigation__responsive-dialog {
-  background-color: var(--wp--custom--color--color-header-bg) !important;
+  background-color: var(--wp--custom--color--color-header-bg);
 }
 
-/* 12. === Print safeguards === */
+/* 13. === Print safeguards === */
+/* Avoid print problems from sticky header and double navigation */
+
 @media print {
 
   /* Always show the desktop navigation and hide the mobile variant */
