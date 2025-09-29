@@ -159,14 +159,19 @@ and it makes more  sense to have it all in one place. */
 
 /* 10. Responsive header behaviour */
 
-/* Defaults: tall & wide viewports */
+/* Defaults (tall & wide): show desktop title/nav, hide mobile title/nav */
 .ibt-title--desktop { display: block; }
 .ibt-title--mobile  { display: none; }
+.ibt-nav-dual .ibt-nav-desktop { display: block; }
+.ibt-nav-dual .ibt-nav-mobile  { display: none; }
 
-/* Narrow width ≤780px — swap titles 
+/* Narrow width ≤780px — swap titles + menus */
 @media (max-width: 780px) {
   .ibt-title--desktop { display: none; }
   .ibt-title--mobile  { display: block; }
+
+  .ibt-nav-dual .ibt-nav-desktop { display: none; }
+  .ibt-nav-dual .ibt-nav-mobile  { display: block; }
 }
 
 /* Short height ≤600px — disable sticky entirely */
@@ -178,45 +183,19 @@ and it makes more  sense to have it all in one place. */
   }
 }
 
-/* 10b. Editor preview: force BOTH titles visible inside the editor iframe
+/* Editor preview: always show BOTH titles and BOTH navs inside the editor iframe */
 .editor-styles-wrapper .ibt-title--desktop,
-.editor-styles-wrapper .ibt-title--mobile {
+.editor-styles-wrapper .ibt-title--mobile,
+.editor-styles-wrapper .ibt-nav-dual .ibt-nav-desktop,
+.editor-styles-wrapper .ibt-nav-dual .ibt-nav-mobile {
   display: block !important;
 }
 
-/* === Dual Navigation breakpoint === */
-/* Desktop nav visible above 780px, mobile nav below */
-
-@media (max-width: 780px) {
-  /* Hide desktop menu and desktop title */
-  .ibt-nav-dual .ibt-nav-desktop { display: none; }
-  .ibt-title--desktop { display: none; }
-
-  /* Show mobile menu and mobile title */
-  .ibt-nav-dual .ibt-nav-mobile { display: block; }
-  .ibt-title--mobile { display: block; }
-}
-
-@media (min-width: 781px) {
-  .ibt-nav-dual .ibt-nav-desktop { display: block; }
-  .ibt-title--desktop { display: block; }
-
-  .ibt-nav-dual .ibt-nav-mobile { display: none; }
-  .ibt-title--mobile { display: none; }
-}
-
-/* Optional – keep both navs visible inside the Site Editor for easier selection */
-body.editor-styles-wrapper .ibt-nav-dual .ibt-nav-desktop,
-body.editor-styles-wrapper .ibt-nav-dual .ibt-nav-mobile {
-  display: block !important;
-}
-
-/* Optional – print: show desktop menu only */
+/* Print: show desktop menu only */
 @media print {
   .ibt-nav-dual .ibt-nav-desktop { display: block !important; }
-  .ibt-nav-dual .ibt-nav-mobile { display: none !important; }
+  .ibt-nav-dual .ibt-nav-mobile  { display: none !important; }
 }
-
 
 
 
