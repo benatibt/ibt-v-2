@@ -159,13 +159,13 @@ and it makes more  sense to have it all in one place. */
 
 /* 10. Responsive header behaviour */
 
-/* Defaults (tall & wide): show desktop title/nav, hide mobile title/nav */
+/* Defaults (tall & wide): show desktop title/nav, hide mobile title/nav 
 .ibt-title--desktop { display: block; }
 .ibt-title--mobile  { display: none; }
 .ibt-nav-dual .ibt-nav-desktop { display: block; }
 .ibt-nav-dual .ibt-nav-mobile  { display: none; }
 
-/* Narrow width ≤780px — swap titles + menus */
+/* Narrow width ≤780px — swap titles + menus 
 @media (max-width: 780px) {
   .ibt-title--desktop { display: none; }
   .ibt-title--mobile  { display: block; }
@@ -174,7 +174,7 @@ and it makes more  sense to have it all in one place. */
   .ibt-nav-dual .ibt-nav-mobile  { display: block; }
 }
 
-/* Short height ≤600px — disable sticky entirely */
+/* Short height ≤600px — disable sticky entirely 
 @media (max-height: 600px) {
   .ibt-sticky,
   .wp-block-template-part:has(> .ibt-sticky) {
