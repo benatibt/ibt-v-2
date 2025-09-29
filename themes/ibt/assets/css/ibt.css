@@ -229,8 +229,18 @@ and it makes more  sense to have it all in one place. */
 
 /* 11. === Global navigation backgrounds === */
 /* Set in css as not reliable in theme.json as at WP6.8 */
-.wp-block-navigation__submenu-container {background-color: var(--wp--custom--color--color-header-bg);} /* Desktop dropdown sub-menus */
-.wp-block-navigation__responsive-container {background-color: var(--wp--custom--color--color-header-bg);} /* Mobile hamburger / overlay panel */
+
+
+/* === Global navigation backgrounds === */
+/* Desktop dropdown sub-menus */
+.wp-block-navigation__submenu-container.has-background {
+  background-color: var(--wp--custom--color--color-header-bg) !important;
+}
+
+/* Mobile hamburger / overlay panel */
+.wp-block-navigation__container.has-background.is-responsive {
+  background-color: var(--wp--custom--color--color-header-bg) !important;
+}
 
 /* 12. === Print safeguards === */
 @media print {
