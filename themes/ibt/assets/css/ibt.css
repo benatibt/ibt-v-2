@@ -12,8 +12,8 @@ Core handles most cases but some embeds still slip through. */
 img, video, iframe, embed, object { max-width: 100%; height: auto; display: block;}
 
 /* 2. Anchor scroll margin -  Prevent headings with IDs from hiding under the sticky header when used as anchor targets.
-!!!!!!! ADJUST TO MATCH HEADER WHEN DESIGNED. !!!!!!!!!!*/
-h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: var(--wp--preset--spacing--l);}
+      ADJUST TO MATCH HEADER IF CHANGED. */
+h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 
 /* 3. Set per-level heading styles that cannot yet be expressed in theme.json (WP 6.8 limitation). 
 Migrate when core adds level-specific controls to json.                                                                                                 */
@@ -227,7 +227,12 @@ and it makes more  sense to have it all in one place. */
   display: block !important;
 }
 
-/* 11/ === Print safeguards === */
+/* 11. === Global navigation backgrounds === */
+/* Set in css as not reliable in theme.json as at WP6.8 */
+.wp-block-navigation__submenu-container {background-color: var(--wp--custom--color--color-header-bg);} /* Desktop dropdown sub-menus */
+.wp-block-navigation__responsive-container {background-color: var(--wp--custom--color--color-header-bg);} /* Mobile hamburger / overlay panel */
+
+/* 12. === Print safeguards === */
 @media print {
 
   /* Always show the desktop navigation and hide the mobile variant */
@@ -295,38 +300,3 @@ and it makes more  sense to have it all in one place. */
                                        END OF MINIMAL FRONT END STYLE SHEET
    ************************************************************************************************************* */
  
-/* === Debug: visual indicator of core Navigation breakpoint === */
-
-/* Wide ≥783px 
-@media (min-width: 783px) {
-  body::after {
-    content: "WIDE ≥783px";
-    position: fixed;
-    bottom: 20px;   
-    right: 20px;
-    background: red;
-    color: white;
-    padding: 6px 12px;
-    font-size: 18px;
-    font-weight: bold;
-    z-index: 99999;
-  }
-}
-
-/* Narrow ≤782px 
-@media (max-width: 782px) {
-  body::after {
-    content: "NARROW ≤782px";
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: blue;
-    color: white;
-    padding: 6px 12px;
-    font-size: 18px;
-    font-weight: bold;
-    z-index: 99999;
-  }
-}
-
-/* */
