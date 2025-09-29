@@ -192,9 +192,11 @@ and it makes more  sense to have it all in one place. */
   align-items: center;
 }
 
-/* Row 2 should align right when wide */
-.ibt-nav-dual.is-layout-flex {
-  justify-content: flex-end;
+/* Row 2 forced right on wide screens */
+@media (min-width: 781px) {
+  .ibt-nav-dual.is-layout-flex {
+    justify-content: flex-end;
+  }
 }
 
 /* ---------- Narrow width ≤780px ---------- */
@@ -207,9 +209,14 @@ and it makes more  sense to have it all in one place. */
   .ibt-nav-dual .ibt-nav-desktop { display: none; }
   .ibt-nav-dual .ibt-nav-mobile  { display: block; }
 
-  /* Row 1 aligns right when narrow */
+  /* Row 1 forced right on narrow screens */
   .ibt-row1.is-layout-flex {
     justify-content: flex-end;
+  }
+
+  /* Reset Row 2 to normal spacing when narrow */
+  .ibt-nav-dual.is-layout-flex {
+    justify-content: space-between;
   }
 
   /* Ensure mobile nav stacks vertically if overlay is not used */
