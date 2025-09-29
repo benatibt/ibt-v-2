@@ -158,38 +158,67 @@ and it makes more  sense to have it all in one place. */
 }
 
 
-/* 10. Responsive header behaviour */
+/* === 10. Responsive header behaviour === */
 
-/* JS-style class swap for testing */
+/* ---------- Defaults: tall & wide viewports ---------- */
+/* Show desktop title/nav, hide mobile equivalents */
+.ibt-title--desktop { display: block; }
+.ibt-title--mobile  { display: none; }
+.ibt-nav-dual .ibt-nav-desktop { display: block; }
+.ibt-nav-dual .ibt-nav-mobile  { display: none; }
 
-/* Desktop active */
-body.ibt-desktop-nav-active .ibt-nav-desktop { display: block; }
-body.ibt-desktop-nav-active .ibt-nav-mobile  { display: none; }
-body.ibt-desktop-nav-active .ibt-title--desktop { display: block; }
-body.ibt-desktop-nav-active .ibt-title--mobile  { display: none; }
-
-/* Mobile active */
-body.ibt-mobile-nav-active .ibt-nav-desktop { display: none; }
-body.ibt-mobile-nav-active .ibt-nav-mobile  { display: block; }
-body.ibt-mobile-nav-active .ibt-title--desktop { display: none; }
-body.ibt-mobile-nav-active .ibt-title--mobile  { display: block; }
-
-/* Harden orientation only when each nav is active */
-
-/* Desktop active: force a single horizontal row */
-body.ibt-desktop-nav-active .ibt-nav-desktop .wp-block-navigation__container {
+/* Harden desktop nav to stay horizontal whenever it’s visible */
+.ibt-nav-dual .ibt-nav-desktop .wp-block-navigation__container {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  align-items: center; /* optional: tidy vertical alignment */
+  align-items: center;
 }
 
-/* Mobile active: ensure vertical stack (if you’re not relying on overlay) */
-body.ibt-mobile-nav-active .ibt-nav-mobile .wp-block-navigation__container {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
+/* ---------- Narrow width ≤780px ---------- */
+/* Swap titles and navs */
+@media (max-width: 780px) {
+  .ibt-title--desktop { display: none; }
+  .ibt-title--mobile  { display: block; }
+
+  .ibt-nav-dual .ibt-nav-desktop { display: none; }
+  .ibt-nav-dual .ibt-nav-mobile  { display: block; }
+
+  /* Ensure mobile nav stacks vertically if overlay is not used */
+  .ibt-nav-dual .ibt-nav-mobile .wp-block-navigation__container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
 }
+
+/* ---------- Short viewport height ≤600px ---------- */
+/* Disable sticky header entirely */
+@media (max-height: 600px) {
+  .ibt-sticky,
+  .wp-block-template-part:has(> .ibt-sticky) {
+    position: static !important;
+    top: auto !important;
+  }
+}
+
+/* ---------- Editor helper ---------- */
+/* Always show both titles/navs inside the Site Editor iframe
+   so blocks remain selectable while editing */
+.editor-styles-wrapper .ibt-title--desktop,
+.editor-styles-wrapper .ibt-title--mobile,
+.editor-styles-wrapper .ibt-nav-dual .ibt-nav-desktop,
+.editor-styles-wrapper .ibt-nav-dual .ibt-nav-mobile {
+  display: block !important;
+}
+
+/* ---------- Print ---------- */
+/* Only print the desktop menu */
+@media print {
+  .ibt-nav-dual .ibt-nav-desktop { display: block !important; }
+  .ibt-nav-dual .ibt-nav-mobile  { display: none !important; }
+}
+
 
 
 
