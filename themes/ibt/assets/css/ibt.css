@@ -286,7 +286,6 @@ and it makes more  sense to have it all in one place. */
   }
 }
 
-
 /* 10d. ---------- Short viewport height ≤600px ---------- */
 /* Disable sticky header entirely */
 @media (max-height: 600px) {
@@ -297,7 +296,65 @@ and it makes more  sense to have it all in one place. */
   }
 }
 
-/* 10e. ---------- Editor helper ---------- */
+/* 10e. ---------- Header search behaviour ---------- */
+
+/* Base state: search field hidden */
+.ibt-search-field {
+  display: none;
+}
+
+/* When search is open, show input */
+.ibt-search--open .ibt-search-field {
+  display: inline-flex;
+  align-items: center;
+  height: 48px;
+}
+
+/* Style input itself */
+.ibt-search-field input[type="search"] {
+  height: 100%;
+  padding: 0 var(--wp--preset--spacing--s);
+  font-size: var(--wp--preset--font-size--m);
+  border: 1px solid var(--wp--custom--color--color-header-border);
+  border-radius: 4px;
+}
+
+/* --- Wide desktop >1000px --- */
+@media (min-width: 1000px) {
+  .ibt-search--open .ibt-search-field {
+    width: 280px; /* comfortable */
+  }
+}
+
+/* --- Narrow desktop 781–1000px --- */
+@media (max-width: 1000px) and (min-width: 781px) {
+  .ibt-search--open .ibt-search-field {
+    width: 250px;
+  }
+  /* Hide title only at lower end of clamp */
+  @media (max-width: 800px) {
+    .ibt-search--open .ibt-title--desktop {
+      display: none;
+    }
+  }
+}
+
+/* --- Mobile ≤780px --- */
+@media (max-width: 780px) {
+  .ibt-search--open .ibt-search-field {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+  /* Hide logo only when very narrow */
+  @media (max-width: 550px) {
+    .ibt-search--open .wp-block-site-logo {
+      display: none;
+    }
+  }
+}
+
+
+/* 10f. ---------- Editor helper ---------- */
 /* Always show both titles/navs inside the Site Editor iframe
    so blocks remain selectable while editing */
 .editor-styles-wrapper .ibt-title--desktop,
