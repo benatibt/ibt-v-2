@@ -204,12 +204,12 @@ and it makes more  sense to have it all in one place. */
     max-width: 70px;
   }
 
-  /* ----- Mobile menu: spacing + collapsed submenus (overlay + fallback) ----- */
+  /* ----- Mobile menu: spacing + collapsed submenus (overlay) ----- */
 
   /* Overlay shape (actual mobile DOM): apply token padding around and token gap between */
   .wp-block-navigation__responsive-container.is-menu-open
     .wp-block-navigation__responsive-container-content {
-    padding: var(--wp--preset--spacing--l);   /* around the group (debug big) */
+    padding: var(--wp--preset--spacing--l);
   }
   .wp-block-navigation__responsive-container.is-menu-open
     .wp-block-navigation__responsive-container-content > .wp-block-navigation__container {
@@ -220,6 +220,8 @@ and it makes more  sense to have it all in one place. */
   /* Submenus collapsed by default; open shows same token gap + modest indent */
   .wp-block-navigation__responsive-container.is-menu-open
     .wp-block-navigation__submenu-container { display: none; }
+  /* NOTE: Closed submenus remain in the keyboard tab order (edge case).
+     Robust fix would need JS (e.g. toggle `inert` on the submenu when aria-expanded="false"). */
 
   /* Open submenu when Core marks the UL or the toggle is expanded */
   .wp-block-navigation__responsive-container.is-menu-open
@@ -235,7 +237,7 @@ and it makes more  sense to have it all in one place. */
     padding-left: var(--wp--preset--spacing--l);
   }
 
- /* Mobile: assertive tap-target padding (overlay + fallback) */
+ /* Mobile: assertive tap-target padding (overlay) */
   /* Overlay (actual mobile DOM) – high-specificity path */
   .ibt-header-nav nav.wp-block-navigation
     .wp-block-navigation__responsive-container.is-menu-open
@@ -250,9 +252,8 @@ and it makes more  sense to have it all in one place. */
     .wp-block-navigation__container > .wp-block-navigation-item > .wp-block-navigation-submenu__toggle {
     display: block; padding-block: var(--wp--preset--spacing--xs); padding-inline: var(--wp--preset--spacing--m);
   }
-
   
-  /* Mobile: submenu tap-targets (overlay + fallback) */
+  /* Mobile: submenu tap-targets (overlay) */
   /* Overlay – submenu items */
   .wp-block-navigation__responsive-container.is-menu-open
     .wp-block-navigation__submenu-container > .wp-block-navigation-item > .wp-block-navigation-item__content,
