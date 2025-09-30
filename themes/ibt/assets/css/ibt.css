@@ -241,25 +241,33 @@ and it makes more  sense to have it all in one place. */
     padding: var(--wp--preset--spacing--xl);   /* around the group (debug big) */
   }
 
-    /* Mobile: simple tap-targets (padding drives size & spacing) */
+    /* Mobile: assertive tap-target padding (overlay + fallback) */
 
-  /* Overlay (actual mobile DOM) */
+  /* Overlay (actual mobile DOM) – high-specificity path */
+  .ibt-header-nav nav.wp-block-navigation
+    .wp-block-navigation__responsive-container.is-menu-open
+    .wp-block-navigation__container > .wp-block-navigation-item > .wp-block-navigation-item__content,
+  .ibt-header-nav nav.wp-block-navigation
+    .wp-block-navigation__responsive-container.is-menu-open
+    .wp-block-navigation__container > .wp-block-navigation-item > .wp-block-navigation-submenu__toggle,
+  /* Generic overlay path (if wrapper class differs) */
   .wp-block-navigation__responsive-container.is-menu-open
-    .wp-block-navigation-item__content,
+    .wp-block-navigation__container > .wp-block-navigation-item > .wp-block-navigation-item__content,
   .wp-block-navigation__responsive-container.is-menu-open
-    .wp-block-navigation-submenu__toggle {
-    display: block; /* make padding apply to the whole clickable row */
+    .wp-block-navigation__container > .wp-block-navigation-item > .wp-block-navigation-submenu__toggle {
+    display: block; /* make padding fill the row */
     padding: var(--wp--preset--spacing--s) var(--wp--preset--spacing--m);
   }
 
   /* Fallback: non-overlay mobile nav rendered directly under <nav> */
   .ibt-nav-mobile nav.wp-block-navigation > .wp-block-navigation__container
-    .wp-block-navigation-item__content,
+    > .wp-block-navigation-item > .wp-block-navigation-item__content,
   .ibt-nav-mobile nav.wp-block-navigation > .wp-block-navigation__container
-    .wp-block-navigation-submenu__toggle {
+    > .wp-block-navigation-item > .wp-block-navigation-submenu__toggle {
     display: block;
     padding: var(--wp--preset--spacing--s) var(--wp--preset--spacing--m);
   }
+
 }
 
 /* ---------- Short viewport height ≤600px ---------- */
