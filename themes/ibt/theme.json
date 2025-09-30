@@ -100,11 +100,11 @@
 		"custom": {
 			"color":{
 				"color-primary": "#5C554E",
-				"color-primary-hover": "#0D0B09",
+				"color-primary-hover": "#1F1C19",
 				"color-primary-strong": "#4A443E",
 
 				"color-secondary": "#315FA3",
-				"color-secondary-hover": "#040E1F",
+				"color-secondary-hover": "#0C203C",
 				"color-secondary-strong": "#243E7D",
 
 				"color-header-bg": "#ECE7E1",
