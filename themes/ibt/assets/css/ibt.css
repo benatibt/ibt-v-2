@@ -346,13 +346,7 @@ and it makes more  sense to have it all in one place. */
 @media (max-width: 780px) {
   .ibt-search--open .ibt-search-field {
     flex: 1 1 auto;
-    width: 100%;
-  }
-  /* Hide logo only when very narrow */
-  @media (max-width: 550px) {
-    .ibt-search--open .wp-block-site-logo {
-      display: none;
-    }
+    width: calc(100% - 20px); /* leave a sliver of space for the logo */
   }
 }
 
