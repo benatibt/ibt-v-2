@@ -353,6 +353,21 @@ and it makes more  sense to have it all in one place. */
   }
 }
 
+/* Reset the HTML block wrapper margins/padding */
+.ibt-search-button-wrapper {margin: 0; padding: 0; width: auto; display: inline-flex;}
+
+/* Style the toggle button itself */
+.ibt-search-toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 /* 10f. ---------- Editor helper ---------- */
 /* Always show both titles/navs inside the Site Editor iframe
