@@ -213,11 +213,11 @@ and it makes more  sense to have it all in one place. */
 
   /* +++Submenu indentation + space between submenu items */
   .ibt-nav-dual .ibt-nav-mobile .wp-block-navigation__submenu-container {
-    margin-top: var(--wp--preset--spacing--xxs);          /* 0.3rem */
+    margin-top: var(--wp--preset--spacing--xs);          /* 0.3rem */
     padding-left: var(--wp--preset--spacing--s);          /* 1.2rem */
   }
   .ibt-nav-dual .ibt-nav-mobile .wp-block-navigation__submenu-container > .wp-block-navigation-item {
-    margin-block: var(--wp--preset--spacing--xxs);        /* ensures submenu items aren't packed */
+    margin-block: var(--wp--preset--spacing--xs);        /* ensures submenu items aren't packed */
   }
 
     /* Reduce logo column width */
