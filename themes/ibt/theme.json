@@ -190,8 +190,6 @@
 						},
 						"border": {
 							"color": "var(--wp--custom--color--color-primary)",
-							"width": "2px",
-							"style": "solid"
 						}
 					}
 				}
