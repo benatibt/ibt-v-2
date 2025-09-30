@@ -178,8 +178,8 @@ and it makes more  sense to have it all in one place. */
   
     /* Define Mobile nav spacing tokens (scoped to .ibt-nav-mobile) */
   .ibt-nav-mobile {
-    --ibt-nav-gap: var(--wp--preset--spacing--s);   /* between items */
-    --ibt-nav-pad: var(--wp--preset--spacing--m);   /* padding around the group */
+    --ibt-nav-gap: var(--wp--preset--spacing--m);   /* between items */
+    --ibt-nav-pad: var(--wp--preset--spacing--xl);   /* padding around the group */
     --ibt-submenu-indent: var(--wp--preset--spacing--s);
   }
   
@@ -208,7 +208,7 @@ and it makes more  sense to have it all in one place. */
   }
 
   /* ----- Style the mobile menu spacing and open submenu collapsed --- */
-  
+
   /* Top-level: support both shapes (direct UL or responsive wrapper) */
   .ibt-nav-mobile nav.wp-block-navigation > .wp-block-navigation__container,
   .ibt-nav-mobile nav.wp-block-navigation .wp-block-navigation__responsive-container-content {
