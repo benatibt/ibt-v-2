@@ -326,18 +326,17 @@ and it makes more  sense to have it all in one place. */
   }
 }
 
-/* --- Narrow desktop 781–1000px --- */
 @media (max-width: 1000px) and (min-width: 781px) {
   .ibt-search--open .ibt-search-field {
     width: 250px;
   }
 
-  /* When hiding the site title, pin icons right */
+  /* At ≤800px, hide title AND pin icons right */
   @media (max-width: 800px) {
     .ibt-search--open .ibt-title--desktop {
       display: none;
     }
-    .ibt-row1.is-layout-flex {
+    .ibt-search--open .ibt-row1.is-layout-flex {
       justify-content: flex-end;
     }
   }
