@@ -320,6 +320,12 @@ and it makes more  sense to have it all in one place. */
   border-radius: 4px;
 }
 
+/* Smooth fade for site title when search toggles */
+.ibt-title--desktop {
+  opacity: 1;
+  transition: opacity 0.2s ease-in-out;
+}
+
 /* --- Wide desktop >1000px --- */
 @media (min-width: 1000px) {
   .ibt-search--open .ibt-search-field {
@@ -335,7 +341,8 @@ and it makes more  sense to have it all in one place. */
   /* At ≤800px, hide title AND pin icons right */
   @media (max-width: 800px) {
     .ibt-search--open .ibt-title--desktop {
-      display: none;
+      opacity: 0;
+      visibility: hidden; /* keeps space so no layout jump */
     }
     .ibt-search--open .ibt-row1.is-layout-flex {
       justify-content: flex-end;
