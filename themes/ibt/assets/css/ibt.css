@@ -200,21 +200,24 @@ and it makes more  sense to have it all in one place. */
     flex-wrap: nowrap;
   }
 
-    /* *** Mobile menu spacing (container) */
+  /* +++ Mobile menu spacing (top-level container) */
   .ibt-nav-dual .ibt-nav-mobile .wp-block-navigation__container {
-    gap: var(--wp--preset--spacing--s, 1rem);
-    padding: 0.75rem 1rem;
+    gap: var(--wp--preset--spacing--m); /* 1.8rem for comfortable separation */
+    padding: var(--wp--preset--spacing--xs) var(--wp--preset--spacing--s); /* 0.6rem tb / 1.2rem lr */
   }
 
-  /* *** Mobile menu spacing (each link) */
+  /* +++ Tap-target padding on each link (overrides header default on mobile) */
   .ibt-nav-dual .ibt-nav-mobile .wp-block-navigation-item__content {
-    padding: 0.5rem 0.75rem; /* overrides the 0.25/0.5 header default on mobile */
+    padding: var(--wp--preset--spacing--xs) var(--wp--preset--spacing--s); /* 0.6rem tb / 1.2rem lr */
   }
 
-  /* *** Optional: add a little indent & breathing room inside submenus */
+  /* +++Submenu indentation + space between submenu items */
   .ibt-nav-dual .ibt-nav-mobile .wp-block-navigation__submenu-container {
-    margin-top: 0.25rem;
-    padding-left: 0.75rem;
+    margin-top: var(--wp--preset--spacing--xxs);          /* 0.3rem */
+    padding-left: var(--wp--preset--spacing--s);          /* 1.2rem */
+  }
+  .ibt-nav-dual .ibt-nav-mobile .wp-block-navigation__submenu-container > .wp-block-navigation-item {
+    margin-block: var(--wp--preset--spacing--xxs);        /* ensures submenu items aren't packed */
   }
 
     /* Reduce logo column width */
@@ -223,14 +226,26 @@ and it makes more  sense to have it all in one place. */
     max-width: 70px;
   }
 
-    /* *** Collapse submenus by default on mobile; open only when toggled */
-  .ibt-nav-dual .ibt-nav-mobile .wp-block-navigation__submenu-container {
-    display: none;
-  }
-  /* *** WP toggles aria-expanded on the submenu toggle button */
-  .ibt-nav-dual .ibt-nav-mobile .wp-block-navigation-submenu__toggle[aria-expanded="true"] + .wp-block-navigation__submenu-container {
+  /* +++ Collapse submenus by default on mobile */
+  .ibt-nav-dual .ibt-nav-mobile .wp-block-navigation__submenu-container { display: none; }
+
+  /* +++ Core sometimes adds .is-open on the submenu container */
+  .ibt-nav-dual .ibt-nav-mobile .wp-block-navigation__submenu-container.is-open { display: block; }
+
+  /* +++ If the toggle button is expanded, reveal the following submenu
+     (use + for adjacent and ~ for “any later” sibling to cover both markups) */
+  .ibt-nav-dual .ibt-nav-mobile .wp-block-navigation-submenu__toggle[aria-expanded="true"] + .wp-block-navigation__submenu-container,
+  .ibt-nav-dual .ibt-nav-mobile .wp-block-navigation-submenu__toggle[aria-expanded="true"] ~ .wp-block-navigation__submenu-container {
     display: block;
   }
+
+  /* *** Bonus: :has() path for modern browsers (covers other DOM arrangements) */
+  @supports selector(li:has(> .wp-block-navigation-submenu__toggle[aria-expanded="true"])) {
+    .ibt-nav-dual .ibt-nav-mobile li.has-child:has(> .wp-block-navigation-submenu__toggle[aria-expanded="true"]) > .wp-block-navigation__submenu-container {
+      display: block;
+    }
+  }
+
 }
 
 /* ---------- Short viewport height ≤600px ---------- */
