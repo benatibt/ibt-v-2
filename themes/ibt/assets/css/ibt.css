@@ -277,8 +277,7 @@ and it makes more  sense to have it all in one place. */
     .wp-block-navigation__submenu-container > .wp-block-navigation-item > .wp-block-navigation-submenu__toggle {
     display: block;
     /* keep left text aligned with the submenu indent set on the container */
-    padding: var(--wp--preset--spacing--s) var(--wp--preset--spacing--m)
-             var(--wp--preset--spacing--s) 0;
+    padding: var(--wp--preset--spacing--s) var(--wp--preset--spacing--m);
   }
 
   /* Fallback – non-overlay submenu items */
@@ -287,11 +286,8 @@ and it makes more  sense to have it all in one place. */
   .ibt-nav-mobile nav.wp-block-navigation > .wp-block-navigation__container
     .wp-block-navigation__submenu-container > .wp-block-navigation-item > .wp-block-navigation-submenu__toggle {
     display: block;
-    padding: var(--wp--preset--spacing--s) var(--wp--preset--spacing--m)
-             var(--wp--preset--spacing--s) 0;
+    padding: var(--wp--preset--spacing--s) var(--wp--preset--spacing--m);
   }
-
-
 
 }
 
