@@ -218,15 +218,38 @@ and it makes more  sense to have it all in one place. */
 .wp-block-navigation__responsive-container.is-menu-open
   .wp-block-navigation__submenu-container { display: none; }
 
+/* Open if Core sets a class on the submenu UL */
 .wp-block-navigation__responsive-container.is-menu-open
-  .wp-block-navigation__submenu-container.is-open,
-.wp-block-navigation__responsive-container.is-menu-open
-  .wp-block-navigation-submenu__toggle[aria-expanded="true"]
-  + .wp-block-navigation__submenu-container {
+  .wp-block-navigation__submenu-container.is-open {
   display: flex;
   flex-direction: column;
-  gap: var(--wp--preset--spacing--l);        /* same item gap (debug big) */
-  padding-left: var(--wp--preset--spacing--l); /* modest indent (debug big) */
+  gap: var(--wp--preset--spacing--l);
+  padding-left: var(--wp--preset--spacing--l);
+}
+
+/* Open if toggle has aria-expanded=true (adjacent OR later sibling) */
+.wp-block-navigation__responsive-container.is-menu-open
+  .wp-block-navigation-submenu__toggle[aria-expanded="true"]
+  + .wp-block-navigation__submenu-container,
+.wp-block-navigation__responsive-container.is-menu-open
+  .wp-block-navigation-submenu__toggle[aria-expanded="true"]
+  ~ .wp-block-navigation__submenu-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--wp--preset--spacing--l);
+  padding-left: var(--wp--preset--spacing--l);
+}
+
+/* Open if Core toggles state on the LI (modern browsers) */
+@supports selector(li:has(> .wp-block-navigation-submenu__toggle[aria-expanded="true"])) {
+  .wp-block-navigation__responsive-container.is-menu-open
+    li.has-child:has(> .wp-block-navigation-submenu__toggle[aria-expanded="true"])
+    > .wp-block-navigation__submenu-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--wp--preset--spacing--l);
+    padding-left: var(--wp--preset--spacing--l);
+  }
 }
 
 /* Fallback for non-overlay (direct UL under <nav>) */
@@ -236,8 +259,6 @@ and it makes more  sense to have it all in one place. */
   gap: var(--wp--preset--spacing--l);        /* between items (debug big) */
   padding: var(--wp--preset--spacing--xl);   /* around the group (debug big) */
 }
-
-
 
 }
 
