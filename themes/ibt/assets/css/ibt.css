@@ -237,8 +237,8 @@ and it makes more  sense to have it all in one place. */
   .ibt-nav-mobile nav.wp-block-navigation > .wp-block-navigation__container {
     display: flex;
     flex-direction: column;
-    gap: 0 /* var(--wp--preset--spacing--l);        /* between items (debug big) */
-    padding: var(--wp--preset--spacing--l);   /* around the group (debug big) */
+    gap: 0 /* var(--wp--preset--spacing--l); */
+    padding: var(--wp--preset--spacing--l);
   }
 
     /* Mobile: assertive tap-target padding (overlay + fallback) */
@@ -255,8 +255,7 @@ and it makes more  sense to have it all in one place. */
     .wp-block-navigation__container > .wp-block-navigation-item > .wp-block-navigation-item__content,
   .wp-block-navigation__responsive-container.is-menu-open
     .wp-block-navigation__container > .wp-block-navigation-item > .wp-block-navigation-submenu__toggle {
-    display: block; /* make padding fill the row */
-    padding: var(--wp--preset--spacing--s) var(--wp--preset--spacing--m);
+    display: block; min-height: 44px; padding-block: var(--wp--preset--spacing--xs); padding-inline: var(--wp--preset--spacing--m);
   }
 
   /* Fallback: non-overlay mobile nav rendered directly under <nav> */
@@ -264,8 +263,7 @@ and it makes more  sense to have it all in one place. */
     > .wp-block-navigation-item > .wp-block-navigation-item__content,
   .ibt-nav-mobile nav.wp-block-navigation > .wp-block-navigation__container
     > .wp-block-navigation-item > .wp-block-navigation-submenu__toggle {
-    display: block;
-    padding: var(--wp--preset--spacing--s) var(--wp--preset--spacing--m);
+    display: block; min-height: 44px; padding-block: var(--wp--preset--spacing--xs); padding-inline: var(--wp--preset--spacing--m);
   }
 
   /* Mobile: submenu tap-targets (overlay + fallback) */
@@ -275,9 +273,7 @@ and it makes more  sense to have it all in one place. */
     .wp-block-navigation__submenu-container > .wp-block-navigation-item > .wp-block-navigation-item__content,
   .wp-block-navigation__responsive-container.is-menu-open
     .wp-block-navigation__submenu-container > .wp-block-navigation-item > .wp-block-navigation-submenu__toggle {
-    display: block;
-    /* keep left text aligned with the submenu indent set on the container */
-    padding: var(--wp--preset--spacing--s) var(--wp--preset--spacing--m);
+    display: block; min-height: 44px; padding-block: var(--wp--preset--spacing--xs); padding-inline: var(--wp--preset--spacing--m);
   }
 
   /* Fallback – non-overlay submenu items */
@@ -285,8 +281,7 @@ and it makes more  sense to have it all in one place. */
     .wp-block-navigation__submenu-container > .wp-block-navigation-item > .wp-block-navigation-item__content,
   .ibt-nav-mobile nav.wp-block-navigation > .wp-block-navigation__container
     .wp-block-navigation__submenu-container > .wp-block-navigation-item > .wp-block-navigation-submenu__toggle {
-    display: block;
-    padding: var(--wp--preset--spacing--s) var(--wp--preset--spacing--m);
+    display: block; min-height: 44px; padding-block: var(--wp--preset--spacing--xs); padding-inline: var(--wp--preset--spacing--m);
   }
 
   /* Mobile: larger tap target for the CLOSE button only */
