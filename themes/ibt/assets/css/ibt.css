@@ -289,6 +289,14 @@ and it makes more  sense to have it all in one place. */
     padding: var(--wp--preset--spacing--s) var(--wp--preset--spacing--m);
   }
 
+  /* Mobile: larger tap target for the CLOSE button only */
+  .wp-block-navigation__responsive-container.is-menu-open
+    .wp-block-navigation__responsive-container-close {
+    min-width: 44px;
+    min-height: 44px;
+    padding: var(--wp--preset--spacing--s) var(--wp--preset--spacing--m);
+  }
+  
 }
 
 /* ---------- Short viewport height ≤600px ---------- */
