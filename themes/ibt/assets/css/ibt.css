@@ -201,33 +201,36 @@ and it makes more  sense to have it all in one place. */
     justify-content: space-between;
   }
 
-  /* TOP-LEVEL (responsive wrapper shape) */
-  .ibt-nav-mobile nav.wp-block-navigation .wp-block-navigation__responsive-container-content {
-    padding: var(--ibt-nav-pad); /* m around the item group */
-  }
-  .ibt-nav-mobile nav.wp-block-navigation
-    .wp-block-navigation__responsive-container-content > .wp-block-navigation__container {
-    display: flex;
-    flex-direction: column;
-    gap: var(--ibt-nav-gap);     /* s between items */
-  }
-
-  /* SUBMENUS: closed by default; open uses same gap */
-  .ibt-nav-mobile nav.wp-block-navigation .wp-block-navigation__submenu-container { display: none; }
-  .ibt-nav-mobile nav.wp-block-navigation .wp-block-navigation__submenu-container.is-open,
-  .ibt-nav-mobile nav.wp-block-navigation .wp-block-navigation-submenu__toggle[aria-expanded="true"]
-    + .wp-block-navigation__submenu-container {
-    display: flex;
-    flex-direction: column;
-    gap: var(--ibt-nav-gap);                 /* s between submenu items */
-    padding-left: var(--ibt-submenu-indent); /* modest left indent */
-  }
-
     /* Reduce logo column width */
   .ibt-header-inner > .wp-block-column:first-child {
     flex-basis: 70px;
     max-width: 70px;
   }
+
+  /* ----- Style the mobile menu spacing and open submenu collapsed --- */
+  
+  /* Top-level: support both shapes (direct UL or responsive wrapper) */
+  .ibt-nav-mobile nav.wp-block-navigation > .wp-block-navigation__container,
+  .ibt-nav-mobile nav.wp-block-navigation .wp-block-navigation__responsive-container-content {
+    padding: var(--ibt-nav-pad); /* m around the group */
+  }
+  .ibt-nav-mobile nav.wp-block-navigation > .wp-block-navigation__container,
+  .ibt-nav-mobile nav.wp-block-navigation .wp-block-navigation__responsive-container-content > .wp-block-navigation__container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ibt-nav-gap);     /* s between items */
+  }
+
+  /* Submenus: closed by default; open shows same gap + modest indent */
+  .ibt-nav-mobile .wp-block-navigation__submenu-container { display: none; }
+  .ibt-nav-mobile .wp-block-navigation__submenu-container.is-open,
+  .ibt-nav-mobile .wp-block-navigation-submenu__toggle[aria-expanded="true"] + .wp-block-navigation__submenu-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ibt-nav-gap);                 /* s between submenu items */
+    padding-left: var(--ibt-submenu-indent); /* indent = s */
+  }
+
 
 }
 
