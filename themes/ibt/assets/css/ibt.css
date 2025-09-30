@@ -303,6 +303,18 @@ and it makes more  sense to have it all in one place. */
   display: none;
 }
 
+/* Ensure search icons are correct size for tap target */
+.ibt-icons > * {
+  min-width: 49px;
+  min-height: 49px;
+}
+
+/* Normalise desktop site title to match icon height */
+.ibt-title--desktop {
+  line-height: 49px;
+  height: 49px;
+}
+
 /* When search is open, show input */
 .ibt-search--open .ibt-search-field {
   display: inline-flex;
@@ -320,12 +332,6 @@ and it makes more  sense to have it all in one place. */
   border-radius: 4px;
 }
 
-/* Smooth fade for site title when search toggles */
-.ibt-title--desktop {
-  opacity: 1;
-  transition: opacity 0.2s ease-in-out;
-}
-
 /* --- Wide desktop >1000px --- */
 @media (min-width: 1000px) {
   .ibt-search--open .ibt-search-field {
@@ -341,8 +347,7 @@ and it makes more  sense to have it all in one place. */
   /* At ≤800px, hide title AND pin icons right */
   @media (max-width: 800px) {
     .ibt-search--open .ibt-title--desktop {
-      opacity: 0;
-      visibility: hidden; /* keeps space so no layout jump */
+      display: none;
     }
     .ibt-search--open .ibt-row1.is-layout-flex {
       justify-content: flex-end;
@@ -372,8 +377,8 @@ and it makes more  sense to have it all in one place. */
   border: none;
   padding: 0;
   margin: 0;
-  width: 48px;
-  height: 48px;
+  width: 49px;
+  height: 49px;
   display: flex;
   align-items: center;
   justify-content: center;
