@@ -175,6 +175,14 @@ and it makes more  sense to have it all in one place. */
 
 /* 10b.---------- Narrow width ≤780px ---------- */
 @media (max-width: 780px) {
+  
+    /* Define Mobile nav spacing tokens (scoped to .ibt-nav-mobile) */
+  .ibt-nav-mobile {
+    --ibt-nav-gap: var(--wp--preset--spacing--s);   /* between items */
+    --ibt-nav-pad: var(--wp--preset--spacing--m);   /* padding around the group */
+    --ibt-submenu-indent: var(--wp--preset--spacing--s);
+  }
+  
   /* Swap titles */
   .ibt-title--desktop { display: none; }
   .ibt-title--mobile  { display: block; }
@@ -193,57 +201,30 @@ and it makes more  sense to have it all in one place. */
     justify-content: space-between;
   }
 
-  /* Ensure mobile nav stacks vertically if overlay is not used */
-  .ibt-nav-dual .ibt-nav-mobile .wp-block-navigation__container {
+  /* Top-level list stacks vertically and uses universal gap + group padding */
+  .ibt-nav-mobile nav.wp-block-navigation > .wp-block-navigation__container {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
+    gap: var(--ibt-nav-gap);
+    padding: var(--ibt-nav-pad);
   }
 
-  /* +++ Mobile menu spacing (top-level container) */
-  .ibt-nav-dual .ibt-nav-mobile .wp-block-navigation__container {
-    gap: var(--wp--preset--spacing--m); 
-    padding: var(--wp--preset--spacing--m) var(--wp--preset--spacing--m);
-  }
+  /* Submenus: closed by default; when open, use the same item gap and a modest indent */
+  .ibt-nav-mobile .wp-block-navigation__submenu-container { display: none; }
 
-  /* +++ Tap-target padding on each link (overrides header default on mobile) */
-  .ibt-nav-dual .ibt-nav-mobile .wp-block-navigation-item__content {
-    padding: var(--wp--preset--spacing--m) var(--wp--preset--spacing--m); 
-  }
-
-  /* +++Submenu indentation + space between submenu items */
-  .ibt-nav-dual .ibt-nav-mobile .wp-block-navigation__submenu-container {
-    margin-top: var(--wp--preset--spacing--m);          
-    padding-left: var(--wp--preset--spacing--m);          
-  }
-  .ibt-nav-dual .ibt-nav-mobile .wp-block-navigation__submenu-container > .wp-block-navigation-item {
-    margin-block: var(--wp--preset--spacing--m);   
+  .ibt-nav-mobile .wp-block-navigation__submenu-container.is-open,
+  .ibt-nav-mobile .wp-block-navigation-submenu__toggle[aria-expanded="true"] + .wp-block-navigation__submenu-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ibt-nav-gap);                 /* gap set using token */
+    padding-left: var(--ibt-submenu-indent); /* gap set using token  */
   }
 
     /* Reduce logo column width */
   .ibt-header-inner > .wp-block-column:first-child {
     flex-basis: 70px;
     max-width: 70px;
-  }
-
-  /* +++ Collapse submenus by default on mobile */
-  .ibt-nav-dual .ibt-nav-mobile .wp-block-navigation__submenu-container { display: none; }
-
-  /* +++ Core sometimes adds .is-open on the submenu container */
-  .ibt-nav-dual .ibt-nav-mobile .wp-block-navigation__submenu-container.is-open { display: block; }
-
-  /* +++ If the toggle button is expanded, reveal the following submenu
-     (use + for adjacent and ~ for “any later” sibling to cover both markups) */
-  .ibt-nav-dual .ibt-nav-mobile .wp-block-navigation-submenu__toggle[aria-expanded="true"] + .wp-block-navigation__submenu-container,
-  .ibt-nav-dual .ibt-nav-mobile .wp-block-navigation-submenu__toggle[aria-expanded="true"] ~ .wp-block-navigation__submenu-container {
-    display: block;
-  }
-
-  /* *** Bonus: :has() path for modern browsers (covers other DOM arrangements) */
-  @supports selector(li:has(> .wp-block-navigation-submenu__toggle[aria-expanded="true"])) {
-    .ibt-nav-dual .ibt-nav-mobile li.has-child:has(> .wp-block-navigation-submenu__toggle[aria-expanded="true"]) > .wp-block-navigation__submenu-container {
-      display: block;
-    }
   }
 
 }
