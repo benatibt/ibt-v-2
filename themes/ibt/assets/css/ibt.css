@@ -272,7 +272,22 @@ and it makes more  sense to have it all in one place. */
 
 }
 
-/* ---------- Short viewport height ≤600px ---------- */
+/* 10c. ---------- Large width >1000px ---------- */
+@media (min-width: 1000px) {
+
+  /* Larger font size for header navigation items */
+  .ibt-header .ibt-nav-dual .ibt-nav-desktop .wp-block-navigation__container {
+    font-size: var(--wp--preset--font-size--l);
+  }
+
+  /* Increase block gap between nav items */
+  .ibt-header .ibt-nav-dual .ibt-nav-desktop {
+    gap: var(--wp--preset--spacing--xs);
+  }
+}
+
+
+/* 10d. ---------- Short viewport height ≤600px ---------- */
 /* Disable sticky header entirely */
 @media (max-height: 600px) {
   .ibt-sticky,
@@ -282,7 +297,7 @@ and it makes more  sense to have it all in one place. */
   }
 }
 
-/* ---------- Editor helper ---------- */
+/* 10e. ---------- Editor helper ---------- */
 /* Always show both titles/navs inside the Site Editor iframe
    so blocks remain selectable while editing */
 .editor-styles-wrapper .ibt-title--desktop,
