@@ -200,10 +200,36 @@ and it makes more  sense to have it all in one place. */
     flex-wrap: nowrap;
   }
 
+    /* *** Mobile menu spacing (container) */
+  .ibt-nav-dual .ibt-nav-mobile .wp-block-navigation__container {
+    gap: var(--wp--preset--spacing--s, 1rem);
+    padding: 0.75rem 1rem;
+  }
+
+  /* *** Mobile menu spacing (each link) */
+  .ibt-nav-dual .ibt-nav-mobile .wp-block-navigation-item__content {
+    padding: 0.5rem 0.75rem; /* overrides the 0.25/0.5 header default on mobile */
+  }
+
+  /* *** Optional: add a little indent & breathing room inside submenus */
+  .ibt-nav-dual .ibt-nav-mobile .wp-block-navigation__submenu-container {
+    margin-top: 0.25rem;
+    padding-left: 0.75rem;
+  }
+
     /* Reduce logo column width */
   .ibt-header-inner > .wp-block-column:first-child {
     flex-basis: 70px;
     max-width: 70px;
+  }
+
+    /* *** Collapse submenus by default on mobile; open only when toggled */
+  .ibt-nav-dual .ibt-nav-mobile .wp-block-navigation__submenu-container {
+    display: none;
+  }
+  /* *** WP toggles aria-expanded on the submenu toggle button */
+  .ibt-nav-dual .ibt-nav-mobile .wp-block-navigation-submenu__toggle[aria-expanded="true"] + .wp-block-navigation__submenu-container {
+    display: block;
   }
 }
 
