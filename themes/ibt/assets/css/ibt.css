@@ -96,22 +96,26 @@ and it makes more  sense to have it all in one place. */
 }
 
 /* 6b. Give different styling treatement to navigations with css tag ibt-header-pages 
-      for header links                                                                */
+      for header links and mobile nav close.                                          */
 
 /* Add transparent box as default to avoid layout shift */      
-.ibt-header-nav .wp-block-navigation-item__content {
+.ibt-header-nav .wp-block-navigation-item__content,
+.ibt-header-nav .wp-block-navigation__responsive-container-close {
   border: 1.5px solid transparent;
   border-radius: 6px;
-  padding: 0.25rem 0.5rem;
+  padding: 0.25rem 0.5rem; /* safe: your mobile overlay later sets bigger padding */
   transition: border-color 0.2s ease, color 0.2s ease;
 }
 
 /* On hover OR focus-visible change box color to brand color */
 .ibt-header-nav .wp-block-navigation-item__content:hover,
-.ibt-header-nav .wp-block-navigation-item__content:focus-visible {
+.ibt-header-nav .wp-block-navigation-item__content:focus-visible,
+.ibt-header-nav .wp-block-navigation__responsive-container-close:hover,
+.ibt-header-nav .wp-block-navigation__responsive-container-close:focus-visible {
   color: var(--wp--custom--color--color-primary-hover);
   border-color: currentColor;
 }
+
 
 /* 7. Keep root padding without adding padding to all groups. theme.json 
       applies padding to all groups to make root padding work. Remove it
