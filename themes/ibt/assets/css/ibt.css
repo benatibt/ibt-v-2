@@ -313,8 +313,9 @@ and it makes more  sense to have it all in one place. */
 /* Style input itself */
 .ibt-search-field input[type="search"] {
   height: 100%;
-  padding: 0 var(--wp--preset--spacing--s);
+  padding: var(--wp--preset--spacing--xxs) var(--wp--preset--spacing--s);
   font-size: var(--wp--preset--font-size--m);
+  line-height: 1.4;
   border: 1px solid var(--wp--custom--color--color-header-border);
   border-radius: 4px;
 }
