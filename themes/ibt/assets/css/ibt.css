@@ -268,6 +268,31 @@ and it makes more  sense to have it all in one place. */
     padding: var(--wp--preset--spacing--s) var(--wp--preset--spacing--m);
   }
 
+  /* Mobile: submenu tap-targets (overlay + fallback) */
+
+  /* Overlay – submenu items */
+  .wp-block-navigation__responsive-container.is-menu-open
+    .wp-block-navigation__submenu-container > .wp-block-navigation-item > .wp-block-navigation-item__content,
+  .wp-block-navigation__responsive-container.is-menu-open
+    .wp-block-navigation__submenu-container > .wp-block-navigation-item > .wp-block-navigation-submenu__toggle {
+    display: block;
+    /* keep left text aligned with the submenu indent set on the container */
+    padding: var(--wp--preset--spacing--s) var(--wp--preset--spacing--m)
+             var(--wp--preset--spacing--s) 0;
+  }
+
+  /* Fallback – non-overlay submenu items */
+  .ibt-nav-mobile nav.wp-block-navigation > .wp-block-navigation__container
+    .wp-block-navigation__submenu-container > .wp-block-navigation-item > .wp-block-navigation-item__content,
+  .ibt-nav-mobile nav.wp-block-navigation > .wp-block-navigation__container
+    .wp-block-navigation__submenu-container > .wp-block-navigation-item > .wp-block-navigation-submenu__toggle {
+    display: block;
+    padding: var(--wp--preset--spacing--s) var(--wp--preset--spacing--m)
+             var(--wp--preset--spacing--s) 0;
+  }
+
+
+
 }
 
 /* ---------- Short viewport height ≤600px ---------- */
