@@ -202,22 +202,22 @@ and it makes more  sense to have it all in one place. */
 
   /* +++ Mobile menu spacing (top-level container) */
   .ibt-nav-dual .ibt-nav-mobile .wp-block-navigation__container {
-    gap: var(--wp--preset--spacing--m); /* 1.8rem for comfortable separation */
-    padding: var(--wp--preset--spacing--xs) var(--wp--preset--spacing--s); /* 0.6rem tb / 1.2rem lr */
+    gap: var(--wp--preset--spacing--m); 
+    padding: var(--wp--preset--spacing--m) var(--wp--preset--spacing--m);
   }
 
   /* +++ Tap-target padding on each link (overrides header default on mobile) */
   .ibt-nav-dual .ibt-nav-mobile .wp-block-navigation-item__content {
-    padding: var(--wp--preset--spacing--xs) var(--wp--preset--spacing--s); /* 0.6rem tb / 1.2rem lr */
+    padding: var(--wp--preset--spacing--m) var(--wp--preset--spacing--m); 
   }
 
   /* +++Submenu indentation + space between submenu items */
   .ibt-nav-dual .ibt-nav-mobile .wp-block-navigation__submenu-container {
-    margin-top: var(--wp--preset--spacing--xs);          /* 0.3rem */
-    padding-left: var(--wp--preset--spacing--s);          /* 1.2rem */
+    margin-top: var(--wp--preset--spacing--m);          
+    padding-left: var(--wp--preset--spacing--m);          
   }
   .ibt-nav-dual .ibt-nav-mobile .wp-block-navigation__submenu-container > .wp-block-navigation-item {
-    margin-block: var(--wp--preset--spacing--xs);        /* ensures submenu items aren't packed */
+    margin-block: var(--wp--preset--spacing--m);   
   }
 
     /* Reduce logo column width */
