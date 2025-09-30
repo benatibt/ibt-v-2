@@ -410,3 +410,9 @@ and it makes more  sense to have it all in one place. */
                                        END OF MINIMAL FRONT END STYLE SHEET
    ************************************************************************************************************* */
  
+/* TEST: visualise icon group width */
+.ibt-icons {
+  width: 200px;            /* start at 200px, adjust until wrap */
+  background: hotpink;     /* debug only */
+  min-height: 48px;        /* simulate target size */
+}
