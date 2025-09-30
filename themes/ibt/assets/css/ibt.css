@@ -240,6 +240,26 @@ and it makes more  sense to have it all in one place. */
     gap: var(--wp--preset--spacing--l);        /* between items (debug big) */
     padding: var(--wp--preset--spacing--xl);   /* around the group (debug big) */
   }
+
+    /* Mobile: simple tap-targets (padding drives size & spacing) */
+
+  /* Overlay (actual mobile DOM) */
+  .wp-block-navigation__responsive-container.is-menu-open
+    .wp-block-navigation-item__content,
+  .wp-block-navigation__responsive-container.is-menu-open
+    .wp-block-navigation-submenu__toggle {
+    display: block; /* make padding apply to the whole clickable row */
+    padding: var(--wp--preset--spacing--s) var(--wp--preset--spacing--m);
+  }
+
+  /* Fallback: non-overlay mobile nav rendered directly under <nav> */
+  .ibt-nav-mobile nav.wp-block-navigation > .wp-block-navigation__container
+    .wp-block-navigation-item__content,
+  .ibt-nav-mobile nav.wp-block-navigation > .wp-block-navigation__container
+    .wp-block-navigation-submenu__toggle {
+    display: block;
+    padding: var(--wp--preset--spacing--s) var(--wp--preset--spacing--m);
+  }
 }
 
 /* ---------- Short viewport height ≤600px ---------- */
