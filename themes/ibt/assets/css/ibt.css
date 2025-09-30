@@ -205,13 +205,13 @@ and it makes more  sense to have it all in one place. */
   /* Overlay shape (actual mobile DOM): apply token padding around and token gap between */
   .wp-block-navigation__responsive-container.is-menu-open
     .wp-block-navigation__responsive-container-content {
-    padding: var(--wp--preset--spacing--xl);   /* around the group (debug big) */
+    padding: var(--wp--preset--spacing--l);   /* around the group (debug big) */
   }
   .wp-block-navigation__responsive-container.is-menu-open
     .wp-block-navigation__responsive-container-content > .wp-block-navigation__container {
     display: flex;
     flex-direction: column;
-    gap: var(--wp--preset--spacing--l);        /* between items (debug big) */
+    gap:0 /* var(--wp--preset--spacing--l);        /* between items (debug big) */
   }
 
   /* Submenus collapsed by default; open shows same token gap + modest indent */
@@ -229,7 +229,7 @@ and it makes more  sense to have it all in one place. */
     ~ .wp-block-navigation__submenu-container {
     display: flex;
     flex-direction: column;
-    gap: var(--wp--preset--spacing--l);
+    gap: 0 /*var(--wp--preset--spacing--l); */
     padding-left: var(--wp--preset--spacing--l);
   }
 
@@ -237,8 +237,8 @@ and it makes more  sense to have it all in one place. */
   .ibt-nav-mobile nav.wp-block-navigation > .wp-block-navigation__container {
     display: flex;
     flex-direction: column;
-    gap: var(--wp--preset--spacing--l);        /* between items (debug big) */
-    padding: var(--wp--preset--spacing--xl);   /* around the group (debug big) */
+    gap: 0 /* var(--wp--preset--spacing--l);        /* between items (debug big) */
+    padding: var(--wp--preset--spacing--l);   /* around the group (debug big) */
   }
 
     /* Mobile: assertive tap-target padding (overlay + fallback) */
@@ -296,7 +296,7 @@ and it makes more  sense to have it all in one place. */
     min-height: 44px;
     padding: var(--wp--preset--spacing--s) var(--wp--preset--spacing--m);
   }
-  
+
 }
 
 /* ---------- Short viewport height ≤600px ---------- */
