@@ -46,6 +46,23 @@ add_action( 'wp_enqueue_scripts', function () {
 	);
 }, 20 );
 
+// Load ibt-header.js for header search toggle
+add_action( 'wp_enqueue_scripts', function () {
+	$rel  = 'assets/js/ibt-header.js';
+	$path = get_stylesheet_directory() . '/' . $rel;
+	$ver  = file_exists( $path ) ? filemtime( $path ) : IBT_VERSION;
+
+	wp_enqueue_script(
+		'ibt-header',
+		get_stylesheet_directory_uri() . '/' . $rel,
+		[],     // no dependencies
+		$ver,   // version from filemtime (cache-bust in dev)
+		true    // load in footer
+	);
+}, 20 );
+
+
+
 // Register custom Button style variations
 add_action( 'init', function() {
 	register_block_style(
