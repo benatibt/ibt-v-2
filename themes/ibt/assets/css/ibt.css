@@ -200,66 +200,46 @@ and it makes more  sense to have it all in one place. */
     max-width: 70px;
   }
 
-/* ----- Mobile menu: spacing + collapsed submenus (overlay + fallback) ----- */
+  /* ----- Mobile menu: spacing + collapsed submenus (overlay + fallback) ----- */
 
-/* Overlay shape (actual mobile DOM): apply token padding around and token gap between */
-.wp-block-navigation__responsive-container.is-menu-open
-  .wp-block-navigation__responsive-container-content {
-  padding: var(--wp--preset--spacing--xl);   /* around the group (debug big) */
-}
-.wp-block-navigation__responsive-container.is-menu-open
-  .wp-block-navigation__responsive-container-content > .wp-block-navigation__container {
-  display: flex;
-  flex-direction: column;
-  gap: var(--wp--preset--spacing--l);        /* between items (debug big) */
-}
-
-/* Submenus collapsed by default; open shows same token gap + modest indent */
-.wp-block-navigation__responsive-container.is-menu-open
-  .wp-block-navigation__submenu-container { display: none; }
-
-/* Open if Core sets a class on the submenu UL */
-.wp-block-navigation__responsive-container.is-menu-open
-  .wp-block-navigation__submenu-container.is-open {
-  display: flex;
-  flex-direction: column;
-  gap: var(--wp--preset--spacing--l);
-  padding-left: var(--wp--preset--spacing--l);
-}
-
-/* Open if toggle has aria-expanded=true (adjacent OR later sibling) */
-.wp-block-navigation__responsive-container.is-menu-open
-  .wp-block-navigation-submenu__toggle[aria-expanded="true"]
-  + .wp-block-navigation__submenu-container,
-.wp-block-navigation__responsive-container.is-menu-open
-  .wp-block-navigation-submenu__toggle[aria-expanded="true"]
-  ~ .wp-block-navigation__submenu-container {
-  display: flex;
-  flex-direction: column;
-  gap: var(--wp--preset--spacing--l);
-  padding-left: var(--wp--preset--spacing--l);
-}
-
-/* Open if Core toggles state on the LI (modern browsers) */
-@supports selector(li:has(> .wp-block-navigation-submenu__toggle[aria-expanded="true"])) {
+  /* Overlay shape (actual mobile DOM): apply token padding around and token gap between */
   .wp-block-navigation__responsive-container.is-menu-open
-    li.has-child:has(> .wp-block-navigation-submenu__toggle[aria-expanded="true"])
-    > .wp-block-navigation__submenu-container {
+    .wp-block-navigation__responsive-container-content {
+    padding: var(--wp--preset--spacing--xl);   /* around the group (debug big) */
+  }
+  .wp-block-navigation__responsive-container.is-menu-open
+    .wp-block-navigation__responsive-container-content > .wp-block-navigation__container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--wp--preset--spacing--l);        /* between items (debug big) */
+  }
+
+  /* Submenus collapsed by default; open shows same token gap + modest indent */
+  .wp-block-navigation__responsive-container.is-menu-open
+    .wp-block-navigation__submenu-container { display: none; }
+
+  /* Open submenu when Core marks the UL or the toggle is expanded */
+  .wp-block-navigation__responsive-container.is-menu-open
+    .wp-block-navigation__submenu-container.is-open,
+  .wp-block-navigation__responsive-container.is-menu-open
+    .wp-block-navigation-submenu__toggle[aria-expanded="true"]
+    + .wp-block-navigation__submenu-container,
+  .wp-block-navigation__responsive-container.is-menu-open
+    .wp-block-navigation-submenu__toggle[aria-expanded="true"]
+    ~ .wp-block-navigation__submenu-container {
     display: flex;
     flex-direction: column;
     gap: var(--wp--preset--spacing--l);
     padding-left: var(--wp--preset--spacing--l);
   }
-}
 
-/* Fallback for non-overlay (direct UL under <nav>) */
-.ibt-nav-mobile nav.wp-block-navigation > .wp-block-navigation__container {
-  display: flex;
-  flex-direction: column;
-  gap: var(--wp--preset--spacing--l);        /* between items (debug big) */
-  padding: var(--wp--preset--spacing--xl);   /* around the group (debug big) */
-}
-
+  /* Fallback for non-overlay (direct UL under <nav>) */
+  .ibt-nav-mobile nav.wp-block-navigation > .wp-block-navigation__container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--wp--preset--spacing--l);        /* between items (debug big) */
+    padding: var(--wp--preset--spacing--xl);   /* around the group (debug big) */
+  }
 }
 
 /* ---------- Short viewport height ≤600px ---------- */
