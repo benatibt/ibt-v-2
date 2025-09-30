@@ -18,11 +18,11 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 /* 3. Set per-level heading styles that cannot yet be expressed in theme.json (WP 6.8 limitation). 
 Migrate when core adds level-specific controls to json.                                                                                                 */
 h1 {font-size: var(--wp--preset--font-size--xxxl); font-weight: 700 ; padding-top: var(--wp--preset--spacing--xl) ; padding-bottom: var(--wp--preset--spacing--s);}
-h2 {font-size: var(--wp--preset--font-size--xxl); font-weight: 600 ; padding-top: var(--wp--preset--spacing--s) ;}
-h3 {font-size: var(--wp--preset--font-size--xl); font-weight: 600 ; padding-top: var(--wp--preset--spacing--xxs) ;}
-h4 {font-size: var(--wp--preset--font-size--l); font-weight: 600 ; padding-top: var(--wp--preset--spacing--xxs) ;}
-h5 {font-size: var(--wp--preset--font-size--m); font-weight: 600 ; padding-top: var(--wp--preset--spacing--xxs) ;}
-h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: var(--wp--preset--spacing--xxs) ;}
+h2 {font-size: var(--wp--preset--font-size--xxl); font-weight: 600 ; padding-top: var(--wp--preset--spacing--m) ;}
+h3 {font-size: var(--wp--preset--font-size--xl); font-weight: 600 ; padding-top: var(--wp--preset--spacing--s) ;}
+h4 {font-size: var(--wp--preset--font-size--l); font-weight: 600 ; padding-top: var(--wp--preset--spacing--s) ;}
+h5 {font-size: var(--wp--preset--font-size--m); font-weight: 600 ; padding-top: var(--wp--preset--spacing--xs) ;}
+h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: var(--wp--preset--spacing--xs) ;}
 
 /* 4. Give visual clue of visited links for body text only. No json option to do this. */
 :where(p, li, .rich-text) a:visited {color: var(--wp--custom--color--color-text-emphasis-primary-visited);}
@@ -307,7 +307,9 @@ and it makes more  sense to have it all in one place. */
   background-color: var(--wp--custom--color--color-header-bg) !important;
 }
 
-/* 12. === Print safeguards === */
+
+
+/* 98. === Print safeguards === */
 /* Avoid print problems from sticky header and double navigation */
 
 @media print {
@@ -323,6 +325,22 @@ and it makes more  sense to have it all in one place. */
     top: auto !important;
   }
 }
+
+/* 99. Reduced motion — global safety net
+   If the user prefers reduced motion, disable non-essential animations,
+   transitions, and smooth scrolling. Keep this late in the file so it wins. */
+@media (prefers-reduced-motion: reduce) {
+  /* Avoid smooth scrolling if set anywhere */
+  :root,
+  html:focus-within { scroll-behavior: auto !important; }
+
+  /* Nix animations/transitions across the UI */
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
 
 
 
