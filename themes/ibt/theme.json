@@ -189,7 +189,7 @@
 							"background": "transparent"
 						},
 						"border": {
-							"color": "var(--wp--custom--color--color-primary)",
+							"color": "var(--wp--custom--color--color-primary)"
 						}
 					}
 				}
