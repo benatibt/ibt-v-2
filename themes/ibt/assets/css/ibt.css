@@ -235,26 +235,6 @@ and it makes more  sense to have it all in one place. */
     padding-left: var(--wp--preset--spacing--l);
   }
 
-  /* Keyboard: if the toggle is collapsed, keep the submenu hidden (no tab stops) */
-.wp-block-navigation__responsive-container.is-menu-open
-  .wp-block-navigation-submenu__toggle[aria-expanded="false"]
-  + .wp-block-navigation__submenu-container,
-.wp-block-navigation__responsive-container.is-menu-open
-  .wp-block-navigation-submenu__toggle[aria-expanded="false"]
-  ~ .wp-block-navigation__submenu-container {
-  display: none;
-}
-
-/* Extra safety for alternate DOM shapes (modern browsers) */
-@supports selector(li:has(> .wp-block-navigation-submenu__toggle)) {
-  .wp-block-navigation__responsive-container.is-menu-open
-    li.has-child:has(> .wp-block-navigation-submenu__toggle[aria-expanded="false"])
-    > .wp-block-navigation__submenu-container {
-    display: none;
-  }
-}
-
-
  /* Mobile: assertive tap-target padding (overlay + fallback) */
   /* Overlay (actual mobile DOM) – high-specificity path */
   .ibt-header-nav nav.wp-block-navigation
