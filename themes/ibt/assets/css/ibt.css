@@ -258,7 +258,7 @@ and it makes more  sense to have it all in one place. */
     display: block; padding-block: var(--wp--preset--spacing--xs); padding-inline: var(--wp--preset--spacing--m);
   }
 
-  /* Fallback: non-overlay mobile nav rendered directly under <nav>  TEST WITHOUT
+  /* Fallback: non-overlay mobile nav rendered directly under <nav>  TEST WITHOUT CONFIRMED OK
   .ibt-nav-mobile nav.wp-block-navigation > .wp-block-navigation__container
     > .wp-block-navigation-item > .wp-block-navigation-item__content,
   .ibt-nav-mobile nav.wp-block-navigation > .wp-block-navigation__container
@@ -276,7 +276,7 @@ and it makes more  sense to have it all in one place. */
     display: block; padding-block: var(--wp--preset--spacing--xs); padding-inline: var(--wp--preset--spacing--m);
   }
 
-  /* Fallback – non-overlay submenu items */
+  /* Fallback – non-overlay submenu items TEST WITHOUT
   .ibt-nav-mobile nav.wp-block-navigation > .wp-block-navigation__container
     .wp-block-navigation__submenu-container > .wp-block-navigation-item > .wp-block-navigation-item__content,
   .ibt-nav-mobile nav.wp-block-navigation > .wp-block-navigation__container
