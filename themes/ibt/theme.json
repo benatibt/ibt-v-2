@@ -123,6 +123,21 @@
 				"color-disabled-tint": "#F0F1F2",
 				
 				"color-text-emphasis-primary-visited": "#312B25"
+			},
+			"search": {
+				"border":{
+					"radius": "4px",
+					"width": "1px"
+				},
+				"padding":{
+					"top": "0",
+					"bottom": "0",
+					"left": "var(--wp--preset--spacing--xs)",
+					"right": "var(--wp--preset--spacing--s)"
+				},
+				"min-wide": "200px",
+				"max-wide": "280px",
+				"height": "48px"
 			}
 		},
 		"shadow": {"defaultPresets": true}

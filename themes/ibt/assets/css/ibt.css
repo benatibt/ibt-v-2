@@ -363,98 +363,54 @@ and it makes more  sense to have it all in one place. */
   height: 49px;
 }
 
-/* When search is open, show input */
-.ibt-search--open .ibt-search-field {
-  display: inline-flex;
-  align-items: center;
-  height: 48px;
-}
-
-/* Style input itself */
-.ibt-search-field input[type="search"] {
-  height: 100%;
-  padding: var(--wp--preset--spacing--xxs) var(--wp--preset--spacing--s);
-  font-size: var(--wp--preset--font-size--m);
-  line-height: 1.4;
-  border: 1px solid var(--wp--custom--color--color-header-border);
-  border-radius: 4px;
-}
-
 /* DEV CODE START ******************************** */
 
 
-/* --- Stage 1: Wide screen search sizing --- */
+/* --- VARIABLES FOR SEARCH SCALING DEV --- */
 :root {
   --ibt-q1: 650px; /* GUESS: logo + site title + paddings + icons */
 }
 
-/* When search is open on wide screens, title & icons stay visible */
+/* Stage 1: Header search wrapper as the visual box */
 .ibt-search--open .ibt-search-field {
-  width: clamp(200px, calc(100vw - var(--ibt-q1)), 280px);
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  height: var(--wp--custom--search--height);
+  width: clamp(
+    var(--wp--custom--search--min-wide),
+    calc(100vw - var(--ibt-q1)),
+    var(--wp--custom--search--max-wide)
+  );
+  border: var(--wp--custom--search--border--width)
+          solid var(--wp--custom--color--color-header-border);
+  border-radius: var(--wp--custom--search--border--radius);
 }
+
+/* Input fills wrapper; wrapper handles borders */
+.ibt-search--open .ibt-search-field input[type="search"] {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: var(--wp--custom--search--padding--top)
+           var(--wp--custom--search--padding--right)
+           var(--wp--custom--search--padding--bottom)
+           var(--wp--custom--search--padding--left);
+  background: transparent;
+  border: none;
+}
+
+/* Accessible keyboard focus */
+.ibt-search--open .ibt-search-field input[type="search"]:focus-visible {
+  outline: 2px solid var(--wp--custom--color--color-primary);
+  outline-offset: 2px;
+}
+
 
 
 
 
 /* DEV CODE END ********************************* */
-
-/* --- Wide desktop >1000px --- 
-@media (min-width: 1000px) {
-  .ibt-search--open .ibt-search-field {
-    width: 280px; /* comfortable */
-  }
-}
-
-@media (max-width: 1000px) and (min-width: 781px) {
- /* .ibt-search--open .ibt-search-field {
-    width: 250px;
-  }
-
-  /* At ≤800px, hide title AND pin icons right */
-  @media (max-width: 800px) {
-    .ibt-search--open .ibt-title--desktop {
-      display: none;
-    }
-    .ibt-search--open .ibt-row1.is-layout-flex {
-      justify-content: flex-end;
-    }
-  }
-}
-
-/* --- Mobile ≤780px --- */
-@media (max-width: 780px) {
-  .ibt-search--open .ibt-search-field {
-    flex: 1 1 auto;
-    width: calc(100% - 20px); /* leave a sliver of space for the logo */
-  }
-}
-
-/* ------ Adapt utility row for search expansion -----
-
-/* --- Narrowest mobile ≤400px --- */
-@media (max-width: 400px) {
-  /* Hide account + cart at very narrow widths */
-  .ibt-icons .woocommerce-mini-cart,
-  .ibt-icons .wc-block-customer-account,
-  .ibt-icons .ibt-header-wooicons:not(:has(.ibt-search-toggle)) {
-    display: none;
-  }
-
-  /* Let search fill available width after logo (logo = 90px) 
-  .ibt-search--open .ibt-search-field {
-    flex: 1 1 auto;
-    width: calc(100% - 90px);
-  }
-}
-
-/* --- Mid-range 401–780px --- 
-@media (max-width: 780px) and (min-width: 401px) {
-  .ibt-search--open .ibt-search-field {
-    max-width: 250px;
-    flex: 0 1 auto;
-  }
-}
-
 
 /* Reset the HTML block wrapper margins/padding */
 .ibt-search-button-wrapper {
