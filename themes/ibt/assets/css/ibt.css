@@ -382,7 +382,7 @@ and it makes more  sense to have it all in one place. */
 
 /* Stage 2: Medium range hide desktop site title
    Only hide the desktop title WHEN search is open */
-@media (max-width: 865px) and (min-width: 780px) {
+@media (max-width: 900px) and (min-width: 780px) {
   .ibt-search--open .ibt-title--desktop {
     display: none;
   } 
