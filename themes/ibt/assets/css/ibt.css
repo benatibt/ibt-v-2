@@ -388,7 +388,7 @@ and it makes more  sense to have it all in one place. */
   --ibt-q1: 650px; /* GUESS: logo + site title + paddings + icons */
 }
 
-/* When search is open on wide screens, title & icons stay visible
+/* When search is open on wide screens, title & icons stay visible */
 .ibt-search--open .ibt-search-field {
   width: clamp(200px, calc(100vw - var(--ibt-q1)), 280px);
 }
