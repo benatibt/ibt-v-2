@@ -118,7 +118,7 @@ and it makes more  sense to have it all in one place. */
 
 /* 6c. Header utility icons (Search, Account, Cart)
    Unified via .ibt-header-icon wrapper.
-   Tight model: 44px content + 2×2px border = 48px total (WCAG tap target). */
+   Tight model: 44px content + 2×2px border = 48px total (WCAG). */
 
 .ibt-header-icon {
   width: 44px;
@@ -134,8 +134,7 @@ and it makes more  sense to have it all in one place. */
   cursor: pointer;
 }
 
-/* Make the actual clickable child (<button> or <a>) fill the wrapper
-   and inherit all styling, while removing UA defaults (outline, padding, etc). */
+/* Inner control fills wrapper, inherit styling, kill UA defaults */
 .ibt-header-icon button,
 .ibt-header-icon a {
   all: unset;
@@ -149,7 +148,7 @@ and it makes more  sense to have it all in one place. */
   cursor: pointer;
 }
 
-/* Inner SVGs follow currentColor and don’t intercept pointer events */
+/* Ensure SVGs follow currentColor and don't steal events */
 .ibt-header-icon svg {
   width: 24px;
   height: 24px;
@@ -157,17 +156,33 @@ and it makes more  sense to have it all in one place. */
   pointer-events: none;
 }
 
-/* Hover + keyboard focus: brand colour + border highlight on the wrapper */
+/* ---------- Interaction states ---------- */
+
+/* 1) Hover — apply on wrapper AND specifically on the search button (which IS the wrapper) */
 .ibt-header-icon:hover,
+.ibt-search-toggle.ibt-header-icon:hover {
+  color: var(--wp--custom--color--color-primary-hover);
+  border-color: var(--wp--custom--color--color-primary-hover);
+}
+
+/* 2) Keyboard focus — use :focus-within on wrapper so inner <a>/<button> triggers highlight */
 .ibt-header-icon:focus-within {
   color: var(--wp--custom--color--color-primary-hover);
   border-color: var(--wp--custom--color--color-primary-hover);
 }
 
-/* Safety: suppress default UA focus ring on the inner controls */
+/* 3) Suppress UA focus rings on inner controls (some browsers still draw them) */
+.ibt-header-icon a:focus,
+.ibt-header-icon a:focus-visible,
 .ibt-header-icon button:focus,
-.ibt-header-icon a:focus {
-  outline: none;
+.ibt-header-icon button:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Firefox quirk for buttons */
+.ibt-header-icon button::-moz-focus-inner {
+  border: 0;
 }
 
 
