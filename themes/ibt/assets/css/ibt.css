@@ -116,55 +116,8 @@ and it makes more  sense to have it all in one place. */
   border-color: currentColor;
 }
 
-/* 6c. Header utility icons */
+/* 6c. Header utility icon — Search only (reset baseline) */
 
-/* --- Woo icons: Account + Cart --- */
-.ibt-header-wooicons {
-  width: 44px;
-  height: 44px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--wp--preset--color--emphasis-primary);
-  border: 2px solid transparent;
-  border-radius: 6px;
-  transition: color 0.2s ease, border-color 0.2s ease;
-  cursor: pointer;
-}
-
-.ibt-header-wooicons > a,
-.ibt-header-wooicons > button {
-  all: unset;
-  width: 100%;
-  height: 100%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: inherit;
-  border-radius: inherit;
-  cursor: pointer;
-}
-
-.ibt-header-wooicons svg {
-  width: 24px;
-  height: 24px;
-  display: block;
-  pointer-events: none;
-}
-
-.ibt-header-wooicons:hover,
-.ibt-header-wooicons:focus-within {
-  color: var(--wp--custom--color--color-primary-hover);
-  border-color: var(--wp--custom--color--color-primary-hover);
-}
-
-.ibt-header-wooicons > a:focus,
-.ibt-header-wooicons > button:focus {
-  outline: none;
-  box-shadow: none;
-}
-
-/* --- Search button (independent: wrapper == control) --- */
 .ibt-search-toggle {
   width: 44px;
   height: 44px;
@@ -172,7 +125,7 @@ and it makes more  sense to have it all in one place. */
   align-items: center;
   justify-content: center;
   color: var(--wp--preset--color--emphasis-primary);
-  border: 2px solid transparent;
+  border: 2px solid transparent; /* keeps size stable */
   border-radius: 6px;
   background: transparent;
   transition: color 0.2s ease, border-color 0.2s ease;
