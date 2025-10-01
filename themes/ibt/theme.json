@@ -135,8 +135,6 @@
 					"left": "var(--wp--preset--spacing--xs)",
 					"right": "var(--wp--preset--spacing--xs)"
 				},
-				"min-wide": "200px",
-				"max-wide": "280px",
 				"height": "48px"
 			}
 		},
