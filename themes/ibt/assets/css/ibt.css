@@ -363,72 +363,7 @@ and it makes more  sense to have it all in one place. */
   height: 49px;
 }
 
-/* DEV CODE START ******************************** */
-
-
-/* Wrapper is container only (border commented for tuning) */
-.ibt-search--open .ibt-search-field {
-  display: grid;
-  align-items: center;                  /* centers the input vertically */
-  height: var(--wp--custom--search--height); /* 48px */
-}
-
-/* Discrete widths by breakpoint */
-
-/* Default: Desktop and wider */
-.ibt-search--open .ibt-search-field {
-  width: 280px; /* comfortable maximum */
-}
-
-/* Stage 2: Medium range hide desktop site title
-   Only hide the desktop title WHEN search is open */
-@media (max-width: 900px) and (min-width: 780px) {
-  .ibt-search--open .ibt-title--desktop {display: none;} 
-  .ibt-search--open .ibt-row1.is-layout-flex {justify-content: flex-end;}
-}
-
-/* Stage 3: Narrow screens ≤560px shrink search input */
-@media (max-width: 560px) {
-  .ibt-search--open .ibt-search-field {width: 140px;}
-}
-
-/* Stage 4: Mobile ≤410px — hide Woo account + cart when search is open */
-@media (max-width: 410px) {
-  .ibt-search--open .ibt-icons [data-block-name="woocommerce/customer-account"],
-  .ibt-search--open .ibt-icons [data-block-name="woocommerce/mini-cart"] {
-    display: none;
-  }
-}
-
-
-/* Input is the visual box */
-.ibt-search--open .ibt-search-field input[type="search"] {
-  width: 100%;
-  min-width: 0;
-  box-sizing: border-box; /* keep sizing predictable */
-  padding: var(--wp--custom--search--padding--top)
-           var(--wp--custom--search--padding--right)
-           var(--wp--custom--search--padding--bottom)
-           var(--wp--custom--search--padding--left);
-  border: 2px solid var(--wp--custom--color--color-header-border);
-  border-radius: var(--wp--custom--search--border--radius);
-  background: #fff;
-  color: inherit;
-  font-size: var(--wp--preset--font-size--s);
-  font-family: inherit;
-  font-weight: inherit;
-  line-height: 1.4;
-}
-
-/* Remove extra outline on focus */
-.ibt-search--open .ibt-search-field input[type="search"]:focus-visible {
-  outline: none;
-}
-
-
-
-
-/* DEV CODE END ********************************* */
+/* 10f. --------- Search Button ------------ */
 
 /* Reset the HTML block wrapper margins/padding */
 .ibt-search-button-wrapper {
@@ -450,8 +385,67 @@ and it makes more  sense to have it all in one place. */
   align-items: center;
   justify-content: center;
 }
+/* 10g. ----------------- Search box ------------------- 
+   Setup, style and adapt search box for different 
+   header sizes.                                       */
 
-/* 10g. ---------- A11y utility (screen-reader only) ---------- */
+/* Wrapper container */
+.ibt-search--open .ibt-search-field {
+  display: grid;
+  align-items: center; /* centers the input vertically */
+  height: var(--wp--custom--search--height); /* 48px */
+  width: 280px; /* comfortable max, adapts for smaller screens */
+}
+
+/* Input is the visual box */
+.ibt-search--open .ibt-search-field input[type="search"] {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box; /* keep sizing predictable */
+  padding: var(--wp--custom--search--padding--top)
+           var(--wp--custom--search--padding--right)
+           var(--wp--custom--search--padding--bottom)
+           var(--wp--custom--search--padding--left);
+  border: 2px solid var(--wp--custom--color--color-header-border);
+  border-radius: var(--wp--custom--search--border--radius);
+  background: #fff;
+  font-size: var(--wp--preset--font-size--s);
+  line-height: 1.4;
+}
+
+/* Remove default outline on focus. Appearance of input box
+   is already very strong focus indicator. */
+.ibt-search--open .ibt-search-field input[type="search"]:focus-visible {
+  outline: none;
+}
+
+/* Discrete widths by breakpoint for header adaption
+   when search input is displayed  */
+
+/* Stage 1: Medium range hide desktop site title when
+   search is open. Below 780px there is no desktop site title 
+   and justify right, default is space between. */
+@media (max-width: 900px) and (min-width: 780px) {
+  .ibt-search--open .ibt-title--desktop {display: none;} 
+  .ibt-search--open .ibt-row1.is-layout-flex {justify-content: flex-end;}
+}
+
+/* Stage 2: Narrow screens - shrink search input */
+@media (max-width: 560px) {
+  .ibt-search--open .ibt-search-field {width: 140px;}
+}
+
+/* Stage 3: Very narrow screens — hide Woo account + cart
+            when search is open to make space for it. */
+@media (max-width: 410px) {
+  .ibt-search--open .ibt-icons [data-block-name="woocommerce/customer-account"],
+  .ibt-search--open .ibt-icons [data-block-name="woocommerce/mini-cart"] {
+    display: none;
+  }
+}
+
+
+/* 10h. ---------- A11y utility (screen-reader only) ---------- */
 .screen-reader-text {
   position: absolute !important;
   width: 1px;
@@ -465,7 +459,7 @@ and it makes more  sense to have it all in one place. */
 }
 
 
-/* 10f. ---------- Editor helper ---------- */
+/* 10i. ---------- Editor helper ---------- */
 /* Always show both titles/navs inside the Site Editor iframe
    so blocks remain selectable while editing */
 .editor-styles-wrapper .ibt-title--desktop,
