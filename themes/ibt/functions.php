@@ -84,7 +84,8 @@ add_action( 'init', function() {
 
 
 // Add title + aria-label to Woo Account icon. 
-// Note - Cart doesn't work, js or css required if needed.
+// Note - Cart doesn't work, js or css required if ever needed.
+//        Woo default meets standards requirements for the cart.
 add_filter( 'render_block', function( $block_content, $block ) {
 	if ( 'woocommerce/customer-account' === $block['blockName'] ) {
 		$block_content = str_replace(
