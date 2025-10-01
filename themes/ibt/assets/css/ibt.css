@@ -116,38 +116,53 @@ and it makes more  sense to have it all in one place. */
   border-color: currentColor;
 }
 
-/* 6c. Header utility icons (Search, Account, Cart) 
-   Match nav link style with emphasis-primary base, 
-   primary-hover interaction, and transparent border baseline */
+/* 6c. Header utility icons (Search, Account, Cart)
+   Match nav-link behaviour: emphasis-primary base, primary-hover on hover/focus.
+   Tight hitbox model: 44px content + 2×2px border = 48px total. */
 
-/* Note for future: width/height = 44px + 2×2px border = 48px total.
-   Keeps sticky header compact but still meets WCAG min tap target. */
-.ibt-search-toggle,
-.wc-block-customer-account__account-icon,
-.wc-block-mini-cart__button {
+/* Clickable elements (not the inner SVGs) */
+.ibt-icons .ibt-search-toggle,
+.ibt-icons .wc-block-customer-account a,
+.ibt-icons .wc-block-mini-cart__button {
   width: 44px;
   height: 44px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   color: var(--wp--preset--color--emphasis-primary);
-  border: 2px solid transparent; /* avoids layout shift */
+  border: 2px solid transparent; /* prevents layout shift when focused/hovered */
   border-radius: 6px;
   background: transparent;
-  transition: border-color 0.2s ease, color 0.2s ease;
+  transition: color 0.2s ease, border-color 0.2s ease;
+  cursor: pointer; /* unify cursor on <button> and <a> */
 }
 
-/* Hover + focus-visible: switch to brand hover colour + show border */
-.ibt-search-toggle:hover,
-.ibt-search-toggle:focus-visible,
-.wc-block-customer-account__account-icon:hover,
-.wc-block-customer-account__account-icon:focus-visible,
-.wc-block-mini-cart__button:hover,
-.wc-block-mini-cart__button:focus-visible {
+/* Ensure inner SVGs inherit colour (Woo/search SVGs already use currentColor) */
+.ibt-icons .ibt-search-toggle svg,
+.ibt-icons .wc-block-customer-account a svg,
+.ibt-icons .wc-block-mini-cart__button svg {
+  display: block; /* avoids stray inline gaps */
+}
+
+/* Hover + focus-visible state (brand colour + visible border) */
+.ibt-icons .ibt-search-toggle:hover,
+.ibt-icons .ibt-search-toggle:focus-visible,
+.ibt-icons .wc-block-customer-account a:hover,
+.ibt-icons .wc-block-customer-account a:focus-visible,
+.ibt-icons .wc-block-mini-cart__button:hover,
+.ibt-icons .wc-block-mini-cart__button:focus-visible {
   color: var(--wp--custom--color--color-primary-hover);
   border-color: var(--wp--custom--color--color-primary-hover);
-  outline: none; /* handled by border */
+  outline: none; /* replace UA outline with our border */
 }
+
+/* Safety: remove default outline on :focus as well (some browsers differ) */
+.ibt-icons .ibt-search-toggle:focus,
+.ibt-icons .wc-block-customer-account a:focus,
+.ibt-icons .wc-block-mini-cart__button:focus {
+  outline: none;
+}
+
 
 
 
