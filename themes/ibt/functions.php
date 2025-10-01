@@ -83,21 +83,14 @@ add_action( 'init', function() {
 } );
 
 
-// Add title + aria-label to Woo header icons
+// Add title + aria-label to Woo Account icon. 
+// Note - Cart doesn't work, js or css required if needed.
 add_filter( 'render_block', function( $block_content, $block ) {
 	if ( 'woocommerce/customer-account' === $block['blockName'] ) {
 		$block_content = str_replace(
 			'<a',
-			'<a title="Your Account" aria-label="Your account"',
+			'<a title="Your account" aria-label="Your account"',
 			$block_content
-		);
-	}
-	if ( 'woocommerce/mini-cart' === $block['blockName'] ) {
-		$block_content = preg_replace(
-			'/<button(.*?)>/',
-			'<button$1 title="View cart" aria-label="View cart">',
-			$block_content,
-			1
 		);
 	}
 	return $block_content;
