@@ -116,11 +116,12 @@ and it makes more  sense to have it all in one place. */
   border-color: currentColor;
 }
 
-/* 6c. Header utility icons — Search, Account, Cart
-   Tight model: 44px content + 2×2px border = 48px tap target (WCAG). */
+/* 6c. Header utility icons (Search, Account, Cart unified)
+   Wrapper provides stable box + styling.
+   Inner <a>/<button> fills wrapper.
+   Tap target: 44px content + 2×2px border = 48px (WCAG). */
 
-/* Shared baseline (size, colour, border, radius, transition) */
-button.ibt-search-toggle,
+/* Wrapper baseline */
 .ibt-header-wooicons {
   width: 44px;
   height: 44px;
@@ -128,23 +129,13 @@ button.ibt-search-toggle,
   align-items: center;
   justify-content: center;
   color: var(--wp--preset--color--emphasis-primary);
-  border: 2px solid transparent; /* avoids layout shift */
+  border: 2px solid transparent; /* prevents layout shift */
   border-radius: 6px;
-  background: transparent;
   transition: color 0.2s ease, border-color 0.2s ease;
   cursor: pointer;
 }
 
-/* Icon sizing + behaviour */
-button.ibt-search-toggle svg,
-.ibt-header-wooicons svg {
-  width: 24px;
-  height: 24px;
-  display: block;
-  pointer-events: none;
-}
-
-/* Woo wrappers contain the actual clickable <a>/<button> — reset them, inherit styling */
+/* Reset child control (<a> or <button>) to inherit */
 .ibt-header-wooicons > a,
 .ibt-header-wooicons > button {
   all: unset;
@@ -158,39 +149,21 @@ button.ibt-search-toggle svg,
   cursor: pointer;
 }
 
-/* INTERACTION STATES */
-
-/* Search (unique: the <button> is the control) */
-button.ibt-search-toggle:hover,
-button.ibt-search-toggle:focus,
-button.ibt-search-toggle:focus-visible {
-  color: var(--wp--custom--color--color-primary-hover);
-  border-color: var(--wp--custom--color--color-primary-hover) !important; /* WP button styles */
-  outline: none;
+/* SVGs follow currentColor */
+.ibt-header-wooicons svg {
+  width: 24px;
+  height: 24px;
+  display: block;
+  pointer-events: none;
 }
 
-/* Woo icons (wrapper highlights on hover + keyboard focus) */
+/* Hover + focus-visible states */
 .ibt-header-wooicons:hover,
 .ibt-header-wooicons:focus-within {
   color: var(--wp--custom--color--color-primary-hover);
   border-color: var(--wp--custom--color--color-primary-hover);
 }
 
-/* Suppress UA outlines on inner controls (we use the wrapper border as focus ring) */
-.ibt-header-wooicons > a:focus,
-.ibt-header-wooicons > a:focus-visible,
-.ibt-header-wooicons > button:focus,
-.ibt-header-wooicons > button:focus-visible {
-  outline: none;
-  box-shadow: none;
-}
-
-/* Extra guard: kill default outline on the anchor itself */
-.ibt-header-wooicons a:focus,
-.ibt-header-wooicons a:focus-visible {
-  outline: none !important;
-  box-shadow: none !important;
-}
 
 /* 7. Keep root padding without adding padding to all groups. theme.json 
       applies padding to all groups to make root padding work. Remove it
