@@ -164,7 +164,7 @@ and it makes more  sense to have it all in one place. */
   box-shadow: none;
 }
 
-/* --- Search button (independent) --- */
+/* --- Search button (independent: wrapper == control) --- */
 .ibt-search-toggle {
   width: 44px;
   height: 44px;
@@ -174,8 +174,8 @@ and it makes more  sense to have it all in one place. */
   color: var(--wp--preset--color--emphasis-primary);
   border: 2px solid transparent;
   border-radius: 6px;
-  transition: color 0.2s ease, border-color 0.2s ease;
   background: transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
   cursor: pointer;
 }
 
@@ -192,6 +192,7 @@ and it makes more  sense to have it all in one place. */
   border-color: var(--wp--custom--color--color-primary-hover);
   outline: none;
 }
+
 
 
 
