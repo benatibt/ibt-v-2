@@ -384,7 +384,7 @@ and it makes more  sense to have it all in one place. */
    Only hide the desktop title WHEN search is open */
 @media (max-width: 900px) and (min-width: 780px) {
   .ibt-search--open .ibt-title--desktop {display: none;} 
-  .ibt-row1.is-layout-flex {justify-content: flex-end;}
+  .ibt-search--open .ibt-row1.is-layout-flex {justify-content: flex-end;}
 }
 
 /* Stage 3: Narrow screens ≤560px shrink search input */
