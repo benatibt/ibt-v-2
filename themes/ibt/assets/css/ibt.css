@@ -122,7 +122,7 @@ and it makes more  sense to have it all in one place. */
 
 /* Base clickable areas */
 .ibt-icons .ibt-search-toggle,
-.ibt-icons [data-block-name="woocommerce/customer-account"],
+.ibt-icons .wc-block-customer-account a,
 .ibt-icons .wc-block-mini-cart__button {
   width: 44px;
   height: 44px;
@@ -130,15 +130,17 @@ and it makes more  sense to have it all in one place. */
   align-items: center;
   justify-content: center;
   color: var(--wp--preset--color--emphasis-primary);
-  border: 2px solid transparent; /* prevents layout shift */
+  border: 2px solid transparent; /* avoids layout shift */
   border-radius: 6px;
   background: transparent;
   transition: color 0.2s ease, border-color 0.2s ease;
   cursor: pointer;
 }
 
-/* SVGs inside should follow currentColor */
-.ibt-icons svg {
+/* Inner SVGs inherit currentColor */
+.ibt-icons .wc-block-customer-account__account-icon,
+.ibt-icons .ibt-search-toggle svg,
+.ibt-icons .wc-block-mini-cart__button svg {
   display: block;
   width: 24px;
   height: 24px;
@@ -147,8 +149,8 @@ and it makes more  sense to have it all in one place. */
 /* Hover + focus-visible */
 .ibt-icons .ibt-search-toggle:hover,
 .ibt-icons .ibt-search-toggle:focus-visible,
-.ibt-icons [data-block-name="woocommerce/customer-account"]:hover,
-.ibt-icons [data-block-name="woocommerce/customer-account"]:focus-visible,
+.ibt-icons .wc-block-customer-account a:hover,
+.ibt-icons .wc-block-customer-account a:focus-visible,
 .ibt-icons .wc-block-mini-cart__button:hover,
 .ibt-icons .wc-block-mini-cart__button:focus-visible {
   color: var(--wp--custom--color--color-primary-hover);
@@ -156,9 +158,9 @@ and it makes more  sense to have it all in one place. */
   outline: none;
 }
 
-/* Safety: remove default UA outline in all states */
+/* Kill UA outlines */
 .ibt-icons .ibt-search-toggle:focus,
-.ibt-icons [data-block-name="woocommerce/customer-account"]:focus,
+.ibt-icons .wc-block-customer-account a:focus,
 .ibt-icons .wc-block-mini-cart__button:focus {
   outline: none;
 }
