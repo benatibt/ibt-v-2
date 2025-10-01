@@ -371,7 +371,7 @@ and it makes more  sense to have it all in one place. */
   --ibt-q1: 650px; /* GUESS: logo + site title + paddings + icons */
 }
 
-/* Stage 1: Header search wrapper as the visual box */
+/* Wrapper is container only (border commented for tuning) */
 .ibt-search--open .ibt-search-field {
   display: inline-flex;
   align-items: center;
@@ -382,12 +382,12 @@ and it makes more  sense to have it all in one place. */
     calc(100vw - var(--ibt-q1)),
     var(--wp--custom--search--max-wide)
   );
-  border: var(--wp--custom--search--border--width)
-          solid var(--wp--custom--color--color-header-border);
+  /* border: var(--wp--custom--search--border--width)
+           solid var(--wp--custom--color--color-header-border); */
   border-radius: var(--wp--custom--search--border--radius);
 }
 
-/* Input fills wrapper; wrapper handles borders */
+/* Input is the visual box */
 .ibt-search--open .ibt-search-field input[type="search"] {
   width: 100%;
   min-width: 0;
@@ -396,8 +396,11 @@ and it makes more  sense to have it all in one place. */
            var(--wp--custom--search--padding--right)
            var(--wp--custom--search--padding--bottom)
            var(--wp--custom--search--padding--left);
-  background: transparent;
-  border: none;
+  border: 2px solid var(--wp--custom--color--color-header-border);
+  border-radius: var(--wp--custom--search--border--radius);
+  background: #fff;
+  color: inherit;
+  font: inherit;
 }
 
 /* Accessible keyboard focus */
