@@ -120,9 +120,9 @@ and it makes more  sense to have it all in one place. */
    Match nav-link behaviour: emphasis-primary base, primary-hover on hover/focus.
    Tight hitbox model: 44px content + 2×2px border = 48px total. */
 
-/* Clickable elements (not the inner SVGs) */
+/* Base clickable areas */
 .ibt-icons .ibt-search-toggle,
-.ibt-icons .wc-block-customer-account a,
+.ibt-icons [data-block-name="woocommerce/customer-account"],
 .ibt-icons .wc-block-mini-cart__button {
   width: 44px;
   height: 44px;
@@ -130,39 +130,38 @@ and it makes more  sense to have it all in one place. */
   align-items: center;
   justify-content: center;
   color: var(--wp--preset--color--emphasis-primary);
-  border: 2px solid transparent; /* prevents layout shift when focused/hovered */
+  border: 2px solid transparent; /* prevents layout shift */
   border-radius: 6px;
   background: transparent;
   transition: color 0.2s ease, border-color 0.2s ease;
-  cursor: pointer; /* unify cursor on <button> and <a> */
+  cursor: pointer;
 }
 
-/* Ensure inner SVGs inherit colour (Woo/search SVGs already use currentColor) */
-.ibt-icons .ibt-search-toggle svg,
-.ibt-icons .wc-block-customer-account a svg,
-.ibt-icons .wc-block-mini-cart__button svg {
-  display: block; /* avoids stray inline gaps */
+/* SVGs inside should follow currentColor */
+.ibt-icons svg {
+  display: block;
+  width: 24px;
+  height: 24px;
 }
 
-/* Hover + focus-visible state (brand colour + visible border) */
+/* Hover + focus-visible */
 .ibt-icons .ibt-search-toggle:hover,
 .ibt-icons .ibt-search-toggle:focus-visible,
-.ibt-icons .wc-block-customer-account a:hover,
-.ibt-icons .wc-block-customer-account a:focus-visible,
+.ibt-icons [data-block-name="woocommerce/customer-account"]:hover,
+.ibt-icons [data-block-name="woocommerce/customer-account"]:focus-visible,
 .ibt-icons .wc-block-mini-cart__button:hover,
 .ibt-icons .wc-block-mini-cart__button:focus-visible {
   color: var(--wp--custom--color--color-primary-hover);
   border-color: var(--wp--custom--color--color-primary-hover);
-  outline: none; /* replace UA outline with our border */
-}
-
-/* Safety: remove default outline on :focus as well (some browsers differ) */
-.ibt-icons .ibt-search-toggle:focus,
-.ibt-icons .wc-block-customer-account a:focus,
-.ibt-icons .wc-block-mini-cart__button:focus {
   outline: none;
 }
 
+/* Safety: remove default UA outline in all states */
+.ibt-icons .ibt-search-toggle:focus,
+.ibt-icons [data-block-name="woocommerce/customer-account"]:focus,
+.ibt-icons .wc-block-mini-cart__button:focus {
+  outline: none;
+}
 
 
 
