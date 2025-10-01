@@ -366,7 +366,7 @@ and it makes more  sense to have it all in one place. */
 /* DEV CODE START ******************************** */
 
 
-/* Wrapper is container only  */
+/* Wrapper is container only (border commented for tuning) */
 .ibt-search--open .ibt-search-field {
   display: grid;
   align-items: center;                  /* centers the input vertically */
@@ -375,24 +375,34 @@ and it makes more  sense to have it all in one place. */
 
 /* Discrete widths by breakpoint */
 
-/* Stage 1: Desktop ≥1000px */
+/* Default: Desktop and wider */
 .ibt-search--open .ibt-search-field {
   width: 280px; /* comfortable maximum */
 }
 
-/* Stage 2: Mid-range 781–999px */
-@media (max-width: 999px) and (min-width: 781px) {
-  .ibt-search--open .ibt-search-field {
-    width: 250px; /* slightly narrower */
+/* Stage 2: Medium range 999px–780px
+   Hide desktop site title so search + icons fit.
+   (Below 780px, mobile rules already hide it) */
+@media (max-width: 999px) and (min-width: 780px) {
+  .ibt-title--desktop {
+    display: none;
   }
 }
 
-/* Stage 3: Mobile ≤780px */
+/* Stage 3: Narrow screens ≤560px
+   Shrink search box further to avoid overlap */
+@media (max-width: 560px) {
+  .ibt-search--open .ibt-search-field {
+    width: 140px; /* ~half of desktop width */
+  }
+}
+
+/* Stage 4: Mobile ≤780px 
 @media (max-width: 780px) {
   .ibt-search--open .ibt-search-field {
-    flex: 1 1 auto;     /* expand within .ibt-icons row */
-    min-width: 180px;   /* avoid collapsing too far */
-    max-width: 100%;    /* can fill row, minus logo/spacing */
+    flex: 1 1 auto;     
+    min-width: 180px;   
+    max-width: 100%;    
   }
 }
 
