@@ -366,26 +366,40 @@ and it makes more  sense to have it all in one place. */
 /* DEV CODE START ******************************** */
 
 
-/* --- VARIABLES FOR SEARCH SCALING DEV --- */
-:root {
-  --ibt-q1: 650px; /* GUESS: logo + site title + paddings + icons */
-}
-
 /* Wrapper is container only (border commented for tuning) */
 .ibt-search--open .ibt-search-field {
   display: inline-flex;
   align-items: center;
   flex: 0 0 auto;
   height: var(--wp--custom--search--height);
-  width: clamp(
-    var(--wp--custom--search--min-wide),
-    calc(100vw - var(--ibt-q1)),
-    var(--wp--custom--search--max-wide)
-  );
   /* border: var(--wp--custom--search--border--width)
            solid var(--wp--custom--color--color-header-border); */
   border-radius: var(--wp--custom--search--border--radius);
 }
+
+/* Discrete widths by breakpoint */
+
+/* Stage 1: Desktop ≥1000px */
+.ibt-search--open .ibt-search-field {
+  width: 280px; /* comfortable maximum */
+}
+
+/* Stage 2: Mid-range 781–999px */
+@media (max-width: 999px) and (min-width: 781px) {
+  .ibt-search--open .ibt-search-field {
+    width: 250px; /* slightly narrower */
+  }
+}
+
+/* Stage 3: Mobile ≤780px */
+@media (max-width: 780px) {
+  .ibt-search--open .ibt-search-field {
+    flex: 1 1 auto;     /* expand within .ibt-icons row */
+    min-width: 180px;   /* avoid collapsing too far */
+    max-width: 100%;    /* can fill row, minus logo/spacing */
+  }
+}
+
 
 /* Input is the visual box */
 .ibt-search--open .ibt-search-field input[type="search"] {
