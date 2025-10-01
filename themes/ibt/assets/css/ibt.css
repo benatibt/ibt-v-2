@@ -394,7 +394,7 @@ and it makes more  sense to have it all in one place. */
 
 /* Stage 4: Mobile ≤410px Hide cart and account to make space*/
 @media (max-width: 410px) {
-  .ibt-search--open .ibt-title--desktop {
+  .ibt-search--open {
     .ibt-search--open .ibt-icons .woocommerce-mini-cart,
     .ibt-search--open .ibt-icons .wc-block-customer-account {
     display: none;
