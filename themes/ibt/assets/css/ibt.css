@@ -366,10 +366,11 @@ and it makes more  sense to have it all in one place. */
 /* DEV CODE START ******************************** */
 
 
-/* Wrapper is container only (border commented for tuning) */
+/* Wrapper is container only  */
 .ibt-search--open .ibt-search-field {
-  display: block;
-  flex: 0 0 auto;
+  display: grid;
+  align-items: center;                  /* centers the input vertically */
+  height: var(--wp--custom--search--height); /* 48px */
 }
 
 /* Discrete widths by breakpoint */
@@ -412,12 +413,7 @@ and it makes more  sense to have it all in one place. */
   font-size: var(--wp--preset--font-size--s);
   font-family: inherit;
   font-weight: inherit;
-  line-height: calc(
-    var(--wp--custom--search--height)
-    - 4px
-    - var(--wp--custom--search--padding--top)
-    - var(--wp--custom--search--padding--bottom)
-  );
+  line-height: 1.4;
 }
 
 /* Accessible keyboard focus */
