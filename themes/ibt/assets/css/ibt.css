@@ -380,6 +380,24 @@ and it makes more  sense to have it all in one place. */
   border-radius: 4px;
 }
 
+/* DEV CODE START ******************************** */
+
+
+/* --- Stage 1: Wide screen search sizing --- */
+:root {
+  --ibt-q1: 350px; /* GUESS: logo + site title + paddings + icons */
+}
+
+/* When search is open on wide screens, title & icons stay visible */
+.ibt-search--open .ibt-search-field {
+  width: clamp(200px, calc(100vw - var(--ibt-q1)), 280px);
+}
+
+
+
+
+/* DEV CODE END ********************************* */
+
 /* --- Wide desktop >1000px --- */
 @media (min-width: 1000px) {
   .ibt-search--open .ibt-search-field {
