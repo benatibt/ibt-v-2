@@ -406,11 +406,11 @@ and it makes more  sense to have it all in one place. */
   width: 100%;
   min-width: 0;
   box-sizing: border-box;
-  padding: var(--wp--custom--search--padding--top)
+  padding: 0 /* var(--wp--custom--search--padding--top)
            var(--wp--custom--search--padding--right)
            var(--wp--custom--search--padding--bottom)
-           var(--wp--custom--search--padding--left);
-  border: 0px solid var(--wp--custom--color--color-header-border);
+           var(--wp--custom--search--padding--left); */
+  border: 2px solid var(--wp--custom--color--color-header-border);
   border-radius: var(--wp--custom--search--border--radius);
   background: #fff;
   color: inherit;
