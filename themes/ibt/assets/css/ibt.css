@@ -368,7 +368,8 @@ and it makes more  sense to have it all in one place. */
 
 /* Wrapper is container only (border commented for tuning) */
 .ibt-search--open .ibt-search-field {
-  display: block;
+  display: flex;          /* flex wrapper again, but only for its input */
+  align-items: center;    /* vertically centre input inside */
   flex: 0 0 auto;
   height: var(--wp--custom--search--height);
   /* border: var(--wp--custom--search--border--width)
