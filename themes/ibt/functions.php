@@ -32,6 +32,7 @@ add_action( 'after_setup_theme', function () {
 	] );
 } );
 
+
 // Load ibt.css with cache buster version number.
 add_action( 'wp_enqueue_scripts', function () {
 	$rel  = 'assets/css/ibt.css';
@@ -45,6 +46,7 @@ add_action( 'wp_enqueue_scripts', function () {
 		$ver
 	);
 }, 20 );
+
 
 // Load ibt-header.js for header search toggle
 add_action( 'wp_enqueue_scripts', function () {
@@ -60,7 +62,6 @@ add_action( 'wp_enqueue_scripts', function () {
 		true    // load in footer
 	);
 }, 20 );
-
 
 
 // Register custom Button style variations
@@ -80,3 +81,23 @@ add_action( 'init', function() {
 		)
 	);
 } );
+
+
+// Add title + aria-label to Woo header icons
+add_filter( 'render_block', function( $block_content, $block ) {
+	if ( 'woocommerce/customer-account' === $block['blockName'] ) {
+		$block_content = str_replace(
+			'<a',
+			'<a title="Account" aria-label="Your account"',
+			$block_content
+		);
+	}
+	if ( 'woocommerce/mini-cart' === $block['blockName'] ) {
+		$block_content = str_replace(
+			'<button',
+			'<button title="Cart" aria-label="View cart"',
+			$block_content
+		);
+	}
+	return $block_content;
+}, 10, 2 );
