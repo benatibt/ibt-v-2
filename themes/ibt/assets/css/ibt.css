@@ -383,26 +383,22 @@ and it makes more  sense to have it all in one place. */
 /* Stage 2: Medium range hide desktop site title
    Only hide the desktop title WHEN search is open */
 @media (max-width: 900px) and (min-width: 780px) {
-  .ibt-search--open .ibt-title--desktop {
-    display: none;
-  } 
+  .ibt-search--open .ibt-title--desktop {display: none;} 
+  .ibt-row1.is-layout-flex {justify-content: flex-end;}
 }
 
-/* Stage 3: Narrow screens ≤560px
-   Shrink search further (no flexing) */
+/* Stage 3: Narrow screens ≤560px shrink search input */
 @media (max-width: 560px) {
-  .ibt-search--open .ibt-search-field {
-    width: 140px; /* ~half of desktop width */
-  }
+  .ibt-search--open .ibt-search-field {width: 140px;}
 }
 
-
-/* Stage 4: Mobile ≤780px 
-@media (max-width: 780px) {
-  .ibt-search--open .ibt-search-field {
-    flex: 1 1 auto;     
-    min-width: 180px;   
-    max-width: 100%;    
+/* Stage 4: Mobile ≤410px Hide cart and account to make space*/
+@media (max-width: 410px) {
+  .ibt-search--open .ibt-title--desktop {
+    .ibt-search--open .ibt-icons .woocommerce-mini-cart,
+    .ibt-search--open .ibt-icons .wc-block-customer-account {
+    display: none;
+    } 
   }
 }
 
