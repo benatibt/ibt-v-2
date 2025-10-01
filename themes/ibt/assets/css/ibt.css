@@ -117,8 +117,8 @@ and it makes more  sense to have it all in one place. */
 }
 
 /* 6c. Header utility icons (Search, Account, Cart)
-   Unified via .ibt-header-icon
-   Tight 44+2px = 48px tap target for AAA compliance */
+   Unified via .ibt-header-icon wrapper.
+   Tight model: 44px content + 2×2px border = 48px total (WCAG tap target). */
 
 .ibt-header-icon {
   width: 44px;
@@ -134,7 +134,22 @@ and it makes more  sense to have it all in one place. */
   cursor: pointer;
 }
 
-/* Ensure inner SVGs inherit currentColor and don’t intercept events */
+/* Make the actual clickable child (<button> or <a>) fill the wrapper
+   and inherit all styling, while removing UA defaults (outline, padding, etc). */
+.ibt-header-icon button,
+.ibt-header-icon a {
+  all: unset;
+  width: 100%;
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+  border-radius: inherit;
+  cursor: pointer;
+}
+
+/* Inner SVGs follow currentColor and don’t intercept pointer events */
 .ibt-header-icon svg {
   width: 24px;
   height: 24px;
@@ -142,11 +157,16 @@ and it makes more  sense to have it all in one place. */
   pointer-events: none;
 }
 
-/* Hover + focus-visible: brand shift + border highlight */
+/* Hover + keyboard focus: brand colour + border highlight on the wrapper */
 .ibt-header-icon:hover,
-.ibt-header-icon:focus-visible {
+.ibt-header-icon:focus-within {
   color: var(--wp--custom--color--color-primary-hover);
   border-color: var(--wp--custom--color--color-primary-hover);
+}
+
+/* Safety: suppress default UA focus ring on the inner controls */
+.ibt-header-icon button:focus,
+.ibt-header-icon a:focus {
   outline: none;
 }
 
