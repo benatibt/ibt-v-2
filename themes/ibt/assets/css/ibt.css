@@ -400,7 +400,10 @@ and it makes more  sense to have it all in one place. */
   border-radius: var(--wp--custom--search--border--radius);
   background: #fff;
   color: inherit;
-  font: inherit;
+  font-size: var(--wp--preset--font-size--s);
+  font-family: inherit;
+  font-weight: inherit;
+  line-height: 1.4;
 }
 
 /* Accessible keyboard focus */
