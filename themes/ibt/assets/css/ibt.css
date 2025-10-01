@@ -381,21 +381,21 @@ and it makes more  sense to have it all in one place. */
 }
 
 /* Stage 2: Medium range 999px–780px
-   Hide desktop site title so search + icons fit.
-   (Below 780px, mobile rules already hide it) */
+   Only hide the desktop title WHEN search is open */
 @media (max-width: 999px) and (min-width: 780px) {
-  .ibt-title--desktop {
+  .ibt-search--open .ibt-title--desktop {
     display: none;
   }
 }
 
 /* Stage 3: Narrow screens ≤560px
-   Shrink search box further to avoid overlap */
+   Shrink search further (no flexing) */
 @media (max-width: 560px) {
   .ibt-search--open .ibt-search-field {
     width: 140px; /* ~half of desktop width */
   }
 }
+
 
 /* Stage 4: Mobile ≤780px 
 @media (max-width: 780px) {
