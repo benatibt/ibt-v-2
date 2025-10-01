@@ -410,7 +410,7 @@ and it makes more  sense to have it all in one place. */
            var(--wp--custom--search--padding--right)
            var(--wp--custom--search--padding--bottom)
            var(--wp--custom--search--padding--left);
-  border: 2px solid var(--wp--custom--color--color-header-border);
+  border: 0px solid var(--wp--custom--color--color-header-border);
   border-radius: var(--wp--custom--search--border--radius);
   background: #fff;
   color: inherit;
