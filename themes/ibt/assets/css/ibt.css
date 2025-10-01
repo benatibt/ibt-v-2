@@ -142,7 +142,7 @@ button.ibt-search-toggle svg {
 button.ibt-search-toggle:hover,
 button.ibt-search-toggle:focus,
 button.ibt-search-toggle:focus-visible {
-  color: var(--wp--custom--color--color-primary-hover) !important;
+  color: var(--wp--custom--color--color-primary-hover) ;
   border-color: var(--wp--custom--color--color-primary-hover) !important;
   outline: none !important;
 }
