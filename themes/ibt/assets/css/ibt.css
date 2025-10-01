@@ -392,10 +392,10 @@ and it makes more  sense to have it all in one place. */
   .ibt-search--open .ibt-search-field {width: 140px;}
 }
 
-/* Stage 4: Mobile ≤410px — hide cart + account icons when search is open */
+/* Stage 4: Mobile ≤410px — hide Woo account + cart when search is open */
 @media (max-width: 410px) {
-  .ibt-search--open .ibt-icons .ibt-header-wooicons.wc-block-mini-cart,
-  .ibt-search--open .ibt-icons .ibt-header-wooicons.wc-block-customer-account {
+  .ibt-search--open .ibt-icons [data-block-name="woocommerce/customer-account"],
+  .ibt-search--open .ibt-icons [data-block-name="woocommerce/mini-cart"] {
     display: none;
   }
 }
