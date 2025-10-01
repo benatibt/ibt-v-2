@@ -185,7 +185,12 @@ button.ibt-search-toggle:focus-visible {
   box-shadow: none;
 }
 
-
+/* Extra guard: kill default outline on the anchor itself */
+.ibt-header-wooicons a:focus,
+.ibt-header-wooicons a:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
 
 /* 7. Keep root padding without adding padding to all groups. theme.json 
       applies padding to all groups to make root padding work. Remove it
