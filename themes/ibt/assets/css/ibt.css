@@ -116,29 +116,24 @@ and it makes more  sense to have it all in one place. */
   border-color: currentColor;
 }
 
-/* 6c. Header utility icons (Search, Account, Cart)
-   Unified via .ibt-header-icon wrapper.
-   Tight model: 44px content + 2×2px border = 48px total (WCAG). */
+/* 6c. Header utility icons */
 
-.ibt-header-icon {
+/* --- Woo icons: Account + Cart --- */
+.ibt-header-wooicons {
   width: 44px;
   height: 44px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   color: var(--wp--preset--color--emphasis-primary);
-  border: 2px solid transparent; /* prevents layout shift */
+  border: 2px solid transparent;
   border-radius: 6px;
-  background: transparent;
   transition: color 0.2s ease, border-color 0.2s ease;
   cursor: pointer;
 }
 
-/* Inner control fills wrapper, inherit styling, kill UA defaults */
-/* Only reset true children (Account <a>, Cart <button>), 
-   not the Search button which already IS the wrapper */
-.ibt-header-icon > a,
-.ibt-header-icon > button {
+.ibt-header-wooicons > a,
+.ibt-header-wooicons > button {
   all: unset;
   width: 100%;
   height: 100%;
@@ -150,47 +145,52 @@ and it makes more  sense to have it all in one place. */
   cursor: pointer;
 }
 
-/* Ensure SVGs follow currentColor and don't steal events */
-.ibt-header-icon svg {
+.ibt-header-wooicons svg {
   width: 24px;
   height: 24px;
   display: block;
   pointer-events: none;
 }
 
-/* ---------- Interaction states ---------- */
-
-/* 1) Hover — apply on wrapper AND specifically on the search button (which IS the wrapper) */
-.ibt-header-icon:hover,
-.ibt-search-toggle.ibt-header-icon:hover {
+.ibt-header-wooicons:hover,
+.ibt-header-wooicons:focus-within {
   color: var(--wp--custom--color--color-primary-hover);
   border-color: var(--wp--custom--color--color-primary-hover);
 }
 
-/* 2) Keyboard focus — use :focus-within on wrapper so inner <a>/<button> triggers highlight */
-.ibt-header-icon:focus-within {
+.ibt-header-wooicons > a:focus,
+.ibt-header-wooicons > button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* --- Search button (independent) --- */
+.ibt-search-toggle {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--wp--preset--color--emphasis-primary);
+  border: 2px solid transparent;
+  border-radius: 6px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+  background: transparent;
+  cursor: pointer;
+}
+
+.ibt-search-toggle svg {
+  width: 24px;
+  height: 24px;
+  display: block;
+  pointer-events: none;
+}
+
+.ibt-search-toggle:hover,
+.ibt-search-toggle:focus-visible {
   color: var(--wp--custom--color--color-primary-hover);
   border-color: var(--wp--custom--color--color-primary-hover);
-}
-
-/* 3) Suppress UA focus rings on inner controls (some browsers still draw them) */
-.ibt-header-icon a:focus,
-.ibt-header-icon a:focus-visible,
-.ibt-header-icon button:focus,
-.ibt-header-icon button:focus-visible {
-  outline: none !important;
-  box-shadow: none !important;
-}
-
-/* Firefox quirk for buttons */
-.ibt-header-icon button::-moz-focus-inner {
-  border: 0;
-}
-
-/* Explicit hover rule for search toggle (button is both wrapper + control) */
-.ibt-search-toggle.ibt-header-icon:hover {
-  color: var(--wp--custom--color--color-primary-hover);
-  border-color: var(--wp--custom--color--color-primary-hover);
+  outline: none;
 }
 
 
