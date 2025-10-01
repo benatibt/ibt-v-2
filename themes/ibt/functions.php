@@ -88,15 +88,16 @@ add_filter( 'render_block', function( $block_content, $block ) {
 	if ( 'woocommerce/customer-account' === $block['blockName'] ) {
 		$block_content = str_replace(
 			'<a',
-			'<a title="Account" aria-label="Your account"',
+			'<a title="Your Account" aria-label="Your account"',
 			$block_content
 		);
 	}
 	if ( 'woocommerce/mini-cart' === $block['blockName'] ) {
-		$block_content = str_replace(
-			'<button',
-			'<button title="Cart" aria-label="View cart"',
-			$block_content
+		$block_content = preg_replace(
+			'/<button(.*?)>/',
+			'<button$1 title="View cart" aria-label="View cart">',
+			$block_content,
+			1
 		);
 	}
 	return $block_content;
