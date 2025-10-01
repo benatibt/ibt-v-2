@@ -133,7 +133,7 @@
 					"top": "4px",
 					"bottom": "4px",
 					"left": "var(--wp--preset--spacing--xs)",
-					"right": "var(--wp--preset--spacing--s)"
+					"right": "var(--wp--preset--spacing--xs)"
 				},
 				"min-wide": "200px",
 				"max-wide": "280px",
