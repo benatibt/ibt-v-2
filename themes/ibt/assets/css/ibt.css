@@ -370,8 +370,6 @@ and it makes more  sense to have it all in one place. */
 .ibt-search--open .ibt-search-field {
   display: block;
   flex: 0 0 auto;
-  height: var(--wp--custom--search--height);
-  padding-top: 2px; /* adjust to 3px if still looks high */
 }
 
 /* Discrete widths by breakpoint */
@@ -414,7 +412,12 @@ and it makes more  sense to have it all in one place. */
   font-size: var(--wp--preset--font-size--s);
   font-family: inherit;
   font-weight: inherit;
-  line-height: 1.4;
+  line-height: calc(
+    var(--wp--custom--search--height)
+    - 4px
+    - var(--wp--custom--search--padding--top)
+    - var(--wp--custom--search--padding--bottom)
+  );
 }
 
 /* Accessible keyboard focus */
