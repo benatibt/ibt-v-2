@@ -385,7 +385,7 @@ and it makes more  sense to have it all in one place. */
 
 /* --- Stage 1: Wide screen search sizing --- */
 :root {
-  --ibt-q1: 350px; /* GUESS: logo + site title + paddings + icons */
+  --ibt-q1: 650px; /* GUESS: logo + site title + paddings + icons */
 }
 
 /* When search is open on wide screens, title & icons stay visible */
