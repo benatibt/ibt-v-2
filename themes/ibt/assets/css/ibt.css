@@ -411,6 +411,33 @@ and it makes more  sense to have it all in one place. */
   }
 }
 
+/* ------ Adapt utility row for search expansion -----
+
+/* --- Narrowest mobile ≤400px --- */
+@media (max-width: 400px) {
+  /* Hide account + cart at very narrow widths */
+  .ibt-icons .woocommerce-mini-cart,
+  .ibt-icons .wc-block-customer-account,
+  .ibt-icons .ibt-header-wooicons:not(:has(.ibt-search-toggle)) {
+    display: none;
+  }
+
+  /* Let search fill available width after logo (logo = 90px) */
+  .ibt-search--open .ibt-search-field {
+    flex: 1 1 auto;
+    width: calc(100% - 90px);
+  }
+}
+
+/* --- Mid-range 401–780px --- */
+@media (max-width: 780px) and (min-width: 401px) {
+  .ibt-search--open .ibt-search-field {
+    max-width: 250px;
+    flex: 0 1 auto;
+  }
+}
+
+
 /* Reset the HTML block wrapper margins/padding */
 .ibt-search-button-wrapper {
   margin: 0;
