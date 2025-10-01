@@ -388,7 +388,7 @@ and it makes more  sense to have it all in one place. */
   --ibt-q1: 650px; /* GUESS: logo + site title + paddings + icons */
 }
 
-/* When search is open on wide screens, title & icons stay visible */
+/* When search is open on wide screens, title & icons stay visible
 .ibt-search--open .ibt-search-field {
   width: clamp(200px, calc(100vw - var(--ibt-q1)), 280px);
 }
@@ -398,7 +398,7 @@ and it makes more  sense to have it all in one place. */
 
 /* DEV CODE END ********************************* */
 
-/* --- Wide desktop >1000px --- */
+/* --- Wide desktop >1000px --- 
 @media (min-width: 1000px) {
   .ibt-search--open .ibt-search-field {
     width: 280px; /* comfortable */
@@ -406,7 +406,7 @@ and it makes more  sense to have it all in one place. */
 }
 
 @media (max-width: 1000px) and (min-width: 781px) {
-  .ibt-search--open .ibt-search-field {
+ /* .ibt-search--open .ibt-search-field {
     width: 250px;
   }
 
@@ -440,14 +440,14 @@ and it makes more  sense to have it all in one place. */
     display: none;
   }
 
-  /* Let search fill available width after logo (logo = 90px) */
+  /* Let search fill available width after logo (logo = 90px) 
   .ibt-search--open .ibt-search-field {
     flex: 1 1 auto;
     width: calc(100% - 90px);
   }
 }
 
-/* --- Mid-range 401–780px --- */
+/* --- Mid-range 401–780px --- 
 @media (max-width: 780px) and (min-width: 401px) {
   .ibt-search--open .ibt-search-field {
     max-width: 250px;
