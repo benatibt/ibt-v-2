@@ -3,27 +3,15 @@
    Structural helpers for things that don’t fit in theme.json or templates
    ********************************************************************** */
 
-/* === INDEX ===
-   0. Reset / Global
+/* ======== INDEX ========
    1. Typography
    2. Buttons & Links
-   3. Header & Nav
+   3. Header, Nav & Footer
    4. Layout / Spacing
    5. Utilities
    6. States & Media
    7. Dev Sandbox
-   ********************************************************************** */
-
-
-/* ======================================================================
-   0. RESET / GLOBAL
-   img/video sizing, anchor offsets, reduced motion, print
-   ====================================================================== */
-
-/* Ensure images, videos, iframes, etc. never overflow their container */
-img, video, iframe, embed, object { max-width: 100%; height: auto; display: block;}
-
-
+   ======================== */
 
 
 /* ======================================================================
@@ -38,9 +26,6 @@ h3 {font-size: var(--wp--preset--font-size--xl); font-weight: 600 ; padding-top:
 h4 {font-size: var(--wp--preset--font-size--l); font-weight: 600 ; padding-top: var(--wp--preset--spacing--m) ;}
 h5 {font-size: var(--wp--preset--font-size--m); font-weight: 600 ; padding-top: var(--wp--preset--spacing--s) ;}
 h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: var(--wp--preset--spacing--s) ;}
-
-/* Anchor scroll offset: prevent in-page targets hiding behind sticky header */
-h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 
 /* Visited links in body text */
 :where(p, li, .rich-text) a:visited {color: var(--wp--custom--color--color-text-emphasis-primary-visited);}
@@ -75,7 +60,7 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 .wp-block-button__link:hover {transform: translateY(-1px);}
 .wp-block-button__link:focus-visible {outline: 2px solid var(--wp--custom--color--color-primary); outline-offset: 2px;}
 
-/* Hover states */
+/* Button hover states by variant */
 .wp-block-button:not(.is-style-outline):not(.is-style-buy-solid):not(.is-style-buy-outline) .wp-block-button__link:hover {
   background-color: var(--wp--custom--color--color-primary-hover);
   border-color: var(--wp--custom--color--color-primary-hover);
@@ -98,7 +83,6 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 
 /* ------------------------- 2.2 - Links ------------------------------ */
 
-/* Hover */
 :where(a[href]):not(.wp-element-button):not(.wp-block-button__link):not(.ibt-header-nav a):hover,
 .wp-block-navigation:not(.ibt-header-nav) a:hover {
   text-decoration: underline;
@@ -107,7 +91,6 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
   text-underline-offset: 0.25em;
 }
 
-/* Focus-Visible */
 :where(a[href]):not(.wp-element-button):not(.wp-block-button__link):not(.ibt-header-nav a):focus-visible,
 .wp-block-navigation:not(.ibt-header-nav) a:focus-visible {
   outline: 2px solid var(--wp--custom--color--color-primary);
@@ -117,7 +100,7 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 
 
 /* ======================================================================
-   3. HEADER & NAV
+   3. HEADER, NAV & FOOTER
    Sticky, inner width, responsive swaps, woo icons, search, nav colours
    ====================================================================== */
 
@@ -381,6 +364,12 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
    5. UTILITIES
    SR-only, status colours, notices, dev/test helpers
    ====================================================================== */
+
+/* Ensure images, videos, iframes, etc. never overflow their container */
+img, video, iframe, embed, object { max-width: 100%; height: auto; display: block;}
+
+/* Anchor scroll offset: prevent in-page targets hiding behind sticky header */
+h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 
 /* 10h. ---------- A11y utility (screen-reader only) ---------- */
 .screen-reader-text {
