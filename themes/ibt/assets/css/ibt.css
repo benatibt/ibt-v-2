@@ -1,20 +1,36 @@
-/* **********************************************************************************************************
-                                         IBT – MINIMAL FRONT END STYLE SHEET
-   Purpose: minimal structural helpers only. Keep colours, typography and hover effects in
-   theme.json where ever possible. Temporary test rules allowed if clearly marked and cleaned up as you go.
-  *********************************************************************************************************** */
+/* **********************************************************************
+   IBT THEME CSS
+   Structural helpers for things that don’t fit in theme.json or templates
+   ********************************************************************** */
 
-/* Working file 02/10/2025 before refactror */
+/* === INDEX ===
+   0. Reset / Global
+   1. Typography
+   2. Buttons & Links
+   3. Header & Nav
+   4. Layout / Spacing
+   5. Utilities
+   6. States & Media
+   ********************************************************************** */
 
-/* ===========================================================================================================
-     IBT – WordPress 6.8 helpers to prevent core "features" causing problems and do things json can't yet.     */
+
+/* ======================================================================
+   0. RESET / GLOBAL
+   img/video sizing, anchor offsets, reduced motion, print
+   ====================================================================== */
+
+
+/* ======================================================================
+   1. TYPOGRAPHY
+   Heading levels, visited links
+   ====================================================================== */
 
 /* 1. Ensure images, videos, iframes, etc. never overflow their container.
 Core handles most cases but some embeds still slip through. */
 img, video, iframe, embed, object { max-width: 100%; height: auto; display: block;}
 
 /* 2. Anchor scroll margin -  Prevent headings with IDs from hiding under the sticky header when used as anchor targets.
-      ADJUST TO MATCH HEADER IF CHANGED. */
+      ADJUST scroll-margin-top TO MATCH HEADER IF CHANGED. */
 h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 
 /* 3. Set per-level heading styles that cannot yet be expressed in theme.json (WP 6.8 limitation). 
@@ -26,8 +42,19 @@ h4 {font-size: var(--wp--preset--font-size--l); font-weight: 600 ; padding-top: 
 h5 {font-size: var(--wp--preset--font-size--m); font-weight: 600 ; padding-top: var(--wp--preset--spacing--s) ;}
 h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: var(--wp--preset--spacing--s) ;}
 
+
 /* 4. Give visual clue of visited links for body text only. No json option to do this. */
 :where(p, li, .rich-text) a:visited {color: var(--wp--custom--color--color-text-emphasis-primary-visited);}
+
+
+
+
+
+/* ======================================================================
+   2. BUTTONS & LINKS
+   Variants, hover/focus states, global link effects
+   ====================================================================== */
+
 
 /* 5. Style custom button variants in CSS as not supported in json for WP6.8 ref 
       https://developer.wordpress.org/block-editor/how-to-guides/themes/global-settings-and-styles/#block-style-variations  */
@@ -97,7 +124,15 @@ and it makes more  sense to have it all in one place. */
   outline-offset: 2px;
 }
 
-/* 6b. Give different styling treatement to navigations with css tag ibt-header-pages 
+
+
+/* ======================================================================
+   3. HEADER & NAV
+   Sticky, inner width, responsive swaps, woo icons, search, nav colours
+   ====================================================================== */
+
+
+   /* 6b. Give different styling treatement to navigations with css tag ibt-header-pages 
       for header links                                                                */
 
 /* Add transparent box as default to avoid layout shift */      
@@ -108,7 +143,6 @@ and it makes more  sense to have it all in one place. */
   padding: 0.25rem 0.5rem; /* safe: your mobile overlay later sets bigger padding */
   transition: border-color 0.2s ease, color 0.2s ease;
 }
-
 
 .ibt-header-nav .wp-block-navigation-item__content:hover,
 .ibt-header-nav .wp-block-navigation-item__content:focus-visible,
@@ -166,13 +200,6 @@ and it makes more  sense to have it all in one place. */
   border-color: var(--wp--custom--color--color-primary-hover);
 }
 
-
-/* 7. Keep root padding without adding padding to all groups. theme.json 
-      applies padding to all groups to make root padding work. Remove it
-      for all groups except wp-block-group where it is required for root
-      padding and groups with .ibt-root-margin css class               */
-:root :where(.wp-block-group):not(.has-global-padding):not(.ibt-outer-wrap) {padding-left: 0; padding-right: 0;}
-
 /* 8. Constrain header wide width with std root padding. Not possible in template  */
 .ibt-header-inner {
   box-sizing: border-box;
@@ -227,7 +254,173 @@ and it makes more  sense to have it all in one place. */
   }
 }
 
-/* 10b.---------- Narrow width ≤780px ---------- */
+
+
+/* 10e. ---------- Header search behaviour ---------- */
+
+/* Base state: search field hidden */
+.ibt-search-field {
+  display: none;
+}
+
+/* Ensure search icons are correct size for tap target */
+.ibt-icons > * {
+  min-width: 49px;
+  min-height: 49px;
+}
+
+/* Normalise desktop site title to match icon height */
+.ibt-title--desktop {
+  line-height: 49px;
+  height: 49px;
+}
+
+/* 10f. --------- Search Button ------------ */
+
+/* Reset the HTML block wrapper margins/padding */
+.ibt-search-button-wrapper {
+  margin: 0;
+  padding: 0;
+  width: auto;
+  display: inline-flex;
+}
+
+/* Style the toggle button itself */
+.ibt-search-toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  width: 49px;
+  height: 49px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* 10g. ----------------- Search box ------------------- 
+   Setup, style and adapt search box for different 
+   header sizes.                                       */
+
+/* Wrapper container */
+.ibt-search--open .ibt-search-field {
+  display: grid;
+  align-items: center; /* centers the input vertically */
+  height: var(--wp--custom--search--height); /* 48px */
+  width: 280px; /* comfortable max, adapts for smaller screens */
+}
+
+/* Input is the visual box */
+.ibt-search--open .ibt-search-field input[type="search"] {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box; /* keep sizing predictable */
+  padding: var(--wp--custom--search--padding--top)
+           var(--wp--custom--search--padding--right)
+           var(--wp--custom--search--padding--bottom)
+           var(--wp--custom--search--padding--left);
+  border: 2px solid var(--wp--custom--color--color-header-border);
+  border-radius: var(--wp--custom--search--border--radius);
+  background: #fff;
+  font-size: var(--wp--preset--font-size--s);
+  line-height: 1.4;
+}
+
+/* Remove default outline on focus. Appearance of input box
+   is already very strong focus indicator. */
+.ibt-search--open .ibt-search-field input[type="search"]:focus-visible {
+  outline: none;
+}
+
+/* Discrete widths by breakpoint for header adaption
+   when search input is displayed  */
+
+/* Stage 1: Medium range hide desktop site title when
+   search is open. Below 780px there is no desktop site title 
+   and justify right, default is space between. */
+@media (max-width: 900px) and (min-width: 780px) {
+  .ibt-search--open .ibt-title--desktop {display: none;} 
+  .ibt-search--open .ibt-row1.is-layout-flex {justify-content: flex-end;}
+}
+
+/* Stage 2: Narrow screens - shrink search input */
+@media (max-width: 560px) {
+  .ibt-search--open .ibt-search-field {width: 140px;}
+}
+
+/* Stage 3: Very narrow screens — hide Woo account + cart
+            when search is open to make space for it. */
+@media (max-width: 410px) {
+  .ibt-search--open .ibt-icons [data-block-name="woocommerce/customer-account"],
+  .ibt-search--open .ibt-icons [data-block-name="woocommerce/mini-cart"] {
+    display: none;
+  }
+}
+
+
+
+
+/* 11. === Global navigation backgrounds === */
+/* Can not reliably be set from theme.json with WP6.8 and difficult
+  in template with custom colors (not in palette)                   */
+
+/* Desktop dropdown sub-menus */
+.wp-block-navigation__submenu-container {
+  background-color: var(--wp--custom--color--color-header-bg) !important;
+}
+
+/* Mobile overlay drawer (container + dialog) */
+.wp-block-navigation__responsive-container,
+.wp-block-navigation__responsive-dialog {
+  background-color: var(--wp--custom--color--color-header-bg) !important;
+}
+
+
+
+/* ======================================================================
+   4. LAYOUT / SPACING
+   Root padding overrides, group/wide constraints
+   ====================================================================== */
+
+   /* 7. Keep root padding without adding padding to all groups. theme.json 
+      applies padding to all groups to make root padding work. Remove it
+      for all groups except wp-block-group where it is required for root
+      padding and groups with .ibt-root-margin css class               */
+:root :where(.wp-block-group):not(.has-global-padding):not(.ibt-outer-wrap) {padding-left: 0; padding-right: 0;}
+
+/* ======================================================================
+   5. UTILITIES
+   SR-only, status colours, notices, dev/test helpers
+   ====================================================================== */
+
+/* 10h. ---------- A11y utility (screen-reader only) ---------- */
+.screen-reader-text {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* 10i. ---------- Editor helper ---------- */
+/* Always show both titles/navs inside the Site Editor iframe
+   so blocks remain selectable while editing */
+.editor-styles-wrapper .ibt-title--desktop,
+.editor-styles-wrapper .ibt-title--mobile,
+.editor-styles-wrapper .ibt-nav-dual .ibt-nav-desktop,
+.editor-styles-wrapper .ibt-nav-dual .ibt-nav-mobile {
+  display: block !important;
+}
+
+/* ======================================================================
+   6. STATES & MEDIA
+   Breakpoints, reduced motion, print
+   ====================================================================== */
+
+   /* 10b.---------- Narrow width ≤780px ---------- */
 @media (max-width: 780px) {
   
   /* Swap titles */
@@ -346,147 +539,6 @@ and it makes more  sense to have it all in one place. */
   }
 }
 
-/* 10e. ---------- Header search behaviour ---------- */
-
-/* Base state: search field hidden */
-.ibt-search-field {
-  display: none;
-}
-
-/* Ensure search icons are correct size for tap target */
-.ibt-icons > * {
-  min-width: 49px;
-  min-height: 49px;
-}
-
-/* Normalise desktop site title to match icon height */
-.ibt-title--desktop {
-  line-height: 49px;
-  height: 49px;
-}
-
-/* 10f. --------- Search Button ------------ */
-
-/* Reset the HTML block wrapper margins/padding */
-.ibt-search-button-wrapper {
-  margin: 0;
-  padding: 0;
-  width: auto;
-  display: inline-flex;
-}
-
-/* Style the toggle button itself */
-.ibt-search-toggle {
-  background: none;
-  border: none;
-  padding: 0;
-  margin: 0;
-  width: 49px;
-  height: 49px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-/* 10g. ----------------- Search box ------------------- 
-   Setup, style and adapt search box for different 
-   header sizes.                                       */
-
-/* Wrapper container */
-.ibt-search--open .ibt-search-field {
-  display: grid;
-  align-items: center; /* centers the input vertically */
-  height: var(--wp--custom--search--height); /* 48px */
-  width: 280px; /* comfortable max, adapts for smaller screens */
-}
-
-/* Input is the visual box */
-.ibt-search--open .ibt-search-field input[type="search"] {
-  width: 100%;
-  min-width: 0;
-  box-sizing: border-box; /* keep sizing predictable */
-  padding: var(--wp--custom--search--padding--top)
-           var(--wp--custom--search--padding--right)
-           var(--wp--custom--search--padding--bottom)
-           var(--wp--custom--search--padding--left);
-  border: 2px solid var(--wp--custom--color--color-header-border);
-  border-radius: var(--wp--custom--search--border--radius);
-  background: #fff;
-  font-size: var(--wp--preset--font-size--s);
-  line-height: 1.4;
-}
-
-/* Remove default outline on focus. Appearance of input box
-   is already very strong focus indicator. */
-.ibt-search--open .ibt-search-field input[type="search"]:focus-visible {
-  outline: none;
-}
-
-/* Discrete widths by breakpoint for header adaption
-   when search input is displayed  */
-
-/* Stage 1: Medium range hide desktop site title when
-   search is open. Below 780px there is no desktop site title 
-   and justify right, default is space between. */
-@media (max-width: 900px) and (min-width: 780px) {
-  .ibt-search--open .ibt-title--desktop {display: none;} 
-  .ibt-search--open .ibt-row1.is-layout-flex {justify-content: flex-end;}
-}
-
-/* Stage 2: Narrow screens - shrink search input */
-@media (max-width: 560px) {
-  .ibt-search--open .ibt-search-field {width: 140px;}
-}
-
-/* Stage 3: Very narrow screens — hide Woo account + cart
-            when search is open to make space for it. */
-@media (max-width: 410px) {
-  .ibt-search--open .ibt-icons [data-block-name="woocommerce/customer-account"],
-  .ibt-search--open .ibt-icons [data-block-name="woocommerce/mini-cart"] {
-    display: none;
-  }
-}
-
-
-/* 10h. ---------- A11y utility (screen-reader only) ---------- */
-.screen-reader-text {
-  position: absolute !important;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-
-/* 10i. ---------- Editor helper ---------- */
-/* Always show both titles/navs inside the Site Editor iframe
-   so blocks remain selectable while editing */
-.editor-styles-wrapper .ibt-title--desktop,
-.editor-styles-wrapper .ibt-title--mobile,
-.editor-styles-wrapper .ibt-nav-dual .ibt-nav-desktop,
-.editor-styles-wrapper .ibt-nav-dual .ibt-nav-mobile {
-  display: block !important;
-}
-
-/* 11. === Global navigation backgrounds === */
-/* Can not reliably be set from theme.json with WP6.8 and difficult
-  in template with custom colors (not in palette)                   */
-
-/* Desktop dropdown sub-menus */
-.wp-block-navigation__submenu-container {
-  background-color: var(--wp--custom--color--color-header-bg) !important;
-}
-
-/* Mobile overlay drawer (container + dialog) */
-.wp-block-navigation__responsive-container,
-.wp-block-navigation__responsive-dialog {
-  background-color: var(--wp--custom--color--color-header-bg) !important;
-}
-
-
 
 /* 98. === Print safeguards === */
 /* Avoid print problems from sticky header and double navigation */
@@ -521,10 +573,10 @@ and it makes more  sense to have it all in one place. */
 }
 
 
-
-
-/* End IBT - Wordpress 6.8 helpers   
-============================================================================================================== */
+/* ======================================================================
+   7. DEV & TEST
+   Work in progress code. To be moved when complete.
+   ====================================================================== */
 
 
 /* ===== DEV / TESTING =====
@@ -570,6 +622,7 @@ and it makes more  sense to have it all in one place. */
   color: var(--wp--custom--color--color-disabled);
 }
 
-/* *************************************************************************************************************
-                                       END OF MINIMAL FRONT END STYLE SHEET
-   ************************************************************************************************************* */
+
+/* **********************************************************************
+   END IBT THEME CSS
+   ********************************************************************** */
