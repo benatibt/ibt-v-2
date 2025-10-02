@@ -11,6 +11,7 @@
    4. Layout / Spacing
    5. Utilities
    6. States & Media
+   7. Dev Sandbox
    ********************************************************************** */
 
 
@@ -19,22 +20,18 @@
    img/video sizing, anchor offsets, reduced motion, print
    ====================================================================== */
 
+/* Ensure images, videos, iframes, etc. never overflow their container */
+img, video, iframe, embed, object { max-width: 100%; height: auto; display: block;}
+
+
+
 
 /* ======================================================================
    1. TYPOGRAPHY
    Heading levels, visited links
    ====================================================================== */
 
-/* 1. Ensure images, videos, iframes, etc. never overflow their container.
-Core handles most cases but some embeds still slip through. */
-img, video, iframe, embed, object { max-width: 100%; height: auto; display: block;}
-
-/* 2. Anchor scroll margin -  Prevent headings with IDs from hiding under the sticky header when used as anchor targets.
-      ADJUST scroll-margin-top TO MATCH HEADER IF CHANGED. */
-h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
-
-/* 3. Set per-level heading styles that cannot yet be expressed in theme.json (WP 6.8 limitation). 
-Migrate when core adds level-specific controls to json.                                                                                                 */
+/* Headings (per-level until WP adds theme.json support) */                                                                                       */
 h1 {font-size: var(--wp--preset--font-size--xxxl); font-weight: 700 ; padding-top: var(--wp--preset--spacing--xl) ; padding-bottom: var(--wp--preset--spacing--s);}
 h2 {font-size: var(--wp--preset--font-size--xxl); font-weight: 600 ; padding-top: var(--wp--preset--spacing--l) ;}
 h3 {font-size: var(--wp--preset--font-size--xl); font-weight: 600 ; padding-top: var(--wp--preset--spacing--m) ;}
@@ -42,10 +39,11 @@ h4 {font-size: var(--wp--preset--font-size--l); font-weight: 600 ; padding-top: 
 h5 {font-size: var(--wp--preset--font-size--m); font-weight: 600 ; padding-top: var(--wp--preset--spacing--s) ;}
 h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: var(--wp--preset--spacing--s) ;}
 
+/* Anchor scroll offset: prevent in-page targets hiding behind sticky header */
+h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 
-/* 4. Give visual clue of visited links for body text only. No json option to do this. */
+/* Visited links in body text */
 :where(p, li, .rich-text) a:visited {color: var(--wp--custom--color--color-text-emphasis-primary-visited);}
-
 
 
 
@@ -53,15 +51,16 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
 /* ======================================================================
    2. BUTTONS & LINKS
    Variants, hover/focus states, global link effects
-   ====================================================================== */
+   ======================================================================
+   2.1 - Buttons
+   2.2 - Links
 
+/* ------------------------- 2.1 - Buttons ------------------------------ */
 
-/* 5. Style custom button variants in CSS as not supported in json for WP6.8 ref 
-      https://developer.wordpress.org/block-editor/how-to-guides/themes/global-settings-and-styles/#block-style-variations  */
-  
-  .wp-block-button.is-style-buy-solid .wp-block-button__link {
+/* Button variants (that can not be styled in json) */
+.wp-block-button.is-style-buy-solid .wp-block-button__link {
   background-color: var(--wp--custom--color--color-secondary);
-  color: #FFFFFF;
+  color: #FFF;
   border: 2px solid var(--wp--custom--color--color-secondary);
 }
 
@@ -71,44 +70,35 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
   border: 2px solid var(--wp--custom--color--color-secondary);
 }
 
-/* 5a. Add hover/focus-visible  effects for all four IBT button types. */
-
-/* Shared behaviour for all buttons */
+/* Shared button behaviour */
 .wp-block-button__link {transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;}
-.wp-block-button__link:hover {transform: translateY(-1px);}  /* Adds a non-colour cue (slight scale) and token-based colour shifts */
+.wp-block-button__link:hover {transform: translateY(-1px);}
 .wp-block-button__link:focus-visible {outline: 2px solid var(--wp--custom--color--color-primary); outline-offset: 2px;}
 
-/* Primary Solid (default core) */
+/* Hover states */
 .wp-block-button:not(.is-style-outline):not(.is-style-buy-solid):not(.is-style-buy-outline) .wp-block-button__link:hover {
   background-color: var(--wp--custom--color--color-primary-hover);
   border-color: var(--wp--custom--color--color-primary-hover);
 }
 
-/* Prinmary Outline */
 .wp-block-button.is-style-outline .wp-block-button__link:hover {
   color: var(--wp--custom--color--color-primary-hover);
   border-color: var(--wp--custom--color--color-primary-hover);
 }
 
-/* Buy Solid (Commercial) */
 .wp-block-button.is-style-buy-solid .wp-block-button__link:hover {
   background-color: var(--wp--custom--color--color-secondary-hover);
   border-color: var(--wp--custom--color--color-secondary-hover);
 }
 
-/* Buy Outline (Commercial) */
 .wp-block-button.is-style-buy-outline .wp-block-button__link:hover {
   color: var(--wp--custom--color--color-secondary-hover);
   border-color: var(--wp--custom--color--color-secondary-hover);
 }
 
-/* 6. Style all link hover effects in css because WP6.8 doesn't support specific styling (e.g. Nav)
-and it makes more  sense to have it all in one place. */
+/* ------------------------- 2.2 - Links ------------------------------ */
 
-/* 6a. Global text link hover — body links and all nav links
-   EXCEPT header page list (ibt-header-pages css tag on navigation container) */
-
-/* On hover */
+/* Hover */
 :where(a[href]):not(.wp-element-button):not(.wp-block-button__link):not(.ibt-header-nav a):hover,
 .wp-block-navigation:not(.ibt-header-nav) a:hover {
   text-decoration: underline;
@@ -117,7 +107,7 @@ and it makes more  sense to have it all in one place. */
   text-underline-offset: 0.25em;
 }
 
-/* On Focus-Visible */
+/* Focus-Visible */
 :where(a[href]):not(.wp-element-button):not(.wp-block-button__link):not(.ibt-header-nav a):focus-visible,
 .wp-block-navigation:not(.ibt-header-nav) a:focus-visible {
   outline: 2px solid var(--wp--custom--color--color-primary);
