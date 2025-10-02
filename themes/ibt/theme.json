@@ -122,7 +122,7 @@
 				"color-disabled": "#666E70",
 				"color-disabled-tint": "#F0F1F2",
 				
-				"color-text-emphasis-primary-visited": "#312B25"
+				"color-text-emphasis-primary-visited": "#000000"
 			},
 			"search": {
 				"border":{
