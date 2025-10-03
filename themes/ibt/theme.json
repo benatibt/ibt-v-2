@@ -8,7 +8,7 @@
 		"layout": {
 			"contentSize": "50rem",
 			"wideSize": "80rem"
-		},
+		}
 		"useRootPaddingAwareAlignments": true,
 		"spacing": {
 			"defaultSpacingSizes": false,
