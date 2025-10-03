@@ -135,6 +135,9 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
   padding: 0.25rem 0.5rem; /* desktop defaults */
   transition: border-color 0.2s ease, color 0.2s ease;
 }
+/* Enforce AAA tap target */
+.ibt-header-nav .wp-block-navigation-item__content { min-height: 48px;}
+
 .ibt-header-nav .wp-block-navigation-item__content:hover,
 .ibt-header-nav .wp-block-navigation-item__content:focus-visible,
 .ibt-header-nav .wp-block-navigation__responsive-container-close:hover,
