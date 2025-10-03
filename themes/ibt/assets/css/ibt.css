@@ -467,7 +467,7 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 }
 
 /* ---- Narrow screens (shrink search input) ---- */
-@media (max-width: 560px) {
+@media (max-width: 600px) {
   .ibt-search--open .ibt-search-field { width: 140px; }
 }
 
