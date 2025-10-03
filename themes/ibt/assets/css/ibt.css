@@ -31,8 +31,6 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
 :where(p, li, .rich-text) a:visited {color: var(--wp--custom--color--color-text-emphasis-primary-visited);}
 
 
-
-
 /* ======================================================================
    2. BUTTONS & LINKS
    Variants, hover/focus states, global link effects
@@ -65,24 +63,22 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
   background-color: var(--wp--custom--color--color-primary-hover);
   border-color: var(--wp--custom--color--color-primary-hover);
 }
-
 .wp-block-button.is-style-outline .wp-block-button__link:hover {
   color: var(--wp--custom--color--color-primary-hover);
   border-color: var(--wp--custom--color--color-primary-hover);
 }
-
 .wp-block-button.is-style-buy-solid .wp-block-button__link:hover {
   background-color: var(--wp--custom--color--color-secondary-hover);
   border-color: var(--wp--custom--color--color-secondary-hover);
 }
-
 .wp-block-button.is-style-buy-outline .wp-block-button__link:hover {
   color: var(--wp--custom--color--color-secondary-hover);
   border-color: var(--wp--custom--color--color-secondary-hover);
 }
 
 /* ------------------------- 2.2 - Links ------------------------------ */
-
+ 
+/* Link hover and focus-visible effects */
 :where(a[href]):not(.wp-element-button):not(.wp-block-button__link):not(.ibt-header-nav a):hover,
 .wp-block-navigation:not(.ibt-header-nav) a:hover {
   text-decoration: underline;
@@ -90,13 +86,11 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
   text-decoration-thickness: 2px;
   text-underline-offset: 0.25em;
 }
-
 :where(a[href]):not(.wp-element-button):not(.wp-block-button__link):not(.ibt-header-nav a):focus-visible,
 .wp-block-navigation:not(.ibt-header-nav) a:focus-visible {
   outline: 2px solid var(--wp--custom--color--color-primary);
   outline-offset: 2px;
 }
-
 
 
 /* ======================================================================
@@ -315,6 +309,19 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
   .ibt-search--open .ibt-row1.is-layout-flex {justify-content: flex-end;}
 }
 
+/* DEV - May be reduntant, test mobile search spacing with this section disabled */
+@media (max-width: 780px) {
+  /* Mobile nav overlay — ensure padding + vertical stacking */
+  .wp-block-navigation__responsive-container.is-menu-open
+    .wp-block-navigation__responsive-container-content {
+    padding: var(--wp--preset--spacing--l); /* breathing room inside drawer */
+  }
+  .wp-block-navigation__responsive-container.is-menu-open
+    .wp-block-navigation__responsive-container-content > .wp-block-navigation__container {
+    display: flex; flex-direction: column; /* force column layout in drawer */
+  }
+}
+
 /* Stage 2: Narrow screens - shrink search input */
 @media (max-width: 560px) {
   .ibt-search--open .ibt-search-field {width: 140px;}
@@ -336,7 +343,7 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
 /* Can not reliably be set from theme.json with WP6.8 and difficult
   in template with custom colors (not in palette)                   */
 
-/* Desktop dropdown sub-menus */
+/* Desktop dropdown submenus */
 .wp-block-navigation__submenu-container {
   background-color: var(--wp--custom--color--color-header-bg) !important;
 }
@@ -354,24 +361,24 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
    Root padding overrides, group/wide constraints
    ====================================================================== */
 
-   /* 7. Keep root padding without adding padding to all groups. theme.json 
-      applies padding to all groups to make root padding work. Remove it
-      for all groups except wp-block-group where it is required for root
-      padding and groups with .ibt-root-margin css class               */
+/* Strip default WP global padding from all Group blocks, except root-level and
+   those marked with .ibt-outer-wrap. Prevents double-padding inside nested groups. */
 :root :where(.wp-block-group):not(.has-global-padding):not(.ibt-outer-wrap) {padding-left: 0; padding-right: 0;}
+
+
 
 /* ======================================================================
    5. UTILITIES
    SR-only, status colours, notices, dev/test helpers
    ====================================================================== */
 
-/* Ensure images, videos, iframes, etc. never overflow their container */
+/* Prevent media (img/video/iframe/etc) overflowing */
 img, video, iframe, embed, object { max-width: 100%; height: auto; display: block;}
 
-/* Anchor scroll offset: prevent in-page targets hiding behind sticky header */
+/* Anchor scroll offset to prevent in-page targets hiding behind sticky header */
 h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 
-/* 10h. ---------- A11y utility (screen-reader only) ---------- */
+/* Screen-reader only text */
 .screen-reader-text {
   position: absolute !important;
   width: 1px;
@@ -384,9 +391,8 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
   border: 0;
 }
 
-/* 10i. ---------- Editor helper ---------- */
-/* Always show both titles/navs inside the Site Editor iframe
-   so blocks remain selectable while editing */
+/* Editor-only: force all nav/title variants visible in Site Editor
+   (keeps blocks selectable while editing) */
 .editor-styles-wrapper .ibt-title--desktop,
 .editor-styles-wrapper .ibt-title--mobile,
 .editor-styles-wrapper .ibt-nav-dual .ibt-nav-desktop,
@@ -394,58 +400,41 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
   display: block !important;
 }
 
+
+
 /* ======================================================================
    6. STATES & MEDIA
    Breakpoints, reduced motion, print
    ====================================================================== */
 
-   /* 10b.---------- Narrow width ≤780px ---------- */
+/* 6.1 - Header layout breakpoints
+   6.2 - Print safeguards & Reduced Motion */
+
+/* ---------------------- 6.1 Header layout breakpoints ---------------- */
+
+/* ---- Default is narrow desktop / wide tablet ---- */
+
+/* ---- Narrow screens ---- */
 @media (max-width: 780px) {
-  
-  /* Swap titles */
-  .ibt-title--desktop { display: none; }
+
+  /* -- Header adaptation for narrow viewport -- */
+  .ibt-title--desktop { display: none; }   /* Swap site titles */
   .ibt-title--mobile  { display: block; }
-
-  /* Swap navs */
-  .ibt-nav-dual .ibt-nav-desktop { display: none; }
+  .ibt-nav-dual .ibt-nav-desktop { display: none; } /* Swap navs */
   .ibt-nav-dual .ibt-nav-mobile  { display: block; }
+  .ibt-row1.is-layout-flex { justify-content: flex-end; }   /* Row 1 right */
+  .ibt-nav-dual.is-layout-flex { justify-content: space-between; } /* Reset Row 2 spacing */
+  .ibt-header-inner > .wp-block-column:first-child { flex-basis: 70px; max-width: 70px; }  /* Reduce logo column width */
+  
+  /* -- Style mobile menu -- */
 
-  /* Row 1 forced right on narrow screens */
-  .ibt-row1.is-layout-flex {
-    justify-content: flex-end;
-  }
-
-  /* Reset Row 2 to normal spacing when narrow */
-  .ibt-nav-dual.is-layout-flex {
-    justify-content: space-between;
-  }
-
-    /* Reduce logo column width */
-  .ibt-header-inner > .wp-block-column:first-child {
-    flex-basis: 70px;
-    max-width: 70px;
-  }
-
-  /* ----- Mobile menu: spacing + collapsed submenus (overlay) ----- */
-
-  /* Overlay shape (actual mobile DOM): apply token padding around and token gap between */
-  .wp-block-navigation__responsive-container.is-menu-open
-    .wp-block-navigation__responsive-container-content {
-    padding: var(--wp--preset--spacing--l);
-  }
-  .wp-block-navigation__responsive-container.is-menu-open
-    .wp-block-navigation__responsive-container-content > .wp-block-navigation__container {
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* Submenus collapsed by default; open shows same token gap + modest indent */
+  /* Force submenu collapsed */
   .wp-block-navigation__responsive-container.is-menu-open
     .wp-block-navigation__submenu-container { display: none; }
   /* NOTE: Closed submenus remain in the keyboard tab order (edge case).
      Robust fix would need JS (e.g. toggle `inert` on the submenu when aria-expanded="false"). */
 
-  /* Open submenu when Core marks the UL or the toggle is expanded */
+  /* show submenu when toggle is open (UL marked .is-open or aria-expanded=true on toggle) */
   .wp-block-navigation__responsive-container.is-menu-open
     .wp-block-navigation__submenu-container.is-open,
   .wp-block-navigation__responsive-container.is-menu-open
@@ -459,8 +448,7 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
     padding-left: var(--wp--preset--spacing--l);
   }
 
- /* Mobile: assertive tap-target padding (overlay) */
-  /* Overlay (actual mobile DOM) – high-specificity path */
+ /* Set AAA compliant tap target on mobile main menu */
   .ibt-header-nav nav.wp-block-navigation
     .wp-block-navigation__responsive-container.is-menu-open
     .wp-block-navigation__container > .wp-block-navigation-item > .wp-block-navigation-item__content,
@@ -474,9 +462,8 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
     .wp-block-navigation__container > .wp-block-navigation-item > .wp-block-navigation-submenu__toggle {
     display: block; padding-block: var(--wp--preset--spacing--xs); padding-inline: var(--wp--preset--spacing--m);
   }
-  
-  /* Mobile: submenu tap-targets (overlay) */
-  /* Overlay – submenu items */
+
+  /* Set AAA compliant tap target on mobile submenu */
   .wp-block-navigation__responsive-container.is-menu-open
     .wp-block-navigation__submenu-container > .wp-block-navigation-item > .wp-block-navigation-item__content,
   .wp-block-navigation__responsive-container.is-menu-open
@@ -484,47 +471,34 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
     display: block; padding-block: var(--wp--preset--spacing--xs); padding-inline: var(--wp--preset--spacing--m);
   }
 
-  /* Mobile: larger tap target for the CLOSE button only */
+  /* Set AAA compliant tap target on mobile menu close button */
   .wp-block-navigation__responsive-container.is-menu-open
     .wp-block-navigation__responsive-container-close {
     min-width: 44px;
     min-height: 44px;
     padding: var(--wp--preset--spacing--s) var(--wp--preset--spacing--s);
-  }
+  }  
+} /* end ≤ 780px */
 
-}
-
-/* 10c. ---------- Large width >1000px ---------- */
+/* ---- Large width >1000px ---- */
 @media (min-width: 1000px) {
-
   /* Larger font size for header navigation items */
-  .ibt-header .ibt-nav-dual .ibt-nav-desktop .wp-block-navigation__container {
-    font-size: var(--wp--preset--font-size--l);
-  }
-
+  .ibt-header .ibt-nav-dual .ibt-nav-desktop .wp-block-navigation__container { font-size: var(--wp--preset--font-size--l); }
   /* Increase block gap between nav items */
-  .ibt-header .ibt-nav-dual .ibt-nav-desktop {
-    gap: var(--wp--preset--spacing--xs);
-  }
+  .ibt-header .ibt-nav-dual .ibt-nav-desktop { gap: var(--wp--preset--spacing--xs); }
 }
 
-/* 10d. ---------- Short viewport height ≤600px ---------- */
-/* Disable sticky header entirely */
+/* ---- Short viewport height ≤600px ---- */
 @media (max-height: 600px) {
-  .ibt-sticky,
-  .wp-block-template-part:has(> .ibt-sticky) {
-    position: static !important;
-    top: auto !important;
-  }
+  /* Disable sticky header entirely */
+  .ibt-sticky, .wp-block-template-part:has(> .ibt-sticky) { position: static !important; top: auto !important;  }
 }
 
+/* ---------------------- 6.2 Print Safeguards & Reduced Motion ---------------- */
 
-/* 98. === Print safeguards === */
-/* Avoid print problems from sticky header and double navigation */
-
+/* --- Print safeguards - Avoid print problems from sticky header and double navigation --- */
 @media print {
-
-  /* Always show the desktop navigation and hide the mobile variant */
+  /* Show desktop navigation and hide mobile navigation */
   .ibt-nav-dual .ibt-nav-desktop { display: block !important; }
   .ibt-nav-dual .ibt-nav-mobile  { display: none !important; }
 
@@ -536,18 +510,16 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
   }
 }
 
-/* 99. Reduced motion — global safety net
-   If the user prefers reduced motion, disable non-essential animations,
-   transitions, and smooth scrolling. Keep this late in the file so it wins. */
+/* --- Reduced motion — global safety net ---
+   If reduced motion selected by user, disable non-essential animations,
+   transitions, and smooth scrolling. */
 @media (prefers-reduced-motion: reduce) {
-  /* Avoid smooth scrolling if set anywhere */
-  :root,
-  html:focus-within { scroll-behavior: auto !important; }
-
-  /* Nix animations/transitions across the UI */
+  /* Disable smooth scrolling if set anywhere */
+  :root, html:focus-within { scroll-behavior: auto !important; }
+  /* Disable animations/transitions across the UI */
   *, *::before, *::after {
-    animation: none !important;
-    transition: none !important;
+      animation: none !important;
+      transition: none !important;
   }
 }
 
