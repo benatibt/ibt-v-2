@@ -1,0 +1,42 @@
+/* ===== DEV / TESTING =====
+   Status & disabled colour utilities for quick visual checks.
+   Safe to delete or comment out before production. */
+
+/* Text colour only */
+.ibt-status--success { color: var(--wp--custom--color--color-success); }
+.ibt-status--warning { color: var(--wp--custom--color--color-warning); }
+.ibt-status--error   { color: var(--wp--custom--color--color-error); }
+.ibt-status--info    { color: var(--wp--custom--color--color-info); }
+
+/* Background (tint) only */
+.ibt-status-bg--success { background-color: var(--wp--custom--color--color-success-tint); }
+.ibt-status-bg--warning { background-color: var(--wp--custom--color--color-warning-tint); }
+.ibt-status-bg--error   { background-color: var(--wp--custom--color--color-error-tint); }
+.ibt-status-bg--info    { background-color: var(--wp--custom--color--color-info-tint); }
+
+/* Border colour only */
+.ibt-status-border--success { border-color: var(--wp--custom--color--color-success); }
+.ibt-status-border--warning { border-color: var(--wp--custom--color--color-warning); }
+.ibt-status-border--error   { border-color: var(--wp--custom--color--color-error); }
+.ibt-status-border--info    { border-color: var(--wp--custom--color--color-info); }
+
+/* Simple notice pattern (padding + radius + border) */
+.ibt-notice { padding: 0.75rem 1rem; border-radius: 8px; border: 1px solid transparent; }
+.ibt-notice--success { background-color: var(--wp--custom--color--color-success-tint); border-color: var(--wp--custom--color--color-success); color: var(--wp--custom--color--color-success); }
+.ibt-notice--warning { background-color: var(--wp--custom--color--color-warning-tint); border-color: var(--wp--custom--color--color-warning); color: var(--wp--custom--color--color-warning); }
+.ibt-notice--error   { background-color: var(--wp--custom--color--color-error-tint);   border-color: var(--wp--custom--color--color-error);   color: var(--wp--custom--color--color-error); }
+.ibt-notice--info    { background-color: var(--wp--custom--color--color-info-tint);    border-color: var(--wp--custom--color--color-info);    color: var(--wp--custom--color--color-info); }
+
+/* ===== IBT Disabled Utilities =====
+   Use these on any block to simulate a disabled/greyed state. */
+
+.ibt-status--disabled        { color: var(--wp--custom--color--color-disabled); }
+.ibt-status-bg--disabled     { background-color: var(--wp--custom--color--color-disabled-tint); }
+.ibt-status-border--disabled { border-color: var(--wp--custom--color--color-disabled); }
+
+/* Quick demo: greyed-out notice style */
+.ibt-notice--disabled {
+  background-color: var(--wp--custom--color--color-disabled-tint);
+  border: 1px solid var(--wp--custom--color--color-disabled);
+  color: var(--wp--custom--color--color-disabled);
+}
