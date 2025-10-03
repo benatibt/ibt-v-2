@@ -143,7 +143,8 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
 .ibt-header-nav .wp-block-navigation__responsive-container-close {
   border: 1.5px solid transparent;
   border-radius: 6px;
-  padding: 0.25rem 0.5rem; /* desktop defaults */
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
   transition: border-color 0.2s ease, color 0.2s ease;
 }
 
