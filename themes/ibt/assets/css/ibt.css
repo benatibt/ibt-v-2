@@ -95,29 +95,46 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
 
 /* ======================================================================
    3. HEADER, NAV & FOOTER
-   Sticky, inner width, responsive swaps, woo icons, search, nav colours
+   Sticky, navigation, utility icons, titles, search, footer
    ====================================================================== */
 
-/* 3.1 Header navigation links
-   3.2 Header utility icons
-   3.3 Header width & alignment
-   3.4 Sticky header
-   3.5 Search toggle & input
-   3.6 Navigation backgrounds
-   3.7 Footer
-*/
+/* 3.1 Sticky header (with admin-bar offsets)
+   3.2 Header navigation links (defaults)
+   3.3 Navigation backgrounds
+   3.4 Header utility icons (Search, Account, Cart)
+   3.5 Header width & alignment
+   3.6 Header site titles & nav defaults
+   3.7 Header search button & input
+   3.8 Footer */
 
-/* ------- 3.1 Header navigation links (pages list) ------- */
+/* ---------- 3.1 Sticky header (with admin-bar offsets) ---------- */
 
-/* Add transparent box as default to avoid layout shift */      
+:root { --ibt-adminbar-offset: 0px; } /* default, no admin bar */
+.admin-bar { --ibt-adminbar-offset: 32px; } /* WP admin bar desktop */
+@media (max-width: 782px) {
+  .admin-bar { --ibt-adminbar-offset: 46px; } /* WP admin bar mobile */
+}
+
+/* Sticky header; uses :has() which older browsers ignore (falls back to normal header) */
+.ibt-sticky,
+.wp-block-template-part:has(> .ibt-sticky) {
+  position: sticky;
+  top: var(--ibt-adminbar-offset);
+  z-index: 50; /* header above content */
+}
+.wp-block-template-part:has(> .ibt-sticky) { z-index: 49; } /* wrapper stays just below */
+
+
+/* ---------- 3.2 Header navigation links (defaults) ---------- */
+
+/* Transparent border avoids layout shift; hover/focus applies highlight */
 .ibt-header-nav .wp-block-navigation-item__content,
 .ibt-header-nav .wp-block-navigation__responsive-container-close {
   border: 1.5px solid transparent;
   border-radius: 6px;
-  padding: 0.25rem 0.5rem; /* safe: your mobile overlay later sets bigger padding */
+  padding: 0.25rem 0.5rem; /* desktop defaults */
   transition: border-color 0.2s ease, color 0.2s ease;
 }
-
 .ibt-header-nav .wp-block-navigation-item__content:hover,
 .ibt-header-nav .wp-block-navigation-item__content:focus-visible,
 .ibt-header-nav .wp-block-navigation__responsive-container-close:hover,
@@ -126,14 +143,22 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
   border-color: currentColor;
 }
 
-/* ------- 3.2 Header utility icons (Search, Account, Cart) ------- */
 
-/* 6c. Header utility icons (Search, Account, Cart unified)
-   Wrapper provides stable box + styling.
-   Inner <a>/<button> fills wrapper.
-   Tap target: 44px content + 2×2px border = 48px (WCAG). */
+/* ---------- 3.3 Navigation backgrounds ---------- */
 
-/* Wrapper baseline */
+/* Submenus and mobile overlay get consistent header background */
+.wp-block-navigation__submenu-container {
+  background-color: var(--wp--custom--color--color-header-bg) !important;
+}
+.wp-block-navigation__responsive-container,
+.wp-block-navigation__responsive-dialog {
+  background-color: var(--wp--custom--color--color-header-bg) !important;
+}
+
+
+/* ---------- 3.4 Header utility icons (Search, Account, Cart) ---------- */
+
+/* Icon wrapper ensures 44×44px size + border for WCAG tap target */
 .ibt-header-wooicons {
   width: 44px;
   height: 44px;
@@ -141,13 +166,15 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
   align-items: center;
   justify-content: center;
   color: var(--wp--preset--color--emphasis-primary);
-  border: 2px solid transparent; /* prevents layout shift */
+  border: 2px solid transparent; /* placeholder border prevents shift */
   border-radius: 6px;
   transition: color 0.2s ease, border-color 0.2s ease;
   cursor: pointer;
+  min-width: 49px;   /* ensure consistent tap target */
+  min-height: 49px;  /* merged from .ibt-icons > * */
 }
 
-/* Reset child control (<a> or <button>) to inherit */
+/* Reset link/button inside wrapper so it inherits wrapper style */
 .ibt-header-wooicons > a,
 .ibt-header-wooicons > button {
   all: unset;
@@ -161,24 +188,24 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
   cursor: pointer;
 }
 
-/* SVGs follow currentColor */
 .ibt-header-wooicons svg {
   width: 24px;
   height: 24px;
   display: block;
-  pointer-events: none;
+  pointer-events: none; /* icon shouldn’t capture events */
 }
 
-/* Hover + focus-visible states */
+/* Hover/focus changes icon color and border */
 .ibt-header-wooicons:hover,
 .ibt-header-wooicons:focus-within {
   color: var(--wp--custom--color--color-primary-hover);
   border-color: var(--wp--custom--color--color-primary-hover);
 }
 
-/* ------- 3.3 Header width & alignment ------- */
 
-/* 8. Constrain header wide width with std root padding. Not possible in template  */
+/* ---------- 3.5 Header width & alignment ---------- */
+
+/* Centers header, constrains to wide size, adds root padding */
 .ibt-header-inner {
   box-sizing: border-box;
   width: 100%;
@@ -187,40 +214,20 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
   padding-inline: var(--wp--style--root--padding-left);
 }
 
-/* ------- 3.4 Sticky header logic ------- */
 
-/* 9. Make header sticky for modern browsers. May not work without :has() support. */
+/* ---------- 3.6 Header site titles & nav defaults ---------- */
 
-/* 9a. Calculate sticky header offset for any WP admin bar */
-:root { --ibt-adminbar-offset: 0px; }
-.admin-bar { --ibt-adminbar-offset: 32px; }
-@media (max-width: 782px) {
-  .admin-bar { --ibt-adminbar-offset: 46px; }
-}
-
-/* 9b. Make the header sticky with the calculated offset */
-.ibt-sticky,
-.wp-block-template-part:has(> .ibt-sticky) {
-  position: sticky;
-  top: var(--ibt-adminbar-offset);
-  z-index: 50; /* header sits above content */
-}
-
-/* 9c. If the template-part wrapper is also sticky, keep it just behind the header */
-.wp-block-template-part:has(> .ibt-sticky) { z-index: 49; }
-
-/* ------- 3.5 Search toggle & input (base styles) ------- */
-
+/* Desktop defaults: show desktop title/nav, hide mobile versions */
 .ibt-title--desktop {
   display: block;
-  line-height: 49px;
+  line-height: 49px; /* matches icon height */
   height: 49px;
 }
 .ibt-title--mobile  { display: none; }
 .ibt-nav-dual .ibt-nav-desktop { display: block; }
 .ibt-nav-dual .ibt-nav-mobile  { display: none; }
 
-/* Harden desktop nav to stay horizontal whenever it’s visible */
+/* Force desktop nav to stay horizontal */
 .ibt-nav-dual .ibt-nav-desktop .wp-block-navigation__container {
   display: flex;
   flex-direction: row;
@@ -228,24 +235,13 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
   align-items: center;
 }
 
-/* 10e. Header search behaviour */
 
-/* Base state: search field hidden */
-.ibt-search-field {
-  display: none;
-}
+/* ---------- 3.7 Header search button & input ----------  */
 
-/* Ensure search icons are correct size for tap target */
-.ibt-icons > * {
-  min-width: 49px;
-  min-height: 49px;
-}
+/* Search field hidden by default */
+.ibt-search-field { display: none; }
 
-
-
-/* 10f. Search Button */
-
-/* Reset the HTML block wrapper margins/padding */
+/* Wrapper keeps button snug without extra spacing */
 .ibt-search-button-wrapper {
   margin: 0;
   padding: 0;
@@ -253,7 +249,7 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
   display: inline-flex;
 }
 
-/* Style the toggle button itself */
+/* Toggle button styled as icon only */
 .ibt-search-toggle {
   background: none;
   border: none;
@@ -266,23 +262,19 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
   justify-content: center;
 }
 
-/* 10g.  Search box 
-   Setup, style and adapt search box for different 
-   header sizes.                                       */
-
-/* Wrapper container */
+/* When open, show search field at fixed width/height */
 .ibt-search--open .ibt-search-field {
   display: grid;
-  align-items: center; /* centers the input vertically */
-  height: var(--wp--custom--search--height); /* 48px */
-  width: 280px; /* comfortable max, adapts for smaller screens */
+  align-items: center;
+  height: var(--wp--custom--search--height);
+  width: 280px;
 }
 
-/* Input is the visual box */
+/* Input box styling */
 .ibt-search--open .ibt-search-field input[type="search"] {
   width: 100%;
   min-width: 0;
-  box-sizing: border-box; /* keep sizing predictable */
+  box-sizing: border-box;
   padding: var(--wp--custom--search--padding--top)
            var(--wp--custom--search--padding--right)
            var(--wp--custom--search--padding--bottom)
@@ -294,33 +286,15 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
   line-height: 1.4;
 }
 
-/* Remove default outline on focus. Appearance of input box
-   is already very strong focus indicator. */
+/* Focus state — rely on border, so suppress outline */
 .ibt-search--open .ibt-search-field input[type="search"]:focus-visible {
   outline: none;
 }
 
-/* ------- 3.6 Navigation backgrounds ------- */
 
-/* 11. === Global navigation backgrounds === */
-/* Can not reliably be set from theme.json with WP6.8 and difficult
-  in template with custom colors (not in palette)                   */
+/* ---------- 3.8 Footer (reserved) ---------- */
 
-/* Desktop dropdown submenus */
-.wp-block-navigation__submenu-container {
-  background-color: var(--wp--custom--color--color-header-bg) !important;
-}
-
-/* Mobile overlay drawer (container + dialog) */
-.wp-block-navigation__responsive-container,
-.wp-block-navigation__responsive-dialog {
-  background-color: var(--wp--custom--color--color-header-bg) !important;
-}
-
-
-/* ------- 3.7 Footer ------- */
-
-/* Reserved for footer css */
+/* Placeholder for footer css */
 
 
 /* ======================================================================
@@ -390,6 +364,7 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
   /* -- Header adaptation for narrow viewport -- */
   .ibt-title--desktop { display: none; }   /* Swap site titles */
   .ibt-title--mobile  { display: block; }
+  .ibt-nav-dual.is-layout-flex { justify-content: flex-end; }  /* Justify group right, default is space between. */
   .ibt-nav-dual .ibt-nav-desktop { display: none; } /* Swap navs */
   .ibt-nav-dual .ibt-nav-mobile  { display: block; }
   .ibt-row1.is-layout-flex { justify-content: flex-end; }   /* Row 1 right */
@@ -450,7 +425,7 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
   }  
 } /* end ≤ 780px */
 
-/* ---- Large width >1000px ---- */
+/* ---- Large width ---- */
 @media (min-width: 1000px) {
   /* Larger font size for header navigation items */
   .ibt-header .ibt-nav-dual .ibt-nav-desktop .wp-block-navigation__container { font-size: var(--wp--preset--font-size--l); }
@@ -458,7 +433,7 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
   .ibt-header .ibt-nav-dual .ibt-nav-desktop { gap: var(--wp--preset--spacing--xs); }
 }
 
-/* ---- Short viewport height ≤600px ---- */
+/* ---- Short viewport height ---- */
 @media (max-height: 600px) {
   /* Disable sticky header entirely */
   .ibt-sticky, .wp-block-template-part:has(> .ibt-sticky) { position: static !important; top: auto !important;  }
@@ -467,44 +442,20 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 
 /* ---------------------- 6.2 Header search breakpoints ---------------- */
 
-/* Row 2 forced right on wide screens */
-@media (min-width: 781px) {
-  .ibt-nav-dual.is-layout-flex {
-    justify-content: flex-end;
-  }
-}
+/* ---- Default is wide screen - Defined in section 3.5 --- */
 
-/* Discrete widths by breakpoint for header adaption
-   when search input is displayed  */
-
-/* Stage 1: Medium range hide desktop site title when
-   search is open. Below 780px there is no desktop site title 
-   and justify right, default is space between. */
+/* ---- Medium screens (hide desktop site title when search is open) ---- */
 @media (max-width: 900px) and (min-width: 780px) {
-  .ibt-search--open .ibt-title--desktop {display: none;} 
-  .ibt-search--open .ibt-row1.is-layout-flex {justify-content: flex-end;}
+  .ibt-search--open .ibt-title--desktop { display: none; }
+  .ibt-search--open .ibt-row1.is-layout-flex { justify-content: flex-end; }
 }
 
-/* DEV - May be reduntant, test mobile search spacing with this section disabled */
-@media (max-width: 780px) {
-  /* Mobile nav overlay — ensure padding + vertical stacking */
-  .wp-block-navigation__responsive-container.is-menu-open
-    .wp-block-navigation__responsive-container-content {
-    padding: var(--wp--preset--spacing--l); /* breathing room inside drawer */
-  }
-  .wp-block-navigation__responsive-container.is-menu-open
-    .wp-block-navigation__responsive-container-content > .wp-block-navigation__container {
-    display: flex; flex-direction: column; /* force column layout in drawer */
-  }
-}
-
-/* Stage 2: Narrow screens - shrink search input */
+/* ---- Narrow screens (shrink search input) ---- */
 @media (max-width: 560px) {
-  .ibt-search--open .ibt-search-field {width: 140px;}
+  .ibt-search--open .ibt-search-field { width: 140px; }
 }
 
-/* Stage 3: Very narrow screens — hide Woo account + cart
-            when search is open to make space for it. */
+/* ---- Very narrow screens (hide account + cart to make room) ---- */
 @media (max-width: 410px) {
   .ibt-search--open .ibt-icons [data-block-name="woocommerce/customer-account"],
   .ibt-search--open .ibt-icons [data-block-name="woocommerce/mini-cart"] {
@@ -515,7 +466,7 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 
 /* ---------------------- 6.3 Print Safeguards ------------------ */
 
-/* --- Print safeguards - Avoid print problems from sticky header and double navigation --- */
+/* --- Prevent print layout issues (sticky header, double nav) --- */
 @media print {
   /* Show desktop navigation and hide mobile navigation */
   .ibt-nav-dual .ibt-nav-desktop { display: block !important; }
@@ -531,9 +482,7 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 
 /* ---------------------- 6.4 Reduced Motion ------------------ */
 
-/* --- Reduced motion — global safety net ---
-   If reduced motion selected by user, disable non-essential animations,
-   transitions, and smooth scrolling. */
+/* --- Implement user reduced-motion preference (WCAG compliance) --- */
 @media (prefers-reduced-motion: reduce) {
   /* Disable smooth scrolling if set anywhere */
   :root, html:focus-within { scroll-behavior: auto !important; }
@@ -550,6 +499,20 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
    Work in progress code. To be moved when complete.
    ====================================================================== */
 
+/* DEV - May be reduntant, test mobile search spacing with this section disabled */
+/* Removed from 6.2 for testing but left active until tested */
+
+@media (max-width: 780px) {
+  /* Mobile nav overlay — ensure padding + vertical stacking */
+  .wp-block-navigation__responsive-container.is-menu-open
+    .wp-block-navigation__responsive-container-content {
+    padding: var(--wp--preset--spacing--l); /* breathing room inside drawer */
+  }
+  .wp-block-navigation__responsive-container.is-menu-open
+    .wp-block-navigation__responsive-container-content > .wp-block-navigation__container {
+    display: flex; flex-direction: column; /* force column layout in drawer */
+  }
+}
 
 /* **********************************************************************
    END IBT THEME CSS
