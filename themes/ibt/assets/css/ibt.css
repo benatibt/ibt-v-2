@@ -461,7 +461,7 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 /* ---- Default is wide screen - Defined in section 3.5 --- */
 
 /* ---- Medium screens (hide desktop site title when search is open) ---- */
-@media (max-width: 900px) and (min-width: 780px) {
+@media (max-width: 1000px) and (min-width: 780px) {
   .ibt-search--open .ibt-title--desktop { display: none; }
   .ibt-search--open .ibt-row1.is-layout-flex { justify-content: flex-end; }
 }
