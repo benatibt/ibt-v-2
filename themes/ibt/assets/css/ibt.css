@@ -127,6 +127,17 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
 
 /* ---------- 3.2 Header navigation links (defaults) ---------- */
 
+/* --- 3.2.A Shared nav rules --- */
+/* Ensure all nav items (top-level + submenu) are vertically centered
+   and meet AAA tap target sizing */
+.ibt-header-nav .wp-block-navigation-item__content,
+.ibt-header-nav .wp-block-navigation__submenu-container .wp-block-navigation-item__content {
+  min-height: 48px;       /* AAA baseline */
+  display: flex;
+  align-items: center;
+}
+
+/* To refactor */
 /* Transparent border avoids layout shift; hover/focus applies highlight */
 .ibt-header-nav .wp-block-navigation-item__content,
 .ibt-header-nav .wp-block-navigation__responsive-container-close {
@@ -135,8 +146,6 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
   padding: 0.25rem 0.5rem; /* desktop defaults */
   transition: border-color 0.2s ease, color 0.2s ease;
 }
-/* Enforce AAA tap target */
-.ibt-header-nav .wp-block-navigation-item__content { min-height: 48px;}
 
 .ibt-header-nav .wp-block-navigation-item__content:hover,
 .ibt-header-nav .wp-block-navigation-item__content:focus-visible,
