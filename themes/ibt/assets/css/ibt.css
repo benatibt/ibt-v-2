@@ -513,7 +513,10 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
    ====================================================================== */
 
    /* Apply root padding to inner group */
-.ibt-header-inner { padding-inline: var(--wp--style--root--padding-left); }
+.ibt-header-inner {
+  padding-left: var(--wp--style--root--padding-left);
+  padding-right: var(--wp--style--root--padding-right);
+}
 
 
 /* **********************************************************************
