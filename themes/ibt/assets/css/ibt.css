@@ -227,6 +227,9 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
 .ibt-nav-dual .ibt-nav-desktop { display: block; }
 .ibt-nav-dual .ibt-nav-mobile  { display: none; }
 
+/* Default Row 2: flex-end because mobile title hidden */
+.ibt-row2.is-layout-flex { justify-content: flex-end; }
+
 /* Force desktop nav to stay horizontal */
 .ibt-nav-dual .ibt-nav-desktop .wp-block-navigation__container {
   display: flex;
@@ -364,11 +367,11 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
   /* -- Header adaptation for narrow viewport -- */
   .ibt-title--desktop { display: none; }   /* Swap site titles */
   .ibt-title--mobile  { display: block; }
-  .ibt-nav-dual.is-layout-flex { justify-content: flex-end; }  /* Justify group right, default is space between. */
+  .ibt-nav-dual.is-layout-flex { justify-content: flex-end; }  /* Justify group right because title--desktop is hidden. */
   .ibt-nav-dual .ibt-nav-desktop { display: none; } /* Swap navs */
   .ibt-nav-dual .ibt-nav-mobile  { display: block; }
-  .ibt-row1.is-layout-flex { justify-content: flex-end; }   /* Row 1 right */
-  .ibt-nav-dual.is-layout-flex { justify-content: space-between; } /* Reset Row 2 spacing */
+  .ibt-row1.is-layout-flex { justify-content: flex-end; }   /* Row 1: desktop title hidden */
+  .ibt-row2.is-layout-flex { justify-content: space-between; } /* Row 2: mobile title visible */
   .ibt-header-inner > .wp-block-column:first-child { flex-basis: 70px; max-width: 70px; }  /* Reduce logo column width */
   
   /* -- Style mobile menu -- */
