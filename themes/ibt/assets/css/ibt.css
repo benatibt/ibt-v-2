@@ -207,8 +207,8 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
 /* DEV D1: mobile nav items (links + toggles) — expect this to hit */
 .ibt-nav-mobile a.wp-block-navigation-item__content,
 .ibt-nav-mobile button.wp-block-navigation-submenu__toggle {
-  padding-left: 1rem ;
-  padding-right: 1rem ;
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
 }
 
 
