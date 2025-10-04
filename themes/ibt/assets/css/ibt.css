@@ -54,7 +54,7 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
 }
 
 /* Shared button behaviour */
-.wp-block-button__link {transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;}
+.wp-block-button__link {transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease-out;}
 .wp-block-button__link:hover {transform: translateY(-1px);}
 .wp-block-button__link:focus-visible {outline: 2px solid var(--wp--custom--color--color-primary); outline-offset: 2px;}
 
@@ -164,7 +164,7 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
 
 /* ---------- 3.3 Header navigation - DESKTOP ONLY ---------- */
 
-/* Spacing, sizing, centering & AAA tap target - top lvl & submenu. */
+/* Spacing, sizing, centering & AAA tap target — top-level & submenu. */
 .ibt-nav-desktop .wp-block-navigation__container .wp-block-navigation-item__content,
 .ibt-nav-desktop .wp-block-navigation__submenu-container .wp-block-navigation-item__content {
   padding-top: 0;
@@ -482,7 +482,7 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 
 /* ---------------------- 6.2 Header search breakpoints ---------------- */
 
-/* ---- Default is wide screen - Defined in section 3.5 --- */
+/* ---- Default is wide screen - Defined in section 3.7 --- */
 
 /* ---- Medium screens (hide desktop site title when search is open) ---- */
 @media (max-width: 1000px) and (min-width: 780px) {
