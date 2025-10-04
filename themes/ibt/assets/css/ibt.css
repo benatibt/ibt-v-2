@@ -5,7 +5,7 @@
 
 /* ---------INDEX ----------
    1. Typography
-   2. Buttons & Links
+   2. Buttons & Links - Common
    3. Header, Nav & Footer
    4. Layout / Spacing
    5. Utilities
@@ -98,26 +98,21 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
    Sticky, navigation, utility icons, titles, search, footer
    ====================================================================== */
 
-/* 3.1 Sticky header (with admin-bar offsets)
-   3.2 Header navigation links (defaults)
-   3.3 Navigation backgrounds
-   3.4 Header utility icons (Search, Account, Cart)
-   3.5 Header width & alignment
-   3.6 Header site titles & nav defaults
-   3.7 Header search button & input
-   3.8 Footer */
+/* 3.1  Sticky header (with admin-bar offsets)
+   3.2  Header navigation - Common [.ibt-header-nav]
+   3.3  Header navigation - Desktop [.ibt-nav-desktop]
+   3.4  Header navigation - Mobile [.ibt-nav-mobile]
+   3.5  Navigation backgrounds
+   3.6  Header utility icons (Search, Account, Cart)
+   3.7  Header width & alignment
+   3.8  Header site titles & nav defaults
+   3.9  Header search button & input
+   3.10 Footer */
    
 /* ----------------------------------------------------------------------
-   IMPORTANT NOTE ON IBT NAVIGATION STRUCTURE
-   ----------------------------------------------------------------------
-   The IBT header contains *TWO SEPARATE* Navigation block instances:
-   one configured for desktop and one for mobile. This duplication allows
-   precise breakpoint control and avoids limitations of WP’s overlay toggle.
-   • Rules shared by both navigations [.ibt-header-nav] → 3.X.A
-   • Rules for the desktop navigation only [.ibt-nav-desktop] → 3.X.B
-   • Rules for the mobile (overlay) nav. only [.ibt-nav-mobile] → 3.X.C
+   The IBT header contains *TWO SEPARATE* Navigation block instances to 
+   allow breakpoint control and avoid limitations of WP’s overlay toggle.
    ----------------------------------------------------------------------*/
-
 
 
 /* ---------- 3.1 Sticky header (with admin-bar offsets) ---------- */
@@ -138,11 +133,9 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
 .wp-block-template-part:has(> .ibt-sticky) { z-index: 49; } /* wrapper stays just below */
 
 
-/* ---------- 3.2 Header navigation links (defaults) ---------- */
+/* ---------- 3.2 Header navigation - COMMON ---------- */
 
-/* --- 3.2.A Shared nav rules --- */
-/* Ensure all nav items (top-level + submenu) are vertically centered
-   and meet AAA tap target sizing */
+/* Ensure all nav items (top-level + submenu) are vertically centered & AAA tap target */
 .ibt-header-nav .wp-block-navigation-item__content,
 .ibt-header-nav .wp-block-navigation__submenu-container .wp-block-navigation-item__content {
   min-height: 48px;       /* AAA baseline */
@@ -164,11 +157,10 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
   border-color: currentColor;
 }
 
-/* --- 3.2.B Desktop nav only --- */
-/* Normalise spacing and sizing for all desktop navigation items.
-   Uses flex + min-height for exact 48px AAA tap targets.
-   Ensures submenu parents and normal links share equal padding. */
 
+/* ---------- 3.3 Header navigation - DESKTOP ONLY ---------- */
+
+/* Spacing, sizing, centering & AAA tap target - top lvl & submenu. */
 .ibt-nav-desktop .wp-block-navigation__container .wp-block-navigation-item__content,
 .ibt-nav-desktop .wp-block-navigation__submenu-container .wp-block-navigation-item__content {
   padding-top: 0;
@@ -179,64 +171,41 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
   align-items: center;
 }
 
-/* Equal horizontal padding for all clickable elements,
-   including combined link+toggle buttons (dual-class). */
+/* Equal horizontal padding for all clickable elements. */
 .ibt-nav-desktop :is(
   a.wp-block-navigation-item__content,
   button.wp-block-navigation-item__content,
   button.wp-block-navigation-submenu__toggle,
   button.wp-block-navigation-item__content.wp-block-navigation-submenu__toggle
-) {
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-}
+) { padding-left: 0.5rem; padding-right: 0.5rem; }
 
 
-
-/* --- 3.2.C Mobile nav only --- */
-
-/* --- 3.2.C.1 Submenu collapse & reveal --- */
+/* ---------- 3.3 Header navigation - MOBILE ONLY ---------- */
 
 /* Collapse all submenus on mobile menu as default */
 .ibt-nav-mobile .wp-block-navigation__responsive-container.is-menu-open
-  .wp-block-navigation__submenu-container {
-  display: none;
-}
+  .wp-block-navigation__submenu-container { display: none; }
 
 /* Reveal submenu when WordPress marks it as open. Robust selection as this is critical */
 .ibt-nav-mobile .wp-block-navigation__submenu-container.is-open,
 .ibt-nav-mobile .wp-block-navigation-submenu__toggle[aria-expanded="true"]
   + .wp-block-navigation__submenu-container,
 .ibt-nav-mobile .wp-block-navigation-submenu__toggle[aria-expanded="true"]
-  ~ .wp-block-navigation__submenu-container {
-  display: block;
-}
+  ~ .wp-block-navigation__submenu-container { display: block; }
 
-/* --- 3.2.C.2 Overlay container padding --- */
-
-/* Add breathing room inside the mobile overlay (drawer)
-   without affecting the closed state. */
+/* Add padding inside the mobile overlay (drawer) when open. */
 .ibt-nav-mobile :is(.wp-block-navigation__responsive-container,
                     .wp-block-navigation__responsive-dialog).is-menu-open
-  .wp-block-navigation__responsive-container-content {
-  padding: 1.5rem;
-}
+  .wp-block-navigation__responsive-container-content { padding: 1.5rem; }
 
-
-/* --- 3.2.C.3 Menu item horizontal padding --- */
-
-/* DEV D1: mobile nav items (links + toggles) — expect this to hit */
+/* Add padding to mobile elements. !importan req'd and it's limited to .ibt-nav-mobile */
 .ibt-nav-mobile a.wp-block-navigation-item__content,
 .ibt-nav-mobile button.wp-block-navigation-submenu__toggle {
   padding-left: 1rem !important;
   padding-right: 1rem !important;
 }
 
-
-/* --- 3.2.C.4 Mobile menu tap targets & hover/focus states --- */
-/* Purpose: unify open + close button behaviour for consistent UX and AAA sizing */
-
-/* Tap target baseline (open + close) */
+/* AAA complaint tap target (open + close) */
 .ibt-nav-mobile :is(
   .wp-block-navigation__responsive-container-open,
   .wp-block-navigation__responsive-container-close
@@ -267,8 +236,7 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
 }
 
 
-
-/* ---------- 3.3 Navigation backgrounds ---------- */
+/* ---------- 3.5 Navigation backgrounds ---------- */
 
 /* Submenus and mobile overlay get consistent header background */
 .wp-block-navigation__submenu-container {
@@ -280,7 +248,7 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
 }
 
 
-/* ---------- 3.4 Header utility icons (Search, Account, Cart) ---------- */
+/* ---------- 3.6 Header utility icons (Search, Account, Cart) ---------- */
 
 /* Icon wrapper ensures 44×44px size + border for WCAG tap target */
 .ibt-header-wooicons {
@@ -327,7 +295,7 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
 }
 
 
-/* ---------- 3.5 Header width & alignment ---------- */
+/* ---------- 3.7 Header width & alignment ---------- */
 
 /* Centers header, constrains to wide size, adds root padding */
 .ibt-header-inner {
@@ -340,9 +308,7 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
 }
 
 
-
-
-/* ---------- 3.6 Header site titles & nav defaults ---------- */
+/* ---------- 3.8 Header site titles & nav defaults ---------- */
 
 /* Desktop defaults: show desktop title/nav, hide mobile versions */
 .ibt-title--desktop {
@@ -366,7 +332,7 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
 }
 
 
-/* ---------- 3.7 Header search button & input ----------  */
+/* ---------- 3.9 Header search button & input ----------  */
 
 /* Search field hidden by default */
 .ibt-search-field { display: none; }
@@ -422,7 +388,7 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
 }
 
 
-/* ---------- 3.8 Footer (reserved) ---------- */
+/* ---------- 3.10 Footer (reserved) ---------- */
 
 /* Placeholder for footer css */
 
@@ -478,19 +444,12 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
    Breakpoints, reduced motion, print
    ====================================================================== */
 
-/* 6.1 - Header layout breakpoints
-   6.2 - Header search breakpoints
-   6.3 - Print safeguards
-   6.4 - Reduced Motion 
-*/
-
 /* ---------------------- 6.1 Header layout breakpoints ---------------- */
 
 /* ---- Default is narrow desktop / wide tablet ---- */
 
 /* ---- Narrow screens ---- */
 @media (max-width: 780px) {
-
   /* -- Header adaptation for narrow viewport -- */
   .ibt-title--desktop { display: none; }   /* Swap site titles */
   .ibt-title--mobile  { display: block; }
@@ -500,7 +459,7 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
   .ibt-row1.is-layout-flex { justify-content: flex-end; }   /* Row 1: desktop title hidden */
   .ibt-row2.is-layout-flex { justify-content: space-between; } /* Row 2: mobile title visible */
   .ibt-header-inner > .wp-block-column:first-child { flex-basis: 70px; max-width: 70px; }  /* Reduce logo column width */
-} /* end ≤ 780px */
+}
 
 /* ---- Large width ---- */
 @media (min-width: 1000px) {
@@ -573,13 +532,8 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 
 /* ======================================================================
    7. DEV & TEST
-   Work in progress code. To be moved when complete.
+   Sandbox. To be moved when complete.
    ====================================================================== */
-
-
-
-
-
 
    
 
