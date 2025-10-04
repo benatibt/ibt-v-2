@@ -43,7 +43,7 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
 /* Button variants (that can't be styled in json) */
 .wp-block-button.is-style-buy-solid .wp-block-button__link {
   background-color: var(--wp--custom--color--color-secondary);
-  color: #FFF;
+  color: #fff;
   border: 2px solid var(--wp--custom--color--color-secondary);
 }
 
@@ -54,7 +54,7 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
 }
 
 /* Shared button behaviour */
-.wp-block-button__link {transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;}
+.wp-block-button__link {transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;}
 .wp-block-button__link:hover {transform: translateY(-1px);}
 .wp-block-button__link:focus-visible {outline: 2px solid var(--wp--custom--color--color-primary); outline-offset: 2px;}
 
@@ -79,6 +79,10 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
 /* ------------------------- 2.2 - Links ------------------------------ */
  
 /* Link hover and focus-visible effects */
+:where(a[href]):not(.wp-element-button):not(.wp-block-button__link):not(.ibt-header-nav a) {
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
 :where(a[href]):not(.wp-element-button):not(.wp-block-button__link):not(.ibt-header-nav a):hover,
 .wp-block-navigation:not(.ibt-header-nav) a:hover {
   text-decoration: underline;
@@ -86,6 +90,7 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
   text-decoration-thickness: 2px;
   text-underline-offset: 0.25em;
 }
+
 :where(a[href]):not(.wp-element-button):not(.wp-block-button__link):not(.ibt-header-nav a):focus-visible,
 .wp-block-navigation:not(.ibt-header-nav) a:focus-visible {
   outline: 2px solid var(--wp--custom--color--color-primary);
