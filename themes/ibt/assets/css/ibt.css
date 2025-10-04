@@ -209,6 +209,11 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
   padding-right: var(--wp--preset--spacing--m);
 }
 
+/* DEV TEST: see what container class is actually used */
+.ibt-nav-mobile [class*="responsive"] {
+  outline: 2px dashed red !important;
+}
+
 
 /* --- 3.2.C.99 Submenu Hover & FV effects --- */
 
