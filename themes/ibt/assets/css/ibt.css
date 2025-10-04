@@ -106,6 +106,19 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
    3.6 Header site titles & nav defaults
    3.7 Header search button & input
    3.8 Footer */
+   
+/* ----------------------------------------------------------------------
+   IMPORTANT NOTE ON IBT NAVIGATION STRUCTURE
+   ----------------------------------------------------------------------
+   The IBT header contains *TWO SEPARATE* Navigation block instances:
+   one configured for desktop and one for mobile. This duplication allows
+   precise breakpoint control and avoids limitations of WP’s overlay toggle.
+   • Rules shared by both navigations [.ibt-header-nav] → 3.X.A
+   • Rules for the desktop navigation only [.ibt-nav-desktop] → 3.X.B
+   • Rules for the mobile (overlay) nav. only [.ibt-nav-mobile] → 3.X.C
+   ----------------------------------------------------------------------*/
+
+
 
 /* ---------- 3.1 Sticky header (with admin-bar offsets) ---------- */
 
@@ -137,10 +150,8 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
   align-items: center;
 }
 
-/* To refactor */
-/* Transparent border avoids layout shift; hover/focus applies highlight */
-.ibt-header-nav .wp-block-navigation-item__content,
-.ibt-header-nav .wp-block-navigation__responsive-container-close {
+/* Transparent border avoids layout shift for hover/focus highlight */
+.ibt-header-nav .wp-block-navigation-item__content {
   border: 1.5px solid transparent;
   border-radius: 6px;
   padding-left: 0.5rem;
@@ -148,10 +159,30 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
   transition: border-color 0.2s ease, color 0.2s ease;
 }
 
+/* Apply hover & focus-visible effects to general nav content */
 .ibt-header-nav .wp-block-navigation-item__content:hover,
-.ibt-header-nav .wp-block-navigation-item__content:focus-visible,
-.ibt-header-nav .wp-block-navigation__responsive-container-close:hover,
-.ibt-header-nav .wp-block-navigation__responsive-container-close:focus-visible {
+.ibt-header-nav .wp-block-navigation-item__content:focus-visible {
+  color: var(--wp--custom--color--color-primary-hover);
+  border-color: currentColor;
+}
+
+/* --- 3.2.B Desktop nav only --- */
+
+
+/* --- 3.2.C Mobile nav only --- */
+
+/* Apply transparent border to mobile menu close button */
+.ibt-nav-mobile .wp-block-navigation__responsive-container-close {
+  border: 1.5px solid transparent;
+  border-radius: 6px;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+/* Apply hover & focus-visible effets to mobile menu close */
+.ibt-nav-mobile .wp-block-navigation__responsive-container-close:hover,
+.ibt-nav-mobile .wp-block-navigation__responsive-container-close:focus-visible {
   color: var(--wp--custom--color--color-primary-hover);
   border-color: currentColor;
 }
