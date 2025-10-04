@@ -165,8 +165,25 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
 }
 
 /* --- 3.2.B Desktop nav only --- */
-/* Compact horizontal spacing within desktop nav items */
-.ibt-nav-desktop .wp-block-navigation-item__content {
+/* Normalise spacing and sizing for all desktop navigation items.
+   Uses flex + min-height for exact 48px AAA tap targets.
+   Ensures submenu parents and normal links share equal padding. */
+
+.ibt-nav-desktop .wp-block-navigation__container .wp-block-navigation-item__content,
+.ibt-nav-desktop .wp-block-navigation__submenu-container .wp-block-navigation-item__content {
+  padding-top: 0;
+  padding-bottom: 0;
+  min-height: 48px; /* AAA baseline */
+  line-height: 1.2;
+  display: flex;
+  align-items: center;
+}
+
+/* Equal horizontal padding for links and submenu toggles */
+.ibt-nav-desktop :is(
+  .wp-block-navigation-item__content,
+  .wp-block-navigation-submenu__toggle
+) {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
 }
