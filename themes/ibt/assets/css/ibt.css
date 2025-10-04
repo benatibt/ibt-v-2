@@ -144,7 +144,7 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
 
 /* Transparent border avoids layout shift for hover/focus highlight */
 .ibt-header-nav .wp-block-navigation-item__content {
-  border: 1.5px solid transparent;
+  border: 2px solid transparent;
   border-radius: 6px;
   transition: border-color 0.2s ease, color 0.2s ease;
 }
