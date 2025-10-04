@@ -179,14 +179,18 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
   align-items: center;
 }
 
-/* Equal horizontal padding for links and submenu toggles */
+/* Equal horizontal padding for all clickable elements,
+   including combined link+toggle buttons (dual-class). */
 .ibt-nav-desktop :is(
-  .wp-block-navigation-item__content,
-  .wp-block-navigation-submenu__toggle
+  a.wp-block-navigation-item__content,
+  button.wp-block-navigation-item__content,
+  button.wp-block-navigation-submenu__toggle,
+  button.wp-block-navigation-item__content.wp-block-navigation-submenu__toggle
 ) {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
 }
+
 
 
 /* --- 3.2.C Mobile nav only --- */
