@@ -187,6 +187,10 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
   border-color: currentColor;
 }
 
+/* DEV TEST: Highlight all menu items (actual tap targets) */
+.ibt-nav-mobile .wp-block-navigation-item__content {
+  background-color: gold !important;
+}
 
 /* ---------- 3.3 Navigation backgrounds ---------- */
 
