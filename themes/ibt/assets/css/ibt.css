@@ -153,7 +153,7 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
 .ibt-header-nav .wp-block-navigation-item__content:hover,
 .ibt-header-nav .wp-block-navigation-item__content:focus-visible {
   color: var(--wp--custom--color--color-primary-hover);
-  border-color: currentColorvar(--wp--custom--color--color-primary-hover);
+  border-color: var(--wp--custom--color--color-primary-hover);
 }
 
 
