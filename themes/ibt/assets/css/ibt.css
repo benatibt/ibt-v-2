@@ -212,28 +212,40 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
 }
 
 
-/* --- 3.2.C.99 Submenu Hover & FV effects --- */
+/* --- 3.2.C.4 Mobile menu tap targets & hover/focus states --- */
+/* Purpose: unify open + close button behaviour for consistent UX and AAA sizing */
 
-/* Apply transparent border to mobile menu close button */
-.ibt-nav-mobile .wp-block-navigation__responsive-container-close {
-  border: 1.5px solid transparent;
+/* Tap target baseline (open + close) */
+.ibt-nav-mobile :is(
+  .wp-block-navigation__responsive-container-open,
+  .wp-block-navigation__responsive-container-close
+) {
+  min-width: 49px;
+  min-height: 49px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid transparent;
   border-radius: 6px;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-  transition: border-color 0.2s ease, color 0.2s ease;
+  color: var(--wp--preset--color--emphasis-primary);
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
 }
 
-/* Apply hover & focus-visible effets to mobile menu close */
-.ibt-nav-mobile .wp-block-navigation__responsive-container-close:hover,
-.ibt-nav-mobile .wp-block-navigation__responsive-container-close:focus-visible {
+/* Hover and focus-visible states */
+.ibt-nav-mobile :is(
+  .wp-block-navigation__responsive-container-open,
+  .wp-block-navigation__responsive-container-close
+):hover,
+.ibt-nav-mobile :is(
+  .wp-block-navigation__responsive-container-open,
+  .wp-block-navigation__responsive-container-close
+):focus-visible {
   color: var(--wp--custom--color--color-primary-hover);
   border-color: currentColor;
 }
 
-/* DEV TEST: Highlight all menu items (actual tap targets) 
-.ibt-nav-mobile .wp-block-navigation-item__content {
-  background-color: gold !important;
-} */
+
 
 /* ---------- 3.3 Navigation backgrounds ---------- */
 
