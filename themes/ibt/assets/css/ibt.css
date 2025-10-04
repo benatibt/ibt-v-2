@@ -173,7 +173,7 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
 
 /* --- 3.2.C.1 Submenu collapse & reveal --- */
 
-/* Collapse all submenus when mobile menu as default */
+/* Collapse all submenus on mobile menu as default */
 .ibt-nav-mobile .wp-block-navigation__responsive-container.is-menu-open
   .wp-block-navigation__submenu-container {
   display: none;
@@ -187,6 +187,28 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
   ~ .wp-block-navigation__submenu-container {
   display: block;
 }
+
+/* --- 3.2.C.2 Overlay container padding --- */
+
+/* Add breathing room inside the mobile overlay (drawer)
+   without affecting the closed state. */
+.ibt-nav-mobile :is(.wp-block-navigation__responsive-container,
+                    .wp-block-navigation__responsive-dialog).is-menu-open
+  .wp-block-navigation__responsive-container-content {
+  padding: var(--wp--preset--spacing--l);
+}
+
+
+/* --- 3.2.C.3 Menu item horizontal padding --- */
+
+/* Apply equal left/right padding to all menu items (top-level + submenus).
+   Vertical sizing is already handled by min-height:48px in 3.2.A. */
+.ibt-nav-mobile .wp-block-navigation-item__content,
+.ibt-nav-mobile .wp-block-navigation-submenu__toggle {
+  padding-left: var(--wp--preset--spacing--m);
+  padding-right: var(--wp--preset--spacing--m);
+}
+
 
 /* --- 3.2.C.99 Submenu Hover & FV effects --- */
 
