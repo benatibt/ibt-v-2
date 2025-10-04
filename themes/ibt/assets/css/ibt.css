@@ -428,6 +428,12 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
   background-color: hotpink !important;
 }
 
+/* DEV TEST: Highlight mobile main menu links (top-level items) */
+.ibt-nav-mobile .wp-block-navigation__responsive-container.is-menu-open 
+  > .wp-block-navigation__container 
+  > .wp-block-navigation-item > .wp-block-navigation-item__content {
+  background-color: limegreen !important;
+}
 
   /* Force submenu collapsed */
   .wp-block-navigation__responsive-container.is-menu-open
