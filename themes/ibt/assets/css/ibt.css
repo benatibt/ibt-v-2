@@ -167,8 +167,8 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
 /* --- 3.2.B Desktop nav only --- */
 /* Compact horizontal spacing within desktop nav items */
 .ibt-nav-desktop .wp-block-navigation-item__content {
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
+  padding-left: 5rem;
+  padding-right: 5rem;
 }
 
 
