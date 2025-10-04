@@ -201,19 +201,12 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
 
 /* --- 3.2.C.3 Menu item horizontal padding --- */
 
-/* Apply equal left/right padding to all menu items (top-level + submenus).
-   Vertical sizing is already handled by min-height:48px in 3.2.A. */
-.ibt-nav-mobile .wp-block-navigation-item__content,
-.ibt-nav-mobile .wp-block-navigation-submenu__toggle {
+.ibt-nav-mobile
+  :where(.wp-block-navigation-item__content,
+         .wp-block-navigation-submenu__toggle) {
   padding-left: var(--wp--preset--spacing--m);
   padding-right: var(--wp--preset--spacing--m);
 }
-
-/* DEV TEST: see what container class is actually used */
-.ibt-nav-mobile [class*="responsive"] {
-  outline: 2px dashed red !important;
-}
-
 
 /* --- 3.2.C.99 Submenu Hover & FV effects --- */
 
