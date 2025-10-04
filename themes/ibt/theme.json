@@ -87,29 +87,37 @@
 			"custom": true,
 			"defaultPalette": false,
 			"palette": [
-				{ "slug": "background",  "name": "Background (Paper)",          "color": "#FAF9F7" },
-				{ "slug": "surface",     "name": "Surface (White cards)",       "color": "#FFFFFF" },
-				{ "slug": "black",  "name": "Black", "color": "#000000" },
-				{ "slug": "text-normal", "name": "Text Normal",                 "color": "#000000" },
-				{ "slug": "text-muted",  "name": "Text Muted (meta)",           "color": "#5F6366" },
-				{ "slug": "border-grey", "name": "Border Grey",                 "color": "#D0D7DD" },
-				{ "slug": "emphasis-primary",   "name": "Emphasis · Primary (Stone-Strong)",  "color": "#5D5248" },
-				{ "slug": "emphasis-secondary", "name": "Emphasis · Secondary (Ocean-Strong)","color": "#243E7D" }
+				{ "slug": "text-normal",           "name": "Text Normal",            "color": "#000000" },
+				{ "slug": "text-muted",            "name": "Text Muted",             "color": "#5F6366" },
+				{ "slug": "emphasis-primary",      "name": "Emphasis – Stone",       "color": "#5D5248" },
+				{ "slug": "emphasis-accent",       "name": "Emphasis – Copper",      "color": "#805D25" },
+				{ "slug": "emphasis-secondary",    "name": "Emphasis – Commercial",  "color": "#315FA3" },
+				{ "slug": "background",            "name": "Background (Paper)",     "color": "#FAF9F7" },
+				{ "slug": "surface",               "name": "Surface (White cards)",  "color": "#FFFFFF" },
+				{ "slug": "border-primary",        "name": "Border – Stone",         "color": "rgba(92,85,78,0.25)" },
+        		{ "slug": "border-primary-strong", "name": "Border – Stone Strong",  "color": "#B3ACA4" },
+        		{ "slug": "border-dark",           "name": "Border – Dark",          "color": "rgba(0,0,0,0.1)" }
 			]
 		},
 		"custom": {
 			"color":{
 				"color-primary": "#5C554E",
-				"color-primary-hover": "#2b2621",
+				"color-primary-hover": "#2B2621",
 				"color-primary-strong": "#4A443E",
 
 				"color-secondary": "#315FA3",
 				"color-secondary-hover": "#25477A",
-				"color-secondary-strong": "#111e3b",
+				"color-secondary-strong": "#111E3B",
 
 				"color-header-bg": "#ECE7E1",
-				"color-header-border": "#7A7168",
-				"color-border": "#D0D7DD",
+				"color-header-border": "rgba(92,85,78,0.2)",
+
+				"color-footer-bg": "#DCD6CF",
+    			"color-footer-border": "rgba(92,85,78,0.2)",
+    			"color-footer-text": "#5C554E",
+
+				"color-sidebar-bg": "#F3F0EB",
+    			"color-sidebar-border": "rgba(92,85,78,0.15)",
 
 				"color-success": "#1B5C55",
 				"color-success-tint": "#E4EBEB",
@@ -122,7 +130,7 @@
 				"color-disabled": "#666E70",
 				"color-disabled-tint": "#F0F1F2",
 				
-				"color-text-emphasis-primary-visited": "#000000"
+				"color-text-emphasis-primary-visited": "#805D25"
 			},
 			"search": {
 				"border":{
