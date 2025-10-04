@@ -154,8 +154,6 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
 .ibt-header-nav .wp-block-navigation-item__content {
   border: 1.5px solid transparent;
   border-radius: 6px;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
   transition: border-color 0.2s ease, color 0.2s ease;
 }
 
@@ -167,6 +165,11 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
 }
 
 /* --- 3.2.B Desktop nav only --- */
+/* Compact horizontal spacing within desktop nav items */
+.ibt-nav-desktop .wp-block-navigation-item__content {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
 
 
 /* --- 3.2.C Mobile nav only --- */
@@ -195,17 +198,16 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
 .ibt-nav-mobile :is(.wp-block-navigation__responsive-container,
                     .wp-block-navigation__responsive-dialog).is-menu-open
   .wp-block-navigation__responsive-container-content {
-  padding: var(--wp--preset--spacing--l);
+  padding: 1.5rem;
 }
 
 
 /* --- 3.2.C.3 Menu item horizontal padding --- */
 
-.ibt-nav-mobile
-  :where(.wp-block-navigation-item__content,
-         .wp-block-navigation-submenu__toggle) {
-  padding-left: var(--wp--preset--spacing--m);
-  padding-right: var(--wp--preset--spacing--m);
+.ibt-nav-mobile .wp-block-navigation-item__content,
+.ibt-nav-mobile .wp-block-navigation-submenu__toggle {
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 /* --- 3.2.C.99 Submenu Hover & FV effects --- */
