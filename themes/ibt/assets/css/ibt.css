@@ -40,7 +40,7 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
 
 /* ------------------------- 2.1 - Buttons ------------------------------ */
 
-/* Button variants (that can not be styled in json) */
+/* Button variants (that can't be styled in json) */
 .wp-block-button.is-style-buy-solid .wp-block-button__link {
   background-color: var(--wp--custom--color--color-secondary);
   color: #FFF;
@@ -136,8 +136,7 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
 /* ---------- 3.2 Header navigation - COMMON ---------- */
 
 /* Ensure all nav items (top-level + submenu) are vertically centered & AAA tap target */
-.ibt-header-nav .wp-block-navigation-item__content,
-.ibt-header-nav .wp-block-navigation__submenu-container .wp-block-navigation-item__content {
+.ibt-header-nav .wp-block-navigation-item__content {
   min-height: 48px;       /* AAA baseline */
   display: flex;
   align-items: center;
@@ -180,9 +179,9 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
 ) { padding-left: 0.5rem; padding-right: 0.5rem; }
 
 
-/* ---------- 3.3 Header navigation - MOBILE ONLY ---------- */
+/* ---------- 3.4 Header navigation - MOBILE ONLY ---------- */
 
-/* Collapse all submenus on mobile menu as default */
+/* Collapse all submenus on mobile menu by default */
 .ibt-nav-mobile .wp-block-navigation__responsive-container.is-menu-open
   .wp-block-navigation__submenu-container { display: none; }
 
@@ -205,7 +204,7 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
   padding-right: 1rem !important;
 }
 
-/* AAA complaint tap target (open + close) */
+/* AAA compliant tap target (open + close) */
 .ibt-nav-mobile :is(
   .wp-block-navigation__responsive-container-open,
   .wp-block-navigation__responsive-container-close
