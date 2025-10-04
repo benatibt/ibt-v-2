@@ -173,16 +173,18 @@ h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: 
 
 /* --- 3.2.C.1 Submenu collapse & reveal --- */
 
-/* Collapse all submenus when mobile menu is open */
+/* Collapse all submenus when mobile menu as default */
 .ibt-nav-mobile .wp-block-navigation__responsive-container.is-menu-open
   .wp-block-navigation__submenu-container {
   display: none;
 }
 
-/* Reveal submenu when WordPress marks it as open */
+/* Reveal submenu when WordPress marks it as open. Robust selection as this is critical */
+.ibt-nav-mobile .wp-block-navigation__submenu-container.is-open,
 .ibt-nav-mobile .wp-block-navigation-submenu__toggle[aria-expanded="true"]
   + .wp-block-navigation__submenu-container,
-.ibt-nav-mobile .wp-block-navigation__submenu-container.is-open {
+.ibt-nav-mobile .wp-block-navigation-submenu__toggle[aria-expanded="true"]
+  ~ .wp-block-navigation__submenu-container {
   display: block;
 }
 
