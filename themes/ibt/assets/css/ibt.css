@@ -423,8 +423,8 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
   
   /* -- Style mobile menu -- */
 
-  /* DEV TEST: Highlight mobile submenu container target */
-.ibt-nav-mobile .wp-block-navigation__submenu-container {
+/* DEV TEST: Highlight mobile submenu links (actual tap targets) */
+.ibt-nav-mobile .wp-block-navigation__submenu-container .wp-block-navigation-item__content {
   background-color: hotpink !important;
 }
 
