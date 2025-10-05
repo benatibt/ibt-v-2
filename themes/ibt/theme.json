@@ -87,16 +87,17 @@
 			"custom": true,
 			"defaultPalette": false,
 			"palette": [
-				{ "slug": "text-normal",           "name": "Text Normal",            "color": "#000000" },
-				{ "slug": "text-muted",            "name": "Text Muted",             "color": "#5F6366" },
-				{ "slug": "emphasis-primary",      "name": "Emphasis – Stone",       "color": "#5D5248" },
-				{ "slug": "emphasis-accent",       "name": "Emphasis – Copper",      "color": "#805D25" },
-				{ "slug": "emphasis-secondary",    "name": "Emphasis – Commercial",  "color": "#315FA3" },
-				{ "slug": "background",            "name": "Background (Paper)",     "color": "#FAF9F7" },
-				{ "slug": "surface",               "name": "Surface (White cards)",  "color": "#FFFFFF" },
-				{ "slug": "border-primary",        "name": "Border – Stone",         "color": "rgba(92,85,78,0.25)" },
-        		{ "slug": "border-primary-strong", "name": "Border – Stone Strong",  "color": "#B3ACA4" },
-        		{ "slug": "border-dark",           "name": "Border – Dark",          "color": "rgba(0,0,0,0.1)" }
+				{ "slug": "text-normal",           "name": "Text Normal",             "color": "#000000" },
+				{ "slug": "text-muted",            "name": "Text Muted",              "color": "#5F6366" },
+				{ "slug": "emphasis-primary",      "name": "Emphasis – Stone",        "color": "#5D5248" },
+				{ "slug": "emphasis-accent",       "name": "Emphasis – Copper",       "color": "#805D25" },
+				{ "slug": "emphasis-secondary",    "name": "Emphasis – Commercial",   "color": "#315FA3" },
+				{ "slug": "background",            "name": "Background (Paper)",      "color": "#FAF9F7" },
+				{ "slug": "surface",               "name": "Background (White cards)","color": "#FFFFFF" },
+				{ "slug": "alt-background",        "name": "Background (Heavy paper)","color": "#F6F3EE" },
+				{ "slug": "border-primary",        "name": "Border – Stone",          "color": "rgba(92,85,78,0.25)" },
+        		{ "slug": "border-primary-strong", "name": "Border – Stone Strong",   "color": "#B3ACA4" },
+        		{ "slug": "border-dark",           "name": "Border – Dark",           "color": "rgba(0,0,0,0.1)" }
 			]
 		},
 		"custom": {
@@ -115,6 +116,7 @@
 				"color-footer-bg": "#DCD6CF",
     			"color-footer-border": "rgba(92,85,78,0.2)",
     			"color-footer-text": "#5C554E",
+				"color-prefooter-bg": "#F6F3EE",
 
 				"color-sidebar-bg": "#F3F0EB",
     			"color-sidebar-border": "rgba(92,85,78,0.15)",
