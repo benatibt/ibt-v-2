@@ -441,17 +441,6 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
   display: block !important;
 }
 
-/* === Hide JSON-LD schema block in Site Editor === */
-.editor-styles-wrapper .ibt-schema-block {
-  display: none !important;
- /* visibility: hidden !important;
-  height: 0 !important;
-  min-height: 0 !important;
-  margin: 0 !important;
-  padding: 0 !important;*/
-}
-
-
 
 /* ======================================================================
    6. STATES & MEDIA
