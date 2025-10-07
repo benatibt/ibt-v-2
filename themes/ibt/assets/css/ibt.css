@@ -460,8 +460,8 @@ hr,
   width: 280px;
 }
 
-/* Input box styling */
-.ibt-header-search.is-open .ibt-header-search-field input[type="search"] {
+/* Style the search box when opened by js */
+.ibt-header.is-open .ibt-header-search-field input[type="search"] {
   width: 100%;
   min-width: 0;
   box-sizing: border-box;
