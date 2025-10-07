@@ -21,7 +21,7 @@
   Purpose:
   Keep all theme-level CSS predictable, token-driven, and accessible.
   Document design here in just enough detail for future maintenance
-  without overhead of seperate documents. 
+  without the overhead of separate documents. 
 
    
 --------- 0.1 - TOKEN & NAMING SYSTEM --------
@@ -65,20 +65,23 @@ PREFOOTER
   .ibt-prefooter-card ............. Inline-block wrapper for pre-footer call-to-action card.
   .ibt-prefooter-inner ............ Centers pre-footer inner group content horizontally.
 
-------------- 0.2 - STYLE PRINCIPLES ----------------------
+------------- 0.3 - STYLE PRINCIPLES ----------------------
 
 • Header/footer constrained to 80 rem inner width (review later)
 • Root padding uses clamp().
 • Colour-agnostic design: only #000 / #fff should appear literal.
-• All motion uses transition tokens.
-• Typography and spacing use tokens or clamp() for fluid scaling.
-• Accessibility: AAA general target but safe AA acceptable if needed.
+• All motion ease times use transition tokens.
+• Tokens are mostly set in theme.json, reasons for exceptions in comments. This includes
+  custom tokens --wp--custom--*
+• :has() used for styling elements but not for critical functionality. (Support for v. old browsers.)  
+• Typography and spacing use tokens or clamp() at larger sizes for responsive fluid scaling.
+• Accessibility: AAA general target but safe AA acceptable if really needed.
 • Basic keyboard nav tests during dev, full a11y checks before release
 
 
------------- 0.3 - COMMENT CONVENTION -------------------------
+------------ 0.4 - COMMENT CONVENTION -------------------------
 
-Each section includes:
+Each section comment should include:
   WHY – design intent for all sections / blocks (always)
   WHAT IT DOES – plain English for complex syntax (when needed)
   HOW TO MAINTAIN – notes for future (when needed)
@@ -94,7 +97,8 @@ Example: (+ == *)
    Basic styling that doesn't work in json yet
    ====================================================================== */
 
-/* Define variables for use in all transitions */
+/* Define variables for use in all transitions. Not in theme.json because
+   it doesn't support transitions yet. */
 :root {
   --transition-base: 0.2s ease-in-out; /* Default */
   --transition-fast: 0.15s ease-out;   /* hover & micro-lift effects */
@@ -109,7 +113,7 @@ h4 {font-size: var(--wp--preset--font-size--l); font-weight: 600 ; padding-top: 
 h5 {font-size: var(--wp--preset--font-size--m); font-weight: 600 ; padding-top: var(--wp--preset--spacing--s) ;}
 h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: var(--wp--preset--spacing--s) ;}
 
-/* Visited links in body text */
+/* Visited links in body text. Visited link styling not supported in json yet. */
 :where(p, li, .rich-text) a:visited {color: var(--wp--custom--color--color-text-emphasis-primary-visited);}
 
 /* Provide theme style for <hr>, partially supported in json but doing all in one place is cleaner. */
@@ -144,7 +148,12 @@ hr,
 }
 
 /* Shared button behaviour */
-.wp-block-button__link {transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease-out;}
+.wp-block-button__link {transition: 
+  color var(--transition-base),
+  background-color var(--transition-base),
+  border-color var(--transition-base),
+  transform var(--transition-fast);
+}
 .wp-block-button__link:hover {transform: translateY(-1px);}
 .wp-block-button__link:focus-visible {outline: 2px solid var(--wp--custom--color--color-primary); outline-offset: 2px;}
 
@@ -170,7 +179,9 @@ hr,
  
 /* Link hover and focus-visible effects */
 :where(a[href]):not(.wp-element-button):not(.wp-block-button__link):not(.ibt-header-nav a) {
-  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+  transition:
+    color var(--transition-base),
+    text-decoration-color var(--transition-base);
 }
 
 :where(a[href]):not(.wp-element-button):not(.wp-block-button__link):not(.ibt-header-nav a):hover,
@@ -218,7 +229,7 @@ hr,
   .admin-bar { --ibt-adminbar-offset: 46px; } /* WP admin bar mobile */
 }
 
-/* Sticky header; uses :has() which older browsers ignore (falls back to normal header) */
+/* Sticky header */
 .ibt-header-sticky,
 .wp-block-template-part:has(> .ibt-header-sticky) {
   position: sticky;
@@ -239,9 +250,10 @@ hr,
 
 /* Transparent border avoids layout shift for hover/focus highlight */
 .ibt-header-nav .wp-block-navigation-item__content {
-  border: 2px solid transparent;
-  border-radius: 6px;
-  transition: border-color 0.2s ease, color 0.2s ease;
+  border: 2px solid transparent; border-radius: 6px;
+  transition:
+    border-color var(--transition-base),
+    color  var(--transition-base);
 }
 
 /* Apply hover & focus-visible effects to general nav content */
@@ -313,7 +325,8 @@ hr,
   border-radius: 6px;
   color: var(--wp--preset--color--emphasis-primary);
   cursor: pointer;
-  transition: color 0.2s ease, border-color 0.2s ease;
+  transition: color var(--transition-base),
+  border-color var(--transition-base);
 }
 
 /* Hover and focus-visible states */
@@ -354,7 +367,8 @@ hr,
   color: var(--wp--preset--color--emphasis-primary);
   border: 2px solid transparent; /* placeholder border prevents shift */
   border-radius: 6px;
-  transition: color 0.2s ease, border-color 0.2s ease;
+  transition: color var(--transition-base),
+     border-color var(--transition-base);
   cursor: pointer;
   min-width: 49px;   /* ensure consistent tap target */
   min-height: 49px;  /* merged from .ibt-header-icons > * */
