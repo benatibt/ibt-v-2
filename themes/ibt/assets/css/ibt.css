@@ -5,7 +5,7 @@
 
 /* ---------INDEX ----------
    0. Theme documentation
-   1. Typography
+   1. Typography & Base styles
    2. Buttons & Links - Common
    3. Header, Nav & Footer
    4. Layout / Spacing
@@ -27,7 +27,7 @@
    --------- 0.1 - TOKEN & NAMING SYSTEM -------------
    
    WordPress tokens
-     --wp--*...................... Core WP presets
+     --wp--* ..................... Core WP presets
    
    IBT custom tokens
      --color-* ................... Semantic colour tokens (palette-agnostic)
@@ -37,19 +37,19 @@
      +++++ ADD HERE AS EXPANDED +++++
 
    Class naming
-     ibt-header-* ............ Header-specific elements
-     ibt-footer-* ............ Footer-specific elements
-     ibt-nav-* ............... Shared navigation structure
-     ibt-header-nav-* ........ Header nav variant
-     ibt-header-nav-desktop... Desktop nav instance
-     ibt-header-nav-mobile ... Mobile nav instance
+     ibt-header-* ................ Header-specific elements
+     ibt-footer-* ................ Footer-specific elements
+     ibt-nav-* ................... Shared navigation structure
+     ibt-header-nav-* ............ Header nav variant
+     ibt-header-nav-desktop....... Desktop nav instance
+     ibt-header-nav-mobile ....... Mobile nav instance
      +++++ ADD HERE AS EXPANDED +++++
    
 
    ------------- 0.2 - STYLE PRINCIPLES ----------------------
    
    • Header/footer constrained to 80 rem inner width (review later)
-   • Root padding uses clamp() for fluid breathing room.
+   • Root padding uses clamp().
    • Colour-agnostic design: only #000 / #fff should appear literal.
    • All motion uses transition tokens:
        --transition-base: 0.2s ease-in-out;
@@ -63,13 +63,13 @@
    ------------ 0.3 - COMMENT CONVENTION -------------------------
    
    Each section includes:
-     WHY – design intent all sections / blocks
+     WHY – design intent for all sections / blocks
      WHAT IT DOES – plain English only where needed for complex syntax
      HOW TO MAINTAIN – notes for future if needed
 
-   Example:
+   Example: (+ == *)
      /+ Scale nav text to suit container width. 1cqw = 1% of nav container width.
-        Note - Adjust slope if wrapping occurs.+/
+        Note - Adjust slope if wrapping occurs in header desktop nav .+/
      font-size: clamp(1rem, 1cqw + 0.9rem, 1.25rem);
 
 
