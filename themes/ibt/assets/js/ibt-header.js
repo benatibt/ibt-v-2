@@ -2,27 +2,28 @@
  * IBT Header Search Toggle
  * ---------------------------------------------
  * WHY: Controls the header search field visibility and submission logic.
- * WHAT IT DOES: Toggles `.is-open` class on the header; 
+ * WHAT IT DOES: Toggles `.is-open` class on `.ibt-header-search`; 
  * opens/closes search, auto-submits if open and input has text.
  * HOW TO MAINTAIN: Keep selectors in sync with header markup. 
  * ---------------------------------------------
  */
 
 document.addEventListener("DOMContentLoaded", () => {
-  const header = document.querySelector(".ibt-header");
-  const toggle = document.querySelector(".ibt-header-search-toggle");
-  const field  = header?.querySelector(".ibt-header-search-field input[type='search']");
-  const form   = field?.closest("form");
+  const header  = document.querySelector(".ibt-header");
+  const wrapper = header?.querySelector(".ibt-header-search");
+  const toggle  = header?.querySelector(".ibt-header-search-toggle");
+  const field   = wrapper?.querySelector(".ibt-header-search-field input[type='search']");
+  const form    = field?.closest("form");
   const OPEN_CLASS = "is-open";
 
   // Safety check: stop if any required element missing
-  if (!header || !toggle || !field || !form) return;
+  if (!header || !wrapper || !toggle || !field || !form) return;
 
   // Defensive: ensure the toggle button never submits if placed inside a form
   if (!toggle.getAttribute("type")) toggle.setAttribute("type", "button");
 
   // Helper: current open state
-  const isOpen = () => header.classList.contains(OPEN_CLASS);
+  const isOpen = () => wrapper.classList.contains(OPEN_CLASS);
 
   // --- Toggle or submit on click ---
   toggle.addEventListener("click", (e) => {
@@ -30,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!isOpen()) {
       // Case 1: Closed → Open search
-      header.classList.add(OPEN_CLASS);
+      wrapper.classList.add(OPEN_CLASS);
       toggle.setAttribute("aria-expanded", "true");
       field.focus();
       return;
@@ -49,23 +50,23 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Case 3: Open + empty → Close search
-    header.classList.remove(OPEN_CLASS);
+    wrapper.classList.remove(OPEN_CLASS);
     toggle.setAttribute("aria-expanded", "false");
   });
 
   // --- Close on Escape key ---
   header.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && isOpen()) {
-      header.classList.remove(OPEN_CLASS);
+      wrapper.classList.remove(OPEN_CLASS);
       toggle.setAttribute("aria-expanded", "false");
       toggle.focus();
     }
   });
 
-  // --- Close if user clicks outside the header ---
+  // --- Close if user clicks outside the header search area ---
   document.addEventListener("click", (e) => {
-    if (isOpen() && !header.contains(e.target) && !toggle.contains(e.target)) {
-      header.classList.remove(OPEN_CLASS);
+    if (isOpen() && !wrapper.contains(e.target) && !toggle.contains(e.target)) {
+      wrapper.classList.remove(OPEN_CLASS);
       toggle.setAttribute("aria-expanded", "false");
     }
   });
@@ -73,10 +74,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // Optional: Custom event hook for analytics or UI sync
   const dispatchToggleEvent = () => {
     const event = new CustomEvent("ibt:searchToggled", { detail: { open: isOpen() } });
-    header.dispatchEvent(event);
+    wrapper.dispatchEvent(event);
   };
 
   // Fire event whenever state changes
   const observer = new MutationObserver(dispatchToggleEvent);
-  observer.observe(header, { attributes: true, attributeFilter: ["class"] });
+  observer.observe(wrapper, { attributes: true, attributeFilter: ["class"] });
 });
