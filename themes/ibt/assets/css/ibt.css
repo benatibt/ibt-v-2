@@ -575,19 +575,27 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 
 /* ---- Medium screens (hide desktop site title when search is open) ---- */
 @media (max-width: 1000px) and (min-width: 780px) {
-  .ibt-header-search.is-open .ibt-header-title-desktop { display: none; }
-  .ibt-header-search.is-open .ibt-header-row1.is-layout-flex { justify-content: flex-end; }
+  .ibt-header:has(.ibt-header-search.is-open) .ibt-header-title-desktop {
+    display: none;
+  }
+  .ibt-header:has(.ibt-header-search.is-open) .ibt-header-row1.is-layout-flex {
+    justify-content: flex-end;
+  }
 }
 
 /* ---- Narrow screens (shrink search input) ---- */
 @media (max-width: 600px) {
-  .ibt-header-search.is-open .ibt-header-search-field { width: 140px; }
+  .ibt-header-search.is-open .ibt-header-search-field {
+    width: 140px;
+  }
 }
 
 /* ---- Very narrow screens (hide account + cart to make room) ---- */
 @media (max-width: 410px) {
-  .ibt-header-search.is-open .ibt-icons [data-block-name="woocommerce/customer-account"],
-  .ibt-header-search.is-open .ibt-icons [data-block-name="woocommerce/mini-cart"] {
+  .ibt-header:has(.ibt-header-search.is-open)
+    .ibt-icons [data-block-name="woocommerce/customer-account"],
+  .ibt-header:has(.ibt-header-search.is-open)
+    .ibt-icons [data-block-name="woocommerce/mini-cart"] {
     display: none;
   }
 }
