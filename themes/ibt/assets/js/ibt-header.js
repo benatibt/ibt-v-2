@@ -1,28 +1,36 @@
 /**
  * IBT Header Search Toggle
- * Toggles the header search field open/closed.
- * Enhancement: if open and input has text → submit search form.
+ * ---------------------------------------------
+ * WHY: Controls the header search field visibility and submission logic.
+ * WHAT IT DOES: Toggles `.is-open` class on the header; 
+ * opens/closes search, auto-submits if open and input has text.
+ * HOW TO MAINTAIN: Keep selectors in sync with header markup. 
+ * ---------------------------------------------
  */
+
 document.addEventListener("DOMContentLoaded", () => {
   const header = document.querySelector(".ibt-header");
-  const toggle = document.querySelector(".ibt-search-toggle");
-  const field  = header?.querySelector(".ibt-search-field input[type='search']");
+  const toggle = document.querySelector(".ibt-header-search-toggle");
+  const field  = header?.querySelector(".ibt-header-search-field input[type='search']");
   const form   = field?.closest("form");
+  const OPEN_CLASS = "is-open";
 
+  // Safety check: stop if any required element missing
   if (!header || !toggle || !field || !form) return;
 
-  // Future-proof: ensure this never acts like a submit button if moved into a <form>
+  // Defensive: ensure the toggle button never submits if placed inside a form
   if (!toggle.getAttribute("type")) toggle.setAttribute("type", "button");
 
-  // Toggle / submit behaviour on button click
+  // Helper: current open state
+  const isOpen = () => header.classList.contains(OPEN_CLASS);
+
+  // --- Toggle or submit on click ---
   toggle.addEventListener("click", (e) => {
     e.preventDefault();
 
-    const isOpen = header.classList.contains("ibt-search--open");
-
-    if (!isOpen) {
-      // Case 1: open search
-      header.classList.add("ibt-search--open");
+    if (!isOpen()) {
+      // Case 1: Closed → Open search
+      header.classList.add(OPEN_CLASS);
       toggle.setAttribute("aria-expanded", "true");
       field.focus();
       return;
@@ -31,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const value = field.value.trim();
 
     if (value !== "") {
-      // Case 2: already open + has text → submit (prefer requestSubmit to trigger validation/onsubmit)
+      // Case 2: Open + has text → submit form
       if (typeof form.requestSubmit === "function") {
         form.requestSubmit();
       } else {
@@ -40,30 +48,35 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Case 3: open + empty → close
-    header.classList.remove("ibt-search--open");
+    // Case 3: Open + empty → Close search
+    header.classList.remove(OPEN_CLASS);
     toggle.setAttribute("aria-expanded", "false");
   });
 
-  // Close on Escape key
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && header.classList.contains("ibt-search--open")) {
-      header.classList.remove("ibt-search--open");
+  // --- Close on Escape key ---
+  header.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && isOpen()) {
+      header.classList.remove(OPEN_CLASS);
       toggle.setAttribute("aria-expanded", "false");
       toggle.focus();
     }
   });
 
-  // Close if user clicks outside the header (but not on the toggle or its children)
+  // --- Close if user clicks outside the header ---
   document.addEventListener("click", (e) => {
-    const isOpen = header.classList.contains("ibt-search--open");
-    if (
-      isOpen &&
-      !header.contains(e.target) &&
-      !toggle.contains(e.target)
-    ) {
-      header.classList.remove("ibt-search--open");
+    if (isOpen() && !header.contains(e.target) && !toggle.contains(e.target)) {
+      header.classList.remove(OPEN_CLASS);
       toggle.setAttribute("aria-expanded", "false");
     }
   });
+
+  // Optional: Custom event hook for analytics or UI sync
+  const dispatchToggleEvent = () => {
+    const event = new CustomEvent("ibt:searchToggled", { detail: { open: isOpen() } });
+    header.dispatchEvent(event);
+  };
+
+  // Fire event whenever state changes
+  const observer = new MutationObserver(dispatchToggleEvent);
+  observer.observe(header, { attributes: true, attributeFilter: ["class"] });
 });

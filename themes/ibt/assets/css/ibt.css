@@ -27,37 +27,52 @@
    --------- 0.1 - TOKEN & NAMING SYSTEM -------------
    
    WordPress tokens
-     --wp--* ..................... Core WP presets
+     --wp--* ........................ Core WP presets
+     .editor-styles-wrapper ......... Set formats specifically for site editor.
    
    IBT custom tokens
-     --color-* ................... Semantic colour tokens (palette-agnostic)
-     --wp--custom--color--* ...... Private palette (as -color but not exposed to editor)
-     --spacing-* ................. Spacing scale (rem-based or clamp)
-     --transition-* .............. Motion timing (base, fast, slow) for easy tuning
-     +++++ ADD HERE AS EXPANDED +++++
+     --color-* ...................... Semantic colour tokens (palette-agnostic)
+     --ibt-adminbar-offset .......... Offset for WP admin bar
+     --wp--custom--color--* ......... Private palette (as -color but not exposed to editor)
+     --spacing-* .................... Spacing scale (rem-based or clamp)
+     --transition-* ................. Motion timing (base, fast, slow) for easy tuning
 
-   Class naming
-     ibt-header-* ................ Header-specific elements
-     ibt-footer-* ................ Footer-specific elements
-     ibt-nav-* ................... Shared navigation structure
-     ibt-header-nav-* ............ Header nav variant
-     ibt-header-nav-desktop....... Desktop nav instance
-     ibt-header-nav-mobile ....... Mobile nav instance
-     +++++ ADD HERE AS EXPANDED +++++
-   
+    Class naming
+      General
+        .ibt-outer-wrap .............. Marks group blocks that should retain root padding,
+      Header
+        .ibt-header-sticky ........... Makes the header sticky beneath the WP admin bar
+        .ibt-header-inner	............ Constrains the header’s inner width to via wide-size and applies root padding.
+        .ibt-header	.................. Selector.
+        .ibt-header-nav	.............. Common styling for all navigation instances.
+        .ibt-header-nav-desktop	...... Desktop navigation instance
+        .ibt-header-nav-mobile	...... Mobile navigation instance
+        .ibt-header-nav-dual	........ Wrapper combining both desktop and mobile nav blocks for breakpoint toggling.
+        .ibt-header-row1	............ First header row (utility row)
+        .ibt-header-row2	............ Second header row (navigation row)
+        .ibt-header-title-desktop	.... Row 1 site title - visible on desktop
+        .ibt-header-title-mobile ..... Row 2 site title - visible on mobile.
+        .ibt-header-wooicons ......... WooCommerce header icons.
+        .ibt-header-search-field	.... Container for search input
+        .ibt-header-search-button-wrap Search button wrapper. (Aids styling as Woo icons)
+        .ibt-header-search-toggle .... Icon-only button that toggles search visibility.
+        .ibt-header-search.is-open	.. State class applied to header when search field is active/open.
+      Prefooter
+        .ibt-prefooter-inner ......... Centers pre-footer inner group content horizontally.
+        .ibt-prefooter-card	 ......... Inline-block wrapper for pre-footer call-to-action card
 
-   ------------- 0.2 - STYLE PRINCIPLES ----------------------
-   
-   • Header/footer constrained to 80 rem inner width (review later)
-   • Root padding uses clamp().
-   • Colour-agnostic design: only #000 / #fff should appear literal.
-   • All motion uses transition tokens:
-       --transition-base: 0.2s ease-in-out;
-       --transition-fast: 0.15s ease-out;
-       --transition-slow: 0.3s ease;
-   • Typography and spacing use tokens or clamp() for fluid scaling.
-   • Accessibility: AAA general target but safe AA acceptable if needed.
-   • Basic keyboard nav tests during dev, full a11y checks before release
+    ------------- 0.2 - STYLE PRINCIPLES ----------------------
+    
+    • Header/footer constrained to 80 rem inner width (review later)
+    • Root padding uses clamp().
+    • Colour-agnostic design: only #000 / #fff should appear literal.
+    • All motion uses transition tokens:
+        --transition-base: 0.2s ease-in-out;
+        --transition-fast: 0.15s ease-out;
+        --transition-slow: 0.3s ease;
+    • Typography and spacing use tokens or clamp() for fluid scaling.
+    • Accessibility: AAA general target but safe AA acceptable if needed.
+    • Basic keyboard nav tests during dev, full a11y checks before release
 
    
    ------------ 0.3 - COMMENT CONVENTION -------------------------
@@ -179,8 +194,8 @@ hr,
 
 /* 3.1  Sticky header (with admin-bar offsets)
    3.2  Header navigation - Common [.ibt-header-nav]
-   3.3  Header navigation - Desktop [.ibt-nav-desktop]
-   3.4  Header navigation - Mobile [.ibt-nav-mobile]
+   3.3  Header navigation - Desktop [.ibt-header-nav-desktop]
+   3.4  Header navigation - Mobile [.ibt-header-nav-mobile]
    3.5  Navigation backgrounds
    3.6  Header utility icons (Search, Account, Cart)
    3.7  Header width & alignment
@@ -203,13 +218,13 @@ hr,
 }
 
 /* Sticky header; uses :has() which older browsers ignore (falls back to normal header) */
-.ibt-sticky,
-.wp-block-template-part:has(> .ibt-sticky) {
+.ibt-header-sticky,
+.wp-block-template-part:has(> .ibt-header-sticky) {
   position: sticky;
   top: var(--ibt-adminbar-offset);
   z-index: 50; /* header above content */
 }
-.wp-block-template-part:has(> .ibt-sticky) { z-index: 49; } /* wrapper stays just below */
+.wp-block-template-part:has(> .ibt-header-sticky) { z-index: 49; } /* wrapper stays just below */
 
 
 /* ---------- 3.2 Header navigation - COMMON ---------- */
@@ -239,8 +254,8 @@ hr,
 /* ---------- 3.3 Header navigation - DESKTOP ONLY ---------- */
 
 /* Spacing, sizing, centering & AAA tap target — top-level & submenu. */
-.ibt-nav-desktop .wp-block-navigation__container .wp-block-navigation-item__content,
-.ibt-nav-desktop .wp-block-navigation__submenu-container .wp-block-navigation-item__content {
+.ibt-header-nav-desktop .wp-block-navigation__container .wp-block-navigation-item__content,
+.ibt-header-nav-desktop .wp-block-navigation__submenu-container .wp-block-navigation-item__content {
   padding-top: 0;
   padding-bottom: 0;
   min-height: 48px; /* AAA baseline */
@@ -250,7 +265,7 @@ hr,
 }
 
 /* Equal horizontal padding for all clickable elements. */
-.ibt-nav-desktop :is(
+.ibt-header-nav-desktop :is(
   a.wp-block-navigation-item__content,
   button.wp-block-navigation-item__content,
   button.wp-block-navigation-submenu__toggle,
@@ -261,30 +276,30 @@ hr,
 /* ---------- 3.4 Header navigation - MOBILE ONLY ---------- */
 
 /* Collapse all submenus on mobile menu by default */
-.ibt-nav-mobile .wp-block-navigation__responsive-container.is-menu-open
+.ibt-header-nav-mobile .wp-block-navigation__responsive-container.is-menu-open
   .wp-block-navigation__submenu-container { display: none; }
 
 /* Reveal submenu when WordPress marks it as open. Robust selection as this is critical */
-.ibt-nav-mobile .wp-block-navigation__submenu-container.is-open,
-.ibt-nav-mobile .wp-block-navigation-submenu__toggle[aria-expanded="true"]
+.ibt-header-nav-mobile .wp-block-navigation__submenu-container.is-open,
+.ibt-header-nav-mobile .wp-block-navigation-submenu__toggle[aria-expanded="true"]
   + .wp-block-navigation__submenu-container,
-.ibt-nav-mobile .wp-block-navigation-submenu__toggle[aria-expanded="true"]
+.ibt-header-nav-mobile .wp-block-navigation-submenu__toggle[aria-expanded="true"]
   ~ .wp-block-navigation__submenu-container { display: block; }
 
 /* Add padding inside the mobile overlay (drawer) when open. */
-.ibt-nav-mobile :is(.wp-block-navigation__responsive-container,
+.ibt-header-nav-mobile :is(.wp-block-navigation__responsive-container,
                     .wp-block-navigation__responsive-dialog).is-menu-open
   .wp-block-navigation__responsive-container-content { padding: 1.5rem; }
 
-/* Add padding to mobile elements. !importan req'd and it's limited to .ibt-nav-mobile */
-.ibt-nav-mobile a.wp-block-navigation-item__content,
-.ibt-nav-mobile button.wp-block-navigation-submenu__toggle {
+/* Add padding to mobile elements. !importan req'd and it's limited to .ibt-header-nav-mobile */
+.ibt-header-nav-mobile a.wp-block-navigation-item__content,
+.ibt-header-nav-mobile button.wp-block-navigation-submenu__toggle {
   padding-left: 1rem !important;
   padding-right: 1rem !important;
 }
 
 /* AAA compliant tap target (open + close) */
-.ibt-nav-mobile :is(
+.ibt-header-nav-mobile :is(
   .wp-block-navigation__responsive-container-open,
   .wp-block-navigation__responsive-container-close
 ) {
@@ -301,11 +316,11 @@ hr,
 }
 
 /* Hover and focus-visible states */
-.ibt-nav-mobile :is(
+.ibt-header-nav-mobile :is(
   .wp-block-navigation__responsive-container-open,
   .wp-block-navigation__responsive-container-close
 ):hover,
-.ibt-nav-mobile :is(
+.ibt-header-nav-mobile :is(
   .wp-block-navigation__responsive-container-open,
   .wp-block-navigation__responsive-container-close
 ):focus-visible {
@@ -389,20 +404,20 @@ hr,
 /* ---------- 3.8 Header site titles & nav defaults ---------- */
 
 /* Desktop defaults: show desktop title/nav, hide mobile versions */
-.ibt-title--desktop {
+.ibt-header-title-desktop {
   display: block;
   line-height: 49px; /* matches icon height */
   height: 49px;
 }
-.ibt-title--mobile  { display: none; }
-.ibt-nav-dual .ibt-nav-desktop { display: block; }
-.ibt-nav-dual .ibt-nav-mobile  { display: none; }
+.ibt-header-title-mobile  { display: none; }
+.ibt-header-nav-dual .ibt-header-nav-desktop { display: block; }
+.ibt-header-nav-dual .ibt-header-nav-mobile  { display: none; }
 
 /* Default Row 2: flex-end because mobile title hidden */
-.ibt-row2.is-layout-flex { justify-content: flex-end; }
+.ibt-header-row2.is-layout-flex { justify-content: flex-end; }
 
 /* Force desktop nav to stay horizontal */
-.ibt-nav-dual .ibt-nav-desktop .wp-block-navigation__container {
+.ibt-header-nav-dual .ibt-header-nav-desktop .wp-block-navigation__container {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -413,10 +428,10 @@ hr,
 /* ---------- 3.9 Header search button & input ----------  */
 
 /* Search field hidden by default */
-.ibt-search-field { display: none; }
+.ibt-header-search-field { display: none; }
 
 /* Wrapper keeps button snug without extra spacing */
-.ibt-search-button-wrapper {
+.ibt-header-search-button-wrap {
   margin: 0;
   padding: 0;
   width: auto;
@@ -424,7 +439,7 @@ hr,
 }
 
 /* Toggle button styled as icon only */
-.ibt-search-toggle {
+.ibt-header-search-toggle {
   background: none;
   border: none;
   padding: 0;
@@ -437,7 +452,7 @@ hr,
 }
 
 /* When open, show search field at fixed width/height */
-.ibt-search--open .ibt-search-field {
+.ibt-header-search.is-open .ibt-header-search-field {
   display: grid;
   align-items: center;
   height: var(--wp--custom--search--height);
@@ -445,7 +460,7 @@ hr,
 }
 
 /* Input box styling */
-.ibt-search--open .ibt-search-field input[type="search"] {
+.ibt-header-search.is-open .ibt-header-search-field input[type="search"] {
   width: 100%;
   min-width: 0;
   box-sizing: border-box;
@@ -461,7 +476,7 @@ hr,
 }
 
 /* Focus state — rely on border, so suppress outline */
-.ibt-search--open .ibt-search-field input[type="search"]:focus-visible {
+.ibt-header-search.is-open .ibt-header-search-field input[type="search"]:focus-visible {
   outline: none;
 }
 
@@ -508,10 +523,10 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 
 /* Editor-only: force all nav/title variants visible in Site Editor
    (keeps blocks selectable while editing) */
-.editor-styles-wrapper .ibt-title--desktop,
-.editor-styles-wrapper .ibt-title--mobile,
-.editor-styles-wrapper .ibt-nav-dual .ibt-nav-desktop,
-.editor-styles-wrapper .ibt-nav-dual .ibt-nav-mobile {
+.editor-styles-wrapper .ibt-header-title-desktop,
+.editor-styles-wrapper .ibt-header-title-mobile,
+.editor-styles-wrapper .ibt-header-nav-dual .ibt-header-nav-desktop,
+.editor-styles-wrapper .ibt-header-nav-dual .ibt-header-nav-mobile {
   display: block !important;
 }
 
@@ -528,28 +543,28 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 /* ---- Narrow screens ---- */
 @media (max-width: 850px) {
   /* -- Header adaptation for narrow viewport -- */
-  .ibt-title--desktop { display: none; }   /* Swap site titles */
-  .ibt-title--mobile  { display: block; }
-  .ibt-nav-dual.is-layout-flex { justify-content: flex-end; }  /* Row group right, default is space between */
-  .ibt-nav-dual .ibt-nav-desktop { display: none; } /* Swap navs */
-  .ibt-nav-dual .ibt-nav-mobile  { display: block; }
-  .ibt-row1.is-layout-flex { justify-content: flex-end; }   /* Row 1: desktop title hidden */
-  .ibt-row2.is-layout-flex { justify-content: space-between; } /* Row 2: mobile title visible */
+  .ibt-header-title-desktop { display: none; }   /* Swap site titles */
+  .ibt-header-title-mobile  { display: block; }
+  .ibt-header-nav-dual.is-layout-flex { justify-content: flex-end; }  /* Row group right, default is space between */
+  .ibt-header-nav-dual .ibt-header-nav-desktop { display: none; } /* Swap navs */
+  .ibt-header-nav-dual .ibt-header-nav-mobile  { display: block; }
+  .ibt-header-row1.is-layout-flex { justify-content: flex-end; }   /* Row 1: desktop title hidden */
+  .ibt-header-row2.is-layout-flex { justify-content: space-between; } /* Row 2: mobile title visible */
   .ibt-header-inner > .wp-block-column:first-child { flex-basis: 70px; max-width: 70px; }  /* Reduce logo column width */
 }
 
 /* ---- Large width ---- */
 @media (min-width: 1000px) {
   /* Larger font size for header navigation items */
-  .ibt-header .ibt-nav-dual .ibt-nav-desktop .wp-block-navigation__container { font-size: var(--wp--preset--font-size--l); }
+  .ibt-header .ibt-header-nav-dual .ibt-header-nav-desktop .wp-block-navigation__container { font-size: var(--wp--preset--font-size--l); }
   /* Increase block gap between nav items */
-  .ibt-header .ibt-nav-dual .ibt-nav-desktop { gap: var(--wp--preset--spacing--xs); }
+  .ibt-header .ibt-header-nav-dual .ibt-header-nav-desktop { gap: var(--wp--preset--spacing--xs); }
 }
 
 /* ---- Short viewport height ---- */
 @media (max-height: 600px) {
   /* Disable sticky header entirely */
-  .ibt-sticky, .wp-block-template-part:has(> .ibt-sticky) { position: static !important; top: auto !important;  }
+  .ibt-header-sticky, .wp-block-template-part:has(> .ibt-header-sticky) { position: static !important; top: auto !important;  }
 }
 
 
@@ -559,19 +574,19 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 
 /* ---- Medium screens (hide desktop site title when search is open) ---- */
 @media (max-width: 1000px) and (min-width: 780px) {
-  .ibt-search--open .ibt-title--desktop { display: none; }
-  .ibt-search--open .ibt-row1.is-layout-flex { justify-content: flex-end; }
+  .ibt-header-search.is-open .ibt-header-title-desktop { display: none; }
+  .ibt-header-search.is-open .ibt-header-row1.is-layout-flex { justify-content: flex-end; }
 }
 
 /* ---- Narrow screens (shrink search input) ---- */
 @media (max-width: 600px) {
-  .ibt-search--open .ibt-search-field { width: 140px; }
+  .ibt-header-search.is-open .ibt-header-search-field { width: 140px; }
 }
 
 /* ---- Very narrow screens (hide account + cart to make room) ---- */
 @media (max-width: 410px) {
-  .ibt-search--open .ibt-icons [data-block-name="woocommerce/customer-account"],
-  .ibt-search--open .ibt-icons [data-block-name="woocommerce/mini-cart"] {
+  .ibt-header-search.is-open .ibt-icons [data-block-name="woocommerce/customer-account"],
+  .ibt-header-search.is-open .ibt-icons [data-block-name="woocommerce/mini-cart"] {
     display: none;
   }
 }
@@ -582,12 +597,12 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 /* --- Prevent print layout issues (sticky header, double nav) --- */
 @media print {
   /* Show desktop navigation and hide mobile navigation */
-  .ibt-nav-dual .ibt-nav-desktop { display: block !important; }
-  .ibt-nav-dual .ibt-nav-mobile  { display: none !important; }
+  .ibt-header-nav-dual .ibt-header-nav-desktop { display: block !important; }
+  .ibt-header-nav-dual .ibt-header-nav-mobile  { display: none !important; }
 
   /* Disable sticky positioning for header and its template wrapper */
-  .ibt-sticky,
-  .wp-block-template-part:has(> .ibt-sticky) {
+  .ibt-header-sticky,
+  .wp-block-template-part:has(> .ibt-header-sticky) {
     position: static !important;
     top: auto !important;
   }
