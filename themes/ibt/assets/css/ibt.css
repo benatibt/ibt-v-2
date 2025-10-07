@@ -451,8 +451,9 @@ hr,
   justify-content: center;
 }
 
-/* When open, show search field at fixed width/height */
-.ibt-header-search.is-open .ibt-header-search-field {
+/* When open, show search field at fixed width/height 
+   It is run by ibt-header.js*/
+.ibt-header.is-open .ibt-header-search-field {
   display: grid;
   align-items: center;
   height: var(--wp--custom--search--height);
