@@ -17,12 +17,13 @@
 			"padding": true,
 			"units": [ "rem", "%", "px" ],
 			"spacingSizes": [
-				{ "slug": "xxs", "name": "XXS", "size": "0.3rem" },
-				{ "slug": "xs", "name": "XS", "size": "0.6rem" },
-				{ "slug": "s",  "name": "S",  "size": "1.2rem" },
-				{ "slug": "m",  "name": "M",  "size": "1.8rem" },
-				{ "slug": "l",  "name": "L",  "size": "2.4rem" },
-				{ "slug": "xl", "name": "XL", "size": "3.6rem" }
+				{ "slug": "xxs", "name": "XXS", "size": "0.5rem" },
+				{ "slug": "xs", "name": "XS", "size": "0.75rem" },
+				{ "slug": "s",  "name": "S",  "size": "1.125rem" },
+				{ "slug": "m",  "name": "M",  "size": "1.75rem" },
+				{ "slug": "l",  "name": "L",  "size": "clamp(2rem, 2vw + 1rem, 2.5rem)" },
+				{ "slug": "xl", "name": "XL", "size": "clamp(2.25rem, 3vw + 1rem, 3.75rem)" },
+				{ "slug": "xxl", "name": "XXL", "size": "clamp(2.5rem, 4vw + 1rem, 5.5rem)" }
 			]
 		},
 		"border": { "color": true, "radius": true, "style": true, "width": true },
