@@ -505,54 +505,40 @@ hr,
 
 /* ======================================================================
    4. LAYOUT / SPACING
-   Root padding and rail constraint system
+   Root padding and group / wide constraints
    ====================================================================== */
 
 /* ---------- 4.1 Padding Reset ----------- 
-   Reset Group block padding to 0 to remove inherited values from 
-   WordPress core or theme.json. :where() has zero specificity,
-   so padding set directly in the editor (inline) still applies. */
-:where(.wp-block-group) {
-  padding: 0;
-}
+   Reset Group block padding to 0 to neutralise inherited values from WP Core
+   or theme.json. The :where() selector has zero specificity, so inline editor
+   padding or later CSS rules will still apply. */
+:where(.wp-block-group) { padding: 0; }
 
-/* ---------- 4.2 Root padding ----------- 
-   IBT custom root padding: predictable, class-based model.
+/* ---------- 4.2 Root Padding ----------- 
+   Replace WordPress root-padding behaviour (which is difficult to predict)
+   with a simple, class-based model.
+     • .ibt-rootp-apply → apply theme root padding to outer wrapper using the JSON token
+     • inner groups (default) → content constrained by content width or by
+       viewport minus 2 × root padding, whichever is smaller
+     • background fill of constrained groups → limited by content-box
+   CAUTION: Padding added by editors still applies and can visually
+   offset the “rail”; use with care when mixing manual padding and root padding. */
 
-   • .ibt-rootp-apply — apply theme root padding (outermost group)
-   • default — direct children of .ibt-rootp-apply have L/R padding = 0
-   • .ibt-rootp-keep-pad — keep block’s own padding inside rails
-   • .ibt-rootp-bleed — keep padding but extend fill beyond rails
-
-   “The rail” = line at content width (e.g. 80 rem) or viewport minus
-   2 × root padding when smaller — what normal content aligns to. */
-
-/* Apply theme root padding — outer wrapper group */
+/* Apply theme root padding on outer wrappers */
 .ibt-rootp-apply {
   padding-inline: var(--wp--custom--layout--root-padding);
 }
 
-/* Contain constrained sections (alignwide etc.) so background colours
-   stop at the rails. Excludes .ibt-bleed blocks, which are intentional
-   full-width / hero sections. */
-.ibt-rootp-apply > .alignwide:not(.ibt-bleed) {
+/* Contain all constrained sections (.alignnone and .alignwide)
+   so background colours stop cleanly at the rails. */
+.ibt-rootp-apply > :is(.alignnone, .alignwide) {
   box-sizing: content-box;
-  padding-inline: var(--wp--custom--layout--root-padding);
 }
 
-/* .ibt-rootp-bleed — object hangs outside rails by root padding,
-   but its content remains aligned via equal internal padding. */
-.ibt-rootp-bleed {
-  margin-inline: calc(-1 * var(--wp--custom--layout--root-padding));
-  padding-inline: var(--wp--custom--layout--root-padding);
-}
-
-/* Enforce zero padding for all other direct children of .ibt-rootp-apply.
-   High-impact but necessary for predictability; editors override via
-   .ibt-rootp-keep-pad or .ibt-rootp-bleed when exceptions are intended. */
-.ibt-rootp-apply > :where(*):not(.ibt-rootp-keep-pad):not(.ibt-rootp-bleed) {
-  padding-inline: 0 !important;
-}
+/* .ibt-rootp-bleed — Considered but not implemented.
+   If required later, could allow a group’s background colour or image
+   to span the full viewport width (100vw offset) while its content
+   remains aligned to the rails inside an inner constrained group. */
 
 
 /* ======================================================================
