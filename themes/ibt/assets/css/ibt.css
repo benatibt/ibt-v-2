@@ -566,7 +566,7 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
   .ibt-header-nav-dual .ibt-header-nav-mobile  { display: block; }
   .ibt-header-row1.is-layout-flex { justify-content: flex-end; }   /* Row 1: desktop title hidden */
   .ibt-header-row2.is-layout-flex { justify-content: space-between; } /* Row 2: mobile title visible */
-  .ibt-header-inner > .wp-block-column:first-child { flex-basis: 70px; max-width: 70px; }  /* Reduce logo column width */
+  /*.ibt-header-inner > .wp-block-column:first-child { flex-basis: 70px; max-width: 70px; } */ /* Reduce logo column width */
 }
 
 /* ---- Large width ---- */
