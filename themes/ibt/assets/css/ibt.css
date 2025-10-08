@@ -535,7 +535,7 @@ hr,
 /* .ibt-rootp-apply — Applies theme root padding using clamp token.
     Typically used on outer wrapper groups. */
 .ibt-rootp-apply {
-  padding-inline: var(--wp--custom--spacing--root-padding);
+  padding-inline: var(--wp--custom--layout--root-padding);
 }
 
 /* .ibt-rootp-keep-pad — No code required, we are keeping default behaviour. Applied
@@ -546,8 +546,8 @@ hr,
 /* .ibt-rootp-bleed — Effect - The object hangs outside the rails by root padding but
    it's content remains on the rail due to root padding. At full width gives full bleed. */
 .ibt-rootp-bleed {
-  margin-inline: calc(-1 * var(--wp--custom--spacing--root-padding));
-  padding-inline: var(--wp--custom--spacing--root-padding);
+  margin-inline: calc(-1 * var(--wp--custom--layout--root-padding));
+  padding-inline: var(--wp--custom--layout--root-padding);
 }
 
 /* Implement ibt root padding — If it is not one of the above exceptions
