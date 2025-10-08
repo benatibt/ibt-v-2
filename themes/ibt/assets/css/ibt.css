@@ -411,8 +411,8 @@ hr,
   width: 100%;
   max-width: var(--wp--style--global--wide-size);
   margin-inline: auto;
-  padding-left: var(--wp--style--root--padding-left);
-  padding-right: var(--wp--style--root--padding-right);
+  /*padding-left: var(--wp--style--root--padding-left);
+  padding-right: var(--wp--style--root--padding-right);*/
 }
 
 
