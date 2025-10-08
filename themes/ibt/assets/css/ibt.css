@@ -507,11 +507,27 @@ hr,
    Root padding overrides, group/wide constraints
    ====================================================================== */
 
-/* Strip default WP global padding from all Group blocks, except root-level and
-   those marked with .ibt-outer-wrap. Prevents double-padding inside nested groups. */
+/* DEV Updating section
+Strip default WP global padding from all Group blocks, except root-level and
+   those marked with .ibt-outer-wrap. Prevents double-padding inside nested groups.
 :root :where(.wp-block-group):not(.has-global-padding):not(.ibt-outer-wrap) {padding-left: 0; padding-right: 0;}
+*/
 
+/* We can not set group padding in json, it is too strong and replaces root padding.
+   By setting it here with a weak :where selector we set    default padding = 0 
+   but allow any root padding and padding set in editor to survive. */
 
+/* Outer groups: keep root L/R, T/B set ibt default padding = 0 */
+:root :where(.wp-block-group.ibt-outer-wrap),
+:root :where(.wp-block-group.has-global-padding) {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* All other groups: strip default wp padding, set ibt default padding = 0 */
+:root :where(.wp-block-group):not(.has-global-padding):not(.ibt-outer-wrap) {
+  padding: 0;
+}
 
 /* ======================================================================
    5. UTILITIES
