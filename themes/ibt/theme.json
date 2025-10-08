@@ -4,7 +4,7 @@
 	"title": "Islands Book Trust",
 	"description": "Accessible, bookish block theme for Islands Book Trust",
 	"settings": {
-		"appearanceTools": true,
+		"appearanceTools": false,
 		"layout": {
 			"contentSize": "50rem",
 			"wideSize": "80rem"
@@ -135,6 +135,9 @@
 				
 				"color-text-emphasis-primary-visited": "#805D25"
 			},
+			"layout":{
+				"root-padding": "clamp(1rem, 4vw, 3rem)"
+			},
 			"search": {
 				"border":{
 					"radius": "4px",
@@ -163,8 +166,8 @@
 			"padding": {
 				"top":"0",
 				"bottom":"0",
-				"left":  "clamp(1rem, 4vw, 3rem)",
-				"right": "clamp(1rem, 4vw, 3rem)"
+				"left":  "0",
+				"right": "0"
 			}
 		},
 		"color": {

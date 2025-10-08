@@ -518,14 +518,14 @@ Strip default WP global padding from all Group blocks, except root-level and
    but allow any root padding and padding set in editor to survive. */
 
 /* Outer groups: keep root L/R, T/B set ibt default padding = 0 */
-:root :where(.wp-block-group.ibt-outer-wrap) /*,
-:root :where(.wp-block-group.has-global-padding)*/ {
+:root :where(.wp-block-group.ibt-outer-wrap),
+:root :where(.wp-block-group.has-global-padding) {
   padding-top: 0;
   padding-bottom: 0;
 }
 
 /* All other groups: strip default wp padding, set ibt default padding = 0 */
-:root :where(.wp-block-group) /*:not(.has-global-padding)*/:not(.ibt-outer-wrap) {
+:root :where(.wp-block-group):not(.has-global-padding):not(.ibt-outer-wrap) {
   padding: 0;
 }
 
