@@ -40,8 +40,10 @@ IBT custom tokens
 --------- 0.2 - CLASS NAMING ------------
 
 GENERAL / LAYOUT
-  .ibt-outer-wrap ................. Marks group blocks that should retain root padding.
-
+  TO REMOVE .ibt-outer-wrap ....... Marks group blocks that should retain root padding.
+  .ibt-rootp-apply ................ Add to outer groups to apply root padding.
+  .ibt-rootp-keep-pad ............. Keeps block’s own padding inside the content rails.
+  .ibt-rootp-bleed ................ Keeps padding but allows it to extend beyond the rails.
 HEADER
   .ibt-header ..................... Main header wrapper element.
   .ibt-header-icons ............... Wrapper for all header icon buttons.
@@ -504,29 +506,56 @@ hr,
 
 /* ======================================================================
    4. LAYOUT / SPACING
-   Root padding overrides, group/wide constraints
+   Root padding , group/wide constraints
    ====================================================================== */
 
-/* DEV Updating section
-Strip default WP global padding from all Group blocks, except root-level and
-   those marked with .ibt-outer-wrap. Prevents double-padding inside nested groups.
-:root :where(.wp-block-group):not(.has-global-padding):not(.ibt-outer-wrap) {padding-left: 0; padding-right: 0;}
-*/
 
-/* We can not set group padding in json, it is too strong and replaces root padding.
-   By setting it here with a weak :where selector we set    default padding = 0 
-   but allow any root padding and padding set in editor to survive. */
-
-/* Outer groups: keep root L/R, T/B set ibt default padding = 0 */
-:root :where(.wp-block-group.ibt-outer-wrap),
-:root :where(.wp-block-group.has-global-padding) {
-  padding-top: 0;
-  padding-bottom: 0;
+/* ---------- 4.1 Padding Reset ----------- 
+   Reset Group block padding to 0 to remove group padding inherited from 
+   WordPress core, etc. The :where() selector has zero specificity, so 
+   any padding set directly in the block editor (inline styles) or more specificaly
+   in css will not be removed. It will reset any padding set in theme.json. */
+:where(.wp-block-group) {
+  padding: 0;
 }
 
-/* All other groups: strip default wp padding, set ibt default padding = 0 */
-:root :where(.wp-block-group):not(.has-global-padding):not(.ibt-outer-wrap) {
-  padding: 0;
+/* ---------- 4.2 Root padding ----------- 
+   IBT Custom implementation of root padding to avoid inconsistencies in the
+   WordPress system. AIM - A simple, predictable class-based model:
+
+   • .ibt-rootp-apply — apply theme root padding (outermost group)
+   •  default — direct children of .ibt-rootp-apply have L/R padding = 0
+   • .ibt-rootp-keep-pad — keep block’s own padding inside rails
+   • .ibt-rootp-bleed — keep padding but extend beyond rails 
+   
+   "The rail" is a line at the edge of the set content width or 
+   viewport minus 2x root padding when this is smaller. It is
+   what normal content aligns to with root padding.*/
+
+/* .ibt-rootp-apply — Applies theme root padding using clamp token.
+    Typically used on outer wrapper groups. */
+.ibt-rootp-apply {
+  padding-inline: var(--wp--custom--spacing--root-padding);
+}
+
+/* .ibt-rootp-keep-pad — No code required, we are keeping default behaviour. Applied
+    as an exception in .ibt-rootp-apply.
+    Effect - Elements current padding is applied within the rails. */
+
+
+/* .ibt-rootp-bleed — Effect - The object hangs outside the rails by root padding but
+   it's content remains on the rail due to root padding. At full width gives full bleed. */
+.ibt-rootp-bleed {
+  margin-inline: calc(-1 * var(--wp--custom--spacing--root-padding));
+  padding-inline: var(--wp--custom--spacing--root-padding);
+}
+
+/* Implement ibt root padding — If it is not one of the above exceptions
+   remove all padding from direct children of ibt-rootp-apply including 
+   editor applied padding. Editors use exception as needed. High impact 
+   css code but required to take control of root padding. */
+.ibt-rootp-apply > :where(*):not(.ibt-rootp-keep-pad):not(.ibt-rootp-bleed) {
+  padding-inline: 0 !important;
 }
 
 /* ======================================================================
