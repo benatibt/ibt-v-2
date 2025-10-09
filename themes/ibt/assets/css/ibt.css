@@ -740,8 +740,8 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 
 /* TEMP TEST — hard value to confirm rule works */
 .ibt-sideb-content {
-  flex: 0 0 50rem;
-  max-width: 50rem;
+  flex: 0 0 50rem !important;
+  max-width: 50rem !important;
   outline: 5px dashed magenta; /* optional visual marker */
 }
 
