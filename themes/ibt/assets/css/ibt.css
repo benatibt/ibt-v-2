@@ -676,46 +676,12 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 
 /* ======================================================================
    7. DEV & TEST
-   Sandbox. To be moved when complete.
+   Sidebar layout prototype (.ibt-sideb-* pattern)
    ====================================================================== */
 
-
-/* Column wrapper (main + sidebar pattern) */
-.ibt-sideb-columns {
-  gap: var(--wp--preset--spacing--l);
-}
-
-/* Main content column (~50rem max width) */
-.ibt-sideb-content {
-  max-width: var(--wp--custom--size--content);
-}
-
-/* Sidebar column (background + border) */
-.ibt-sideb-sideb {
-  background-color: var(--wp--custom--color--color-sidebar-bg)!important;
-  border-left: 1px solid var(--wp--custom--color--color-sidebar-border);
-  padding-left: var(--wp--preset--spacing--l);
-}
-
-/* Optional sticky CTA area inside sidebar */
-.ibt-sideb-sideb .ibt-cta {
-  position: sticky;
-  top: var(--wp--preset--spacing--xl);
-}
-
-/* Responsive collapse (≤50rem) */
-@media (max-width: 50rem) {
-  .ibt-sideb-sideb {
-    border-left: none;
-    background-color: transparent;
-    padding-left: 0;
-  }
-}
-
-/* ================================================================
-   7.x  SIDEBAR COLUMN WIDTHS
-   ================================================================ */
-
+/* ----------------------------------------------------------------------
+   Column wrapper (main + sidebar pattern)
+   ---------------------------------------------------------------------- */
 .ibt-sideb-columns {
   display: flex;
   flex-wrap: nowrap;
@@ -725,16 +691,34 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
   margin-inline: auto;
 }
 
+/* ----------------------------------------------------------------------
+   Main content column (~50rem width)
+   ---------------------------------------------------------------------- */
 .ibt-sideb-content {
   flex: 0 0 var(--wp--custom--sideb--size-content);
   max-width: var(--wp--custom--sideb--size-content);
 }
 
+/* ----------------------------------------------------------------------
+   Sidebar column (background, border, padding)
+   ---------------------------------------------------------------------- */
 .ibt-sideb-sideb {
   flex: 1 1 auto;
   min-width: 18rem; /* safety minimum for narrow screens */
+  background-color: var(--wp--custom--color--color-sidebar-bg);
+  border-left: 1px solid var(--wp--custom--color--color-sidebar-border);
+  padding-left: var(--wp--preset--spacing--l);
 }
 
+/* Sticky CTA area inside sidebar (optional) */
+.ibt-sideb-sideb .ibt-cta {
+  position: sticky;
+  top: var(--wp--preset--spacing--xl);
+}
+
+/* ----------------------------------------------------------------------
+   Responsive collapse (≤50rem)
+   ---------------------------------------------------------------------- */
 @media (max-width: 50rem) {
   .ibt-sideb-columns {
     flex-direction: column;
@@ -745,7 +729,14 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
     flex: 1 1 100%;
     max-width: 100%;
   }
+
+  .ibt-sideb-sideb {
+    border-left: none;
+    background-color: transparent;
+    padding-left: 0;
+  }
 }
+
 
 
 /* **********************************************************************
