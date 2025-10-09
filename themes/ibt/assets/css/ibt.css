@@ -706,7 +706,7 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
   flex: 1 1 auto;
   min-width: 18rem; /* safety minimum for narrow screens */
   background-color: var(--wp--custom--color--color-sidebar-bg);
-  border-left: 1px solid var(--wp--custom--color--color-sidebar-border);
+  border: 1px solid var(--wp--custom--color--color-sidebar-border);
   padding-left: var(--wp--preset--spacing--l);
 }
 
