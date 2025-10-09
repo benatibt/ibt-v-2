@@ -692,8 +692,8 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 
 /* Sidebar column (background + border) */
 .ibt-sideb-sideb {
-  background-color: var(--wp--custom--color--sidebar-bg)!important;
-  border-left: 1px solid var(--wp--custom--color--sidebar-border);
+  background-color: var(--wp--custom--color--color-sidebar-bg)!important;
+  border-left: 1px solid var(--wp--custom--color--color-sidebar-border);
   padding-left: var(--wp--preset--spacing--l);
 }
 
