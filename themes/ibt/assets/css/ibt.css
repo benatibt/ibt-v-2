@@ -529,9 +529,9 @@ hr,
   padding-inline: var(--wp--custom--layout--root-padding);
 }
 
-/* Contain all constrained sections (.alignnone and .alignwide)
-   so background colours stop cleanly at the rails. */
-.ibt-rootp-apply > :is(.alignnone, .alignwide) {
+/* Contain all childrens' fill unless they are explicitly
+   aligned full so background colour stops cleanly at the rail. */
+.ibt-rootp-apply > :not(.alignfull) {
   box-sizing: content-box;
 }
 
