@@ -150,6 +150,9 @@
 					"right": "var(--wp--preset--spacing--xs)"
 				},
 				"height": "48px"
+			},
+			"sideb": {
+				"size-content": "50rem"
 			}
 		},
 		"shadow": {"defaultPresets": true}
