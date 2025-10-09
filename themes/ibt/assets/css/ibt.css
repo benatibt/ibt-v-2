@@ -679,28 +679,37 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
    Sandbox. To be moved when complete.
    ====================================================================== */
 
-/* Columns spacing */
-.ibt-columns-main{
+/* Column group spacing */
+.ibt-columns-main {
   gap: var(--wp--preset--spacing--l);
 }
 
-/* Sidebar visual tokens */
-.has-sidebar-background{
+/* Main content column (~50rem max width) */
+.ibt-sideb-content {
+  max-width: var(--wp--custom--size--content);
+}
+
+/* Sidebar column */
+.ibt-sideb-sideb {
   background-color: var(--wp--custom--color--sidebar-bg);
   border-left: 1px solid var(--wp--custom--color--sidebar-border);
+  padding-left: var(--wp--preset--spacing--l);
 }
 
-/* Mobile refinement */
-@media (max-width: 50rem){
-  .has-sidebar-background{ border-left: none; }
-}
-
-/* Optional: sticky CTA block inside sidebar 
-  .ibt-sidebar-cta{
+/* Optional sticky CTA area within sidebar */
+.ibt-sideb-sideb .ibt-cta {
   position: sticky;
   top: var(--wp--preset--spacing--xl);
-}*/
+}
 
+/* Responsive collapse behaviour (≤50rem) */
+@media (max-width: 50rem) {
+  .ibt-sideb-sideb {
+    border-left: none;
+    background-color: transparent;
+    padding-left: 0;
+  }
+}
 
 
 
