@@ -679,14 +679,28 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
    Sandbox. To be moved when complete.
    ====================================================================== */
 
-/* Make inner group on pre-footer hug content 
-.ibt-prefooter-inner { justify-content: center; }
-.ibt-prefooter-card {
-  display: inline-block !important;
-  width: auto !important;
-  max-width: max-content !important;
+/* Columns spacing */
+.ibt-columns-main{
+  gap: var(--wp--preset--spacing--l);
 }
-.ibt-prefooter-card p { margin: 0 !important; } */
+
+/* Sidebar visual tokens */
+.has-sidebar-background{
+  background-color: var(--wp--custom--color--sidebar-bg);
+  border-left: 1px solid var(--wp--custom--color--sidebar-border);
+}
+
+/* Mobile refinement */
+@media (max-width: 50rem){
+  .has-sidebar-background{ border-left: none; }
+}
+
+/* Optional: sticky CTA block inside sidebar 
+  .ibt-sidebar-cta{
+  position: sticky;
+  top: var(--wp--preset--spacing--xl);
+}*/
+
 
 
 
