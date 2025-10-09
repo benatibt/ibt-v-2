@@ -721,13 +721,13 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
   flex-wrap: nowrap;
   justify-content: space-between;
   gap: var(--wp--preset--spacing--l);
-  max-width: var(--wp--custom--size--wide);
+  max-width: var(--wp--style--global--wide-size);
   margin-inline: auto;
 }
 
 .ibt-sideb-content {
-  flex: 0 0 var(--wp--custom--size--content);
-  max-width: var(--wp--custom--size--content);
+  flex: 0 0 var(--wp--custom--sideb--size-content);
+  max-width: var(--wp--custom--sideb--size-content);
 }
 
 .ibt-sideb-sideb {
