@@ -737,6 +737,16 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
   }
 }
 
+
+
+/* Extend sidebar background beyond 80rem container */
+.ibt-sideb-sideb {
+  position: relative;
+  z-index: 0; /* ensure border stays visible */
+  margin-right: calc((100vw - var(--wp--style--global--wide-size)) / 2);
+}
+
+
 /* **********************************************************************
    END IBT THEME CSS
    ********************************************************************** */
