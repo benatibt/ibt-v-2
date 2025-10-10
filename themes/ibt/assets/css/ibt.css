@@ -679,83 +679,25 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
    Sidebar layout prototype (.ibt-sideb-* pattern)
    ====================================================================== */
 
-/* ----------------------------------------------------------------------
-   Column wrapper (main + sidebar pattern)
-   ---------------------------------------------------------------------- */
-.ibt-sideb-columns {
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-  gap: var(--wp--preset--spacing--l);
-  max-width: var(--wp--style--global--wide-size);
-  margin-inline: auto;
-}
-
-/* ----------------------------------------------------------------------
-   Main content column (~50rem width)
-   ---------------------------------------------------------------------- */
-.ibt-sideb-content {
-  flex: 0 0 var(--wp--custom--sideb--size-content) !important;
-  max-width: var(--wp--custom--sideb--size-content) !important;
-}
-
-/* ----------------------------------------------------------------------
-   Sidebar column (background, border, padding)
-   ---------------------------------------------------------------------- */
-.ibt-sideb-sideb {
-  flex: 1 1 auto;
-  min-width: 18rem; /* safety minimum for narrow screens */
-  /*background-color: #F6F3EE;*/
-  border: 1px solid var(--wp--custom--color--color-sidebar-border);
-  padding-left: var(--wp--preset--spacing--l);
-}
-
-/* Sticky CTA area inside sidebar (optional) */
-.ibt-sideb-sideb .ibt-cta {
-  position: sticky;
-  top: var(--wp--preset--spacing--xl);
-}
-
-/* ----------------------------------------------------------------------
-   Responsive collapse (≤50rem)
-   ---------------------------------------------------------------------- */
-@media (max-width: 50rem) {
-  .ibt-sideb-columns {
-    flex-direction: column;
-  }
-
-  .ibt-sideb-content,
-  .ibt-sideb-sideb {
-    flex: 1 1 100%;
-    max-width: 100%;
-  }
-
-  .ibt-sideb-sideb {
-    border-left: none;
-    background-color: transparent;
-    padding-left: 0;
-  }
-}
-
 /* ======================================================================
-   IBT – Sidebar Layout + CTA (production-safe baseline)
+   7. DEV – Sidebar Layout (layout-only, no visuals)
    - Equal-height columns
-   - Token-driven widths
-   - Sidebar visual treatment
-   - Sticky CTA in sidebar
-   - Footer clearance + print hygiene
+   - Token-driven content width (scoped)
+   - Sidebar as vertical stack
+   - Sticky CTA when CTA pattern is placed in sidebar
+   - Optional mobile visibility swap (sidebar ↔ bottom bar)
    ====================================================================== */
 
 /* Columns container (main + sidebar) */
 .ibt-sideb-columns{
   display: flex;
-  align-items: stretch;                          /* make columns share height */
+  align-items: stretch;                           /* make columns share height */
   gap: var(--wp--preset--spacing--l);
   max-width: var(--wp--style--global--wide-size);
   margin-inline: auto;
 }
 
-/* Main content column (~50rem) — scoped specificity + !important to beat core */
+/* Main content column (~50rem) — scoped + !important to beat core defaults */
 .ibt-sideb-columns .ibt-sideb-content{
   flex: 0 0 var(--wp--custom--sideb--size-content) !important;
   max-width: var(--wp--custom--sideb--size-content) !important;
@@ -763,69 +705,50 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
   flex-direction: column;
 }
 
-/* Sidebar column */
+/* Sidebar column as a vertical stack (no visuals here) */
 .ibt-sideb-sideb{
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
-  gap: var(--wp--preset--spacing--m);
-  /* Visual: transparent rail with a subtle vertical rule */
-  background: transparent;
-  border-left: 1px solid var(--wp--custom--color--color-sidebar-border);
-  padding-left: var(--wp--preset--spacing--l);
-  /* Ensure the rail doesn’t crash into the footer when sticky elements are present */
+  /* clearance so sticky items don't collide with footer */
   margin-bottom: var(--wp--preset--spacing--xl);
 }
 
-/* Optional: generic card styling (useful for quick prototyping) */
-.ibt-card{
-  background: var(--wp--custom--color--color-sidebar-bg);
-  border: 1px solid var(--wp--custom--color--color-sidebar-border);
-  border-radius: var(--wp--custom--radius--m, 0.5rem);
-  padding: var(--wp--preset--spacing--s);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-}
-
-/* ===============================================================
-   CTA pattern (IBT-CTA-1) – shared base + sidebar context
-   =============================================================== */
-
-/* Base CTA box (works inline, bottom bar, and sidebar) */
-.ibt-cta{
-  background: var(--wp--custom--color--color-sidebar-bg);
-  border: 1px solid var(--wp--custom--color--color-sidebar-border);
-  border-radius: var(--wp--custom--radius--m, 0.5rem);
-  padding: var(--wp--preset--spacing--m);
-  text-align: center;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  /* tighten internal block gap a touch */
-  --wp--style--block-gap: var(--wp--preset--spacing--s);
-}
-
-/* Button inside CTA */
-.ibt-cta .wp-block-button__link{
-  margin-top: var(--wp--preset--spacing--s);
-  font-weight: 600;
-  text-decoration: none;
-  color: var(--wp--custom--color--color-primary-strong);
-}
-
-/* Sidebar context: make CTA sticky mid-viewport */
+/* Make any CTA pattern instance sticky when placed in the sidebar */
 .ibt-sideb-sideb .ibt-cta{
   position: sticky;
-  top: 50vh;                       /* sits around mid screen while scrolling */
+  top: 50vh;                       /* sit around mid-screen while scrolling */
   align-self: flex-start;
 }
 
-/* Print hygiene: hide rails & CTAs on print */
-@media print{
-  .ibt-sideb-sideb,
-  .ibt-cta{ display: none !important; }
+/* ---------------------------------------------------------------
+   Optional: mobile swap (only applies if .ibt-bottom-bar exists)
+   - Desktop/tablet: sidebar shown, bottom bar hidden
+   - ≤50rem: sidebar hidden, bottom bar shown
+   - Also relax content width on small screens
+   --------------------------------------------------------------- */
+.ibt-bottom-bar{ display: none; }
+
+@media (max-width: 50rem){
+  .ibt-sideb-sideb{ display: none; }
+  .ibt-bottom-bar{ display: block; }
+
+  /* Let content go full width on narrow screens */
+  .ibt-sideb-columns .ibt-sideb-content{
+    flex: 1 1 100% !important;
+    max-width: 100% !important;
+  }
 }
 
+/* ----------------------------------------------------------------
+   TEMP fallback (remove once token is in theme.json):
+   If --wp--custom--sideb--size-content isn't defined yet, uncomment:
+
+.ibt-sideb-columns .ibt-sideb-content{
+  flex: 0 0 50rem !important;
+  max-width: 50rem !important;
+}
+------------------------------------------------------------------ */
 
 
 
