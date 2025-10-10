@@ -730,12 +730,12 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
   display: flex;
   flex-direction: column;
 
-/* Sidebar column: simple two-stop fade */
-background: linear-gradient(
-  to right,
-  var(--wp--custom--color--color-sidebar-bg) 0%,
-  var(--wp--preset--color--background) 100%
-);
+  /* Gradient layer = fades from sidebar → page paper (with fallbacks) */
+  background-image: linear-gradient(
+    to right,
+    var(--wp--custom--color--color-sidebar-bg, #F3F0EB) 0%,
+    var(--wp--preset--color--background, #FAF9F7) 100%
+  );
 
   /* clearance so sticky items don't collide with footer */
   margin-bottom: var(--wp--preset--spacing--xl);
