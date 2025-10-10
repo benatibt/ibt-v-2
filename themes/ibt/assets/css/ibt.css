@@ -743,7 +743,7 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 
 /* Responsive spacer inside sidebar */
 .ibt-sideb-sideb .ibt-sideb-spacer {
-  height: clamp(2rem, 10vh, 60rem) !important;
+  height: clamp(2rem, 1vh, 60rem) !important;
 }
 
 /* ---------------------------------------------------------------
