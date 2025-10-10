@@ -729,6 +729,14 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
   min-width: var(--_sidebar-min);
   display: flex;
   flex-direction: column;
+
+  /* Subtle paper-like gradient */
+background: linear-gradient(
+  to right,
+  var(--wp--custom--color--color-sidebar-bg) 0%,
+  color-mix(in srgb, var(--wp--custom--color--color-sidebar-bg) 90%, var(--wp--custom--color--color-header-bg)) 100%
+);
+
   /* clearance so sticky items don't collide with footer */
   margin-bottom: var(--wp--preset--spacing--xl);
 }
@@ -740,12 +748,7 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
   align-self: flex-start;
 }
 
-/* Subtle paper-like gradient */
-background: linear-gradient(
-  to right,
-  var(--wp--custom--color--color-sidebar-bg) 0%,
-  color-mix(in srgb, var(--wp--custom--color--color-sidebar-bg) 90%, var(--wp--custom--color--color-header-bg)) 100%
-);
+
 
 /* ---------------------------------------------------------------
    Optional: mobile swap (only applies if .ibt-bottom-bar exists)
