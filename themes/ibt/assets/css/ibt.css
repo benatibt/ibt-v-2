@@ -745,16 +745,17 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
    --------------------------------------------------------------- */
 .ibt-bottom-bar{ display: none; }
 
-@media (max-width: 50rem){
+/* Mobile collapse (≤56rem): stack + content full width */
+@media (max-width: 56rem){
   .ibt-sideb-sideb{ display: none; }
-  .ibt-bottom-bar{ display: block; }
+  .ibt-bottom-bar{ display: block; } /* only if you’ve added one */
 
-  /* Let content go full width on narrow screens */
   .ibt-sideb-columns .ibt-sideb-content{
     flex: 1 1 100% !important;
     max-width: 100% !important;
   }
 }
+
 
 
 
