@@ -730,13 +730,19 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
   display: flex;
   flex-direction: column;
 
-/* Sidebar gradient: blend into page background (Paper) */
-/* Sidebar gradient: simple 2-stop fade */
-background: linear-gradient(
-  to right,
-  var(--wp--custom--color--color-sidebar-bg) 0%,
-  var(--wp--preset--color--background) 100%
-);
+ /* Subtle gradient only within the sidebar area */
+  background: linear-gradient(
+    to right,
+    var(--wp--custom--color--color-sidebar-bg) 0%,
+    color-mix(in srgb,
+      var(--wp--custom--color--color-sidebar-bg) 50%,
+      var(--wp--preset--color--background)
+    ) 70%,
+    var(--wp--preset--color--background) 100%
+  );
+
+  background-clip: content-box; /* limit gradient to inner content area */
+  box-sizing: border-box;       /* ensures clip behaves correctly */
 
   /* clearance so sticky items don't collide with footer */
   margin-bottom: var(--wp--preset--spacing--xl);
