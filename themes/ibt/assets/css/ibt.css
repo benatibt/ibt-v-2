@@ -698,6 +698,9 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
   --_content-max: var(--wp--custom--sideb--size-content, 50rem);
   --_content-min: 33rem;                          /* readable floor */
   --_sidebar-min: 20rem;                          /* usable product-card floor */
+
+  /* Root padding */
+  --_root-pad: var(--wp--custom--layout--root-padding, 2rem);
 }
 
 /* Main content column (clamped by ratio + guards) */
@@ -745,10 +748,10 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
    --------------------------------------------------------------- */
 .ibt-bottom-bar{ display: none; }
 
-/* Mobile collapse (≤56rem): stack + content full width */
-@media (max-width: 56rem){
+/* Collapse when total width ≤ 56rem + 2×root padding */
+@media (max-width: calc(56rem + (2 * var(--wp--custom--layout--root-padding, 2rem)))){
   .ibt-sideb-sideb{ display: none; }
-  .ibt-bottom-bar{ display: block; } /* only if you’ve added one */
+  .ibt-bottom-bar{ display: block; }
 
   .ibt-sideb-columns .ibt-sideb-content{
     flex: 1 1 100% !important;
