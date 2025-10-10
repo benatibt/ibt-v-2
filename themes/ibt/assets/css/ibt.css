@@ -699,8 +699,8 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
   --_content-min: 33rem;                          /* readable floor */
   --_sidebar-min: 20rem;                          /* usable product-card floor */
 
-  /* Root padding */
-  --_root-pad: var(--wp--custom--layout--root-padding, 2rem);
+  /* NEW: make this a query container so breakpoints key off its real width */
+  container-type: inline-size;
 }
 
 /* Main content column (clamped by ratio + guards) */
@@ -748,16 +748,18 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
    --------------------------------------------------------------- */
 .ibt-bottom-bar{ display: none; }
 
-/* Collapse when total width ≤ 56rem + 2×root padding */
-@media (max-width: calc(56rem + (2 * var(--wp--custom--layout--root-padding, 2rem)))){
+/* Collapse to mobile based on column 1 width */
+@container (max-width: 56rem){
   .ibt-sideb-sideb{ display: none; }
-  .ibt-bottom-bar{ display: block; }
+  .ibt-bottom-bar{ display: block; } /* only matters if you’ve added one */
 
+  /* Let content go full width when the columns container is too narrow */
   .ibt-sideb-columns .ibt-sideb-content{
     flex: 1 1 100% !important;
     max-width: 100% !important;
   }
 }
+
 
 
 
