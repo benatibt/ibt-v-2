@@ -727,6 +727,7 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
     calc(100% - var(--_content-min) - var(--_gap))
   );
   padding-left: var(--wp--custom--layout--root-padding);
+  background-color: beige;
   min-width: var(--_sidebar-min);
   display: flex;
   flex-direction: column;
