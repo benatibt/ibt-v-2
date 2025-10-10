@@ -675,17 +675,12 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 
 
 /* ======================================================================
-   7. DEV & TEST
-   Sidebar layout prototype (.ibt-sideb-* pattern)
-   ====================================================================== */
-
-/* ======================================================================
    7. DEV – Sidebar Layout (layout-only, no visuals)
-   - Equal-height columns
-   - Token-driven content width (scoped)
-   - Sidebar as vertical stack
-   - Sticky CTA when CTA pattern is placed in sidebar
-   - Optional mobile visibility swap (sidebar ↔ bottom bar)
+   - Ratio-driven columns: prefers 5/8 (content) : 3/8 (sidebar)
+   - Guards: content max ≈ 50rem, content min ≈ 33rem, sidebar min ≈ 20rem
+   - Equal-height columns via flex stretch
+   - Opt-in sticky CTA (add class .ibt-sideb-sticky to the instance)
+   - Mobile collapse at ≤50rem (content 100%, sidebar hidden; optional bottom bar)
    ====================================================================== */
 
 /* Columns container (main + sidebar) */
@@ -695,29 +690,50 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
   gap: var(--wp--preset--spacing--l);
   max-width: var(--wp--style--global--wide-size);
   margin-inline: auto;
+
+  /* Ratio + guards */
+  --_gap: var(--wp--preset--spacing--l);
+  --_content-ratio: 0.625;                        /* 5/8 */
+  --_sidebar-ratio: 0.375;                        /* 3/8 */
+  --_content-max: var(--wp--custom--sideb--size-content, 50rem);
+  --_content-min: 33rem;                          /* readable floor */
+  --_sidebar-min: 20rem;                          /* usable product-card floor */
 }
 
-/* Main content column (~50rem) — scoped + !important to beat core defaults */
+/* Main content column (clamped by ratio + guards) */
 .ibt-sideb-columns .ibt-sideb-content{
-  flex: 0 0 var(--wp--custom--sideb--size-content) !important;
-  max-width: var(--wp--custom--sideb--size-content) !important;
+  flex: 0 0 clamp(
+    var(--_content-min),
+    calc(var(--_content-ratio) * (100% - var(--_gap))),
+    var(--_content-max)
+  ) !important;
+  max-width: clamp(
+    var(--_content-min),
+    calc(var(--_content-ratio) * (100% - var(--_gap))),
+    var(--_content-max)
+  ) !important;
   display: flex;
   flex-direction: column;
 }
 
-/* Sidebar column as a vertical stack (no visuals here) */
+/* Sidebar column (clamped by ratio + min) */
 .ibt-sideb-sideb{
-  flex: 1 1 auto;
+  flex: 1 1 clamp(
+    var(--_sidebar-min),
+    calc(var(--_sidebar-ratio) * (100% - var(--_gap))),
+    calc(100% - var(--_content-min) - var(--_gap))
+  );
+  min-width: var(--_sidebar-min);
   display: flex;
   flex-direction: column;
   /* clearance so sticky items don't collide with footer */
   margin-bottom: var(--wp--preset--spacing--xl);
 }
 
-/* Make any CTA pattern instance sticky when placed in the sidebar */
-.ibt-sideb-sideb .ibt-cta{
+/* Opt-in sticky: mark the specific CTA/card you want to stick */
+.ibt-sideb-sideb .ibt-sideb-sticky{
   position: sticky;
-  top: 50vh;                       /* sit around mid-screen while scrolling */
+  top: 50vh;                                      /* mid-viewport feel */
   align-self: flex-start;
 }
 
@@ -740,15 +756,6 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
   }
 }
 
-/* ----------------------------------------------------------------
-   TEMP fallback (remove once token is in theme.json):
-   If --wp--custom--sideb--size-content isn't defined yet, uncomment:
-
-.ibt-sideb-columns .ibt-sideb-content{
-  flex: 0 0 50rem !important;
-  max-width: 50rem !important;
-}
------------------------------------------------------------------- */
 
 
 
