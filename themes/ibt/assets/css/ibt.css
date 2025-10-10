@@ -732,6 +732,9 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 
   /* Flat subtle tone — just darker than page background */
   background-color: #F8F6F2;
+  background-attachment: local;
+  background-origin: border-box;    /* paint through padding */
+  background-clip: border-box;      /* allow full bleed */
 
   /* clearance so sticky items don't collide with footer */
   margin-bottom: var(--wp--preset--spacing--xl);
