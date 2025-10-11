@@ -789,21 +789,13 @@ Purpose:
   
 }
 
-/* DEBUG — Force sticky diagnostics */
-.ibt-sideb-sideb {
-  outline: 2px dashed red !important;
-  min-height: 200vh !important; /* ensure overflow */
-  position: relative !important;
-  overflow: visible !important;
+
+/* Fix: allow sticky elements inside flex-based column layouts */
+.ibt-sideb-columns {
+  align-items: flex-start;   /* ensures children scroll independently */
+  overflow: visible;         /* prevent containment clipping */
+  contain: layout;           /* isolate flex without blocking sticky */
 }
-
-.ibt-sideb-sideb .ibt-sideb-sticky {
-  background: rgba(255,0,0,0.1) !important;
-  position: sticky !important;
-  top: 20vh !important;
-}
-
-
 
 /* **********************************************************************
    END IBT THEME CSS
