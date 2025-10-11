@@ -772,7 +772,7 @@ Purpose:
 .ibt-sideb-mobile {display: none;}
 
 /* Collapse to mobile layout */
-@media (max-width: 58rem) {
+@media (max-width: 60rem) {
 
   .ibt-sideb-sideb {display: none;}          /* hide sidebar column */
   .ibt-sideb-mobile {display: block;}        /* show mobile CTA bar */
