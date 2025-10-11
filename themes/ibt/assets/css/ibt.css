@@ -772,7 +772,7 @@ Purpose:
 .ibt-sideb-mobile {display: none;}
 
 /* Collapse to mobile layout */
-@media (max-width: 60rem) {
+@media (max-width: 58rem) {
 
   .ibt-sideb-sideb {display: none;}          /* hide sidebar column */
   .ibt-sideb-mobile {display: block;}        /* show mobile CTA bar */
@@ -782,7 +782,7 @@ Purpose:
     flex: 1 1 100% !important;
     max-width: 100% !important;
   }
-
+  
 }
 
 
