@@ -542,6 +542,101 @@ hr,
   box-sizing: content-box;
 }
 
+/* ---------------------------------------------------------------------
+    4.2 - SINGLE POST WITH SIDEBAR
+
+single.html
+   • One-article layout with optional right sidebar.
+   • Sidebar (<aside>) lives inside second column (.ibt-sideb-sideb).
+   • Sticky CTAs use .ibt-sideb-sticky (position: sticky; top: 50vh).
+   • Mobile bar <aside.ibt-sideb-mobile> shown ≤50rem; desktop hidden.
+   • Outer <main> uses .ibt-rootp-apply for global root padding. 
+   
+Purpose:
+   Manage two-column post layouts with an optional sidebar and mobile CTA bar.
+
+   Desktop (>60rem)
+   • Two columns (5/8 content, 3/8 sidebar)
+   • Equal-height columns via flex stretch
+   • Sticky CTA (.ibt-sideb-sticky) ensures visible sidebar content
+   • Mobile bottom bar (.ibt-sideb-mobile) hidden
+
+   Mobile (≤60rem)
+   • Sidebar hidden, bottom bar shown
+   • Content column expands to full width
+
+   Editor
+   • Both sidebar and bottom bar visible for editing convenience */
+
+   /* ******************************************************************
+                DEV REQUIRED – Future Semantic Enhancement
+  
+   Once single.html and sidebar templates are stable:
+   • Move HTML semantics (role="complementary", aria-label="Sidebar")
+     into PHP via render_block filter.
+   • Implement in theme /inc/semantics.php and include from functions.php.
+   • Purpose: preserve <div> for Gutenberg editor compatibility while
+     providing <aside>-equivalent semantics on front-end render only.
+   ********************************************************************* */
+
+/* Columns container (main + sidebar) */
+.ibt-sideb-columns {
+  display: flex;
+  align-items: stretch;                           /* equal column heights */
+  gap: var(--wp--preset--spacing--l);
+  max-width: var(--wp--style--global--wide-size);
+  margin-inline: auto;
+
+  /* Ratio + guards (variable defs) */
+  --_gap: var(--wp--preset--spacing--l);
+  --_content-ratio: 0.625;                        /* 5/8 */
+  --_sidebar-ratio: 0.375;                        /* 3/8 */
+  --_content-max: var(--wp--custom--sideb--size-content, 50rem);
+  --_content-min: 33rem;                          /* readable floor */
+  --_sidebar-min: 20rem;                          /* usable product-card floor */
+}
+
+/* Main content column (clamped by ratio + guards) */
+.ibt-sideb-columns .ibt-sideb-content {
+  flex: 0 0 clamp(
+    var(--_content-min),
+    calc(var(--_content-ratio) * (100% - var(--_gap))),
+    var(--_content-max)
+  ) !important;
+  max-width: clamp(
+    var(--_content-min),
+    calc(var(--_content-ratio) * (100% - var(--_gap))),
+    var(--_content-max)
+  ) !important;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Sidebar column (clamped by ratio + min)
+   Flex layout keeps spacers and stacking natural. */
+.ibt-sideb-sideb {
+  flex: 1 1 clamp(
+    var(--_sidebar-min),
+    calc(var(--_sidebar-ratio) * (100% - var(--_gap))),
+    calc(100% - var(--_content-min) - var(--_gap))
+  );
+  min-width: var(--_sidebar-min);
+  padding-left: var(--wp--custom--layout--root-padding);
+  display: flex;
+  flex-direction: column;
+
+  /* footer clearance */
+  margin-bottom: var(--wp--preset--spacing--xl);
+}
+
+/* Sticky CTA: opt-in via .ibt-sideb-sticky */
+.ibt-sideb-sideb .ibt-sideb-sticky {
+  position: sticky;
+  top: 50vh;                                      /* mid-viewport feel */
+  align-self: flex-start;
+}
+
+/* Responsive - see 6.3
 
 /* ======================================================================
    5. UTILITIES
@@ -645,8 +740,30 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
   }
 }
 
+/* ---------------------- 6.3 Responsive single post and sidebar (see 4.2) ------------------ */
 
-/* ---------------------- 6.3 Print Safeguards ------------------ */
+/* Default desktop/tablet */
+.ibt-sideb-mobile { display: none; }
+
+/* Collapse to mobile layout */
+@media (max-width: 60rem) {
+  .ibt-sideb-sideb { display: none; }  /* hide sidebar */
+  .ibt-sideb-mobile { display: block; } /* show mobile bottom bar */
+
+  /* Content goes full width */
+  .ibt-sideb-columns .ibt-sideb-content {
+    flex: 1 1 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+/* Site Editor - Show both so they can be editied. */
+body.block-editor-page .ibt-sideb-sideb,
+body.block-editor-page .ibt-sideb-mobile {
+  display: block !important;
+}
+
+/* ---------------------- 6.4 Print Safeguards ------------------ */
 
 /* --- Prevent print layout issues (sticky header, double nav) --- */
 @media print {
@@ -662,7 +779,7 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
   }
 }
 
-/* ---------------------- 6.4 Reduced Motion ------------------ */
+/* ---------------------- 6.5 Reduced Motion ------------------ */
 
 /* --- Implement user reduced-motion preference (WCAG compliance) --- */
 @media (prefers-reduced-motion: reduce) {
@@ -680,113 +797,11 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
    7. DEV – WIP CODE
    ====================================================================== */
 
-/* SINGLE POST WITH SIDEBAR
-
-single.html
-   • One-article layout with optional right sidebar.
-   • Sidebar (<aside>) lives inside second column (.ibt-sideb-sideb).
-   • Sticky CTAs use .ibt-sideb-sticky (position: sticky; top: 50vh).
-   • Mobile bar <aside.ibt-sideb-mobile> shown ≤50rem; desktop hidden.
-   • Outer <main> uses .ibt-rootp-apply for global root padding. 
-   
-Purpose:
-   Manage two-column post layouts with an optional sidebar and mobile CTA bar.
-
-   Desktop (>60rem)
-   • Two columns (5/8 content, 3/8 sidebar)
-   • Equal-height columns via flex stretch
-   • Sticky CTA (.ibt-sideb-sticky) ensures visible sidebar content
-   • Mobile bottom bar (.ibt-sideb-mobile) hidden
-
-   Mobile (≤60rem)
-   • Sidebar hidden, bottom bar shown
-   • Content column expands to full width
-
-   Editor
-   • Both sidebar and bottom bar visible for editing convenience
-   ---------------------------------------------------------------------- */
-
-
-/* ================================================================
-   SINGLE POST WITH SIDEBAR — STABLE BASE
-   Clean, minimal, and confirmed sticky + responsive behaviour
-   ================================================================ */
-
-/* Columns container (main + sidebar) */
-.ibt-sideb-columns {
-  display: flex;
-  align-items: stretch;                           /* equal column heights */
-  gap: var(--wp--preset--spacing--l);
-  max-width: var(--wp--style--global--wide-size);
-  margin-inline: auto;
-
-  /* Ratio + guards */
-  --_gap: var(--wp--preset--spacing--l);
-  --_content-ratio: 0.625;                        /* 5/8 */
-  --_sidebar-ratio: 0.375;                        /* 3/8 */
-  --_content-max: var(--wp--custom--sideb--size-content, 50rem);
-  --_content-min: 33rem;                          /* readable floor */
-  --_sidebar-min: 20rem;                          /* usable product-card floor */
-}
-
-/* Main content column (clamped by ratio + guards) */
-.ibt-sideb-columns .ibt-sideb-content {
-  flex: 0 0 clamp(
-    var(--_content-min),
-    calc(var(--_content-ratio) * (100% - var(--_gap))),
-    var(--_content-max)
-  ) !important;
-  max-width: clamp(
-    var(--_content-min),
-    calc(var(--_content-ratio) * (100% - var(--_gap))),
-    var(--_content-max)
-  ) !important;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Sidebar column (clamped by ratio + min)
-   Flex layout keeps spacers and stacking natural. */
-.ibt-sideb-sideb {
-  flex: 1 1 clamp(
-    var(--_sidebar-min),
-    calc(var(--_sidebar-ratio) * (100% - var(--_gap))),
-    calc(100% - var(--_content-min) - var(--_gap))
-  );
-  min-width: var(--_sidebar-min);
-  padding-left: var(--wp--custom--layout--root-padding);
-  display: flex;
-  flex-direction: column;
-
-  /* footer clearance */
-  margin-bottom: var(--wp--preset--spacing--xl);
-}
-
-/* Sticky CTA: opt-in via .ibt-sideb-sticky */
-.ibt-sideb-sideb .ibt-sideb-sticky {
-  position: sticky;
-  top: 50vh;                                      /* mid-viewport feel */
-  align-self: flex-start;
-}
 
 /* ---------------------------------------------------------------
    MOBILE SWAP (Sidebar ⇄ Bottom Bar)
    --------------------------------------------------------------- */
 
-/* Default desktop/tablet */
-.ibt-sideb-mobile { display: none; }
-
-/* Collapse to mobile layout */
-@media (max-width: 60rem) {
-  .ibt-sideb-sideb { display: none; }  /* hide sidebar */
-  .ibt-sideb-mobile { display: block; } /* show mobile bottom bar */
-
-  /* Content goes full width */
-  .ibt-sideb-columns .ibt-sideb-content {
-    flex: 1 1 100% !important;
-    max-width: 100% !important;
-  }
-}
 
 
 
