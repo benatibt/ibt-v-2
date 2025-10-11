@@ -692,13 +692,13 @@ single.html
 Purpose:
    Manage two-column post layouts with an optional sidebar and mobile CTA bar.
 
-   Desktop (>56rem)
+   Desktop (>60rem)
    • Two columns (5/8 content, 3/8 sidebar)
    • Equal-height columns via flex stretch
    • Sticky CTA (.ibt-sideb-sticky) ensures visible sidebar content
    • Mobile bottom bar (.ibt-sideb-mobile) hidden
 
-   Mobile (≤56rem)
+   Mobile (≤60rem)
    • Sidebar hidden, bottom bar shown
    • Content column expands to full width
 
@@ -754,6 +754,12 @@ Purpose:
 
   /* clearance so sticky items don't collide with footer */
   margin-bottom: var(--wp--preset--spacing--xl);
+}
+
+/* Ensure sidebar containers allow sticky positioning */
+.ibt-sideb-columns,
+.ibt-sideb-sideb {
+  overflow: visible;
 }
 
 /* Opt-in sticky: mark the specific CTA/card you want to stick */
