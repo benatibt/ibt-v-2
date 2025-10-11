@@ -757,8 +757,8 @@ Purpose:
 }
 
 /* DEV - Try to make sticky stick */
-.ibt-sideb-sideb aside {
-  display: block;
+/* Promote sidebar column to sticky container if it has a sticky CTA */
+.ibt-sideb-sideb:has(.ibt-sideb-sticky) {
   position: relative;
   overflow: visible;
 }
