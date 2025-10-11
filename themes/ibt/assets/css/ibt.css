@@ -790,13 +790,6 @@ Purpose:
 }
 
 
-/* DEBUG — force all ancestors of sticky visible and block-level */
-body, .wp-site-blocks, main, .wp-block-group, .wp-block-columns, .wp-block-column, aside {
-  overflow: visible !important;
-  display: block !important;
-  position: static !important;
-}
-
 
 /* **********************************************************************
    END IBT THEME CSS
