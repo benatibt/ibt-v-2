@@ -743,17 +743,17 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 }
 
 /* ---------------------------------------------------------------
-   Optional: mobile swap (only applies if .ibt-bottom-bar exists)
+   Optional: mobile swap (only applies if .ibt-sideb-mobile exists)
    - Desktop/tablet: sidebar shown, bottom bar hidden
    - ≤50rem: sidebar hidden, bottom bar shown
    - Also relax content width on small screens
    --------------------------------------------------------------- */
-.ibt-bottom-bar{ display: none; }
+.ibt-sideb-mobile{ display: none; }
 
 /* Collapse to mobile based on column 1 width */
 @container (max-width: 56rem){
   .ibt-sideb-sideb{ display: none; }
-  .ibt-bottom-bar{ display: block; } /* only matters if you’ve added one */
+  .ibt-sideb-mobile{ display: block; } /* only matters if you’ve added one */
 
   /* Let content go full width when the columns container is too narrow */
   .ibt-sideb-columns .ibt-sideb-content{
