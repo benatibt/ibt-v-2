@@ -736,9 +736,8 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 }
 
 /* Opt-in sticky: mark the specific CTA/card you want to stick */
-.ibt-sideb-sideb aside .ibt-sideb-sticky{
-  border-color: hotpink !important;
-  position: sticky !important;
+.ibt-sideb-sideb .ibt-sideb-sticky{
+  position: sticky;
   top: 50vh;                                      /* mid-viewport feel */
   align-self: flex-start;
 }
