@@ -789,7 +789,11 @@ Purpose:
   
 }
 
-
+/* FIX: allow sticky within Gutenberg column */
+.ibt-sideb-sideb.is-layout-flow {
+  display: block !important;
+  overflow: visible !important;
+}
 
 /* **********************************************************************
    END IBT THEME CSS
