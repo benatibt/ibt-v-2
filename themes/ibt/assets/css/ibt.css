@@ -724,6 +724,12 @@ Purpose:
   --_sidebar-min: 20rem;                          /* usable product-card floor */
 }
 
+/* Fix: disable Gutenberg flex layout on columns container so sticky works */
+.ibt-sideb-columns.is-layout-flex {
+  display: block !important;
+  overflow: visible !important;
+}
+
 /* Main content column (clamped by ratio + guards) */
 .ibt-sideb-columns .ibt-sideb-content {
   flex: 0 0 clamp(
