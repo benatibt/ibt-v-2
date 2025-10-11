@@ -707,6 +707,11 @@ Purpose:
    ---------------------------------------------------------------------- */
 
 
+/* ================================================================
+   SINGLE POST WITH SIDEBAR — STABLE BASE
+   Clean, minimal, and confirmed sticky + responsive behaviour
+   ================================================================ */
+
 /* Columns container (main + sidebar) */
 .ibt-sideb-columns {
   display: flex;
@@ -741,53 +746,48 @@ Purpose:
 }
 
 /* Sidebar column (clamped by ratio + min)
-   • Block layout ensures sticky CTAs work correctly.
-   • Also defines local positioning context for sticky children.
-   • Flex removed — vertical stacking occurs naturally. */
+   Flex layout keeps spacers and stacking natural. */
 .ibt-sideb-sideb {
   flex: 1 1 clamp(
     var(--_sidebar-min),
     calc(var(--_sidebar-ratio) * (100% - var(--_gap))),
     calc(100% - var(--_content-min) - var(--_gap))
   );
-  padding-left: var(--wp--custom--layout--root-padding);
   min-width: var(--_sidebar-min);
-  display: block;
-  position: relative;            /* ensure sticky anchors correctly */
-  overflow: visible;             /* prevent clipping */
-  margin-bottom: var(--wp--preset--spacing--xl); /* footer clearance */
+  padding-left: var(--wp--custom--layout--root-padding);
+  display: flex;
+  flex-direction: column;
+
+  /* footer clearance */
+  margin-bottom: var(--wp--preset--spacing--xl);
 }
 
-/* Opt-in sticky: mark the last CTA with class .ibt-sideb-sticky */
+/* Sticky CTA: opt-in via .ibt-sideb-sticky */
 .ibt-sideb-sideb .ibt-sideb-sticky {
   position: sticky;
-  top: 50vh;                     /* mid-viewport feel */
-  z-index: 1;                    /* visible above siblings */
+  top: 50vh;                                      /* mid-viewport feel */
+  align-self: flex-start;
 }
-
 
 /* ---------------------------------------------------------------
    MOBILE SWAP (Sidebar ⇄ Bottom Bar)
    --------------------------------------------------------------- */
 
-/* Default desktop/wide tablet state */
-.ibt-sideb-sideb {display: block;} /* Sidebar visible on desktop */
-.ibt-sideb-mobile {display: none;}  /* Hidden on desktop */
-
+/* Default desktop/tablet */
+.ibt-sideb-mobile { display: none; }
 
 /* Collapse to mobile layout */
 @media (max-width: 60rem) {
+  .ibt-sideb-sideb { display: none; }  /* hide sidebar */
+  .ibt-sideb-mobile { display: block; } /* show mobile bottom bar */
 
-  .ibt-sideb-sideb {display: none;}          /* hide sidebar column */
-  .ibt-sideb-mobile {display: block;}        /* show mobile CTA bar */
-  
-  /* Let content column expand fully */
+  /* Content goes full width */
   .ibt-sideb-columns .ibt-sideb-content {
     flex: 1 1 100% !important;
     max-width: 100% !important;
   }
-  
 }
+
 
 
 /* **********************************************************************
