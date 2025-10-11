@@ -508,37 +508,39 @@ hr,
    Root padding and group / wide constraints
    ====================================================================== */
 
-/* ---------- 4.1 Padding Reset ----------- 
-   Reset Group block padding to 0 to neutralise inherited values from WP Core
-   or theme.json. The :where() selector has zero specificity, so inline editor
-   padding or later CSS rules will still apply. */
-:where(.wp-block-group) { padding: 0; }
+/* ---------------------------------------------------------------------
+   4.1 Root Padding System
+  
+   WordPress core "root-padding" is unpredictable, varies by context,
+   and conflicts with nested Group block padding. This system replaces
+   it with a single class-based model that applies theme-wide spacing
+   in a predictable, token-driven way.
 
-/* ---------- 4.2 Root Padding ----------- 
-   Replace WordPress root-padding behaviour (which is difficult to predict)
-   with a simple, class-based model.
-     • .ibt-rootp-apply → apply theme root padding to outer wrapper using the JSON token
-     • inner groups (default) → content constrained by content width or by
-       viewport minus 2 × root padding, whichever is smaller
-     • background fill of constrained groups → limited by content-box
-   CAUTION: Padding added by editors still applies and can visually
-   offset the “rail”; use with care when mixing manual padding and root padding. */
+   How it works:
+   • Resets all Group block padding to 0 using :where() for zero specificity.
+     Removes most WP default padding (& any from theme.json) but editor padding survives.
+   • Applies fluid root padding via theme.json token to any wrapper using .ibt-rootp-apply.
+   • Ensures backgrounds stop cleanly at the content rail unless .alignfull is used.
+
+   Notes:
+   • Adjust the clamp() value in theme.json → layout.root-padding to change spacing globally.
+   • Add .ibt-rootp-apply to any outer wrapper (e.g. <main>) to apply global rails.
+   • Manual group padding is generally not required in editor but can be used if needed. */
+
+/* Reset Group block padding (neutral base) */
+:where(.wp-block-group) {
+  padding: 0;
+}
 
 /* Apply theme root padding on outer wrappers */
 .ibt-rootp-apply {
   padding-inline: var(--wp--custom--layout--root-padding);
 }
 
-/* Contain all childrens' fill unless they are explicitly
-   aligned full so background colour stops cleanly at the rail. */
+/* Constrain inner groups to content rail unless .alignfull */
 .ibt-rootp-apply > :not(.alignfull) {
   box-sizing: content-box;
 }
-
-/* .ibt-rootp-bleed — Considered but not implemented.
-   If required later, could allow a group’s background colour or image
-   to span the full viewport width (100vw offset) while its content
-   remains aligned to the rails inside an inner constrained group. */
 
 
 /* ======================================================================
@@ -675,16 +677,36 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 
 
 /* ======================================================================
-   7. DEV – Sidebar Layout (layout-only, no visuals)
-   - Ratio-driven columns: prefers 5/8 (content) : 3/8 (sidebar)
-   - Guards: content max ≈ 50rem, content min ≈ 33rem, sidebar min ≈ 20rem
-   - Equal-height columns via flex stretch
-   - Opt-in sticky CTA (add class .ibt-sideb-sticky to the instance)
-   - Mobile collapse at ≤50rem (content 100%, sidebar hidden; optional bottom bar)
+   7. DEV – WIP CODE
    ====================================================================== */
 
+/* SINGLE POST WITH SIDEBAR
+
+single.html
+   • One-article layout with optional right sidebar.
+   • Sidebar (<aside>) lives inside second column (.ibt-sideb-sideb).
+   • Sticky CTAs use .ibt-sideb-sticky (position: sticky; top: 50vh).
+   • Mobile bar <aside.ibt-sideb-mobile> shown ≤50rem; desktop hidden.
+   • Outer <main> uses .ibt-rootp-apply for global root padding. 
+   
+Desktop (>???? rem)
+   2 column layout. Column widths are ratio driven 5/8 content, 3/8 sidebar
+   Equal-height columns via flex stretch
+   The last CTA in sidebar should have .ibt-sideb-sticky class so there is always sidebar content
+   .ibt-sideb-mobile (bottom bar) is supressed.
+
+Mobile (<???? rem)
+   1 column layout, sidebar is supressed. Content is constrained. .ibt-sideb-mobile is shown.
+
+Editor
+   Both sidebar and bottom bar are shown for editing.
+
+/* =====================================================================
+   4.x SINGLE POST WITH SIDEBAR LAYOUT
+   ===================================================================== */
+
 /* Columns container (main + sidebar) */
-.ibt-sideb-columns{
+.ibt-sideb-columns {
   display: flex;
   align-items: stretch;                           /* make columns share height */
   gap: var(--wp--preset--spacing--l);
@@ -704,7 +726,7 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 }
 
 /* Main content column (clamped by ratio + guards) */
-.ibt-sideb-columns .ibt-sideb-content{
+.ibt-sideb-columns .ibt-sideb-content {
   flex: 0 0 clamp(
     var(--_content-min),
     calc(var(--_content-ratio) * (100% - var(--_gap))),
@@ -720,7 +742,7 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 }
 
 /* Sidebar column (clamped by ratio + min) */
-.ibt-sideb-sideb{
+.ibt-sideb-sideb {
   flex: 1 1 clamp(
     var(--_sidebar-min),
     calc(var(--_sidebar-ratio) * (100% - var(--_gap))),
@@ -735,38 +757,49 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
   margin-bottom: var(--wp--preset--spacing--xl);
 }
 
-/* Opt-in sticky: mark the specific CTA/card you want to stick */
-.ibt-sideb-sideb .ibt-sideb-sticky{
+/* Opt-in sticky CTA card */
+.ibt-sideb-sideb .ibt-sideb-sticky {
   position: sticky;
   top: 50vh;                                      /* mid-viewport feel */
   align-self: flex-start;
 }
 
 /* ---------------------------------------------------------------
-   Optional: mobile swap (only applies if .ibt-sideb-mobile exists)
-   - Desktop/tablet: sidebar shown, bottom bar hidden
-   - ≤50rem: sidebar hidden, bottom bar shown
-   - Also relax content width on small screens
+   MOBILE BEHAVIOUR (Sidebar swap + layout relax)
    --------------------------------------------------------------- */
 /*.ibt-sideb-mobile{ display: none; }*/
 
 /* Collapse to mobile based on column 1 width */
-@container (max-width: 56rem){
-  .ibt-sideb-sideb{ 
-    display: none; 
-    border: 1px;
-    border-color: blueviolet;
-  } /* Hide the sidebar */
-  .ibt-sideb-mobile{ display: block; } /* Display the mobile bottom bar alternative */
+@container (max-width: 56rem) {
+  .ibt-sideb-sideb {
+    display: none;
+  }
+  .ibt-sideb-mobile {
+    display: block;
+  }
 
-  /* Let content go full width when the columns container is too narrow */
-  .ibt-sideb-columns .ibt-sideb-content{
+  /* Let content expand when container narrows */
+  .ibt-sideb-columns .ibt-sideb-content {
     flex: 1 1 100% !important;
     max-width: 100% !important;
   }
 }
 
+/* ---------------------------------------------------------------
+   PLACEHOLDER – Site Editor Adjustments
+   --------------------------------------------------------------- */
+/* .edit-site-editor__* … (planned for future if needed)
+   To visually separate sidebar & mobile bar in editor view. */
 
+/* ---------------------------------------------------------------
+   PLACEHOLDER – Accessibility Hooks
+   --------------------------------------------------------------- */
+/* :focus-visible states, aria-live regions etc. (if required later) */
+
+/* ---------------------------------------------------------------
+   PLACEHOLDER – Testing Overrides
+   --------------------------------------------------------------- */
+/* Temporary borders or colours for layout debugging */
 
 
 
