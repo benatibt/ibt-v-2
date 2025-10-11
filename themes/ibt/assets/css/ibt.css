@@ -790,12 +790,13 @@ Purpose:
 }
 
 
-/* Fix: allow sticky elements inside flex-based column layouts */
-.ibt-sideb-columns {
-  align-items: flex-start;   /* ensures children scroll independently */
-  overflow: visible;         /* prevent containment clipping */
-  contain: layout;           /* isolate flex without blocking sticky */
+/* DEBUG — force all ancestors of sticky visible and block-level */
+body, .wp-site-blocks, main, .wp-block-group, .wp-block-columns, .wp-block-column, aside {
+  overflow: visible !important;
+  display: block !important;
+  position: static !important;
 }
+
 
 /* **********************************************************************
    END IBT THEME CSS
