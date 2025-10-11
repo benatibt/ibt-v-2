@@ -741,8 +741,9 @@ Purpose:
 }
 
 /* Sidebar column (clamped by ratio + min)
-   Revert to block layout so sticky CTAs work inside.
-   Flex removed — vertical stacking occurs naturally. */
+   • Block layout ensures sticky CTAs work correctly.
+   • Also defines local positioning context for sticky children.
+   • Flex removed — vertical stacking occurs naturally. */
 .ibt-sideb-sideb {
   flex: 1 1 clamp(
     var(--_sidebar-min),
@@ -752,32 +753,27 @@ Purpose:
   padding-left: var(--wp--custom--layout--root-padding);
   min-width: var(--_sidebar-min);
   display: block;
-
-  /* clearance so sticky items don't collide with footer */
-  margin-bottom: var(--wp--preset--spacing--xl);
+  position: relative;            /* ensure sticky anchors correctly */
+  overflow: visible;             /* prevent clipping */
+  margin-bottom: var(--wp--preset--spacing--xl); /* footer clearance */
 }
 
-/* Opt-in sticky: mark the last CTA with class ibt-sideb-sticky */
-
-/* Sticky CTA (ensures parent allows sticking) */
-.ibt-sideb-sideb {
-  position: relative;           /* define containing context */
-  overflow: visible;            /* prevent clipping of sticky children */
-}
-
+/* Opt-in sticky: mark the last CTA with class .ibt-sideb-sticky */
 .ibt-sideb-sideb .ibt-sideb-sticky {
   position: sticky;
-  top: 50vh;                    /* mid-viewport feel */
-  align-self: flex-start;
-  z-index: 1;                   /* ensure visible over content */
+  top: 50vh;                     /* mid-viewport feel */
+  z-index: 1;                    /* visible above siblings */
 }
+
 
 /* ---------------------------------------------------------------
    MOBILE SWAP (Sidebar ⇄ Bottom Bar)
    --------------------------------------------------------------- */
 
 /* Default desktop/wide tablet state */
-.ibt-sideb-mobile {display: none;} /* Desktop sideb already visible. */
+.ibt-sideb-sideb {display: block;} /* Sidebar visible on desktop */
+.ibt-sideb-mobile {display: none;}  /* Hidden on desktop */
+
 
 /* Collapse to mobile layout */
 @media (max-width: 60rem) {
