@@ -758,10 +758,18 @@ Purpose:
 }
 
 /* Opt-in sticky: mark the last CTA with class ibt-sideb-sticky */
+
+/* Sticky CTA (ensures parent allows sticking) */
+.ibt-sideb-sideb {
+  position: relative;           /* define containing context */
+  overflow: visible;            /* prevent clipping of sticky children */
+}
+
 .ibt-sideb-sideb .ibt-sideb-sticky {
   position: sticky;
-  top: 50vh;                                      /* mid-viewport feel */
+  top: 50vh;                    /* mid-viewport feel */
   align-self: flex-start;
+  z-index: 1;                   /* ensure visible over content */
 }
 
 /* ---------------------------------------------------------------
