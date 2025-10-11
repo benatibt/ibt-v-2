@@ -756,9 +756,10 @@ Purpose:
   margin-bottom: var(--wp--preset--spacing--xl);
 }
 
-/* Ensure sidebar containers allow sticky positioning */
-.ibt-sideb-columns,
-.ibt-sideb-sideb {
+/* DEV - Try to make sticky stick */
+.ibt-sideb-sideb aside {
+  display: block;
+  position: relative;
   overflow: visible;
 }
 
