@@ -689,26 +689,28 @@ single.html
    • Mobile bar <aside.ibt-sideb-mobile> shown ≤50rem; desktop hidden.
    • Outer <main> uses .ibt-rootp-apply for global root padding. 
    
-Desktop (>???? rem)
-   2 column layout. Column widths are ratio driven 5/8 content, 3/8 sidebar
-   Equal-height columns via flex stretch
-   The last CTA in sidebar should have .ibt-sideb-sticky class so there is always sidebar content
-   .ibt-sideb-mobile (bottom bar) is supressed.
+Purpose:
+   Manage two-column post layouts with an optional sidebar and mobile CTA bar.
 
-Mobile (<???? rem)
-   1 column layout, sidebar is supressed. Content is constrained. .ibt-sideb-mobile is shown.
+   Desktop (>56rem)
+   • Two columns (5/8 content, 3/8 sidebar)
+   • Equal-height columns via flex stretch
+   • Sticky CTA (.ibt-sideb-sticky) ensures visible sidebar content
+   • Mobile bottom bar (.ibt-sideb-mobile) hidden
 
-Editor
-   Both sidebar and bottom bar are shown for editing.
+   Mobile (≤56rem)
+   • Sidebar hidden, bottom bar shown
+   • Content column expands to full width
 
-/* =====================================================================
-   4.x SINGLE POST WITH SIDEBAR LAYOUT
-   ===================================================================== */
+   Editor
+   • Both sidebar and bottom bar visible for editing convenience
+   ---------------------------------------------------------------------- */
+
 
 /* Columns container (main + sidebar) */
 .ibt-sideb-columns {
   display: flex;
-  align-items: stretch;                           /* make columns share height */
+  align-items: stretch;                           /* equal column heights */
   gap: var(--wp--preset--spacing--l);
   max-width: var(--wp--style--global--wide-size);
   margin-inline: auto;
@@ -720,9 +722,6 @@ Editor
   --_content-max: var(--wp--custom--sideb--size-content, 50rem);
   --_content-min: 33rem;                          /* readable floor */
   --_sidebar-min: 20rem;                          /* usable product-card floor */
-
-  /* NEW: make this a query container so breakpoints key off its real width */
-  container-type: inline-size;
 }
 
 /* Main content column (clamped by ratio + guards) */
@@ -757,7 +756,7 @@ Editor
   margin-bottom: var(--wp--preset--spacing--xl);
 }
 
-/* Opt-in sticky CTA card */
+/* Opt-in sticky: mark the specific CTA/card you want to stick */
 .ibt-sideb-sideb .ibt-sideb-sticky {
   position: sticky;
   top: 50vh;                                      /* mid-viewport feel */
@@ -765,42 +764,26 @@ Editor
 }
 
 /* ---------------------------------------------------------------
-   MOBILE BEHAVIOUR (Sidebar swap + layout relax)
+   MOBILE SWAP (Sidebar ⇄ Bottom Bar)
    --------------------------------------------------------------- */
-/*.ibt-sideb-mobile{ display: none; }*/
 
-/* Collapse to mobile based on column 1 width */
-@container (max-width: 56rem) {
-  .ibt-sideb-sideb {
-    display: none;
-  }
-  .ibt-sideb-mobile {
-    display: block;
-  }
+/* Default desktop/wide tablet state */
+.ibt-sideb-sideb {display: flex;}
+.ibt-sideb-mobile {display: none;}
 
-  /* Let content expand when container narrows */
+/* Collapse to mobile layout */
+@media (max-width: 56rem) {
+
+  .ibt-sideb-sideb {display: none;}          /* hide sidebar column */
+  .ibt-sideb-mobile {display: block;}        /* show mobile CTA bar */
+  
+  /* Let content column expand fully */
   .ibt-sideb-columns .ibt-sideb-content {
     flex: 1 1 100% !important;
     max-width: 100% !important;
   }
+  
 }
-
-/* ---------------------------------------------------------------
-   PLACEHOLDER – Site Editor Adjustments
-   --------------------------------------------------------------- */
-/* .edit-site-editor__* … (planned for future if needed)
-   To visually separate sidebar & mobile bar in editor view. */
-
-/* ---------------------------------------------------------------
-   PLACEHOLDER – Accessibility Hooks
-   --------------------------------------------------------------- */
-/* :focus-visible states, aria-live regions etc. (if required later) */
-
-/* ---------------------------------------------------------------
-   PLACEHOLDER – Testing Overrides
-   --------------------------------------------------------------- */
-/* Temporary borders or colours for layout debugging */
-
 
 
 
