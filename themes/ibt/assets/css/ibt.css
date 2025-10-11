@@ -758,8 +758,8 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 }
 
 /* Site Editor - Show both so they can be editied. */
-body.block-editor-page .ibt-sideb-sideb,
-body.block-editor-page .ibt-sideb-mobile {
+.editor-styles-wrapper .ibt-sideb-sideb,
+.editor-styles-wrapper .ibt-sideb-mobile {
   display: block !important;
 }
 
