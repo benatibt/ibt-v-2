@@ -789,6 +789,20 @@ Purpose:
   
 }
 
+/* DEBUG — Force sticky diagnostics */
+.ibt-sideb-sideb {
+  outline: 2px dashed red !important;
+  min-height: 200vh !important; /* ensure overflow */
+  position: relative !important;
+  overflow: visible !important;
+}
+
+.ibt-sideb-sideb .ibt-sideb-sticky {
+  background: rgba(255,0,0,0.1) !important;
+  position: sticky !important;
+  top: 20vh !important;
+}
+
 
 
 /* **********************************************************************
