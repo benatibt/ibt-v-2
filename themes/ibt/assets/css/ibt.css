@@ -287,6 +287,10 @@ hr,
   button.wp-block-navigation-item__content.wp-block-navigation-submenu__toggle
 ) { padding-left: 0.5rem; padding-right: 0.5rem; }
 
+/* Remove automatic ▼ icon from desktop nav items to avoid styling problems.*/
+.ibt-header-nav-desktop .wp-block-navigation__submenu-icon {
+  display: none !important;
+}
 
 /* ---------- 3.4 Header navigation - MOBILE ONLY ---------- */
 
@@ -677,68 +681,7 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
    Breakpoints, reduced motion, print
    ====================================================================== */
 
-/* ---------------------- 6.1 Header layout breakpoints ---------------- */
 
-/* ---- Default is narrow desktop / wide tablet ---- */
-
-/* ---- Narrow screens ---- */
-@media (max-width: 850px) {
-  /* -- Header adaptation for narrow viewport -- */
-  .ibt-header-title-desktop { display: none; }   /* Swap site titles */
-  .ibt-header-title-mobile  { display: block; }
-  .ibt-header-nav-dual.is-layout-flex { justify-content: flex-end; }  /* Row group right, default is space between */
-  .ibt-header-nav-dual .ibt-header-nav-desktop { display: none; } /* Swap navs */
-  .ibt-header-nav-dual .ibt-header-nav-mobile  { display: block; }
-  .ibt-header-row1.is-layout-flex { justify-content: flex-end; }   /* Row 1: desktop title hidden */
-  .ibt-header-row2.is-layout-flex { justify-content: space-between; } /* Row 2: mobile title visible */
-  /*.ibt-header-inner > .wp-block-column:first-child { flex-basis: 70px; max-width: 70px; } */ /* Reduce logo column width */
-}
-
-/* ---- Large width ---- */
-@media (min-width: 1000px) {
-  /* Larger font size for header navigation items */
-  .ibt-header .ibt-header-nav-dual .ibt-header-nav-desktop .wp-block-navigation__container { font-size: var(--wp--preset--font-size--l); }
-  /* Increase block gap between nav items */
-  .ibt-header .ibt-header-nav-dual .ibt-header-nav-desktop { gap: var(--wp--preset--spacing--xs); }
-}
-
-/* ---- Short viewport height ---- */
-@media (max-height: 600px) {
-  /* Disable sticky header entirely */
-  .ibt-header-sticky, .wp-block-template-part:has(> .ibt-header-sticky) { position: static !important; top: auto !important;  }
-}
-
-
-/* ---------------------- 6.2 Header search breakpoints ---------------- */
-
-/* ---- Default is wide screen - Defined in section 3.7 --- */
-
-/* ---- Medium screens (hide desktop site title when search is open) ---- */
-@media (max-width: 1000px) and (min-width: 780px) {
-  .ibt-header:has(.ibt-header-search.is-open) .ibt-header-title-desktop {
-    display: none;
-  }
-  .ibt-header:has(.ibt-header-search.is-open) .ibt-header-row1.is-layout-flex {
-    justify-content: flex-end;
-  }
-}
-
-/* ---- Narrow screens (shrink search input) ---- */
-@media (max-width: 600px) {
-  .ibt-header-search.is-open .ibt-header-search-field {
-    width: 140px;
-  }
-}
-
-/* ---- Very narrow screens (hide account + cart to make room) ---- */
-@media (max-width: 410px) {
-  .ibt-header:has(.ibt-header-search.is-open)
-    .ibt-header-icons [data-block-name="woocommerce/customer-account"],
-  .ibt-header:has(.ibt-header-search.is-open)
-    .ibt-header-icons [data-block-name="woocommerce/mini-cart"] {
-    display: none;
-  }
-}
 
 /* ---------------------- 6.3 Responsive single post and sidebar (see 4.2) ----------------- */
 
@@ -797,13 +740,19 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
    7. DEV – WIP CODE
    ====================================================================== */
 
-
-/* ---------------------------------------------------------------
-   MOBILE SWAP (Sidebar ⇄ Bottom Bar)
-   --------------------------------------------------------------- */
+.ibt-header .ibt-header-nav-dual .ibt-header-nav-desktop { gap: 3px; }
 
 
+.ibt-header-nav-desktop .wp-block-navigation__container {
+  font-size: clamp(17.6px, 0.4vw + 14.4px, 24px) !important;
+}
 
+/* Fluid L/R padding per side: 8px @790 → 20px @1600, linear in between */
+/* Fluid L/R padding per side: 7px @780 → 20px @1500 */
+.ibt-header-nav-desktop .wp-block-navigation-item__content {
+  padding-left:  clamp(7px, 1.81vw - 7.1px, 20px) !important;
+  padding-right: clamp(7px, 1.81vw - 7.1px, 20px) !important;
+}
 
 /* **********************************************************************
    END IBT THEME CSS
