@@ -757,15 +757,7 @@ Purpose:
   margin-bottom: var(--wp--preset--spacing--xl);
 }
 
-
-/* DEV - Try to make sticky stick */
-/* Promote sidebar column to sticky container if it has a sticky CTA 
-.ibt-sideb-sideb:has(.ibt-sideb-sticky) {
-  position: relative;
-  overflow: visible;
-}*/
-
-/* Opt-in sticky: mark the specific CTA/card you want to stick */
+/* Opt-in sticky: mark the last CTA with class ibt-sideb-sticky */
 .ibt-sideb-sideb .ibt-sideb-sticky {
   position: sticky;
   top: 50vh;                                      /* mid-viewport feel */
@@ -777,8 +769,7 @@ Purpose:
    --------------------------------------------------------------- */
 
 /* Default desktop/wide tablet state */
-.ibt-sideb-sideb {display: flex;}
-.ibt-sideb-mobile {display: none;}
+.ibt-sideb-mobile {display: none;} /* Desktop sideb already visible. */
 
 /* Collapse to mobile layout */
 @media (max-width: 60rem) {
