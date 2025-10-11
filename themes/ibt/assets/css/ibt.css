@@ -740,7 +740,9 @@ Purpose:
   flex-direction: column;
 }
 
-/* Sidebar column (clamped by ratio + min) */
+/* Sidebar column (clamped by ratio + min)
+   Revert to block layout so sticky CTAs work inside.
+   Flex removed — vertical stacking occurs naturally. */
 .ibt-sideb-sideb {
   flex: 1 1 clamp(
     var(--_sidebar-min),
@@ -749,19 +751,19 @@ Purpose:
   );
   padding-left: var(--wp--custom--layout--root-padding);
   min-width: var(--_sidebar-min);
-  display: flex;
-  flex-direction: column;
+  display: block;
 
   /* clearance so sticky items don't collide with footer */
   margin-bottom: var(--wp--preset--spacing--xl);
 }
 
+
 /* DEV - Try to make sticky stick */
-/* Promote sidebar column to sticky container if it has a sticky CTA */
+/* Promote sidebar column to sticky container if it has a sticky CTA 
 .ibt-sideb-sideb:has(.ibt-sideb-sticky) {
   position: relative;
   overflow: visible;
-}
+}*/
 
 /* Opt-in sticky: mark the specific CTA/card you want to stick */
 .ibt-sideb-sideb .ibt-sideb-sticky {
