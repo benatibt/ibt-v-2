@@ -39,11 +39,9 @@ IBT custom tokens
 
 --------- 0.2 - CLASS NAMING ------------
 
-GENERAL / LAYOUT
-  TO REMOVE .ibt-outer-wrap ....... Marks group blocks that should retain root padding.
+ROOT PADDING
   .ibt-rootp-apply ................ Add to outer groups to apply root padding.
-  .ibt-rootp-keep-pad ............. Keeps block’s own padding inside the content rails.
-  .ibt-rootp-bleed ................ Keeps padding but allows it to extend beyond the rails.
+  .ibt-rootp-bg-exempt ............ Background is not constrained with content box
 HEADER
   .ibt-header ..................... Main header wrapper element.
   .ibt-header-icons ............... Wrapper for all header icon buttons.
@@ -541,8 +539,8 @@ hr,
   padding-inline: var(--wp--custom--layout--root-padding);
 }
 
-/* Constrain inner groups to content rail unless .alignfull */
-.ibt-rootp-apply > :not(.alignfull) {
+/* Constrain inner groups to content rail unless .alignfull or .ibt-rootp-bg-exempt */
+.ibt-rootp-apply > :not(.alignfull):not(.ibt-rootp-bg-exempt) {
   box-sizing: content-box;
 }
 
@@ -599,6 +597,34 @@ Purpose:
   --_content-min: 33rem;                          /* readable floor */
   --_sidebar-min: 20rem;                          /* usable product-card floor */
 }
+
+
+/* DEV */
+
+/* Full-width background when the sidebar column has the exempt class */
+.ibt-sideb-columns:has(> .ibt-sideb-sideb.ibt-rootp-bg-exempt) { position: relative; isolation: isolate; }
+
+.ibt-sideb-columns:has(> .ibt-sideb-sideb.ibt-rootp-bg-exempt)::after {
+  content:"";
+  position:absolute; top:0; bottom:0;
+  left: calc(var(--_content-ratio) * (100% - var(--_gap)) + var(--_gap));
+  right: calc((100vw - 100%) * -1);
+  background-color:#f6f6f6;
+  z-index:-1;
+}
+
+.ibt-sideb-sideb.ibt-rootp-bg-exempt {
+  border-left: 1px solid var(--wp--preset--color--border-dark, #999);
+}
+
+.ibt-sideb-sideb.ibt-rootp-bg-exempt { background: none; }
+
+@media (max-width: 60rem) {
+  .ibt-sideb-columns:has(> .ibt-sideb-sideb.ibt-rootp-bg-exempt)::after { display:none; }
+}
+
+/* END DEV */
+
 
 /* Main content column (clamped by ratio + guards) */
 .ibt-sideb-columns .ibt-sideb-content {
