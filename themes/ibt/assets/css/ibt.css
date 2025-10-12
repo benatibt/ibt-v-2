@@ -201,167 +201,83 @@ hr,
 
 /* ======================================================================
    3. HEADER, NAV & FOOTER
-   Sticky, navigation, utility icons, titles, search, footer
+   Sticky, navigation, utility icons,  search, footer
    ====================================================================== */
 
-/* 3.1  Sticky header (with admin-bar offsets)
-   3.2  Header navigation - Common [.ibt-header-nav]
-   3.3  Header navigation - Desktop [.ibt-header-nav-desktop]
-   3.4  Header navigation - Mobile [.ibt-header-nav-mobile]
-   3.5  Navigation backgrounds
-   3.6  Header utility icons (Search, Account, Cart)
-   3.7  Header width & alignment
-   3.8  Header site titles & nav defaults
-   3.9  Header search button & input
-   3.10 Footer */
-   
 /* ----------------------------------------------------------------------
    The IBT header contains *TWO SEPARATE* Navigation block instances to 
    allow breakpoint control and avoid limitations of WP’s overlay toggle.
    ----------------------------------------------------------------------*/
 
+/* ----------------------------------------------------------------------
+   3.1 – Sticky Header
+   ---------------------------------------------------------------------- */
+/* Keep header stuck to top with admin-bar offset for logged-in users.
+   Note – Adjust --ibt-adminbar-offset if WordPress changes bar height. */
 
-/* ---------- 3.1 Sticky header (with admin-bar offsets) ---------- */
+:root { --ibt-adminbar-offset: 0px; }
+.admin-bar { --ibt-adminbar-offset: 32px; }
 
-:root { --ibt-adminbar-offset: 0px; } /* default, no admin bar */
-.admin-bar { --ibt-adminbar-offset: 32px; } /* WP admin bar desktop */
 @media (max-width: 782px) {
-  .admin-bar { --ibt-adminbar-offset: 46px; } /* WP admin bar mobile */
+  .admin-bar { --ibt-adminbar-offset: 46px; }
 }
 
-/* Sticky header */
 .ibt-header-sticky,
 .wp-block-template-part:has(> .ibt-header-sticky) {
   position: sticky;
   top: var(--ibt-adminbar-offset);
-  z-index: 50; /* header above content */
-}
-.wp-block-template-part:has(> .ibt-header-sticky) { z-index: 49; } /* wrapper stays just below */
-
-
-/* ---------- 3.2 Header navigation - COMMON ---------- */
-
-/* Ensure all nav items (top-level + submenu) are vertically centered & AAA tap target */
-.ibt-header-nav .wp-block-navigation-item__content {
-  min-height: 48px;       /* AAA baseline */
-  display: flex;
-  align-items: center;
+  z-index: 50;
 }
 
-/* Transparent border avoids layout shift for hover/focus highlight */
-.ibt-header-nav .wp-block-navigation-item__content {
-  border: 2px solid transparent; border-radius: 6px;
-  transition:
-    border-color var(--transition-base),
-    color  var(--transition-base);
-}
+.wp-block-template-part:has(> .ibt-header-sticky) { z-index: 49; }
 
-/* Apply hover & focus-visible effects to general nav content */
-.ibt-header-nav .wp-block-navigation-item__content:hover,
-.ibt-header-nav .wp-block-navigation-item__content:focus-visible {
-  color: var(--wp--custom--color--color-primary-hover);
-  border-color: var(--wp--custom--color--color-primary-hover);
+/* ---- Responsive: short viewport height ----
+   Disable sticky header on small viewports to prevent content loss. */
+@media (max-height: 600px) {
+  .ibt-header-sticky,
+  .wp-block-template-part:has(> .ibt-header-sticky) {
+    position: static !important;
+    top: auto !important;
+  }
 }
 
 
-/* ---------- 3.3 Header navigation - DESKTOP ONLY ---------- */
+/* ----------------------------------------------------------------------
+   3.2 – Header Styling
+   ---------------------------------------------------------------------- */
 
-/* Spacing, sizing, centering & AAA tap target — top-level & submenu. */
-.ibt-header-nav-desktop .wp-block-navigation__container .wp-block-navigation-item__content,
-.ibt-header-nav-desktop .wp-block-navigation__submenu-container .wp-block-navigation-item__content {
-  padding-top: 0;
-  padding-bottom: 0;
-  min-height: 48px; /* AAA baseline */
-  line-height: 1.2;
-  display: flex;
-  align-items: center;
-}
+/* ----- 3.2.A - Base container -----
+   Handles header background, border, and general layout. */
 
-/* Equal horizontal padding for all clickable elements. */
-.ibt-header-nav-desktop :is(
-  a.wp-block-navigation-item__content,
-  button.wp-block-navigation-item__content,
-  button.wp-block-navigation-submenu__toggle,
-  button.wp-block-navigation-item__content.wp-block-navigation-submenu__toggle
-) { padding-left: 0.5rem; padding-right: 0.5rem; }
-
-/* Remove automatic ▼ icon from desktop nav items to avoid styling problems.*/
-.ibt-header-nav-desktop .wp-block-navigation__submenu-icon {
-  display: none !important;
-}
-
-/* ---------- 3.4 Header navigation - MOBILE ONLY ---------- */
-
-/* Collapse all submenus on mobile menu by default */
-.ibt-header-nav-mobile .wp-block-navigation__responsive-container.is-menu-open
-  .wp-block-navigation__submenu-container { display: none; }
-
-/* Reveal submenu when WordPress marks it as open. Robust selection as this is critical */
-.ibt-header-nav-mobile .wp-block-navigation__submenu-container.is-open,
-.ibt-header-nav-mobile .wp-block-navigation-submenu__toggle[aria-expanded="true"]
-  + .wp-block-navigation__submenu-container,
-.ibt-header-nav-mobile .wp-block-navigation-submenu__toggle[aria-expanded="true"]
-  ~ .wp-block-navigation__submenu-container { display: block; }
-
-/* Add padding inside the mobile overlay (drawer) when open. */
-.ibt-header-nav-mobile :is(.wp-block-navigation__responsive-container,
-                    .wp-block-navigation__responsive-dialog).is-menu-open
-  .wp-block-navigation__responsive-container-content { padding: 1.5rem; }
-
-/* Add padding to mobile elements. !importan req'd and it's limited to .ibt-header-nav-mobile */
-.ibt-header-nav-mobile a.wp-block-navigation-item__content,
-.ibt-header-nav-mobile button.wp-block-navigation-submenu__toggle {
-  padding-left: 1rem !important;
-  padding-right: 1rem !important;
-}
-
-/* AAA compliant tap target (open + close) */
-.ibt-header-nav-mobile :is(
-  .wp-block-navigation__responsive-container-open,
-  .wp-block-navigation__responsive-container-close
-) {
-  min-width: 49px;
-  min-height: 49px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid transparent;
-  border-radius: 6px;
+/* Provide base styling and layout for the header container. */
+.ibt-header {
+  background-color: var(--wp--custom--color--color-header-bg);
   color: var(--wp--preset--color--emphasis-primary);
-  cursor: pointer;
-  transition: color var(--transition-base),
-  border-color var(--transition-base);
+  border: none;
 }
 
-/* Hover and focus-visible states */
-.ibt-header-nav-mobile :is(
-  .wp-block-navigation__responsive-container-open,
-  .wp-block-navigation__responsive-container-close
-):hover,
-.ibt-header-nav-mobile :is(
-  .wp-block-navigation__responsive-container-open,
-  .wp-block-navigation__responsive-container-close
-):focus-visible {
-  color: var(--wp--custom--color--color-primary-hover);
-  border-color: currentColor;
+/* Center header content and constrain width to wide container. */
+.ibt-header-inner {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--wp--style--global--wide-size);
+  margin-inline: auto;
+  padding-block: 0;
 }
 
 
-/* ---------- 3.5 Navigation backgrounds ---------- */
+/* ----- 3.2.B - Logo and column layout -----
+   Manage logo column width, alignment and spacing. */
 
-/* Submenus and mobile overlay get consistent header background */
-.wp-block-navigation__submenu-container {
-  background-color: var(--wp--custom--color--color-header-bg) !important;
-}
-.wp-block-navigation__responsive-container,
-.wp-block-navigation__responsive-dialog {
-  background-color: var(--wp--custom--color--color-header-bg) !important;
+/* Fix logo column width (inline style override from block editor). */
+.ibt-header-inner > .wp-block-column:first-child {
+  flex-basis: 85px !important;
+  max-width: 85px;
 }
 
+/* ----- 3.2.C - Utility icons ----- */
+/* Style search, account and cart icons as consistent 44×44 px tap targets. */
 
-/* ---------- 3.6 Header utility icons (Search, Account, Cart) ---------- */
-
-/* Icon wrapper ensures 44×44px size + border for WCAG tap target */
 .ibt-header-wooicons {
   width: 44px;
   height: 44px;
@@ -369,16 +285,14 @@ hr,
   align-items: center;
   justify-content: center;
   color: var(--wp--preset--color--emphasis-primary);
-  border: 2px solid transparent; /* placeholder border prevents shift */
+  border: 2px solid transparent;
   border-radius: 6px;
-  transition: color var(--transition-base),
-     border-color var(--transition-base);
+  transition: color var(--transition-base), border-color var(--transition-base);
   cursor: pointer;
-  min-width: 49px;   /* ensure consistent tap target */
-  min-height: 49px;  /* merged from .ibt-header-icons > * */
+  min-width: 49px;
+  min-height: 49px;
 }
 
-/* Reset link/button inside wrapper so it inherits wrapper style */
 .ibt-header-wooicons > a,
 .ibt-header-wooicons > button {
   all: unset;
@@ -396,82 +310,37 @@ hr,
   width: 24px;
   height: 24px;
   display: block;
-  pointer-events: none; /* icon shouldn’t capture events */
+  pointer-events: none;
 }
 
-/* Hover/focus changes icon color and border */
+/* Change icon colour and border on hover or focus. 
 .ibt-header-wooicons:hover,
 .ibt-header-wooicons:focus-within {
   color: var(--wp--custom--color--color-primary-hover);
   border-color: var(--wp--custom--color--color-primary-hover);
-}
+}*/
 
 
-/* ---------- 3.7 Header width & alignment ---------- */
-
-/* Centers header, constrains to wide size, adds root padding */
-.ibt-header-inner {
-  box-sizing: border-box;
-  width: 100%;
-  max-width: var(--wp--style--global--wide-size);
-  margin-inline: auto;
-  /*padding-left: var(--wp--style--root--padding-left);
-  padding-right: var(--wp--style--root--padding-right);*/
-}
 
 
-/* ---------- 3.8 Header site titles & nav defaults ---------- */
+/* ----------------------------------------------------------------------
+   3.3 – Header Search
+   ---------------------------------------------------------------------- */
+/* Handle search toggle and field behaviour controlled by ibt-header.js. */
 
-/* Desktop defaults: show desktop title/nav, hide mobile versions */
-.ibt-header-title-desktop {
-  display: block;
-  line-height: 49px; /* matches icon height */
-  height: 49px;
-}
-.ibt-header-title-mobile  { display: none; }
-.ibt-header-nav-dual .ibt-header-nav-desktop { display: block; }
-.ibt-header-nav-dual .ibt-header-nav-mobile  { display: none; }
-
-/* Default Row 2: flex-end because mobile title hidden */
-.ibt-header-row2.is-layout-flex { justify-content: flex-end; }
-
-/* Force desktop nav to stay horizontal */
-.ibt-header-nav-dual .ibt-header-nav-desktop .wp-block-navigation__container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-items: center;
-}
-
-
-/* ---------- 3.9 Header search button & input ----------  */
-
-/* Search field hidden by default */
 .ibt-header-search-field { display: none; }
 
-/* Wrapper keeps button snug without extra spacing */
-.ibt-header-search-button-wrap {
-  margin: 0;
-  padding: 0;
-  width: auto;
-  display: inline-flex;
-}
-
-/* Toggle button styled as icon only */
 .ibt-header-search-toggle {
-  background: none;
-  border: none;
-  padding: 0;
-  margin: 0;
+  all: unset;
   width: 49px;
   height: 49px;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 
-/* When open, show search field at fixed width/height 
-   It is run by ibt-header.js*/
+/* Show search field when header JS adds .is-open. */
 .ibt-header-search.is-open .ibt-header-search-field {
   display: grid;
   align-items: center;
@@ -479,10 +348,8 @@ hr,
   width: 280px;
 }
 
-/* Style the search box when opened by js */
 .ibt-header-search.is-open .ibt-header-search-field input[type="search"] {
   width: 100%;
-  min-width: 0;
   box-sizing: border-box;
   padding: var(--wp--custom--search--padding--top)
            var(--wp--custom--search--padding--right)
@@ -495,15 +362,259 @@ hr,
   line-height: 1.4;
 }
 
-/* Focus state — rely on border, so suppress outline */
 .ibt-header-search.is-open .ibt-header-search-field input[type="search"]:focus-visible {
   outline: none;
 }
 
+/* ---- Responsive: narrow screens (≤600 px) ----
+   Shrink search box for smaller layouts. */
+@media (max-width: 600px) {
+  .ibt-header-search.is-open .ibt-header-search-field { width: 140px; }
+}
 
-/* ---------- 3.10 Footer (reserved) ---------- */
+/* ---- Responsive: very narrow screens (≤410 px) ----
+   Hide account + cart icons to make space for open search. */
+@media (max-width: 410px) {
+  .ibt-header:has(.ibt-header-search.is-open)
+    .ibt-header-icons [data-block-name="woocommerce/customer-account"],
+  .ibt-header:has(.ibt-header-search.is-open)
+    .ibt-header-icons [data-block-name="woocommerce/mini-cart"] {
+    display: none;
+  }
+}
 
-/* Placeholder for footer css */
+
+/* ----------------------------------------------------------------------
+   3.4 – Desktop Navigation
+   ---------------------------------------------------------------------- */
+
+/* ----- 3.4.A Layout and tap targets -----
+   Keep nav horizontal, evenly spaced, and AAA-compliant for touch. */
+
+.ibt-header-nav-dual .ibt-header-nav-desktop .wp-block-navigation__container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.ibt-header-nav-desktop .wp-block-navigation__container
+  .wp-block-navigation-item__content,
+.ibt-header-nav-desktop .wp-block-navigation__submenu-container
+  .wp-block-navigation-item__content {
+  display: flex;
+  align-items: center;
+  line-height: 1.2;
+  min-height: 48px; /* AAA baseline */
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* Equal horizontal padding for all clickable elements. */
+.ibt-header-nav-desktop :is(
+  a.wp-block-navigation-item__content,
+  button.wp-block-navigation-item__content,
+  button.wp-block-navigation-submenu__toggle,
+  button.wp-block-navigation-item__content.wp-block-navigation-submenu__toggle
+) {
+  padding-left:  clamp(7px, 1.81vw - 7.1px, 20px);
+  padding-right: clamp(7px, 1.81vw - 7.1px, 20px);
+}
+
+/* Compact gap between items (replaces blockGap in header.html). */
+.ibt-header .ibt-header-nav-dual .ibt-header-nav-desktop {
+  gap: 3px;
+}
+
+/* ----- 3.4.B Typography and scaling-----
+   Adjust text size smoothly with viewport width. */
+
+.ibt-header-nav-desktop .wp-block-navigation__container {
+  font-size: clamp(17.6px, 0.4vw + 14.4px, 24px);
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  font-weight: 600; /* semi-bold */
+}
+
+/* ----- 3.4.C Borders and default state -----
+   Prepare for tab-index styling (3.4 d). */
+
+.ibt-header-nav-desktop .wp-block-navigation-item__content {
+  border: 2px solid transparent;
+  border-radius: 6px 6px 0 0;
+  border-bottom: none; /* tab illusion */
+  background-color: var(--wp--custom--color--color-header-bg);
+  transition: border-color var(--transition-base),
+              color var(--transition-base),
+              background-color var(--transition-base);
+}
+
+/* ----------------------------------------------------------------------
+   3.4.C.1 – Card-index Tabs (Active & Ancestor states – functional test)
+   Connects PHP-generated classes to visible tab colours.
+   Note – replace strong colours with tokens after confirmation.
+---------------------------------------------------------------------- */
+
+/* ----------------------------------------------------------------------
+   3.4.C.1 – Card-index Tabs (Test colours, wired to active/ancestor)
+   Replace colours with theme tokens once verified.
+---------------------------------------------------------------------- */
+
+.ibt-header-nav-desktop {
+  --color-header-tab-default: hotpink;  /* other */
+  --color-header-tab-hover:   magenta;  /* hover */
+  --color-header-tab-active:  white;    /* exact match */
+  --color-header-tab-related: grey;     /* ancestor */
+  --color-header-tab-border:  purple;
+}
+
+/* Default / Other */
+.ibt-header-nav-desktop .wp-block-navigation-item__content {
+  background-color: var(--color-header-tab-default);
+  border-color: transparent;
+  color: var(--wp--preset--color--emphasis-primary);
+}
+
+/* Active (exact page match) */
+.ibt-header-nav-desktop .wp-block-navigation-item__content.wp-block-navigation-item--active {
+  background-color: var(--color-header-tab-active);
+  border-color: var(--color-header-tab-border);
+  color: black;
+}
+
+/* Ancestor / Parent (section match) */
+.ibt-header-nav-desktop .wp-block-navigation-item__content.wp-block-navigation-item--ancestor {
+  background-color: var(--color-header-tab-related);
+  border-color: var(--color-header-tab-border);
+  color: black;
+}
+
+/* Hover / Focus (non-active) */
+.ibt-header-nav-desktop
+  .wp-block-navigation-item__content:not(.wp-block-navigation-item--active):hover,
+.ibt-header-nav-desktop
+  .wp-block-navigation-item__content:not(.wp-block-navigation-item--active):focus-visible {
+  background-color: var(--color-header-tab-hover);
+  border-color: var(--color-header-tab-border);
+  color: black;
+}
+
+
+
+
+
+/* Uncomment once tab highlighting is ready:
+.ibt-header-nav-desktop .wp-block-navigation-item__content:hover,
+.ibt-header-nav-desktop .wp-block-navigation-item__content:focus-visible {
+  color: var(--wp--custom--color--color-primary-hover);
+  border-color: var(--wp--custom--color--color-primary-hover);
+}
+*/
+
+/* ----- 3.4.D - Submenu containers -----
+   Match header background for drop-downs. */
+.ibt-header-nav-desktop .wp-block-navigation__submenu-container {
+  background-color: var(--wp--custom--color--color-header-bg) !important;
+  border-radius: 6px;
+}
+
+/* Remove automatic ▼ icon from desktop nav items to avoid styling problems.*/
+.ibt-header-nav-desktop .wp-block-navigation__submenu-icon {
+  display: none !important;
+}
+
+/* Default visibility — desktop nav active, mobile turned off */
+.ibt-header-nav-dual .ibt-header-nav-desktop { display: block; }
+.ibt-header-nav-dual .ibt-header-nav-mobile  { display: none; }
+
+
+/* ----------------------------------------------------------------------
+   3.5 – Mobile Navigation
+   ---------------------------------------------------------------------- */
+
+/* Collapse all submenus by default and only reveal those opened by WordPress. */
+.ibt-header-nav-mobile .wp-block-navigation__responsive-container.is-menu-open
+  .wp-block-navigation__submenu-container {
+  display: none;
+}
+
+.ibt-header-nav-mobile .wp-block-navigation__submenu-container.is-open,
+.ibt-header-nav-mobile .wp-block-navigation-submenu__toggle[aria-expanded="true"]
+  + .wp-block-navigation__submenu-container,
+.ibt-header-nav-mobile .wp-block-navigation-submenu__toggle[aria-expanded="true"]
+  ~ .wp-block-navigation__submenu-container {
+  display: block;
+}
+
+/* Add padding inside the mobile overlay when menu is open. */
+.ibt-header-nav-mobile
+  :is(.wp-block-navigation__responsive-container,
+      .wp-block-navigation__responsive-dialog).is-menu-open
+  .wp-block-navigation__responsive-container-content {
+  padding: 1.5rem;
+}
+
+/* Add equal padding to all mobile menu items. */
+.ibt-header-nav-mobile
+  :is(a.wp-block-navigation-item__content,
+      button.wp-block-navigation-submenu__toggle) {
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+}
+
+/* Ensure open and close buttons meet AAA tap target and visual feedback. */
+.ibt-header-nav-mobile
+  :is(.wp-block-navigation__responsive-container-open,
+      .wp-block-navigation__responsive-container-close) {
+  min-width: 49px;
+  min-height: 49px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  color: var(--wp--preset--color--emphasis-primary);
+  cursor: pointer;
+  transition: color var(--transition-base),
+              border-color var(--transition-base);
+}
+
+/* Ensure mobile nav items meet AAA tap-target size and stay vertically centred. */
+.ibt-header-nav-mobile
+  :is(.wp-block-navigation__container a.wp-block-navigation-item__content,
+      .wp-block-navigation__container button.wp-block-navigation-item__content,
+      .wp-block-navigation__submenu-container a.wp-block-navigation-item__content,
+      .wp-block-navigation__submenu-container button.wp-block-navigation-item__content) {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+}
+
+/* Uncomment later when hover/focus tuning resumes:
+.ibt-header-nav-mobile
+  :is(.wp-block-navigation__responsive-container-open,
+      .wp-block-navigation__responsive-container-close):hover,
+.ibt-header-nav-mobile
+  :is(.wp-block-navigation__responsive-container-open,
+      .wp-block-navigation__responsive-container-close):focus-visible {
+  color: var(--wp--custom--color--color-primary-hover);
+  border-color: currentColor;
+}
+*/
+
+/* Match overlay background to header background colour. */
+.wp-block-navigation__responsive-container,
+.wp-block-navigation__responsive-dialog {
+  background-color: var(--wp--custom--color--color-header-bg) !important;
+}
+
+/* ---- Responsive: narrow screens (≤799 px) ----
+   Swap desktop / mobile nav elements. */
+@media (max-width: 799px) {
+  .ibt-header-nav-dual .ibt-header-nav-desktop { display: none; }
+  .ibt-header-nav-dual .ibt-header-nav-mobile  { display: block; }
+}
+
 
 /* ======================================================================
    4. LAYOUT / SPACING
@@ -692,10 +803,8 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
   border: 0;
 }
 
-/* Editor-only: force all nav/title variants visible in Site Editor
+/* Editor-only: force both nav variants visible in Site Editor
    (keeps blocks selectable while editing) */
-.editor-styles-wrapper .ibt-header-title-desktop,
-.editor-styles-wrapper .ibt-header-title-mobile,
 .editor-styles-wrapper .ibt-header-nav-dual .ibt-header-nav-desktop,
 .editor-styles-wrapper .ibt-header-nav-dual .ibt-header-nav-mobile {
   display: block !important;
@@ -707,7 +816,7 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
    Breakpoints, reduced motion, print
    ====================================================================== */
 
-
+/* DEV - HEADER RESPONSIVE STATES REMOVED TO BACKUP FILE */
 
 /* ---------------------- 6.3 Responsive single post and sidebar (see 4.2) ----------------- */
 
@@ -766,19 +875,7 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
    7. DEV – WIP CODE
    ====================================================================== */
 
-.ibt-header .ibt-header-nav-dual .ibt-header-nav-desktop { gap: 3px; }
 
-
-.ibt-header-nav-desktop .wp-block-navigation__container {
-  font-size: clamp(17.6px, 0.4vw + 14.4px, 24px) !important;
-}
-
-/* Fluid L/R padding per side: 8px @790 → 20px @1600, linear in between */
-/* Fluid L/R padding per side: 7px @780 → 20px @1500 */
-.ibt-header-nav-desktop .wp-block-navigation-item__content {
-  padding-left:  clamp(7px, 1.81vw - 7.1px, 20px) !important;
-  padding-right: clamp(7px, 1.81vw - 7.1px, 20px) !important;
-}
 
 /* **********************************************************************
    END IBT THEME CSS
