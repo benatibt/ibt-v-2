@@ -99,31 +99,35 @@ add_filter( 'render_block', function( $block_content, $block ) {
 
 
 /* ---------------------------------------------------------------------
-   IBT – Navigation Active State (production, light log)
-   • Runs once per desktop navigation block.
-   • Marks current link as data-ibt-state="active" or "ancestor".
-   • Adds one short log line per request for optional diagnostics.
+   IBT – Navigation Active State (final)
+   Handles:
+     1. Exact match  → data-ibt-state="active"
+     2. Ancestor     → data-ibt-state="ancestor"
+     3. Virtual ancestor (submenu container with no href)
+        → data-ibt-state="ancestor" on <span> inside <li.has-child>
+
+   Scopes only to ibt-header-nav-desktop
+   Logs one concise line for traceability.
 --------------------------------------------------------------------- */
 
 add_filter( 'render_block_core/navigation', function( $content, $block ) {
 
-  // 🔒 1️⃣ Limit to desktop nav only
+  // 1️⃣ Scope to desktop navigation only
   $class_name = $block['attrs']['className'] ?? '';
   if ( strpos( $class_name, 'ibt-header-nav-desktop' ) === false ) {
-    return $content; // skip mobile or other navs
+    return $content;
   }
 
-  // ---- 2️⃣ Get current path ------------------------------------------------
+  // 2️⃣ Determine current request path
   $current_path = parse_url( $_SERVER['REQUEST_URI'], PHP_URL_PATH );
   $current_path = untrailingslashit( strtolower( $current_path ?: '/' ) );
 
-  // ---- 3️⃣ Extract <a href> links ------------------------------------------
+  // 3️⃣ Extract all <a href> links (relative or same-domain absolute)
   preg_match_all( '/<a[^>]+href="([^"]+)"[^>]*>/i', $content, $matches, PREG_OFFSET_CAPTURE );
   $links = [];
   foreach ( $matches[1] as $i => $match ) {
-    $href      = $match[0];
-    // only keep internal links (starting with "/")
-    if ( ! str_starts_with( $href, '/' ) ) continue;
+    $href = $match[0];
+    if ( ! str_starts_with( $href, '/' ) && ! str_starts_with( $href, home_url( '/' ) ) ) continue;
     $link_path = untrailingslashit( strtolower( parse_url( $href, PHP_URL_PATH ) ?: '/' ) );
     $links[] = [
       'href' => $href,
@@ -132,8 +136,9 @@ add_filter( 'render_block_core/navigation', function( $content, $block ) {
     ];
   }
 
-  // ---- 4️⃣ Pass 1: exact match --------------------------------------------
   $found = 'none';
+
+  // 4️⃣ Exact match
   foreach ( $links as $link ) {
     if ( $link['path'] === $current_path ) {
       $replacement = str_replace('<a ', '<a data-ibt-state="active" ', $link['full']);
@@ -143,10 +148,9 @@ add_filter( 'render_block_core/navigation', function( $content, $block ) {
     }
   }
 
-  // ---- 5️⃣ Pass 2: ancestor match -----------------------------------------
+  // 5️⃣ Ancestor match (prefix logic)
   if ( $found === 'none' ) {
     foreach ( $links as $link ) {
-      // skip root to prevent false positives
       if ( $link['path'] === '/' || $link['path'] === '' ) continue;
       if ( str_starts_with( $current_path, $link['path'] . '/' ) ) {
         $replacement = str_replace('<a ', '<a data-ibt-state="ancestor" ', $link['full']);
@@ -157,11 +161,40 @@ add_filter( 'render_block_core/navigation', function( $content, $block ) {
     }
   }
 
-  // ---- 6️⃣ Optional single log line ---------------------------------------
+  // 6️⃣ Virtual ancestor match (for submenu containers with <span>)
+  if ( $found === 'none' ) {
+    // Find each <li class="has-child"> ... </li>
+    if ( preg_match_all( '/<li[^>]+has-child[^>]*>(.*?)<\/li>/is', $content, $parents, PREG_OFFSET_CAPTURE ) ) {
+      foreach ( $parents[0] as $block_match ) {
+        $li_html = $block_match[0];
+        // Get child links within this <li>
+        if ( preg_match_all( '/<a[^>]+href="([^"]+)"[^>]*>/i', $li_html, $child_links ) ) {
+          foreach ( $child_links[1] as $child_href ) {
+            $child_path = untrailingslashit( strtolower( parse_url( $child_href, PHP_URL_PATH ) ?: '/' ) );
+            if ( str_starts_with( $current_path, $child_path ) ) {
+              // Add data-ibt-state="ancestor" to the parent <span>
+              $updated = preg_replace(
+                '/<span([^>]*)class="([^"]*wp-block-navigation-item__content[^"]*)"([^>]*)>/i',
+                '<span$1class="$2"$3 data-ibt-state="ancestor">',
+                $li_html,
+                1 // only the first span per li
+              );
+              if ( $updated ) {
+                $content = str_replace( $li_html, $updated, $content );
+                $found = 'virtual';
+                break 2; // exit both loops
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // 7️⃣ Minimal log (safe to disable later)
   error_log("[IBT NAV] {$found} match applied for {$current_path}");
 
-  // ---- 7️⃣ Return modified HTML ------------------------------------------
+  // 8️⃣ Return final HTML
   return $content;
 
 }, 10, 2 );
-
