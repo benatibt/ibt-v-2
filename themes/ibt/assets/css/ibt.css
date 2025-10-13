@@ -449,23 +449,13 @@ hr,
               background-color var(--transition-base);
 }
 
-/* ----------------------------------------------------------------------
-   3.4.C.1 – Card-index Tabs (Active & Ancestor states – functional test)
-   Connects PHP-generated classes to visible tab colours.
-   Note – replace strong colours with tokens after confirmation.
----------------------------------------------------------------------- */
-
-/* ----------------------------------------------------------------------
-   3.4.C.1 – Card-index Tabs (Test colours, wired to active/ancestor)
-   Replace colours with theme tokens once verified.
----------------------------------------------------------------------- */
-
+/* Local test palette (override later with theme tokens) */
 .ibt-header-nav-desktop {
-  --color-header-tab-default: hotpink;  /* other */
+  --color-header-tab-default: #DCD6CF;  /* other */
   --color-header-tab-hover:   magenta;  /* hover */
-  --color-header-tab-active:  white;    /* exact match */
-  --color-header-tab-related: grey;     /* ancestor */
-  --color-header-tab-border:  purple;
+  --color-header-tab-active:  #FAF9F7;    /* exact match */
+  --color-header-tab-related: #EBE8E3;     /* ancestor */
+  --color-header-tab-border:  #4A443E;
 }
 
 /* Default / Other */
@@ -475,29 +465,57 @@ hr,
   color: var(--wp--preset--color--emphasis-primary);
 }
 
-/* Active (exact page match) */
-.ibt-header-nav-desktop .wp-block-navigation-item__content.wp-block-navigation-item--active {
+/* Active (exact page match) — links only */
+.ibt-header-nav-desktop a.wp-block-navigation-item__content[data-ibt-state="active"] {
   background-color: var(--color-header-tab-active);
   border-color: var(--color-header-tab-border);
   color: black;
 }
 
-/* Ancestor / Parent (section match) */
-.ibt-header-nav-desktop .wp-block-navigation-item__content.wp-block-navigation-item--ancestor {
+/* Ancestor (section match) — links only */
+.ibt-header-nav-desktop a.wp-block-navigation-item__content[data-ibt-state="ancestor"] {
   background-color: var(--color-header-tab-related);
   border-color: var(--color-header-tab-border);
   color: black;
 }
 
-/* Hover / Focus (non-active) */
+/* Hover / Focus (non-active links) 
 .ibt-header-nav-desktop
-  .wp-block-navigation-item__content:not(.wp-block-navigation-item--active):hover,
+  a.wp-block-navigation-item__content:not([data-ibt-state="active"]):hover,
 .ibt-header-nav-desktop
-  .wp-block-navigation-item__content:not(.wp-block-navigation-item--active):focus-visible {
+  a.wp-block-navigation-item__content:not([data-ibt-state="active"]):focus-visible {
   background-color: var(--color-header-tab-hover);
   border-color: var(--color-header-tab-border);
   color: black;
+} */
+
+/* === Submenu parent highlight via :has() ============================= */
+
+/* When ANY descendant link is active/ancestor, style the parent toggle button 
+.ibt-header-nav-desktop li.has-child:has(a.wp-block-navigation-item__content[data-ibt-state="active"]),
+.ibt-header-nav-desktop li.has-child:has(a.wp-block-navigation-item__content[data-ibt-state="ancestor"]) {
+  /* This styles the whole li; if you prefer just the button, use the rule below */
+  /* Optional: border-top-left/right radius if needed for 'card-index' look */
+
+/* Prefer styling the toggle button itself (WP 6.8+ uses <button> for submenu parents) */
+.ibt-header-nav-desktop
+  li.has-child:has(a.wp-block-navigation-item__content[data-ibt-state="active"])
+  > button.wp-block-navigation-item__content,
+.ibt-header-nav-desktop
+  li.has-child:has(a.wp-block-navigation-item__content[data-ibt-state="ancestor"])
+  > button.wp-block-navigation-item__content {
+  background-color: var(--color-header-tab-related);
+  border-color: var(--color-header-tab-border);
+  color: black;
 }
+
+/* (Optional) Prevent hover colour from overriding the submenu parent state 
+.ibt-header-nav-desktop
+  li.has-child:has(a.wp-block-navigation-item__content[data-ibt-state])
+  > button.wp-block-navigation-item__content:hover {
+  background-color: var(--color-header-tab-related);
+} */
+
 
 
 

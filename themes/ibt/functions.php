@@ -98,103 +98,114 @@ add_filter( 'render_block', function( $block_content, $block ) {
 }, 10, 2 );
 
 
-/* ---------------------------------------------------------------------
-   IBT – Navigation Active State (final)
-   Handles:
-     1. Exact match  → data-ibt-state="active"
-     2. Ancestor     → data-ibt-state="ancestor"
-     3. Virtual ancestor (submenu container with no href)
-        → data-ibt-state="ancestor" on <span> inside <li.has-child>
 
-   Scopes only to ibt-header-nav-desktop
-   Logs one concise line for traceability.
---------------------------------------------------------------------- */
 
-add_filter( 'render_block_core/navigation', function( $content, $block ) {
 
-  // 1️⃣ Scope to desktop navigation only
-  $class_name = $block['attrs']['className'] ?? '';
-  if ( strpos( $class_name, 'ibt-header-nav-desktop' ) === false ) {
-    return $content;
-  }
 
-  // 2️⃣ Determine current request path
-  $current_path = parse_url( $_SERVER['REQUEST_URI'], PHP_URL_PATH );
-  $current_path = untrailingslashit( strtolower( $current_path ?: '/' ) );
+/**
+ * IBT Navigation: mark links as active/ancestor for CSS :has()
+ * Verbose logging + optional alias mapping (e.g., "/more" → "")
+ */
 
-  // 3️⃣ Extract all <a href> links (relative or same-domain absolute)
-  preg_match_all( '/<a[^>]+href="([^"]+)"[^>]*>/i', $content, $matches, PREG_OFFSET_CAPTURE );
-  $links = [];
-  foreach ( $matches[1] as $i => $match ) {
-    $href = $match[0];
-    if ( ! str_starts_with( $href, '/' ) && ! str_starts_with( $href, home_url( '/' ) ) ) continue;
-    $link_path = untrailingslashit( strtolower( parse_url( $href, PHP_URL_PATH ) ?: '/' ) );
-    $links[] = [
-      'href' => $href,
-      'path' => $link_path,
-      'full' => $matches[0][$i][0],
+add_filter('render_block', function ($content, $block) {
+    if (empty($block['blockName']) || $block['blockName'] !== 'core/navigation') {
+        return $content;
+    }
+    $class = $block['attrs']['className'] ?? '';
+    if (strpos($class, 'ibt-header-nav-desktop') === false) {
+        return $content;
+    }
+
+    // --- Config: alias prefixes (apply to current path before matching) ---
+    // Example: '/more' => '' turns /more/about into /about for comparison
+    $alias_map = [
+        '/more' => '',   // <— toggle this off later if you don’t want it
     ];
-  }
 
-  $found = 'none';
+    // --- Current path (original + normalised) ---
+    $original_path = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?? '/';
+    $original_path = strtolower(rtrim($original_path, '/'));
+    if ($original_path === '') $original_path = '/';
 
-  // 4️⃣ Exact match
-  foreach ( $links as $link ) {
-    if ( $link['path'] === $current_path ) {
-      $replacement = str_replace('<a ', '<a data-ibt-state="active" ', $link['full']);
-      $content = str_replace($link['full'], $replacement, $content);
-      $found = 'active';
-      break;
-    }
-  }
-
-  // 5️⃣ Ancestor match (prefix logic)
-  if ( $found === 'none' ) {
-    foreach ( $links as $link ) {
-      if ( $link['path'] === '/' || $link['path'] === '' ) continue;
-      if ( str_starts_with( $current_path, $link['path'] . '/' ) ) {
-        $replacement = str_replace('<a ', '<a data-ibt-state="ancestor" ', $link['full']);
-        $content = str_replace($link['full'], $replacement, $content);
-        $found = 'ancestor';
-        break;
-      }
-    }
-  }
-
-  // 6️⃣ Virtual ancestor match (for submenu containers with <span>)
-  if ( $found === 'none' ) {
-    // Find each <li class="has-child"> ... </li>
-    if ( preg_match_all( '/<li[^>]+has-child[^>]*>(.*?)<\/li>/is', $content, $parents, PREG_OFFSET_CAPTURE ) ) {
-      foreach ( $parents[0] as $block_match ) {
-        $li_html = $block_match[0];
-        // Get child links within this <li>
-        if ( preg_match_all( '/<a[^>]+href="([^"]+)"[^>]*>/i', $li_html, $child_links ) ) {
-          foreach ( $child_links[1] as $child_href ) {
-            $child_path = untrailingslashit( strtolower( parse_url( $child_href, PHP_URL_PATH ) ?: '/' ) );
-            if ( str_starts_with( $current_path, $child_path ) ) {
-              // Add data-ibt-state="ancestor" to the parent <span>
-              $updated = preg_replace(
-                '/<span([^>]*)class="([^"]*wp-block-navigation-item__content[^"]*)"([^>]*)>/i',
-                '<span$1class="$2"$3 data-ibt-state="ancestor">',
-                $li_html,
-                1 // only the first span per li
-              );
-              if ( $updated ) {
-                $content = str_replace( $li_html, $updated, $content );
-                $found = 'virtual';
-                break 2; // exit both loops
-              }
-            }
-          }
+    $current_path = $original_path;
+    foreach ($alias_map as $prefix => $replacement) {
+        if ($prefix !== '' && str_starts_with($current_path, $prefix . '/')) {
+            $current_path = $replacement . substr($current_path, strlen($prefix));
+            if ($current_path === '') $current_path = '/';
+            $current_path = strtolower(rtrim($current_path, '/'));
+            if ($current_path === '') $current_path = '/';
+            break; // apply first matching alias only
+        } elseif ($current_path === $prefix) {
+            $current_path = $replacement ?: '/';
         }
-      }
     }
-  }
 
-  // 7️⃣ Minimal log (safe to disable later)
-  error_log("[IBT NAV] {$found} match applied for {$current_path}");
+    // --- Gather all <a class="...wp-block-navigation-item__content..."> ---
+    if (!preg_match_all('/<a[^>]*>/i', $content, $all_a_tags)) {
+        error_log('[IBT NAV] no <a> tags found');
+        return $content;
+    }
 
-  // 8️⃣ Return final HTML
-  return $content;
+    $anchors = [];
+    foreach ($all_a_tags[0] as $tag) {
+        if (!preg_match('/class="[^"]*\bwp-block-navigation-item__content\b[^"]*"/i', $tag)) continue;
+        if (!preg_match('/href="([^"]+)"/i', $tag, $m)) continue;
 
-}, 10, 2 );
+        $href = $m[1];
+        $is_internal = str_starts_with($href, '/') || str_starts_with($href, home_url('/'));
+        if (!$is_internal) continue;
+
+        $link_path = parse_url($href, PHP_URL_PATH) ?? '/';
+        $link_path = strtolower(rtrim($link_path, '/'));
+        if ($link_path === '') $link_path = '/';
+
+        $anchors[] = [
+            'full' => $tag,
+            'href' => $href,
+            'path' => $link_path,
+        ];
+    }
+
+    // --- Logging: list candidates ---
+    error_log('====[IBT NAV] start ====');
+    error_log('[IBT NAV] original=' . $original_path . ' normalised=' . $current_path);
+    foreach ($anchors as $i => $a) {
+        error_log(sprintf('[IBT NAV] link %02d: href=%s path=%s', $i + 1, $a['href'], $a['path']));
+    }
+
+    // Helper: add data-ibt-state="X" to a specific <a ...> opening tag
+    $add_state = function (string $tag, string $state) {
+        return preg_replace('/>$/', ' data-ibt-state="' . $state . '">', $tag, 1);
+    };
+
+    // --- 1) Exact match ---
+    foreach ($anchors as $i => $a) {
+        error_log(sprintf('[IBT NAV] [EXACT] cmp %02d: %s === %s ?', $i + 1, $a['path'], $current_path));
+        if ($a['path'] === $current_path) {
+            $content = str_replace($a['full'], $add_state($a['full'], 'active'), $content);
+            error_log(sprintf('[IBT NAV] [EXACT] ✅ match on %s', $a['path']));
+            error_log('====[IBT NAV] end (state=active) ====');
+            return $content;
+        }
+    }
+
+    // --- 2) Ancestor match (prefix + segment boundary; skip root) ---
+    foreach ($anchors as $i => $a) {
+        if ($a['path'] === '/' || $a['path'] === '') continue;
+        $prefix = $a['path'] . '/';
+        $is_match = str_starts_with($current_path, $prefix);
+        error_log(sprintf('[IBT NAV] [ANCESTOR] cmp %02d: current=%s starts_with %s ? %s',
+            $i + 1, $current_path, $prefix, $is_match ? 'YES' : 'no'));
+        if ($is_match) {
+            $content = str_replace($a['full'], $add_state($a['full'], 'ancestor'), $content);
+            error_log(sprintf('[IBT NAV] [ANCESTOR] ✅ match on %s', $a['path']));
+            error_log('====[IBT NAV] end (state=ancestor) ====');
+            return $content;
+        }
+    }
+
+    error_log('====[IBT NAV] end (state=none) ====');
+    return $content;
+}, 10, 2);
+
+
