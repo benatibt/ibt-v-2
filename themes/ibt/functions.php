@@ -98,31 +98,34 @@ add_filter( 'render_block', function( $block_content, $block ) {
 }, 10, 2 );
 
 
-
-
-
-
 /**
- * IBT Navigation: mark links as active/ancestor for CSS :has()
- * Verbose logging + optional alias mapping (e.g., "/more" → "")
+ * IBT Navigation – Active / Ancestor / Virtual-Ancestor Highlighter
+ * ------------------------------------------------------------------
+ * Adds data-ibt-state attributes (active, ancestor, virtual-ancestor) to WordPress
+ * navigation markup so CSS can highlight the current page's parent menu.
  */
 
-add_filter('render_block', function ($content, $block) {
+add_filter('render_block', 'ibt_highlight_navigation', 10, 2);
+
+function ibt_highlight_navigation($content, $block) {
     if (empty($block['blockName']) || $block['blockName'] !== 'core/navigation') {
         return $content;
     }
+
     $class = $block['attrs']['className'] ?? '';
     if (strpos($class, 'ibt-header-nav-desktop') === false) {
         return $content;
     }
 
-    // --- Config: alias prefixes (apply to current path before matching) ---
-    // Example: '/more' => '' turns /more/about into /about for comparison
+    // --- Config: alias prefixes -------------------------------------------
+    // Purpose: remap URL prefixes for section parents without pages.
+    // Example: '/more' => '' means /more/about behaves like /about.
+    // Add or remove entries as site structure changes.
     $alias_map = [
-        '/more' => '',   // <— toggle this off later if you don’t want it
+        '/more' => '',   // toggle off later if not needed
     ];
 
-    // --- Current path (original + normalised) ---
+    // --- Current path (original + normalised) -----------------------------
     $original_path = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?? '/';
     $original_path = strtolower(rtrim($original_path, '/'));
     if ($original_path === '') $original_path = '/';
@@ -140,9 +143,8 @@ add_filter('render_block', function ($content, $block) {
         }
     }
 
-    // --- Gather all <a class="...wp-block-navigation-item__content..."> ---
+    // --- Gather all <a class="...wp-block-navigation-item__content..."> ----
     if (!preg_match_all('/<a[^>]*>/i', $content, $all_a_tags)) {
-        error_log('[IBT NAV] no <a> tags found');
         return $content;
     }
 
@@ -166,46 +168,53 @@ add_filter('render_block', function ($content, $block) {
         ];
     }
 
-    // --- Logging: list candidates ---
-    error_log('====[IBT NAV] start ====');
-    error_log('[IBT NAV] original=' . $original_path . ' normalised=' . $current_path);
-    foreach ($anchors as $i => $a) {
-        error_log(sprintf('[IBT NAV] link %02d: href=%s path=%s', $i + 1, $a['href'], $a['path']));
-    }
-
     // Helper: add data-ibt-state="X" to a specific <a ...> opening tag
     $add_state = function (string $tag, string $state) {
         return preg_replace('/>$/', ' data-ibt-state="' . $state . '">', $tag, 1);
     };
 
-    // --- 1) Exact match ---
-    foreach ($anchors as $i => $a) {
-        error_log(sprintf('[IBT NAV] [EXACT] cmp %02d: %s === %s ?', $i + 1, $a['path'], $current_path));
+    $state = 'none';
+
+    // --- 1) Exact match ---------------------------------------------------
+    foreach ($anchors as $a) {
         if ($a['path'] === $current_path) {
             $content = str_replace($a['full'], $add_state($a['full'], 'active'), $content);
-            error_log(sprintf('[IBT NAV] [EXACT] ✅ match on %s', $a['path']));
-            error_log('====[IBT NAV] end (state=active) ====');
-            return $content;
+            $state = 'active';
+            break;
         }
     }
 
-    // --- 2) Ancestor match (prefix + segment boundary; skip root) ---
-    foreach ($anchors as $i => $a) {
-        if ($a['path'] === '/' || $a['path'] === '') continue;
-        $prefix = $a['path'] . '/';
-        $is_match = str_starts_with($current_path, $prefix);
-        error_log(sprintf('[IBT NAV] [ANCESTOR] cmp %02d: current=%s starts_with %s ? %s',
-            $i + 1, $current_path, $prefix, $is_match ? 'YES' : 'no'));
-        if ($is_match) {
-            $content = str_replace($a['full'], $add_state($a['full'], 'ancestor'), $content);
-            error_log(sprintf('[IBT NAV] [ANCESTOR] ✅ match on %s', $a['path']));
-            error_log('====[IBT NAV] end (state=ancestor) ====');
-            return $content;
+    // --- 2) Ancestor match (prefix + segment boundary; skip root) ---------
+    if ($state === 'none') {
+        foreach ($anchors as $a) {
+            if ($a['path'] === '/' || $a['path'] === '') continue;
+            $prefix = $a['path'] . '/';
+            if (str_starts_with($current_path, $prefix)) {
+                $content = str_replace($a['full'], $add_state($a['full'], 'ancestor'), $content);
+                $state = 'ancestor';
+                break;
+            }
         }
     }
 
-    error_log('====[IBT NAV] end (state=none) ====');
+    // --- 3) Virtual ancestor (submenu parent button highlight) ------------
+    if (preg_match_all('/<li[^>]+has-child[^>]*>.*?<button[^>]*>.*?<\/button>/is', $content, $subs)) {
+        foreach ($subs[0] as $submenu) {
+            if (preg_match('/data-ibt-state="(?:active|ancestor)"/i', $submenu)) {
+                $new = preg_replace(
+                    '/(<button[^>]*)(>)/i',
+                    '$1 data-ibt-state="ancestor"$2',
+                    $submenu,
+                    1
+                );
+                $content = str_replace($submenu, $new, $content);
+                $state = 'virtual-ancestor';
+            }
+        }
+    }
+
+    // --- Optional log (uncomment for debugging) ---------------------------
+    // error_log('[IBT NAV] state=' . $state . ' path=' . $current_path);
+
     return $content;
-}, 10, 2);
-
-
+}
