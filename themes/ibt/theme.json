@@ -131,9 +131,7 @@
 				"color-info": "#465059",
 				"color-info-tint": "#E9EAEB",
 				"color-disabled": "#666E70",
-				"color-disabled-tint": "#F0F1F2",
-				
-				"color-text-emphasis-primary-visited": "#805D25"
+				"color-disabled-tint": "#F0F1F2"
 			},
 			"layout":{
 				"root-padding": "clamp(1rem, 4vw, 3rem)"
@@ -362,6 +360,14 @@
 				"spacing": {},
 				"border": {},
 				"color": {}
+			},
+			"core/separator":{
+				"spacing": {
+					"margin": {
+						"top": "var(--wp--preset--spacing--m)",
+						"bottom": "var(--wp--preset--spacing--m)"
+					}
+				}
 			},
 			"core/table": {
 				"typography": { "fontFamily": "var(--wp--preset--font-family--body-font)" },

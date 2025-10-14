@@ -113,15 +113,20 @@ h4 {font-size: var(--wp--preset--font-size--l); font-weight: 600 ; padding-top: 
 h5 {font-size: var(--wp--preset--font-size--m); font-weight: 600 ; padding-top: var(--wp--preset--spacing--s) ;}
 h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: var(--wp--preset--spacing--s) ;}
 
-/* Visited links in body text. Visited link styling not supported in json yet. */
-:where(p, li, .rich-text) a:visited {color: var(--wp--custom--color--color-text-emphasis-primary-visited);}
-
 /* Provide theme style for <hr>, partially supported in json but doing all in one place is cleaner. */
 hr,
 .wp-block-separator {
   border: none;
   border-top: 1px solid var(--wp--custom--color--border-primary);
   margin-block: var(--wp--preset--spacing--m);
+}
+
+/* Provide basic neutral grey separator */
+/* Can be set in theme.json but over-written because Gutenberg... */
+.wp-block-separator,
+.wp-block-separator.has-alpha-channel-opacity {
+  border-top: 1px solid #d9d9d9;
+  opacity: 1;
 }
 
 
@@ -177,26 +182,29 @@ hr,
 
 /* ------------------------- 2.2 - Links ------------------------------ */
  
-/* Link hover and focus-visible effects */
-:where(a[href]):not(.wp-element-button):not(.wp-block-button__link):not(.ibt-header-nav a) {
-  transition:
-    color var(--transition-base),
-    text-decoration-color var(--transition-base);
-}
-
-:where(a[href]):not(.wp-element-button):not(.wp-block-button__link):not(.ibt-header-nav a):hover,
-.wp-block-navigation:not(.ibt-header-nav) a:hover {
+/* Apply underline, colour from theme.json */
+:where(a[href])
+  :not(.wp-element-button)
+  :not(.wp-block-button__link)
+  :not(.button)
+  :not(:where(nav *)) {
   text-decoration: underline;
-  color: var(--wp--custom--color--color-primary-hover);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 0.25em;
 }
 
-:where(a[href]):not(.wp-element-button):not(.wp-block-button__link):not(.ibt-header-nav a):focus-visible,
-.wp-block-navigation:not(.ibt-header-nav) a:focus-visible {
-  outline: 2px solid var(--wp--custom--color--color-primary);
-  outline-offset: 2px;
+/* Visited links – default text colour for block */
+:where(a[href]):visited {
+  color: inherit;
 }
+
+/* Lighter underline for headers and no link colour */
+.wp-block-post-title a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+}
+
+/* Exception for footer links in section 3 */
 
 
 /* ======================================================================
@@ -423,7 +431,7 @@ hr,
 
 /* Compact gap between items (replaces blockGap in header.html). */
 .ibt-header .ibt-header-nav-dual .ibt-header-nav-desktop {
-  gap: 3px;
+  gap: 6px;
 }
 
 /* ----- 3.4.B Typography and scaling-----
@@ -449,85 +457,77 @@ hr,
               background-color var(--transition-base);
 }
 
+
+
+
+/* =====================================================================
+   IBT Header Navigation – Active / Ancestor Styling (Top-level only)
+   ===================================================================== */
+
 /* Local test palette (override later with theme tokens) */
 .ibt-header-nav-desktop {
-  --color-header-tab-default: #DCD6CF;  /* other */
-  --color-header-tab-hover:   magenta;  /* hover */
-  --color-header-tab-active:  #FAF9F7;    /* exact match */
-  --color-header-tab-related: #EBE8E3;     /* ancestor */
-  --color-header-tab-border:  #4A443E;
+  --color-header-tab-default: #DCD6CF;  /* normal tab fill */
+  --color-header-tab-related: #EBE8E3;  /* ancestor section */
+  --color-header-tab-active:  #FAF9F7;  /* current page */
+  --color-header-tab-hover:   magenta;  /* hover (future use) */
+  --color-header-tab-border:  #4A443E;  /* active/ancestor border */
+  --color-header-tab-soft:    #8D8780;  /* subtle border for inactive */
 }
 
-/* Default / Other */
+/* Default / Inactive */
 .ibt-header-nav-desktop .wp-block-navigation-item__content {
   background-color: var(--color-header-tab-default);
-  border-color: transparent;
+  border: 1px solid var(--color-header-tab-soft);
+  border-bottom: none;
   color: var(--wp--preset--color--emphasis-primary);
 }
 
-/* Active (exact page match) — links only */
-.ibt-header-nav-desktop a.wp-block-navigation-item__content[data-ibt-state="active"] {
+/* === Top-level only: Active & Ancestor =============================== */
+
+/* Exact page match (active) */
+.ibt-header-nav-desktop
+  > ul > li > a.wp-block-navigation-item__content[data-ibt-state="active"] {
   background-color: var(--color-header-tab-active);
   border-color: var(--color-header-tab-border);
+  border-bottom: none;
   color: black;
 }
 
-/* Ancestor (section match) — links only */
-.ibt-header-nav-desktop a.wp-block-navigation-item__content[data-ibt-state="ancestor"] {
+/* Section parent (ancestor) */
+.ibt-header-nav-desktop
+  > ul > li > a.wp-block-navigation-item__content[data-ibt-state="ancestor"] {
   background-color: var(--color-header-tab-related);
   border-color: var(--color-header-tab-border);
+  border-bottom: none;
   color: black;
 }
 
-/* Hover / Focus (non-active links) 
+/* === Submenu parent highlight via :has() ============================= */
+
+/* Highlight parent button when any child is active or ancestor */
+.ibt-header-nav-desktop
+  > ul > li.has-child:has(a.wp-block-navigation-item__content[data-ibt-state="active"]) > button.wp-block-navigation-item__content,
+.ibt-header-nav-desktop
+  > ul > li.has-child:has(a.wp-block-navigation-item__content[data-ibt-state="ancestor"]) > button.wp-block-navigation-item__content {
+  background-color: var(--color-header-tab-related);
+  border-color: var(--color-header-tab-border);
+  border-bottom: none;
+  color: black;
+}
+
+/* === Hover / Focus (for later implementation) ======================== */
+/*
 .ibt-header-nav-desktop
   a.wp-block-navigation-item__content:not([data-ibt-state="active"]):hover,
 .ibt-header-nav-desktop
   a.wp-block-navigation-item__content:not([data-ibt-state="active"]):focus-visible {
   background-color: var(--color-header-tab-hover);
   border-color: var(--color-header-tab-border);
+  border-bottom: none;
   color: black;
-} */
-
-/* === Submenu parent highlight via :has() ============================= */
-
-/* When ANY descendant link is active/ancestor, style the parent toggle button 
-.ibt-header-nav-desktop li.has-child:has(a.wp-block-navigation-item__content[data-ibt-state="active"]),
-.ibt-header-nav-desktop li.has-child:has(a.wp-block-navigation-item__content[data-ibt-state="ancestor"]) {
-  /* This styles the whole li; if you prefer just the button, use the rule below */
-  /* Optional: border-top-left/right radius if needed for 'card-index' look */
-
-/* Prefer styling the toggle button itself (WP 6.8+ uses <button> for submenu parents) */
-.ibt-header-nav-desktop
-  li.has-child:has(a.wp-block-navigation-item__content[data-ibt-state="active"])
-  > button.wp-block-navigation-item__content,
-.ibt-header-nav-desktop
-  li.has-child:has(a.wp-block-navigation-item__content[data-ibt-state="ancestor"])
-  > button.wp-block-navigation-item__content {
-  background-color: var(--color-header-tab-related);
-  border-color: var(--color-header-tab-border);
-  color: black;
-}
-
-/* (Optional) Prevent hover colour from overriding the submenu parent state 
-.ibt-header-nav-desktop
-  li.has-child:has(a.wp-block-navigation-item__content[data-ibt-state])
-  > button.wp-block-navigation-item__content:hover {
-  background-color: var(--color-header-tab-related);
-} */
-
-
-
-
-
-
-/* Uncomment once tab highlighting is ready:
-.ibt-header-nav-desktop .wp-block-navigation-item__content:hover,
-.ibt-header-nav-desktop .wp-block-navigation-item__content:focus-visible {
-  color: var(--wp--custom--color--color-primary-hover);
-  border-color: var(--wp--custom--color--color-primary-hover);
 }
 */
+
 
 
 
@@ -638,6 +638,15 @@ hr,
   .ibt-header-nav-dual .ibt-header-nav-mobile  { display: block; }
 }
 
+/* ----------------------------------------------------------------------
+   3.6 – Footer
+   ---------------------------------------------------------------------- */
+
+/* Remove link styling for footer */
+.ibt-footer a {
+  color: inherit;
+  text-decoration: none;
+}
 
 /* ======================================================================
    4. LAYOUT / SPACING
@@ -898,6 +907,17 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
    7. DEV – WIP CODE
    ====================================================================== */
 
+
+
+   /* ====================================================================
+   4.3 - HORIZONTAL RULES / SEPARATORS
+   Purpose: default book-style divider (line–circle–line)
+   Note – unified styling for <hr> and Separator block.
+   -------------------------------------------------------------------- */
+/* ====================================================================
+   4.3 - HORIZONTAL RULES / SEPARATORS
+   Purpose: visible, neutral divider (no opacity / no token dependency)
+   -------------------------------------------------------------------- */
 
 
 /* **********************************************************************
