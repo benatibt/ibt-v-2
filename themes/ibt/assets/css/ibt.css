@@ -134,10 +134,37 @@ hr,
    2. BUTTONS & LINKS
    Variants, hover/focus states, global link effects
    ======================================================================
-   2.1 - Buttons
-   2.2 - Links */
+   2.1 - Links
+   2.2 - Buttons */
 
-/* ------------------------- 2.1 - Buttons ------------------------------ */
+/* ------------------------- 2.1 - Links ------------------------------ */
+ 
+/* Apply underline, colour comes from theme.json */
+:where(a[href])
+  :not(.wp-element-button)
+  :not(.wp-block-button__link)
+  :not(.button)
+  :not(:where(nav *)) {
+  text-decoration: underline;
+}
+
+/* Visited links – remove link colour */
+:where(a[href]):visited {
+  color: inherit;
+}
+
+/* Lighter underline for headers and remove link colour for all links */
+.wp-block-post-title a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+}
+
+/* Exception for footer links in section 3 */
+
+
+/* ------------------------- 2.2 - Buttons ------------------------------ */
 
 /* Button variants (that can't be styled in json) */
 .wp-block-button.is-style-buy-solid .wp-block-button__link {
@@ -179,32 +206,6 @@ hr,
   color: var(--wp--custom--color--color-secondary-hover);
   border-color: var(--wp--custom--color--color-secondary-hover);
 }
-
-/* ------------------------- 2.2 - Links ------------------------------ */
- 
-/* Apply underline, colour from theme.json */
-:where(a[href])
-  :not(.wp-element-button)
-  :not(.wp-block-button__link)
-  :not(.button)
-  :not(:where(nav *)) {
-  text-decoration: underline;
-}
-
-/* Visited links – default text colour for block */
-:where(a[href]):visited {
-  color: inherit;
-}
-
-/* Lighter underline for headers and no link colour */
-.wp-block-post-title a {
-  color: inherit;
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 0.15em;
-}
-
-/* Exception for footer links in section 3 */
 
 
 /* ======================================================================
