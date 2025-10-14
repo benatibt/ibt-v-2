@@ -64,21 +64,54 @@ add_action( 'wp_enqueue_scripts', function () {
 }, 20 );
 
 
-// Register custom Button style variations
+// ---------------------------------------------------------------------
+//  Register IBT button styles.
+//  WP defaults (mostly) hidden in editor by js
+// ---------------------------------------------------------------------
 add_action( 'init', function() {
+
+	register_block_style(
+		'core/button',
+		array(
+			'name'  => 'primary-solid',
+			'label' => __( 'Primary Solid', 'ibt' ),
+		)
+	);
+	register_block_style(
+		'core/button',
+		array(
+			'name'  => 'primary-outline',
+			'label' => __( 'Primary Outline', 'ibt' ),
+		)
+	);
 	register_block_style(
 		'core/button',
 		array(
 			'name'  => 'buy-solid',
-			'label' => __( 'Buy Solid', 'ibt' )
+			'label' => __( 'Buy Solid', 'ibt' ),
 		)
 	);
 	register_block_style(
 		'core/button',
 		array(
 			'name'  => 'buy-outline',
-			'label' => __( 'Buy Outline', 'ibt' )
+			'label' => __( 'Buy Outline', 'ibt' ),
 		)
+	);
+
+}, 20 );
+
+
+// ---------------------------------------------------------------------
+//  Load ibt-editor.js inside the Gutenberg editor
+// ---------------------------------------------------------------------
+add_action( 'enqueue_block_editor_assets', function() {
+	wp_enqueue_script(
+		'ibt-editor-js',
+		get_template_directory_uri() . '/assets/js/ibt-editor.js',
+		array( 'wp-blocks', 'wp-dom-ready' ),
+		wp_get_theme()->get( 'Version' ),
+		true
 	);
 } );
 

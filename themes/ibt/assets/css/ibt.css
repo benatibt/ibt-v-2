@@ -166,44 +166,141 @@ hr,
 
 /* ------------------------- 2.2 - Buttons ------------------------------ */
 
-/* Button variants (that can't be styled in json) */
-.wp-block-button.is-style-buy-solid .wp-block-button__link {
-  background-color: var(--wp--custom--color--color-secondary);
-  color: #fff;
-  border: 2px solid var(--wp--custom--color--color-secondary);
+/* Shared geometry and transitions */
+.wp-element-button {
+  font-family: var(--wp--preset--font-family--title-font);
+  font-weight: 600;
+  border-radius: 8px;
+  border-width: 2px;
+  border-style: solid;
+  min-height: 50px;
+  padding: 0.75rem 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    color var(--transition-base),
+    background-color var(--transition-base),
+    border-color var(--transition-base),
+    box-shadow var(--transition-base),
+    transform var(--transition-fast);
 }
 
-.wp-block-button.is-style-buy-outline .wp-block-button__link {
-  background-color: transparent;
+/* Micro-lift for hover */
+.wp-element-button:hover {
+  transform: translateY(-1px);
+}
+
+/* Base elevation shadow */
+.wp-element-button {
+  box-shadow: var(--wp--preset--shadow--low);
+}
+
+/* Hover elevation shadow & translate */
+.wp-element-button:hover {
+  box-shadow: var(--wp--preset--shadow--medium);
+  transform: translateY(-1px);
+}
+
+/* Active (pressed) state shadow & translate */
+.wp-element-button:active {
+  box-shadow: var(--wp--preset--shadow--sunken);
+  transform: translateY(0);
+}
+
+/* Disabled */
+.wp-element-button:disabled,
+.wp-element-button[aria-disabled="true"] {
+  box-shadow: none;
+  transform: none;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ----- Base Colours ----- */
+
+/* Primary Solid */
+.wp-block-button.is-style-primary-solid .wp-element-button {
+  background-color: var(--wp--custom--color--color-primary);
+  color: #fff;
+  border: 2px solid color-mix(in srgb, var(--wp--custom--color--color-primary) 85%, black 15%);
+}
+
+/* Primary Outline */
+.wp-block-button.is-style-primary-outline .wp-element-button {
+  background-color: color-mix(in srgb, white 50%, transparent);
+  color: var(--wp--custom--color--color-primary);
+  border: 2px solid var(--wp--custom--color--color-primary);
+}
+
+/* Buy Solid */
+.wp-block-button.is-style-buy-solid .wp-element-button {
+  background-color: var(--wp--custom--color--color-secondary);
+  color: #fff;
+  border: 2px solid color-mix(in srgb, var(--wp--custom--color--color-secondary) 85%, black 15%);
+}
+
+/* Buy Outline */
+.wp-block-button.is-style-buy-outline .wp-element-button {
+  background-color: color-mix(in srgb, white 50%, transparent);
   color: var(--wp--custom--color--color-secondary);
   border: 2px solid var(--wp--custom--color--color-secondary);
 }
 
-/* Shared button behaviour */
-.wp-block-button__link {transition: 
-  color var(--transition-base),
-  background-color var(--transition-base),
-  border-color var(--transition-base),
-  transform var(--transition-fast);
-}
-.wp-block-button__link:hover {transform: translateY(-1px);}
+/* ----- Hover + Active ----- */
 
-/* Button hover states by variant */
-.wp-block-button:not(.is-style-outline):not(.is-style-buy-solid):not(.is-style-buy-outline) .wp-block-button__link:hover {
+/* Primary Solid */
+.wp-block-button.is-style-primary-solid .wp-element-button:hover {
   background-color: var(--wp--custom--color--color-primary-hover);
-  border-color: var(--wp--custom--color--color-primary-hover);
+  border-color: color-mix(in srgb, var(--wp--custom--color--color-primary-hover) 70%, black 30%);
 }
-.wp-block-button.is-style-outline .wp-block-button__link:hover {
+.wp-block-button.is-style-primary-solid .wp-element-button:active {
+  background-color: color-mix(in srgb, var(--wp--custom--color--color-primary-hover) 90%, black 10%);
+  border-color: color-mix(in srgb, var(--wp--custom--color--color-primary-hover) 70%, black 35%);
+}
+
+/* Primary Outline */
+.wp-block-button.is-style-primary-outline .wp-element-button:hover {
+  background-color: color-mix(in srgb, white 88%, transparent);
+  border-color: var(--wp--custom--color--color-primary-hover);
   color: var(--wp--custom--color--color-primary-hover);
-  border-color: var(--wp--custom--color--color-primary-hover);
 }
-.wp-block-button.is-style-buy-solid .wp-block-button__link:hover {
+.wp-block-button.is-style-primary-outline .wp-element-button:active {
+  background-color: color-mix(in srgb, white 80%, transparent);
+  border-color: color-mix(in srgb, var(--wp--custom--color--color-primary-hover) 80%, black 20%);
+}
+
+/* Buy Solid */
+.wp-block-button.is-style-buy-solid .wp-element-button:hover {
   background-color: var(--wp--custom--color--color-secondary-hover);
-  border-color: var(--wp--custom--color--color-secondary-hover);
+  border-color: color-mix(in srgb, var(--wp--custom--color--color-secondary-hover) 70%, black 30%);
 }
-.wp-block-button.is-style-buy-outline .wp-block-button__link:hover {
-  color: var(--wp--custom--color--color-secondary-hover);
+.wp-block-button.is-style-buy-solid .wp-element-button:active {
+  background-color: color-mix(in srgb, var(--wp--custom--color--color-secondary-hover) 90%, black 10%);
+  border-color: color-mix(in srgb, var(--wp--custom--color--color-secondary-hover) 70%, black 35%);
+}
+
+/* Buy Outline */
+.wp-block-button.is-style-buy-outline .wp-element-button:hover {
+  background-color: color-mix(in srgb, white 88%, transparent);
   border-color: var(--wp--custom--color--color-secondary-hover);
+  color: var(--wp--custom--color--color-secondary-hover);
+}
+.wp-block-button.is-style-buy-outline .wp-element-button:active {
+  background-color: color-mix(in srgb, white 80%, transparent);
+  border-color: color-mix(in srgb, var(--wp--custom--color--color-secondary-hover) 80%, black 20%);
+}
+
+/* ----- Disabled States ----- */
+
+/* Applies to all variants, including simulated (aria-disabled) */
+.wp-element-button:disabled,
+.wp-element-button[aria-disabled="true"] {
+  opacity: 0.6;
+  box-shadow: none;
+  cursor: not-allowed;
+  pointer-events: none;
+  transform: none;
 }
 
 /* --------- 2.3 Focus Visible default -------- */
@@ -919,6 +1016,44 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 /* ======================================================================
    7. DEV – WIP CODE
    ====================================================================== */
+
+
+/* ---------------------------------------------------------------------
+   LINKED IMAGE HOVER TEST
+   Purpose – visually indicate when an image is interactive.
+   Behaviour – slight zoom and luminance increase on hover;
+   motion disabled under reduced-motion preference.
+   Note – contrast delta <3:1; meets WCAG perceptibility requirement.
+------------------------------------------------------------------------ */
+
+a:has(img) img,
+a > img,
+a img {
+  transition:
+    transform var(--transition-fast),
+    filter var(--transition-fast);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:has(img):hover img,
+  a:hover > img,
+  a:hover img {
+    transform: scale(1.03);
+    filter: brightness(1.06);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a:has(img):hover img,
+  a:hover > img,
+  a:hover img {
+    transform: none;
+    filter: brightness(1.06);
+  }
+}
+
+
+   
 
 
 
