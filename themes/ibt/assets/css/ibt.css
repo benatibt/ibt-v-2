@@ -187,7 +187,6 @@ hr,
   transform var(--transition-fast);
 }
 .wp-block-button__link:hover {transform: translateY(-1px);}
-.wp-block-button__link:focus-visible {outline: 2px solid var(--wp--custom--color--color-primary); outline-offset: 2px;}
 
 /* Button hover states by variant */
 .wp-block-button:not(.is-style-outline):not(.is-style-buy-solid):not(.is-style-buy-outline) .wp-block-button__link:hover {
@@ -320,14 +319,15 @@ textarea:focus-visible {
 
 .ibt-header-wooicons > a,
 .ibt-header-wooicons > button {
-  all: unset;
-  width: 100%;
-  height: 100%;
-  display: inline-flex;
+  background: none;        /* remove UA button fill */
+  border: none;            /* remove default borders */
+  padding: 0;
+  margin: 0;
+  display: flex;
   align-items: center;
   justify-content: center;
-  color: inherit;
-  border-radius: inherit;
+  width: 2.25rem;
+  height: 2.25rem;
   cursor: pointer;
 }
 
@@ -356,12 +356,14 @@ textarea:focus-visible {
 .ibt-header-search-field { display: none; }
 
 .ibt-header-search-toggle {
-  all: unset;
-  width: 49px;
-  height: 49px;
+  background: none;
+  border: none;
+  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
   cursor: pointer;
 }
 
@@ -758,9 +760,6 @@ Purpose:
   --_sidebar-min: 20rem;                          /* usable product-card floor */
 }
 
-
-/* DEV */
-
 /* Full-width background when the sidebar column has the exempt class */
 .ibt-sideb-columns:has(> .ibt-sideb-sideb.ibt-rootp-bg-exempt) { position: relative; isolation: isolate; }
 
@@ -782,9 +781,6 @@ Purpose:
 @media (max-width: 60rem) {
   .ibt-sideb-columns:has(> .ibt-sideb-sideb.ibt-rootp-bg-exempt)::after { display:none; }
 }
-
-/* END DEV */
-
 
 /* Main content column (clamped by ratio + guards) */
 .ibt-sideb-columns .ibt-sideb-content {
@@ -826,7 +822,28 @@ Purpose:
   align-self: flex-start;
 }
 
-/* Responsive - see 6.3
+//* ----- Responsive Sidebar Adaption ----- */
+
+/* Default desktop/tablet */
+.ibt-sideb-mobile { display: none; }
+
+/* Collapse to mobile layout */
+@media (max-width: 60rem) {
+  .ibt-sideb-sideb { display: none; }  /* hide sidebar */
+  .ibt-sideb-mobile { display: block; } /* show mobile bottom bar */
+
+  /* Content goes full width */
+  .ibt-sideb-columns .ibt-sideb-content {
+    flex: 1 1 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+/* Site Editor - Show both so they can be editied. */
+.editor-styles-wrapper .ibt-sideb-sideb,
+.editor-styles-wrapper .ibt-sideb-mobile {
+  display: block !important;
+}
 
 /* ======================================================================
    5. UTILITIES
@@ -865,30 +882,9 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
    Breakpoints, reduced motion, print
    ====================================================================== */
 
-/* DEV - HEADER RESPONSIVE STATES REMOVED TO BACKUP FILE */
+/* Responsive code moved to sections to keep it in more human logical flow */
 
-/* ---------------------- 6.3 Responsive single post and sidebar (see 4.2) ----------------- */
 
-/* Default desktop/tablet */
-.ibt-sideb-mobile { display: none; }
-
-/* Collapse to mobile layout */
-@media (max-width: 60rem) {
-  .ibt-sideb-sideb { display: none; }  /* hide sidebar */
-  .ibt-sideb-mobile { display: block; } /* show mobile bottom bar */
-
-  /* Content goes full width */
-  .ibt-sideb-columns .ibt-sideb-content {
-    flex: 1 1 100% !important;
-    max-width: 100% !important;
-  }
-}
-
-/* Site Editor - Show both so they can be editied. */
-.editor-styles-wrapper .ibt-sideb-sideb,
-.editor-styles-wrapper .ibt-sideb-mobile {
-  display: block !important;
-}
 
 /* ---------------------- 6.4 Print Safeguards ------------------ */
 
@@ -924,17 +920,6 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
    7. DEV – WIP CODE
    ====================================================================== */
 
-
-
-   /* ====================================================================
-   4.3 - HORIZONTAL RULES / SEPARATORS
-   Purpose: default book-style divider (line–circle–line)
-   Note – unified styling for <hr> and Separator block.
-   -------------------------------------------------------------------- */
-/* ====================================================================
-   4.3 - HORIZONTAL RULES / SEPARATORS
-   Purpose: visible, neutral divider (no opacity / no token dependency)
-   -------------------------------------------------------------------- */
 
 
 /* **********************************************************************
