@@ -822,7 +822,7 @@ Purpose:
   align-self: flex-start;
 }
 
-//* ----- Responsive Sidebar Adaption ----- */
+/* ----- Responsive Sidebar Adaption ----- */
 
 /* Default desktop/tablet */
 .ibt-sideb-mobile { display: none; }
