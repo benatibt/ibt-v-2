@@ -207,6 +207,22 @@ hr,
   border-color: var(--wp--custom--color--color-secondary-hover);
 }
 
+/* --------- 2.3 Focus Visible default -------- */
+
+/* Warm red. Unique and good contrast on Paper and dark surfaces */
+:focus-visible {
+  outline: 2px solid #C05040; 
+  outline-offset: 2px;
+}
+
+/* Suppress duplicate outlines on elements that already have visible rings */
+button:focus-visible,
+[role="button"]:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline-offset: 3px; /* small buffer from native borders */
+}
 
 /* ======================================================================
    3. HEADER, NAV & FOOTER
