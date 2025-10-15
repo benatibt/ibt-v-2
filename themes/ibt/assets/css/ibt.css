@@ -138,8 +138,13 @@ hr,
    2.2 - Buttons */
 
 /* ------------------------- 2.1 - Links ------------------------------ */
- 
-/* Apply underline, colour comes from theme.json */
+
+/* Create an absolute position for all a (link) elements for visual effects */
+a {
+  position: relative;  
+}
+
+/* Default text link - Apply underline, colour comes from theme.json */
 :where(a[href])
   :not(.wp-element-button)
   :not(.wp-block-button__link)
@@ -153,7 +158,7 @@ hr,
   color: inherit;
 }
 
-/* Lighter underline for headers and remove link colour for all links */
+/* Heading - Lighter underline and remove link colour for all links */
 .wp-block-post-title a {
   color: inherit;
   text-decoration: underline;
@@ -163,45 +168,68 @@ hr,
 
 /* Exception for footer links in section 3 */
 
+
 /* ----- Image links ----- */
 
-/* Base image */
-a img {
-  display: block;
-  transition:
-    transform   var(--transition-fast),
-    filter      var(--transition-fast);
+/* Prepare linked images for hover effects */
+a > img {
+  display: block;       /* Remove inline spacing; ensures predictable box behaviour */
+  transition:           /* Animate only transform and filter (no opacity here) */
+    transform var(--transition-fast),
+    filter    var(--transition-fast);
 }
 
-/* Hover state */
+/* Hover: gentle zoom and brightening */
 a:hover img {
-  transform: scale(1.015);
-  filter: brightness(1.05);
+  transform: scale(1.003);    /* Slight zoom-in for tactile feel */
+  filter: brightness(1.05);   /* Lift luminance slightly, no colour shift */
 }
 
-/* Edge-light overlay */
-a {
-  position: relative;
-}
-
-a::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity var(--transition-base);
-  background: radial-gradient(
+/* Edge-light overlay setup */
+a:has(img)::after {
+  content: "";                 /* Generate empty pseudo-element layer */
+  position: absolute;          /* Position it relative to the link */
+  inset: 0;                    /* Fill the entire link box */
+  pointer-events: none;        /* Keep clicks/focus on the image/link itself */
+  opacity: 0;                  /* Start invisible (fades in on hover) */
+  transition: opacity var(--transition-base);  /* Fade speed for the overlay */
+  background: radial-gradient( /* Create a soft radial light around edges */
     circle at center,
-    rgba(255,255,255,0) 55%,
-    rgba(255,255,255,0.25) 100%
+    rgba(255,255,255,0)   50%,  /* Transparent centre */
+    rgba(255,255,255,0.22) 95%  /* Gentle edge highlight */
   );
-  mix-blend-mode: screen;
+  mix-blend-mode: screen;      /* Lighten only; preserve underlying detail */
 }
 
-a:hover::after {
+/* Hover: reveal the overlay */
+a:has(img):hover::after {
   opacity: 1;
 }
+
+
+/* ------ ICON BUTTONS ------ */
+/* Add .ibt-icon-button class to buttons to use this hover rule */
+
+.ibt-icon-button {
+  display: inline-flex;                 /* Centre icon within box */
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+
+/* Subtle scale-up on hover */
+.ibt-icon-button:hover svg,
+.ibt-icon-button:hover img {
+  transform: scale(1.18);
+}
+
+/* Slight compress on press */
+.ibt-icon-button:active svg,
+.ibt-icon-button:active img {
+  transform: scale(0.98);
+}
+
 
 
 
@@ -1076,7 +1104,7 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 .is-style-outline .wp-element-button {
   background-color: hotpink !important;
   color: magenta !important;
-  border-color: hotpink !important;
+  border-color: yellow !important;
 }
 /* !!! END DEV ONLY BLOCK !!! */
 
