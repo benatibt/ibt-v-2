@@ -206,7 +206,7 @@
 		},
 		"blocks": {
 			"core/archives": {},
-			"core/buttons": {
+			"core/button": {
 				"border": {
 					"radius": "8px",
 					"width": "2px",
@@ -242,6 +242,11 @@
 							"color": "var(--wp--custom--color--color-secondary)"
 						}
 					}
+				}
+			},
+			"core/buttons":{
+				"spacing": {
+					"blockGap": "var(--wp--preset--spacing--s)"
 				}
 			},
 			"core/categories": {},
