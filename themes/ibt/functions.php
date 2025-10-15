@@ -4,7 +4,7 @@
  * DEV VERSION WITH CACHE BUSTER - CHANGE BEFORE RELEASE
  * ====================================================== */
 
-// Define a version for cache-busting.
+// DEV ONLY - Define a version for cache-busting.
 if ( ! defined( 'IBT_VERSION' ) ) {
 	$theme = wp_get_theme( get_template() );
 	$ver   = $theme ? $theme->get( 'Version' ) : null;
@@ -34,6 +34,7 @@ add_action( 'after_setup_theme', function () {
 
 
 // Load ibt.css with cache buster version number.
+// DEV ONLY - Replace with normal enque
 add_action( 'wp_enqueue_scripts', function () {
 	$rel  = 'assets/css/ibt.css';
 	$path = get_stylesheet_directory() . '/' . $rel;
@@ -64,10 +65,7 @@ add_action( 'wp_enqueue_scripts', function () {
 }, 20 );
 
 
-// ---------------------------------------------------------------------
 //  Register IBT button styles.
-//  WP defaults (mostly) hidden in editor by js
-// ---------------------------------------------------------------------
 add_action( 'init', function() {
 
 	register_block_style(
@@ -100,21 +98,6 @@ add_action( 'init', function() {
 	);
 
 }, 20 );
-
-
-// ---------------------------------------------------------------------
-//  Load ibt-editor.js inside the Gutenberg editor
-// ---------------------------------------------------------------------
-add_action( 'enqueue_block_editor_assets', function() {
-	wp_enqueue_script(
-		'ibt-editor-js',
-		get_template_directory_uri() . '/assets/js/ibt-editor.js',
-		array( 'wp-blocks', 'wp-dom-ready' ),
-		wp_get_theme()->get( 'Version' ),
-		true
-	);
-} );
-
 
 // Add title + aria-label to Woo Account icon. 
 // Note - Cart doesn't work, js or css required if ever needed.

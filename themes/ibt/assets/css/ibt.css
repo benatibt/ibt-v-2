@@ -163,6 +163,47 @@ hr,
 
 /* Exception for footer links in section 3 */
 
+/* ----- Image links ----- */
+
+/* Base image */
+a img {
+  display: block;
+  transition:
+    transform   var(--transition-fast),
+    filter      var(--transition-fast);
+}
+
+/* Hover state */
+a:hover img {
+  transform: scale(1.015);
+  filter: brightness(1.05);
+}
+
+/* Edge-light overlay */
+a {
+  position: relative;
+}
+
+a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--transition-base);
+  background: radial-gradient(
+    circle at center,
+    rgba(255,255,255,0) 55%,
+    rgba(255,255,255,0.25) 100%
+  );
+  mix-blend-mode: screen;
+}
+
+a:hover::after {
+  opacity: 1;
+}
+
+
 
 /* ------------------------- 2.2 - Buttons ------------------------------ */
 
@@ -1018,44 +1059,26 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
    ====================================================================== */
 
 
-/* ---------------------------------------------------------------------
-   LINKED IMAGE HOVER TEST
-   Purpose – visually indicate when an image is interactive.
-   Behaviour – slight zoom and luminance increase on hover;
-   motion disabled under reduced-motion preference.
-   Note – contrast delta <3:1; meets WCAG perceptibility requirement.
------------------------------------------------------------------------- */
 
-a:has(img) img,
-a > img,
-a img {
-  transition:
-    transform var(--transition-fast),
-    filter var(--transition-fast);
+
+
+
+
+
+
+/* ====================================================================== */
+
+/* !!!!!! THIS BLOCK SHOULD BE COMMENTED OUT IN PRODUCTION !!!!!!
+   DEV ONLY - Make any use of default styles extremely obvious in dev. 
+   When this is 'turned off' reasonable defaults come from theme.json   */
+
+.is-style-fill .wp-element-button,
+.is-style-outline .wp-element-button {
+  background-color: hotpink !important;
+  color: magenta !important;
+  border-color: hotpink !important;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  a:has(img):hover img,
-  a:hover > img,
-  a:hover img {
-    transform: scale(1.03);
-    filter: brightness(1.06);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  a:has(img):hover img,
-  a:hover > img,
-  a:hover img {
-    transform: none;
-    filter: brightness(1.06);
-  }
-}
-
-
-   
-
-
+/* !!! END DEV ONLY BLOCK !!! */
 
 /* **********************************************************************
    END IBT THEME CSS

@@ -207,7 +207,42 @@
 		"blocks": {
 			"core/archives": {},
 			"core/buttons": {
-				"spacing": { "blockGap": "var(--wp--preset--spacing--s)" }
+				"border": {
+					"radius": "8px",
+					"width": "2px",
+					"style": "solid",
+					"color": "var(--wp--custom--color--color-secondary)"
+				},
+				"color": {
+					"background": "var(--wp--custom--color--color-secondary)",
+					"text": "#ffffff"
+				},
+				"spacing": {
+					"padding": {
+						"top": "0.75rem",
+						"right": "1.25rem",
+						"bottom": "0.75rem",
+						"left": "1.25rem"
+					}
+				},
+				"typography": {
+					"fontFamily": "var(--wp--preset--font-family--title-font)",
+					"fontWeight": "600"
+				},
+				"variations": {
+					"outline": {
+						"color": {
+							"background": "transparent",
+							"text": "var(--wp--custom--color--color-secondary)"
+						},
+						"border": {
+							"radius": "8px",
+							"width": "2px",
+							"style": "solid",
+							"color": "var(--wp--custom--color--color-secondary)"
+						}
+					}
+				}
 			},
 			"core/categories": {},
 			"core/columns": {},
