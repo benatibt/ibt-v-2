@@ -145,12 +145,20 @@ a {
 }
 
 /* Default text link - Apply underline, colour comes from theme.json */
-:where(a[href])
-  :not(.wp-element-button)
-  :not(.wp-block-button__link)
-  :not(.button)
-  :not(:where(nav *)) {
+/* Default text link – underline (colour from theme.json) */
+:where(a[href]):not(.wp-element-button):not(.wp-block-button__link):not(.button):not(:where(nav *)) {
   text-decoration: underline;
+  transition:
+    text-underline-offset var(--transition-slow),
+    text-decoration-thickness var(--transition-slow);
+}
+
+/* Default text link hover */
+:where(a[href]):not(.wp-element-button):not(.wp-block-button__link):not(.button):not(:where(nav *)):hover {
+  text-underline-offset: 0.25em;
+  transition:
+    text-underline-offset var(--transition-slow),
+    text-decoration-thickness var(--transition-slow);
 }
 
 /* Visited links – remove link colour */
@@ -162,12 +170,23 @@ a {
 .wp-block-post-title a {
   color: inherit;
   text-decoration: underline;
-  text-decoration-thickness: 1px;
+  text-decoration-thickness: 1px !important; /*!important required to overcome WP late applied default*/
   text-underline-offset: 0.15em;
+  transition:
+    text-underline-offset var(--transition-base),
+    text-decoration-thickness var(--transition-base);
+}
+
+/* Heading links - Hover */
+.wp-block-post-title a:hover {
+  text-underline-offset: 0.25em;
+  text-decoration-thickness: 2px !important;
+  transition:
+    text-underline-offset var(--transition-base),
+    text-decoration-thickness var(--transition-base);
 }
 
 /* Exception for footer links in section 3 */
-
 
 /* ----- Image links ----- */
 
@@ -215,7 +234,7 @@ a:has(img):hover::after {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: transform var(--transition-fast);
+  transition: transform var(--transition-base);
 }
 
 /* Subtle scale-up on hover */
@@ -829,8 +848,8 @@ textarea:focus-visible {
 
 /* Remove link styling for footer */
 .ibt-footer a {
-  color: inherit;
-  text-decoration: none;
+  color: inherit !important;
+  text-decoration: none !important;
 }
 
 /* ======================================================================
