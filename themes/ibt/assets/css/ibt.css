@@ -155,7 +155,7 @@ a {
 
 /* Default text link hover */
 :where(a[href]):not(.wp-element-button):not(.wp-block-button__link):not(.button):not(:where(nav *)):hover {
-  text-underline-offset: 0.25em;
+  text-underline-offset: 0.2em;
   transition:
     text-underline-offset var(--transition-slow),
     text-decoration-thickness var(--transition-slow);
@@ -187,6 +187,7 @@ a {
 }
 
 /* Exception for footer links in section 3 */
+
 
 /* ----- Image links ----- */
 
@@ -248,9 +249,6 @@ a:has(img):hover::after {
 .ibt-icon-button:active img {
   transform: scale(0.98);
 }
-
-
-
 
 /* ------------------------- 2.2 - Buttons ------------------------------ */
 
@@ -523,15 +521,6 @@ textarea:focus-visible {
   pointer-events: none;
 }
 
-/* Change icon colour and border on hover or focus. 
-.ibt-header-wooicons:hover,
-.ibt-header-wooicons:focus-within {
-  color: var(--wp--custom--color--color-primary-hover);
-  border-color: var(--wp--custom--color--color-primary-hover);
-}*/
-
-
-
 
 /* ----------------------------------------------------------------------
    3.3 – Header Search
@@ -673,7 +662,7 @@ textarea:focus-visible {
   --color-header-tab-default: #DCD6CF;  /* normal tab fill */
   --color-header-tab-related: #EBE8E3;  /* ancestor section */
   --color-header-tab-active:  #FAF9F7;  /* current page */
-  --color-header-tab-hover:   magenta;  /* hover (future use) */
+  --color-header-tab-hover:   #FAF9F7;  /* hover */
   --color-header-tab-border:  #4A443E;  /* active/ancestor border */
   --color-header-tab-soft:    #8D8780;  /* subtle border for inactive */
 }
@@ -719,23 +708,21 @@ textarea:focus-visible {
   color: black;
 }
 
-/* === Hover / Focus (for later implementation) ======================== */
-/*
+/* === Hover / Focus ======================== */
+
 .ibt-header-nav-desktop
   a.wp-block-navigation-item__content:not([data-ibt-state="active"]):hover,
 .ibt-header-nav-desktop
-  a.wp-block-navigation-item__content:not([data-ibt-state="active"]):focus-visible {
+  a.wp-block-navigation-item__content:not([data-ibt-state="active"]):focus-visible,
+.ibt-header-nav-desktop
+  button.wp-block-navigation-item__content:not([data-ibt-state="active"]):hover,
+.ibt-header-nav-desktop
+  button.wp-block-navigation-item__content:not([data-ibt-state="active"]):focus-visible {
   background-color: var(--color-header-tab-hover);
   border-color: var(--color-header-tab-border);
   border-bottom: none;
   color: black;
 }
-*/
-
-
-
-
-
 
 
 /* ----- 3.4.D - Submenu containers -----
@@ -816,18 +803,6 @@ textarea:focus-visible {
   display: flex;
   align-items: center;
 }
-
-/* Uncomment later when hover/focus tuning resumes:
-.ibt-header-nav-mobile
-  :is(.wp-block-navigation__responsive-container-open,
-      .wp-block-navigation__responsive-container-close):hover,
-.ibt-header-nav-mobile
-  :is(.wp-block-navigation__responsive-container-open,
-      .wp-block-navigation__responsive-container-close):focus-visible {
-  color: var(--wp--custom--color--color-primary-hover);
-  border-color: currentColor;
-}
-*/
 
 /* Match overlay background to header background colour. */
 .wp-block-navigation__responsive-container,
