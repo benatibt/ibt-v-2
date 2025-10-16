@@ -931,26 +931,11 @@ Purpose:
   --_sidebar-min: 20rem;                          /* usable product-card floor */
 }
 
-/* Full-width background when the sidebar column has the exempt class */
-.ibt-sideb-columns:has(> .ibt-sideb-sideb.ibt-rootp-bg-exempt) { position: relative; isolation: isolate; }
-
-.ibt-sideb-columns:has(> .ibt-sideb-sideb.ibt-rootp-bg-exempt)::after {
-  content:"";
-  position:absolute; top:0; bottom:0;
-  left: calc(var(--_content-ratio) * (100% - var(--_gap)) + var(--_gap));
-  right: calc((100vw - 100%) * -1);
-  background-color:#f6f6f6;
-  z-index:-1;
-}
-
+/* Simple neutral grey background */
 .ibt-sideb-sideb.ibt-rootp-bg-exempt {
+  background-color: #f6f6f6; /* revert to solid colour */
   border-left: 1px solid var(--wp--preset--color--border-dark, #999);
-}
-
-.ibt-sideb-sideb.ibt-rootp-bg-exempt { background: none; }
-
-@media (max-width: 60rem) {
-  .ibt-sideb-columns:has(> .ibt-sideb-sideb.ibt-rootp-bg-exempt)::after { display:none; }
+  border-right: 1px solid var(--wp--preset--color--border-dark, #999);
 }
 
 /* Main content column (clamped by ratio + guards) */
