@@ -80,9 +80,9 @@ Phase 1 — Core Structure
 
     1.4 Template Parts
 
-        1.4.1 Minimal header.html (site title + nav).
+        X 1.4.1 Minimal header.html (site title + nav).
 
-        1.4.2 Minimal footer.html (copyright placeholder).
+        X 1.4.2 Minimal footer.html (copyright placeholder).
 
     1.5 Custom Types & Taxonomies
 
