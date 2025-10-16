@@ -113,6 +113,11 @@ add_filter( 'render_block', function( $block_content, $block ) {
 	return $block_content;
 }, 10, 2 );
 
+// Stop Woo loading it's product zoom js which we don't need for books
+add_action( 'after_setup_theme', function() {
+	remove_theme_support( 'wc-product-gallery-zoom' );
+}, 20 );
+
 
 /**
  * IBT Navigation – Active / Ancestor / Virtual-Ancestor Highlighter
