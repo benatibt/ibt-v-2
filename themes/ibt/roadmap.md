@@ -58,17 +58,17 @@ Phase 1 — Core Structure
 
     1.2 Adapt/create:
 
-        1.2.1 index.html
+        X1.2.1 index.html
 
-        1.2.2 page.html
+        X1.2.2 page.html
 
-        1.2.3 single.html
+        X1.2.3 single.html
 
-        1.2.4 archive.html
+        X1.2.4 archive.html
 
-        1.2.5 front-page.html
+        X1.2.5 front-page.html
 
-        1.2.6 404.html
+        X1.2.6 404.html
 
     1.3 WooCommerce:
 

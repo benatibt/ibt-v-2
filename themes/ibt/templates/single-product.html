@@ -1,0 +1,72 @@
+<!-- wp:template-part {"slug":"header-shop","theme":"ibt"} /-->
+
+<!-- wp:group {"tagName":"main","className":"ibt-rootp-apply","layout":{"type":"constrained"}} -->
+<main class="wp-block-group ibt-rootp-apply">
+
+    <!-- wp:template-part {"slug":"meta-schema","theme":"ibt"} /-->
+
+    <!-- wp:woocommerce/breadcrumbs /-->
+    <!-- wp:woocommerce/store-notices /-->
+
+    <!-- wp:columns {"align":"wide"} -->
+    <div class="wp-block-columns alignwide">
+
+        <!-- wp:column {"width":"512px"} -->
+        <div class="wp-block-column" style="flex-basis:512px">
+            <!-- wp:woocommerce/product-image-gallery /-->
+        </div>
+        <!-- /wp:column -->
+
+        <!-- wp:column -->
+        <div class="wp-block-column">
+
+            <!-- wp:post-title {"level":1,"__woocommerceNamespace":"woocommerce/product-query/product-title"} /-->
+            <!-- wp:woocommerce/product-rating {"isDescendentOfSingleProductTemplate":true} /-->
+            <!-- wp:woocommerce/product-price {"isDescendentOfSingleProductTemplate":true,"fontSize":"large"} /-->
+            <!-- wp:post-excerpt {"__woocommerceNamespace":"woocommerce/product-query/product-summary","excerptLength":100} /-->
+            <!-- wp:woocommerce/add-to-cart-form /-->
+
+            <!-- wp:woocommerce/product-meta {"metadata":{"ignoredHookedBlocks":["core/post-terms"]}} -->
+            <div class="wp-block-woocommerce-product-meta">
+                <!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap"}} -->
+                <div class="wp-block-group">
+                    <!-- wp:woocommerce/product-sku /-->
+                    <!-- wp:post-terms {"term":"product_cat","prefix":"Category: "} /-->
+                    <!-- wp:post-terms {"term":"product_tag","prefix":"Tags: "} /-->
+                </div>
+                <!-- /wp:group -->
+                <!-- wp:post-terms {"term":"product_brand","prefix":"Brands: "} /-->
+            </div>
+            <!-- /wp:woocommerce/product-meta -->
+
+        </div>
+        <!-- /wp:column -->
+
+    </div>
+    <!-- /wp:columns -->
+
+    <!-- wp:woocommerce/product-details {"align":"wide","className":"is-style-minimal"} /-->
+
+    <!-- wp:woocommerce/product-collection {"align":"wide","queryId":0,"query":{"perPage":5,"pages":1,"offset":0,"postType":"product","order":"asc","orderBy":"title","search":"","exclude":[],"inherit":false,"taxQuery":[],"isProductCollectionBlock":true,"featured":false,"woocommerceOnSale":false,"woocommerceStockStatus":["instock","onbackorder"],"woocommerceAttributes":[],"woocommerceHandPickedProducts":[],"filterable":false,"relatedBy":{"categories":true,"tags":true}},"tagName":"div","displayLayout":{"type":"flex","columns":5,"shrinkColumns":false},"dimensions":{"widthType":"fill"},"collection":"woocommerce/product-collection/related","hideControls":["inherit"],"queryContextIncludes":["collection"]} -->
+    <div class="wp-block-woocommerce-product-collection alignwide">
+        <!-- wp:heading {"style":{"spacing":{"margin":{"top":"var:preset|spacing|30","bottom":"var:preset|spacing|30"}}}} -->
+        <h2 class="wp-block-heading" style="margin-top:var(--wp--preset--spacing--30);margin-bottom:var(--wp--preset--spacing--30)">
+            Related products
+        </h2>
+        <!-- /wp:heading -->
+
+        <!-- wp:woocommerce/product-template -->
+            <!-- wp:woocommerce/product-image {"showSaleBadge":false,"imageSizing":"thumbnail","isDescendentOfQueryLoop":true} -->
+                <!-- wp:woocommerce/product-sale-badge {"isDescendentOfQueryLoop":true,"align":"right"} /-->
+            <!-- /wp:woocommerce/product-image -->
+            <!-- wp:post-title {"textAlign":"center","level":3,"isLink":true,"style":{"spacing":{"margin":{"bottom":"0.75rem","top":"0"}}},"fontSize":"medium","__woocommerceNamespace":"woocommerce/product-collection/product-title"} /-->
+            <!-- wp:woocommerce/product-price {"isDescendentOfQueryLoop":true,"textAlign":"center","fontSize":"small"} /-->
+            <!-- wp:woocommerce/product-button {"textAlign":"center","isDescendentOfQueryLoop":true,"fontSize":"small"} /-->
+        <!-- /wp:woocommerce/product-template -->
+    </div>
+    <!-- /wp:woocommerce/product-collection -->
+
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer-shop","theme":"ibt"} /-->
