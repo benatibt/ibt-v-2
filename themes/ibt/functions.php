@@ -65,6 +65,10 @@ add_action( 'wp_enqueue_scripts', function () {
 }, 20 );
 
 
+// Disable WooCommerce image zoom on single product pages (not needed for book covers).
+add_filter( 'woocommerce_single_product_zoom_enabled', '__return_false', 20 );
+
+
 //  Register IBT button styles.
 add_action( 'init', function() {
 
@@ -112,11 +116,6 @@ add_filter( 'render_block', function( $block_content, $block ) {
 	}
 	return $block_content;
 }, 10, 2 );
-
-// Stop Woo loading it's product zoom js which we don't need for books
-add_action( 'after_setup_theme', function() {
-	remove_theme_support( 'wc-product-gallery-zoom' );
-}, 20 );
 
 
 /**
