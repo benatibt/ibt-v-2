@@ -54,7 +54,7 @@ Phase 1 — Core Structure
 
     1.1 Templates
 
-        Strip TT5 design blocks → keep skeleton only.
+        X Strip TT5 design blocks → keep skeleton only.
 
     1.2 Adapt/create:
 
