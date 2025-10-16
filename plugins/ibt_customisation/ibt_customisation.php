@@ -7,9 +7,23 @@
  * License: GPL-2.0-or-later
  *
  * Changelog
- * 0.2.1 – Added ibt_safe() error-handling wrapper; production-stable release.
+ * 0.2.1 – Added ibt_safe() error-handling wrapper.
  * 0.2.0 – Added WooCommerce presence check (auto-deactivate + log) and free-text ISBN.
  * 0.1.0 – Initial test release.
+ */
+
+/**
+ * ---------------------------------------------------------------------
+ * PURPOSE
+ * Adds "Author" and "ISBN" custom fields for WooCommerce products
+ * in the Books category, displaying them in listings and single views.
+ *
+ * SAFE LOAD & ERROR HANDLING
+ * • Auto-deactivates if WooCommerce is missing.
+ * • All runtime callbacks wrapped in ibt_safe() – errors logged,
+ *   should never be fatal.
+ * • Logs written via error_log(); no admin notices or UI output.
+ * ---------------------------------------------------------------------
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
