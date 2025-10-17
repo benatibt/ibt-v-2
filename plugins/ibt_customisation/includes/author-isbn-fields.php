@@ -156,7 +156,7 @@ function ibt_render_author( $atts = array(), $content = null ) {
 	$subtitle = get_post_meta( $product->get_id(), '_ibt_subtitle', true );
 	if ( ! $subtitle ) return '';
 
-	return '<p class="ibt-author-parastyle">Author: ' . esc_html( $subtitle ) . '</p>';
+	return '<h3 class="ibt-author-parastyle">Author: ' . esc_html( $subtitle ) . '</h3>';
 }
 
 /**
