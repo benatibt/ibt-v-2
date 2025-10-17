@@ -1,4 +1,5 @@
 <?php
+
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
@@ -29,8 +30,13 @@ function ibt_get_books_term() {
 }
 
 function ibt_get_books_and_descendant_ids() {
+	static $cache = null;
+	if ( $cache !== null ) {
+		return $cache;
+	}
+
 	$root = ibt_get_books_term();
-	if ( ! $root ) return array();
+	if ( ! $root ) return $cache = array();
 
 	$ids  = array( (int) $root->term_id );
 	$desc = get_terms( array(
@@ -43,7 +49,8 @@ function ibt_get_books_and_descendant_ids() {
 	if ( is_array( $desc ) ) {
 		$ids = array_map( 'intval', array_unique( array_merge( $ids, $desc ) ) );
 	}
-	return $ids;
+
+	return $cache = $ids;
 }
 
 /**
@@ -100,7 +107,9 @@ add_action( 'woocommerce_process_product_meta', ibt_safe( function( $post_id ) {
 /**
  * ADMIN: Toggle field visibility when category changes
  */
-add_action( 'admin_enqueue_scripts', ibt_safe( function() {
+add_action( 'admin_enqueue_scripts', ibt_safe( function( $hook_suffix = '' ) {
+	if ( ! current_user_can( 'edit_products' ) ) return;
+
 	$screen = get_current_screen();
 	if ( ! $screen || $screen->post_type !== 'product' ) return;
 
@@ -134,7 +143,7 @@ add_action( 'admin_enqueue_scripts', ibt_safe( function() {
 /**
  * FRONT: Core rendering function (used by shortcode)
  */
-function ibt_render_author() {
+function ibt_render_author( $atts = array(), $content = null ) {
 	global $product;
 	if ( ! ( $product instanceof WC_Product ) ) return '';
 
