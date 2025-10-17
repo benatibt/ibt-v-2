@@ -23,6 +23,7 @@
  * • All runtime callbacks wrapped in ibt_safe() – errors logged,
  *   should never be fatal.
  * • Logs written via error_log(); no admin notices or UI output.
+
  * ---------------------------------------------------------------------
  */
 
@@ -40,10 +41,10 @@ const IBT_BOOKS_CATEGORY_SLUG = 'books';
  */
 add_action( 'plugins_loaded', function() {
 
-	// If WooCommerce missing, write to log and deactivate.
+	// Check whether WooCommerce is loaded.
 	if ( ! class_exists( 'WooCommerce' ) ) {
 		if ( function_exists( 'error_log' ) ) {
-			error_log( '[IBT Customisation] WooCommerce not detected – plugin auto-deactivated.' );
+			error_log( '[IBT Customisation] WooCommerce check failed — plugin not initialised (auto-deactivated).' );
 		}
 		if ( function_exists( 'deactivate_plugins' ) ) {
 			deactivate_plugins( plugin_basename( __FILE__ ) );
@@ -54,3 +55,4 @@ add_action( 'plugins_loaded', function() {
 	// Safe to include our main logic.
 	require_once __DIR__ . '/includes/author-isbn-fields.php';
 } );
+

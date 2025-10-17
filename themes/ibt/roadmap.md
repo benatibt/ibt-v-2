@@ -72,11 +72,11 @@ Phase 1 — Core Structure
 
     1.3 WooCommerce:
 
-        1.3.1 single-product.html
+        X1.3.1 single-product.html
 
-        1.3.2 archive-product.html
+        X1.3.2 archive-product.html
 
-        1.3.3 checkout.html
+        X1.3.3 checkout.html
 
     1.4 Template Parts
 

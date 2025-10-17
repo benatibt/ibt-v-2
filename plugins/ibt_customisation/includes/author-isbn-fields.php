@@ -57,15 +57,22 @@ function ibt_get_books_and_descendant_ids() {
 
 /**
  * ---------------------------------------------------------------------
- * ADMIN: Add custom fields
+ * ADMIN: Add custom fields to Product Data → General
+ * (guarded by capability)
  * ---------------------------------------------------------------------
  */
 add_action(
 	'woocommerce_product_options_general_product_data',
 	ibt_safe(
 		function() {
+
+			if ( ! current_user_can( 'edit_products' ) ) {
+				return;
+			}
+
 			echo '<div class="options_group ibt-book-only-fields" style="display:none">';
 
+			// Author
 			woocommerce_wp_text_input(
 				array(
 					'id'          => '_ibt_subtitle',
@@ -76,6 +83,7 @@ add_action(
 				)
 			);
 
+			// ISBN (free text as per spec)
 			woocommerce_wp_text_input(
 				array(
 					'id'          => '_ibt_isbn',
@@ -94,13 +102,19 @@ add_action(
 
 /**
  * ---------------------------------------------------------------------
- * ADMIN: Save fields
+ * ADMIN: Save fields (guarded by capability)
+ * (free-text ISBN; sanitise only)
  * ---------------------------------------------------------------------
  */
 add_action(
 	'woocommerce_process_product_meta',
 	ibt_safe(
 		function( $post_id ) {
+
+			if ( ! current_user_can( 'edit_products' ) ) {
+				return;
+			}
+
 			if ( isset( $_POST['_ibt_subtitle'] ) ) {
 				update_post_meta(
 					$post_id,
@@ -119,7 +133,7 @@ add_action(
 
 /**
  * ---------------------------------------------------------------------
- * ADMIN: Toggle field visibility
+ * ADMIN: Toggle field visibility when category changes
  * ---------------------------------------------------------------------
  */
 add_action(
@@ -135,7 +149,7 @@ add_action(
 				return;
 			}
 
-			wp_register_script( 'ibt-admin-books-toggle', '', array( 'jquery' ), '1.0.2', true );
+			wp_register_script( 'ibt-admin-books-toggle', '', array( 'jquery' ), '1.0.3', true );
 			$inline = <<<JS
 			(function($){
 				function ids(){return new Set(JSON.parse($('#ibtBooksIds').data('ids')||'[]'));}
@@ -163,7 +177,8 @@ add_action(
 
 /**
  * ---------------------------------------------------------------------
- * FRONT: Rendering
+ * FRONT: Core rendering function (used by block + shortcode)
+ * (No PHP injection hooks; display is block-only now)
  * ---------------------------------------------------------------------
  */
 function ibt_render_author() {
@@ -192,25 +207,9 @@ function ibt_render_author() {
 
 /**
  * ---------------------------------------------------------------------
- * FRONT: Shortcode, loops, filters, CSS, block
+ * FRONT: ISBN in Additional Information table (keep as PHP filter)
  * ---------------------------------------------------------------------
  */
-add_shortcode( 'ibt_author', 'ibt_render_author' );
-
-add_action(
-	'woocommerce_after_shop_loop_item_title',
-	ibt_safe(
-		function() {
-			global $product;
-			if ( ! ( $product instanceof WC_Product ) ) {
-				return;
-			}
-			echo ibt_render_author();
-		}
-	),
-	6
-);
-
 add_filter(
 	'woocommerce_display_product_attributes',
 	ibt_safe(
@@ -241,45 +240,41 @@ add_filter(
 	2
 );
 
-add_action(
-	'wp_enqueue_scripts',
-	ibt_safe(
-		function() {
-			if ( ! ( is_product() || is_shop() || is_product_category() ) ) {
-				return;
-			}
-			$css = '
-			.ibt-author-parastyle {
-				margin: 0 0 0.5rem 0;
-				font: inherit;
-				font-weight: 400;
-				color: var(--wp--preset--color--text,#000);
-				font-family: var(--wp--preset--font-family--body-font,inherit);
-				font-size: var(--wp--preset--font-size--m,1rem);
-			}';
-			wp_register_style( 'ibt-front-inline', false, array(), '1.4.1' );
-			wp_enqueue_style( 'ibt-front-inline' );
-			wp_add_inline_style( 'ibt-front-inline', $css );
-		}
-	)
-);
-
+/**
+ * ---------------------------------------------------------------------
+ * BLOCK: Register "Book Author" dynamic block via block.json
+ * ---------------------------------------------------------------------
+ */
 add_action(
 	'init',
 	ibt_safe(
 		function() {
-			register_block_type(
-				'ibt/book-author',
-				array(
-					'api_version'     => 2,
-					'title'           => __( 'Book Author', 'ibt' ),
-					'description'     => __( 'Displays the Author field for Books products.', 'ibt' ),
-					'category'        => 'widgets',
-					'icon'            => 'id',
-					'render_callback' => 'ibt_render_author',
-					'supports'        => array( 'html' => false ),
-				)
-			);
+			// Use block.json for modern editor visibility.
+			$block_dir = dirname( __DIR__ ) . '/blocks/book-author';
+			if ( file_exists( $block_dir . '/block.json' ) ) {
+				register_block_type( $block_dir );
+			} else {
+				// Fallback: direct registration if block.json missing (won't show in inserter)
+				register_block_type(
+					'ibt/book-author',
+					array(
+						'api_version'     => 2,
+						'title'           => __( 'Book Author', 'ibt' ),
+						'description'     => __( 'Displays the Author field for Books products.', 'ibt' ),
+						'category'        => 'woocommerce',
+						'icon'            => 'id',
+						'render_callback' => 'ibt_render_author',
+						'supports'        => array( 'html' => false ),
+					)
+				);
+			}
 		}
 	)
 );
+
+/**
+ * ---------------------------------------------------------------------
+ * SHORTCODE (optional, for legacy use)
+ * ---------------------------------------------------------------------
+ */
+add_shortcode( 'ibt_author', 'ibt_render_author' );
