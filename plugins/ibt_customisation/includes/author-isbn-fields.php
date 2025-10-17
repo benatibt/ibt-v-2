@@ -162,7 +162,8 @@ function ibt_render_author( $atts = array(), $content = null ) {
 /**
  * FRONT: ISBN in Additional Information table
  */
-add_filter( 'woocommerce_display_product_attributes', ibt_safe( function( $attrs, $product ) {
+add_filter( 'woocommerce_display_product_attributes', ibt_safe( function( $attrs, $product = null ) {
+
 	$isbn = get_post_meta( $product->get_id(), '_ibt_isbn', true );
 	if ( $isbn === '' ) return $attrs;
 
