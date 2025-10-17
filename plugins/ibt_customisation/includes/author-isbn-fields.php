@@ -142,10 +142,26 @@ add_action( 'admin_enqueue_scripts', ibt_safe( function( $hook_suffix = '' ) {
 
 /**
  * FRONT: Core rendering function (used by shortcode)
+ * Adds optional "level" attribute for heading or paragraph output.
+ * Example: [ibt_author level="h2"] → <h2>Author: …</h2>
  */
 function ibt_render_author( $atts = array(), $content = null ) {
 	global $product;
 	if ( ! ( $product instanceof WC_Product ) ) return '';
+
+	// Allow shortcode attribute for heading level (default h3)
+	$atts = shortcode_atts(
+		array(
+			'level' => 'h3',
+		),
+		$atts,
+		'ibt_author'
+	);
+
+	// Sanitize allowed tags
+	$level = in_array( strtolower( $atts['level'] ), array( 'h2', 'h3', 'p' ), true )
+		? strtolower( $atts['level'] )
+		: 'h3';
 
 	$books_ids = ibt_get_books_and_descendant_ids();
 	if ( empty( $books_ids ) ) return '';
@@ -156,13 +172,27 @@ function ibt_render_author( $atts = array(), $content = null ) {
 	$subtitle = get_post_meta( $product->get_id(), '_ibt_subtitle', true );
 	if ( ! $subtitle ) return '';
 
-	return '<h3 class="ibt-author-parastyle">Author: ' . esc_html( $subtitle ) . '</h3>';
+	return sprintf(
+		'<%1$s class="ibt-author-parastyle">Author: %2$s</%1$s>',
+		esc_html( $level ),
+		esc_html( $subtitle )
+	);
 }
+
 
 /**
  * FRONT: ISBN in Additional Information table
  */
 add_filter( 'woocommerce_display_product_attributes', ibt_safe( function( $attrs, $product = null ) {
+
+	// Woo 10.2+ sometimes omits $product; recover it safely.
+	if ( ! ( $product instanceof WC_Product ) ) {
+		global $product;
+		$product = $product instanceof WC_Product ? $product : wc_get_product( get_the_ID() );
+	}
+	if ( ! ( $product instanceof WC_Product ) ) {
+		return $attrs; // Can't proceed safely.
+	}
 
 	$isbn = get_post_meta( $product->get_id(), '_ibt_isbn', true );
 	if ( $isbn === '' ) return $attrs;
@@ -180,7 +210,9 @@ add_filter( 'woocommerce_display_product_attributes', ibt_safe( function( $attrs
 		array_unshift( $attrs, $row );
 	}
 	return $attrs;
-}, 10, 2 ) );
+}), 10, 2 );
+
+
 
 /**
  * SHORTCODE: [ibt_author]
