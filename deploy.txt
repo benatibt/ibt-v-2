@@ -1,5 +1,7 @@
 How to deploy
 ? Site logos ?
 Install required plugins
+Create placeholder pages
+Configure settings/reading (sandbox ref)
 Configure permalinks (sandbox as ref)
 Configure Relevanssi indexing tab (sandbox as ref)
