@@ -86,13 +86,13 @@ Phase 1 — Core Structure
 
     1.5 Custom Types & Taxonomies
 
-        1.5.1 Register Library CPT (library) with archive.
+        X1.5.1 Register Library CPT (library) with archive.
 
-        1.5.2 Register shared Topic taxonomy for product + library.
+        X1.5.2 Register shared Topic taxonomy for product + library.
 
-        1.5.3 Keep Woo Product Tag private (internal only).
+        X1.5.3 Keep Woo Product Tag private (internal only).
 
-        1.5.4 theme.json Tokens - Spacing scale & content/wide widths.
+        X1.5.4 theme.json Tokens - Spacing scale & content/wide widths.
 
     X1.6 Temporary AAA-safe palette.
 
