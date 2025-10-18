@@ -877,8 +877,25 @@ textarea:focus-visible {
   box-sizing: content-box;
 }
 
+/* --------------------------------------------------------------------------------
+4.2 - Adjust spacing for content indexes (query loops, archives, search results) */
+
+.wp-block-post-template :where(h1, h2, h3, h4, h5, h6, p) {
+  margin-block: 0;
+  padding-block: 0;
+}
+
+.wp-block-post-template .wp-block-post-title {
+  padding-block-start: 0.75em;
+  font-size: var(--wp--preset--font-size--xl);
+}
+
+.wp-block-post-template .wp-block-post-excerpt__excerpt {
+  padding-block: 0;
+}
+
 /* ---------------------------------------------------------------------
-    4.2 - SINGLE POST WITH SIDEBAR
+    4.3 - SINGLE POST WITH SIDEBAR
 
 single.html
    • One-article layout with optional right sidebar.
@@ -1077,7 +1094,6 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
    ====================================================================== */
 
 
-   
 
 /* ====================================================================== */
 
