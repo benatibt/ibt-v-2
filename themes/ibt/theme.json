@@ -398,47 +398,68 @@
 				"border": {},
 				"color": {}
 			},
-			"woocommerce/product-collection": {
-				"spacing": {},
-				"typography": {},
-				"color": {}
-				},
-
-			"woocommerce/product-image": {
-				"border": {},
-				"spacing": {}
-				},
-
-			"woocommerce/product-title": {
-				"typography": {},
-				"color": {},
-				"spacing": {}
-				},
-
-			"woocommerce/product-price": {
-				"typography": {},
-				"color": {},
-				"spacing": {}
-				},
-
-			"woocommerce/product-button": {
-				"typography": {},
-				"color": {},
-				"border": {},
-				"spacing": {}
-				},
-
+			"woocommerce/add-to-cart-form": {},
+			"woocommerce/breadcrumbs": {},
 			"woocommerce/cart": {
-				"spacing": {},
-				"color": {},
-				"typography": {}
-				},
-
+				"spacing": {}
+			},
 			"woocommerce/checkout": {
-				"spacing": {},
-				"color": {},
-				"typography": {}
+				"spacing": {}
+			},
+			"woocommerce/mini-cart": {},
+			"woocommerce/product-button": {
+				"typography": {
+					"fontFamily": "var(--wp--preset--font-family--title-font)",
+					"fontWeight": "600"
+				},
+				"border": {
+					"radius": "8px",
+					"width": "2px",
+					"style": "solid",
+					"color": "color-mix(in srgb, var(--wp--custom--color--color-secondary) 85%, black 15%)"
+				},
+				"spacing": {
+					"padding": {
+					"top": "0.75rem",
+					"right": "1.25rem",
+					"bottom": "0.75rem",
+					"left": "1.25rem"
+					}
+				},
+				"color": {
+					"background": "var(--wp--custom--color--color-secondary)",
+					"text": "#ffffff"
 				}
+			},
+
+			"woocommerce/product-collection": {
+				"spacing": {
+				"blockGap": "var(--wp--preset--spacing--s)"
+				}
+			},
+			"woocommerce/product-image": {},
+			"woocommerce/product-price": {
+				"typography": {
+				"fontFamily": "var(--wp--preset--font-family--body-font)",
+				"fontWeight": "600",
+				"fontSize": "var(--wp--preset--font-size--m)"
+				},
+				"color": {
+				"text": "var(--wp--custom--color--color-text-normal)"
+				}
+			},
+			"woocommerce/product-rating": {},
+			"woocommerce/product-sku": {},
+			"woocommerce/product-summary": {},
+			"woocommerce/product-template": {},
+			"woocommerce/product-title": {
+				"typography": {
+				"fontFamily": "var(--wp--preset--font-family--heading)",
+				"fontWeight": "600",
+				"fontSize": "var(--wp--preset--font-size--l)"
+				}
+			},
+			"woocommerce/store-notices": {}
 		}
 	}
 }

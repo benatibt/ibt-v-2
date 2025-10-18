@@ -37,7 +37,7 @@ IBT custom tokens
   --spacing-* .................... Spacing scale (rem-based or clamp)
   --transition-* ................. Motion timing (base, fast, slow) for easy tuning
 
---------- 0.2 - CLASS NAMING ------------
+--------- 0.2 - CLASS NAMING -----------
 
 ROOT PADDING
   .ibt-rootp-apply ................ Add to outer groups to apply root padding.
@@ -878,24 +878,40 @@ textarea:focus-visible {
 }
 
 /* --------------------------------------------------------------------------------
-4.2 - Adjust spacing for content indexes (query loops, archives, search results) */
+4.2 - Compact contexts – reduce heading/paragraph rhythm in grids
+      Applies to Woo product cards, post archives, library lists, etc. */
 
-.wp-block-post-template :where(h1, h2, h3, h4, h5, h6, p) {
+:is(
+  .wp-block-post-template,
+  .wp-block-woocommerce-product-template,
+  .wp-block-query-loop,
+  .ibt-card-list,
+  .ibt-sideb-section
+) :where(h1, h2, h3, h4, h5, h6, p) {
   margin-block: 0;
   padding-block: 0;
 }
 
-.wp-block-post-template .wp-block-post-title {
-  padding-block-start: 0.75em;
-  font-size: var(--wp--preset--font-size--xl);
+/* Optionally add a light top gap to titles only */
+:is(
+  .wp-block-post-template,
+  .wp-block-woocommerce-product-template
+) h2 {
+  padding-block-start: 0.5em;
 }
 
-.wp-block-post-template .wp-block-post-excerpt__excerpt {
-  padding-block: 0;
+/*  ---------------------------------------------------------------
+    4.3 Single product – tighten text, fit picture    */
+
+.single-product :where(h1, h2, h3, h4, h5, h6, p) {
+  padding-block: 0.25em !important;
 }
+
+
+
 
 /* ---------------------------------------------------------------------
-    4.3 - SINGLE POST WITH SIDEBAR
+    4.4 - SINGLE POST WITH SIDEBAR
 
 single.html
    • One-article layout with optional right sidebar.
@@ -1105,8 +1121,10 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 /* !!! END DEV ONLY BLOCK !!! */
 /* ====================================================================== */
 
-
-
+/* Temporary Woo gap test 
+[class*="wp-block-woocommerce-"] {
+  --wp--style--block-gap: var(--wp--preset--spacing--xs);
+}*/
 
 
 
