@@ -397,7 +397,48 @@
 				"spacing": {},
 				"border": {},
 				"color": {}
-			}
+			},
+			"woocommerce/product-collection": {
+				"spacing": {},
+				"typography": {},
+				"color": {}
+				},
+
+			"woocommerce/product-image": {
+				"border": {},
+				"spacing": {}
+				},
+
+			"woocommerce/product-title": {
+				"typography": {},
+				"color": {},
+				"spacing": {}
+				},
+
+			"woocommerce/product-price": {
+				"typography": {},
+				"color": {},
+				"spacing": {}
+				},
+
+			"woocommerce/product-button": {
+				"typography": {},
+				"color": {},
+				"border": {},
+				"spacing": {}
+				},
+
+			"woocommerce/cart": {
+				"spacing": {},
+				"color": {},
+				"typography": {}
+				},
+
+			"woocommerce/checkout": {
+				"spacing": {},
+				"color": {},
+				"typography": {}
+				}
 		}
 	}
 }
