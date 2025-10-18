@@ -6,7 +6,7 @@
  *
  *   RTT1 - Topic taxonomy
  *   RTT2 - Library CPT
- *   RTT3 - Hook registration
+ *   RTT3 - Rename "Posts" to "News" in admin
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * RTT1 - Register Taxonomy: topic (non-hierarchical)
  * Shared between Library (CPT) and Woo Products.
  * ===================================================================== */
-add_action( 'init', ibt_safe( 'register-taxonomy-topic', function() {
+add_action( 'init', ibt_safe( 'RTT1-register-taxonomy-topic', function() {
 
 	$labels = array(
 		'name'                       => __( 'Topics', 'ibt' ),
@@ -56,7 +56,7 @@ add_action( 'init', ibt_safe( 'register-taxonomy-topic', function() {
  * Note – can be made hierarchical later ('hierarchical' => true)
  *        with no structural changes.
  * ===================================================================== */
-add_action( 'init', ibt_safe( 'register-cpt-library', function() {
+add_action( 'init', ibt_safe( 'RTT2-register-cpt-library', function() {
 
 	$labels = array(
 		'name'               => __( 'Library', 'ibt' ),
@@ -106,9 +106,28 @@ add_action( 'init', ibt_safe( 'register-cpt-library', function() {
 
 	register_post_type( 'library', $args );
 
+
+// RTT3 - Rename "Posts" to "News" in admin
+add_action( 'init', ibt_safe( 'RTT3-rename-post-labels', function() {
+
+	global $wp_post_types;
+	if ( isset( $wp_post_types['post'] ) ) {
+		$labels = &$wp_post_types['post']->labels;
+		$labels->name               = __( 'News', 'ibt' );
+		$labels->singular_name      = __( 'News Article', 'ibt' );
+		$labels->add_new            = __( 'Add News Article', 'ibt' );
+		$labels->add_new_item       = __( 'Add New News Article', 'ibt' );
+		$labels->edit_item          = __( 'Edit News Article', 'ibt' );
+		$labels->new_item           = __( 'News Article', 'ibt' );
+		$labels->view_item          = __( 'View News Article', 'ibt' );
+		$labels->search_items       = __( 'Search News', 'ibt' );
+		$labels->not_found          = __( 'No News found', 'ibt' );
+		$labels->not_found_in_trash = __( 'No News found in Trash', 'ibt' );
+		$labels->all_items          = __( 'All News', 'ibt' );
+		$labels->menu_name          = __( 'News', 'ibt' );
+		$labels->name_admin_bar     = __( 'News Article', 'ibt' );
+	}
+}), 20 );
+
 }, 10 ) );
 
-/* ========================================================================
- * RTT3 - (static) No runtime code here beyond action hooks.
- * This file is loaded unconditionally from the main plugin.
- * ===================================================================== */
