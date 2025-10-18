@@ -1,0 +1,3 @@
+Install required plugins
+Configure permalinks (sandbox as ref)
+Configure Relevanssi indexing tab (sandbox as ref)
