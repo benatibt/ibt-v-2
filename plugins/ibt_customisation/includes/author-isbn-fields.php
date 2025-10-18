@@ -141,27 +141,23 @@ add_action( 'admin_enqueue_scripts', ibt_safe( function( $hook_suffix = '' ) {
 } ) );
 
 /**
- * FRONT: Core rendering function (used by shortcode)
- * Adds optional "level" attribute for heading or paragraph output.
- * Example: [ibt_author level="h2"] → <h2>Author: …</h2>
+ * FRONT: Core rendering function (used by shortcode and hooks)
+ * Outputs Author field; shortcode uses <h2>, loop hook overrides to <h3>.
  */
 function ibt_render_author( $atts = array(), $content = null ) {
 	global $product;
 	if ( ! ( $product instanceof WC_Product ) ) return '';
 
-	// Allow shortcode attribute for heading level (default h3)
+	// Determine heading level (default h2)
 	$atts = shortcode_atts(
-		array(
-			'level' => 'h3',
-		),
+		array( 'level' => 'h2' ),
 		$atts,
 		'ibt_author'
 	);
 
-	// Sanitize allowed tags
 	$level = in_array( strtolower( $atts['level'] ), array( 'h2', 'h3', 'p' ), true )
 		? strtolower( $atts['level'] )
-		: 'h3';
+		: 'h2';
 
 	$books_ids = ibt_get_books_and_descendant_ids();
 	if ( empty( $books_ids ) ) return '';
@@ -178,6 +174,23 @@ function ibt_render_author( $atts = array(), $content = null ) {
 		esc_html( $subtitle )
 	);
 }
+
+
+/**
+ * FRONT: Show author in product loops (shop, category, related, etc.)
+ * Shortcode has issues resolving product so old school approach.
+ */
+add_action( 'woocommerce_after_shop_loop_item_title', function() {
+	global $product;
+	if ( ! ( $product instanceof WC_Product ) ) {
+		return;
+	}
+
+	$author_html = ibt_render_author( array( 'level' => 'h3' ) );
+	if ( $author_html ) {
+		echo $author_html;
+	}
+}, 6 );
 
 
 /**

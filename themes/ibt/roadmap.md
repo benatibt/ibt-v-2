@@ -94,9 +94,9 @@ Phase 1 — Core Structure
 
         1.5.4 theme.json Tokens - Spacing scale & content/wide widths.
 
-    1.6 Temporary AAA-safe palette.
+    X1.6 Temporary AAA-safe palette.
 
-    1.7 Base typography (≈1.2 rem body, generous line-height).
+    X1.7 Base typography (≈1.2 rem body, generous line-height).
 
 Phase 2 — Functionality
 
