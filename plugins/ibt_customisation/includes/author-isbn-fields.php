@@ -3,22 +3,6 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
- * Error-handling wrapper: logs but never breaks execution.
- */
-if ( ! function_exists( 'ibt_safe' ) ) {
-	function ibt_safe( callable $fn ): callable {
-		return function ( ...$args ) use ( $fn ) {
-			try {
-				return $fn( ...$args );
-			} catch ( \Throwable $e ) {
-				error_log( '[IBT Customisation] Handler error: ' . $e->getMessage() );
-				return null;
-			}
-		};
-	}
-}
-
-/**
  * Helpers
  */
 function ibt_get_books_term() {
@@ -56,7 +40,7 @@ function ibt_get_books_and_descendant_ids() {
 /**
  * ADMIN: Add custom fields to Product Data → General (guarded)
  */
-add_action( 'woocommerce_product_options_general_product_data', ibt_safe( function() {
+add_action( 'woocommerce_product_options_general_product_data', ibt_safe('AIF1-admin-add-fields', function() {
 	if ( ! current_user_can( 'edit_products' ) ) return;
 
 	echo '<div class="options_group ibt-book-only-fields" style="display:none">';
@@ -84,7 +68,7 @@ add_action( 'woocommerce_product_options_general_product_data', ibt_safe( functi
 /**
  * ADMIN: Save fields (guarded)
  */
-add_action( 'woocommerce_process_product_meta', ibt_safe( function( $post_id ) {
+add_action( 'woocommerce_process_product_meta', ibt_safe('AIF2-admin-save-fields', function( $post_id ) {
 	if ( ! current_user_can( 'edit_products' ) ) return;
 
 	if ( isset( $_POST['_ibt_subtitle'] ) ) {
@@ -107,7 +91,7 @@ add_action( 'woocommerce_process_product_meta', ibt_safe( function( $post_id ) {
 /**
  * ADMIN: Toggle field visibility when category changes
  */
-add_action( 'admin_enqueue_scripts', ibt_safe( function( $hook_suffix = '' ) {
+add_action( 'admin_enqueue_scripts', ibt_safe('AIF3-admin-books-toggle', function( $hook_suffix = '' ) {
 	if ( ! current_user_can( 'edit_products' ) ) return;
 
 	$screen = get_current_screen();
@@ -196,7 +180,7 @@ add_action( 'woocommerce_after_shop_loop_item_title', function() {
 /**
  * FRONT: ISBN in Additional Information table
  */
-add_filter( 'woocommerce_display_product_attributes', ibt_safe( function( $attrs, $product = null ) {
+add_filter( 'woocommerce_display_product_attributes', ibt_safe( 'AIF4-front-isbn-filter', function( $attrs, $product = null ) {
 
 	// Woo 10.2+ sometimes omits $product; recover it safely.
 	if ( ! ( $product instanceof WC_Product ) ) {

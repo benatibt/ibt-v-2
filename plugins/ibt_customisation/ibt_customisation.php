@@ -33,6 +33,29 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Error-handling wrapper: logs but never breaks execution.
+ * Usage: add_action( 'hook', ibt_safe( 'context-name' , fn() => { ... }) );
+ */
+if ( ! function_exists( 'ibt_safe' ) ) {
+	function ibt_safe( string $context, callable $fn ): callable {
+		return function ( ...$args ) use ( $fn, $context ) {
+			try {
+				return $fn( ...$args );
+			} catch ( \Throwable $e ) {
+				error_log( sprintf(
+					'[IBT Customisation] (%s) Handler error: %s',
+					$context,
+					$e->getMessage()
+				) );
+				return null;
+			}
+		};
+	}
+}
+
+
+
+/**
  * SETTINGS
  */
 const IBT_BOOKS_CATEGORY_SLUG = 'books';
