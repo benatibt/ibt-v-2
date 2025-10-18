@@ -155,7 +155,7 @@ a {
 
 /* Default text link hover */
 :where(a[href]):not(.wp-element-button):not(.wp-block-button__link):not(.button):not(:where(nav *)):hover {
-  text-underline-offset: 0.2em;
+  text-underline-offset: 0.2em ;
   transition:
     text-underline-offset var(--transition-slow),
     text-decoration-thickness var(--transition-slow);
@@ -169,7 +169,7 @@ a {
 /* Heading - Lighter underline and remove link colour for all links */
 .wp-block-post-title a {
   color: inherit;
-  text-decoration: underline;
+  text-decoration: underline ;
   text-decoration-thickness: 1px !important; /*!important required to overcome WP late applied default*/
   text-underline-offset: 0.15em;
   transition:
@@ -889,15 +889,30 @@ textarea:focus-visible {
   .ibt-sideb-section
 ) :where(h1, h2, h3, h4, h5, h6, p) {
   margin-block: 0;
-  padding-block: 0;
+  padding-block: 0.5em;
 }
 
-/* Optionally add a light top gap to titles only */
-:is(
-  .wp-block-post-template,
-  .wp-block-woocommerce-product-template
-) h2 {
-  padding-block-start: 0.5em;
+/* Product title links – no underline until hover */
+.wp-block-post-title a:not(:hover) {
+  text-decoration: none !important;
+}
+
+/* Author line – smaller, centred in product grids only */
+.wc-block-product .ibt-author-parastyle {
+  font-size: var(--wp--preset--font-size--m);
+  text-align: center;
+}
+
+/* Price: heading font in product grids only */
+.wp-block-woocommerce-product-template .woocommerce-Price-amount,
+.wp-block-woocommerce-product-collection .woocommerce-Price-amount,
+.wp-block-query-loop .woocommerce-Price-amount {
+  font-family: var(--wp--preset--font-family--heading);
+}
+
+/* Woo breadcrumb spacing (json doesn't work) */
+.wc-block-breadcrumbs {
+  padding-block: var(--wp--preset--spacing--s);
 }
 
 /*  ---------------------------------------------------------------
@@ -906,9 +921,6 @@ textarea:focus-visible {
 .single-product :where(h1, h2, h3, h4, h5, h6, p) {
   padding-block: 0.25em !important;
 }
-
-
-
 
 /* ---------------------------------------------------------------------
     4.4 - SINGLE POST WITH SIDEBAR

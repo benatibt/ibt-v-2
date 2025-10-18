@@ -399,7 +399,16 @@
 				"color": {}
 			},
 			"woocommerce/add-to-cart-form": {},
-			"woocommerce/breadcrumbs": {},
+			"woocommerce/breadcrumbs": {
+				"typography": {
+					"fontFamily": "var(--wp--preset--font-family--heading)",
+					"fontSize": "var(--wp--preset--font-size--s)",
+					"fontWeight": "var(--wp--preset--font-weight--regular)"
+				},
+				"color": {
+					"text": "var(--wp--preset--color--text)"
+				}
+			},
 			"woocommerce/cart": {
 				"spacing": {}
 			},
