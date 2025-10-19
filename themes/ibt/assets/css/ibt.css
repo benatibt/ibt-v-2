@@ -23,6 +23,20 @@
   Document design here in just enough detail for future maintenance
   without the overhead of separate documents. 
 
+--------- 0.0 - CSS FEATURES POLICY -------- 
+Given IBT's older demographic site must operate for out of date browsers
+but we do not want to limit styling for the majority of our audience. The
+following pragmatic guidelines on UK CSS feature support apply as a guide.
+
+Critical core: ≥ 99.8 % browser coverage.
+  Site must fully function even with no advanced CSS.
+  Avoid new syntax on a11y and basic site use features.
+
+Nice-to-have layer: ≥ 95 % coverage. (e.g. has() ) 
+  Must degrade gracefully without support. 
+
+Experimental (< 95 %) features: Not permitted.
+
    
 --------- 0.1 - TOKEN & NAMING SYSTEM --------
    
@@ -145,15 +159,14 @@ a {
 }
 
 /* ----- Default text link -----
-   Excludes Buttons, WooCommerce, Footer, and Heading links (.wp-block-post-title),
-   which have separate styling blocks. */
+   Universal link styling. Excludes buttons, nav items, and heading links.
+   Low specificity for overides as needed. */
 
-/* Base State */
-:where(a[href]):not(.wp-element-button):not(.wp-block-button__link)
-:not(.button):not(:where(nav *))
-:is(:not(:where(.woocommerce *)))
-:is(:not(:where(.ibt-footer a)))
-:is(:not(:where(.wp-block-post-title a))) {
+/* Base state (low specificity via :where) */
+:where(a[href])
+  :not(:where(.wp-element-button, .wp-block-button__link, .button))
+  :not(:where(nav *))
+  :not(:where(.wp-block-post-title *)) {
   text-decoration: underline;
   transition:
     text-underline-offset var(--transition-slow),
@@ -161,11 +174,10 @@ a {
 }
 
 /* Hover */
-:where(a[href]):not(.wp-element-button):not(.wp-block-button__link)
-:not(.button):not(:where(nav *))
-:is(:not(:where(.woocommerce *)))
-:is(:not(:where(.ibt-footer a)))
-:is(:not(:where(.wp-block-post-title a))):hover {
+:where(a[href])
+  :not(:where(.wp-element-button, .wp-block-button__link, .button))
+  :not(:where(nav *))
+  :not(:where(.wp-block-post-title *)):hover {
   text-underline-offset: 0.2em;
   transition:
     text-underline-offset var(--transition-slow),
@@ -174,23 +186,21 @@ a {
 
 /* Visited */
 :where(a[href])
-  :is(:not(:where(.woocommerce *)))
-  :is(:not(:where(.ibt-footer a)))
-  :is(:not(:where(.wp-block-post-title a))):visited {
+  :not(:where(.wp-element-button, .wp-block-button__link, .button))
+  :not(:where(nav *))
+  :not(:where(.wp-block-post-title *)):visited {
   color: inherit;
 }
 
 
 /* ----- Heading links -----
-   Excludes WooCommerce and Footer contexts. Separate styling. */
+   Low specificity for override as needed. */
 
 /* Base state */
-:where(.wp-block-post-title a)
-  :is(:not(:where(.woocommerce *)))
-  :is(:not(:where(.ibt-footer *))) {
+:where(.wp-block-post-title a) {
   color: inherit;
   text-decoration: underline;
-  text-decoration-thickness: 1px !important; /* maintain specificity vs block defaults */
+  text-decoration-thickness: 1px;
   text-underline-offset: 0.15em;
   transition:
     text-underline-offset var(--transition-base),
@@ -198,15 +208,14 @@ a {
 }
 
 /* Hover */
-:where(.wp-block-post-title a)
-  :is(:not(:where(.woocommerce *)))
-  :is(:not(:where(.ibt-footer *))):hover {
+:where(.wp-block-post-title a):hover {
   text-underline-offset: 0.25em;
-  text-decoration-thickness: 2px !important;
+  text-decoration-thickness: 2px;
   transition:
     text-underline-offset var(--transition-base),
     text-decoration-thickness var(--transition-base);
 }
+
 
 /* ----- Image links ----- */
 
@@ -841,8 +850,9 @@ textarea:focus-visible {
    ---------------------------------------------------------------------- */
 
 /* ----- Footer links -----
-   Inherit colour and show underline only on hover.
-   Excludes Buttons and WooCommerce content (mini-cart, account, etc.). */
+   Inherit colour, no underline by default, underline only on hover.
+   Excludes buttons and WooCommerce fragments. High specificity so it
+   cleanly overrides base link rules. */
 
 /* Base state */
 .ibt-footer a:not(.wp-element-button):not(.wp-block-button__link)
@@ -859,7 +869,11 @@ textarea:focus-visible {
 :not(.button):not(:where(.woocommerce *)):hover {
   text-decoration: underline;
   text-underline-offset: 0.2em;
+  transition:
+    text-underline-offset var(--transition-base),
+    text-decoration-thickness var(--transition-base);
 }
+
 
 
 /* ======================================================================
@@ -1040,8 +1054,9 @@ Purpose:
 }
 
 /* ----- WooCommerce links -----
-   Uses underline on hover only. 
-   DEV - Add more selectors. Avoid scoping buttons or exclude.*/
+   Product titles use underline on hover only.
+   Beats base styling by specificity (and later)
+   DEV – extend selector list as new Woo templates are styled. */
 
 /* Base state */
 .wc-block-product .wp-block-post-title a {
@@ -1055,7 +1070,11 @@ Purpose:
 .wc-block-product .wp-block-post-title a:hover {
   text-decoration: underline;
   text-underline-offset: 0.2em;
+  transition:
+    text-underline-offset var(--transition-base),
+    text-decoration-thickness var(--transition-base);
 }
+
 
 
 /* ----- 4A.2 - Shop archive / product grid ----------------------------
