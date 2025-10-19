@@ -144,50 +144,72 @@ a {
   position: relative;  
 }
 
-/* Default text link - Apply underline, colour comes from theme.json */
-/* Default text link – underline (colour from theme.json) */
-:where(a[href]):not(.wp-element-button):not(.wp-block-button__link):not(.button):not(:where(nav *)) {
+/* ------------------------- 2.1 - Links ------------------------------ */
+
+/* Create an absolute position for all a (link) elements for visual effects */
+a {
+  position: relative;  
+}
+
+/* ----- Default text link -----
+   Excludes Buttons, WooCommerce, Footer, and Heading links (.wp-block-post-title),
+   which have separate styling blocks. */
+
+/* Base State */
+:where(a[href]):not(.wp-element-button):not(.wp-block-button__link)
+:not(.button):not(:where(nav *))
+:not(:where(.woocommerce *))
+:not(:where(.ibt-footer *))
+:not(:where(.wp-block-post-title *)) {
   text-decoration: underline;
   transition:
     text-underline-offset var(--transition-slow),
     text-decoration-thickness var(--transition-slow);
 }
 
-/* Default text link hover */
-:where(a[href]):not(.wp-element-button):not(.wp-block-button__link):not(.button):not(:where(nav *)):hover {
-  text-underline-offset: 0.2em ;
+/* Hover */
+:where(a[href]):not(.wp-element-button):not(.wp-block-button__link)
+:not(.button):not(:where(nav *))
+:not(:where(.woocommerce *))
+:not(:where(.ibt-footer *))
+:not(:where(.wp-block-post-title *)):hover {
+  text-underline-offset: 0.2em;
   transition:
     text-underline-offset var(--transition-slow),
     text-decoration-thickness var(--transition-slow);
 }
 
-/* Visited links – remove link colour */
-:where(a[href]):visited {
+/* Visited */
+:where(a[href])
+  :not(:where(.woocommerce *))
+  :not(:where(.ibt-footer *))
+  :not(:where(.wp-block-post-title *)):visited {
   color: inherit;
 }
 
-/* Heading - Lighter underline and remove link colour for all links */
-.wp-block-post-title a {
+
+/* ----- Heading links -----
+Excludes WooCommerce and Footer contexts. Separate styling. */
+
+/* Base state */
+:where(.wp-block-post-title a):not(:where(.woocommerce *)):not(:where(.ibt-footer *)) {
   color: inherit;
-  text-decoration: underline ;
-  text-decoration-thickness: 1px !important; /*!important required to overcome WP late applied default*/
+  text-decoration: underline;
+  text-decoration-thickness: 1px !important; /* maintain specificity vs block defaults */
   text-underline-offset: 0.15em;
   transition:
     text-underline-offset var(--transition-base),
     text-decoration-thickness var(--transition-base);
 }
 
-/* Heading links - Hover */
-.wp-block-post-title a:hover {
+/* Hover */
+:where(.wp-block-post-title a):not(:where(.woocommerce *)):not(:where(.ibt-footer *)):hover {
   text-underline-offset: 0.25em;
   text-decoration-thickness: 2px !important;
   transition:
     text-underline-offset var(--transition-base),
     text-decoration-thickness var(--transition-base);
 }
-
-/* Exception for footer links in section 3 */
-
 
 /* ----- Image links ----- */
 
@@ -821,22 +843,27 @@ textarea:focus-visible {
    3.6 – Footer
    ---------------------------------------------------------------------- */
 
-/* Remove link styling for footer (exclude buttons) */
-.ibt-footer a:not(.wp-element-button):not(.wp-block-button__link):not(.button) {
-  color: inherit !important;
-  text-decoration: none !important;
+/* ----- Footer links -----
+   Inherit colour and show underline only on hover.
+   Excludes Buttons and WooCommerce content (mini-cart, account, etc.). */
+
+/* Base state */
+.ibt-footer a:not(.wp-element-button):not(.wp-block-button__link)
+:not(.button):not(:where(.woocommerce *)) {
+  color: inherit;
+  text-decoration: none;
   transition:
     text-underline-offset var(--transition-base),
     text-decoration-thickness var(--transition-base);
 }
 
-/* Footer links - Hover (exclude buttons) */
-.ibt-footer a:not(.wp-element-button):not(.wp-block-button__link):not(.button):hover {
-  text-decoration: underline !important;
-  transition:
-    text-underline-offset var(--transition-base),
-    text-decoration-thickness var(--transition-base);
+/* Hover */
+.ibt-footer a:not(.wp-element-button):not(.wp-block-button__link)
+:not(.button):not(:where(.woocommerce *)):hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
 }
+
 
 /* ======================================================================
    4. LAYOUT / SPACING
@@ -1007,51 +1034,72 @@ Purpose:
    WooCommerce section for all store-related styling.
    --------------------------------------------------------------------- */
 
-/* ----- 4A.1 - Global resets and helpers ---------------------------------
+/* ----- 4A.1 - Global resets, helpers & styling -----------------------
    General resets and styling that applies across Woo store */
 
+/* Price – heading font for all Woo contexts */
+.woocommerce-Price-amount {
+  font-family: var(--wp--preset--font-family--heading);
+}
 
-/* ----- 4A.2 - Shop archive / product grid -------------------------------
+/* ----- WooCommerce links -----
+   Uses underline on hover only. 
+   DEV - Add more selectors. Avoid scoping buttons or exclude.*/
+
+/* Base state */
+.wc-block-product .wp-block-post-title a {
+  text-decoration: none;
+  transition:
+    text-underline-offset var(--transition-base),
+    text-decoration-thickness var(--transition-base);
+}
+
+/* Hover */
+.wc-block-product .wp-block-post-title a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+
+/* ----- 4A.2 - Shop archive / product grid ----------------------------
    Styling that applies to all archive/grid views */
 
-/* Reduce heading/paragraph padding and margins to suit grids */
+/* Compact heading/paragraph rhythm for product grids */
 :is(
   .wp-block-post-template,
   .wp-block-woocommerce-product-template,
-  .wp-block-query-loop,
-  .ibt-card-list,
-  .ibt-sideb-section
+  .wp-block-query-loop
 ) :where(h1, h2, h3, h4, h5, h6, p) {
   margin-block: 0;
   padding-block: 0.5em;
 }
 
-/* Product title links – no underline until hover */
+/* Product title links – no underline until hover
+   Note – uses :not(:hover) to avoid !important escalation with base link rule */
 .wp-block-post-title a:not(:hover) {
   text-decoration: none !important;
 }
 
-/* Author line – smaller, centred in product grids only */
+/* Author line – smaller, centred in product grids */
 .wc-block-product .ibt-author-parastyle {
   font-size: var(--wp--preset--font-size--m);
   text-align: center;
 }
 
-/* Price: heading font in product grids only */
-.wp-block-woocommerce-product-template .woocommerce-Price-amount,
-.wp-block-woocommerce-product-collection .woocommerce-Price-amount,
-.wp-block-query-loop .woocommerce-Price-amount {
-  font-family: var(--wp--preset--font-family--heading);
-}
+
+
+
 
 
 /* ----- 4A.3 - Single product -------------------------------------------
    Styling that applies to just the single product template */
 
-/* Tighten text, fit picture    */
+/* Compact text rhythm for single product layout
+   Note – reduces vertical gaps from Woo defaults; may relax later via json. */
 .single-product :where(h1, h2, h3, h4, h5, h6, p) {
   padding-block: 0.25em !important;
 }
+
 
 /* ----- 4A.4 - Cart, checkout & notices ---------------------------------
    Styling that applies to cart and checkout */
