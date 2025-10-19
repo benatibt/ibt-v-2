@@ -144,13 +144,6 @@ a {
   position: relative;  
 }
 
-/* ------------------------- 2.1 - Links ------------------------------ */
-
-/* Create an absolute position for all a (link) elements for visual effects */
-a {
-  position: relative;  
-}
-
 /* ----- Default text link -----
    Excludes Buttons, WooCommerce, Footer, and Heading links (.wp-block-post-title),
    which have separate styling blocks. */
@@ -1074,21 +1067,11 @@ Purpose:
   padding-block: 0.5em;
 }
 
-/* Product title links – no underline until hover
-   Note – uses :not(:hover) to avoid !important escalation with base link rule */
-.wp-block-post-title a:not(:hover) {
-  text-decoration: none !important;
-}
-
 /* Author line – smaller, centred in product grids */
 .wc-block-product .ibt-author-parastyle {
   font-size: var(--wp--preset--font-size--m);
   text-align: center;
 }
-
-
-
-
 
 
 /* ----- 4A.3 - Single product -------------------------------------------
@@ -1103,8 +1086,6 @@ Purpose:
 
 /* ----- 4A.4 - Cart, checkout & notices ---------------------------------
    Styling that applies to cart and checkout */
-
-
 
 
 
