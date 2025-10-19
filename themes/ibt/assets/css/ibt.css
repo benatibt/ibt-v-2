@@ -151,9 +151,9 @@ a {
 /* Base State */
 :where(a[href]):not(.wp-element-button):not(.wp-block-button__link)
 :not(.button):not(:where(nav *))
-:not(:where(.woocommerce *))
-:not(:where(.ibt-footer *))
-:not(:where(.wp-block-post-title *)) {
+:is(:not(:where(.woocommerce *)))
+:is(:not(:where(.ibt-footer a)))
+:is(:not(:where(.wp-block-post-title a))) {
   text-decoration: underline;
   transition:
     text-underline-offset var(--transition-slow),
@@ -163,9 +163,9 @@ a {
 /* Hover */
 :where(a[href]):not(.wp-element-button):not(.wp-block-button__link)
 :not(.button):not(:where(nav *))
-:not(:where(.woocommerce *))
-:not(:where(.ibt-footer *))
-:not(:where(.wp-block-post-title *)):hover {
+:is(:not(:where(.woocommerce *)))
+:is(:not(:where(.ibt-footer a)))
+:is(:not(:where(.wp-block-post-title a))):hover {
   text-underline-offset: 0.2em;
   transition:
     text-underline-offset var(--transition-slow),
@@ -174,18 +174,20 @@ a {
 
 /* Visited */
 :where(a[href])
-  :not(:where(.woocommerce *))
-  :not(:where(.ibt-footer *))
-  :not(:where(.wp-block-post-title *)):visited {
+  :is(:not(:where(.woocommerce *)))
+  :is(:not(:where(.ibt-footer a)))
+  :is(:not(:where(.wp-block-post-title a))):visited {
   color: inherit;
 }
 
 
 /* ----- Heading links -----
-Excludes WooCommerce and Footer contexts. Separate styling. */
+   Excludes WooCommerce and Footer contexts. Separate styling. */
 
 /* Base state */
-:where(.wp-block-post-title a):not(:where(.woocommerce *)):not(:where(.ibt-footer *)) {
+:where(.wp-block-post-title a)
+  :is(:not(:where(.woocommerce *)))
+  :is(:not(:where(.ibt-footer *))) {
   color: inherit;
   text-decoration: underline;
   text-decoration-thickness: 1px !important; /* maintain specificity vs block defaults */
@@ -196,7 +198,9 @@ Excludes WooCommerce and Footer contexts. Separate styling. */
 }
 
 /* Hover */
-:where(.wp-block-post-title a):not(:where(.woocommerce *)):not(:where(.ibt-footer *)):hover {
+:where(.wp-block-post-title a)
+  :is(:not(:where(.woocommerce *)))
+  :is(:not(:where(.ibt-footer *))):hover {
   text-underline-offset: 0.25em;
   text-decoration-thickness: 2px !important;
   transition:
