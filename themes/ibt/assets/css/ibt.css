@@ -877,53 +877,9 @@ textarea:focus-visible {
   box-sizing: content-box;
 }
 
-/* --------------------------------------------------------------------------------
-4.2 - Compact contexts – reduce heading/paragraph rhythm in grids
-      Applies to Woo product cards, post archives, library lists, etc. */
-
-:is(
-  .wp-block-post-template,
-  .wp-block-woocommerce-product-template,
-  .wp-block-query-loop,
-  .ibt-card-list,
-  .ibt-sideb-section
-) :where(h1, h2, h3, h4, h5, h6, p) {
-  margin-block: 0;
-  padding-block: 0.5em;
-}
-
-/* Product title links – no underline until hover */
-.wp-block-post-title a:not(:hover) {
-  text-decoration: none !important;
-}
-
-/* Author line – smaller, centred in product grids only */
-.wc-block-product .ibt-author-parastyle {
-  font-size: var(--wp--preset--font-size--m);
-  text-align: center;
-}
-
-/* Price: heading font in product grids only */
-.wp-block-woocommerce-product-template .woocommerce-Price-amount,
-.wp-block-woocommerce-product-collection .woocommerce-Price-amount,
-.wp-block-query-loop .woocommerce-Price-amount {
-  font-family: var(--wp--preset--font-family--heading);
-}
-
-/* Woo breadcrumb spacing (json doesn't work) */
-.wc-block-breadcrumbs {
-  padding-block: var(--wp--preset--spacing--s);
-}
-
-/*  ---------------------------------------------------------------
-    4.3 Single product – tighten text, fit picture    */
-
-.single-product :where(h1, h2, h3, h4, h5, h6, p) {
-  padding-block: 0.25em !important;
-}
 
 /* ---------------------------------------------------------------------
-    4.4 - SINGLE POST WITH SIDEBAR
+    4.2 - SINGLE POST WITH SIDEBAR
 
 single.html
    • One-article layout with optional right sidebar.
@@ -1046,6 +1002,64 @@ Purpose:
   display: block !important;
 }
 
+/* ---------------------------------------------------------------------
+   4A - WooCommerce (Temporary numbering until full refactor.)
+   WooCommerce section for all store-related styling.
+   --------------------------------------------------------------------- */
+
+/* ----- 4A.1 - Global resets and helpers ---------------------------------
+   General resets and styling that applies across Woo store */
+
+
+/* ----- 4A.2 - Shop archive / product grid -------------------------------
+   Styling that applies to all archive/grid views */
+
+/* Reduce heading/paragraph padding and margins to suit grids */
+:is(
+  .wp-block-post-template,
+  .wp-block-woocommerce-product-template,
+  .wp-block-query-loop,
+  .ibt-card-list,
+  .ibt-sideb-section
+) :where(h1, h2, h3, h4, h5, h6, p) {
+  margin-block: 0;
+  padding-block: 0.5em;
+}
+
+/* Product title links – no underline until hover */
+.wp-block-post-title a:not(:hover) {
+  text-decoration: none !important;
+}
+
+/* Author line – smaller, centred in product grids only */
+.wc-block-product .ibt-author-parastyle {
+  font-size: var(--wp--preset--font-size--m);
+  text-align: center;
+}
+
+/* Price: heading font in product grids only */
+.wp-block-woocommerce-product-template .woocommerce-Price-amount,
+.wp-block-woocommerce-product-collection .woocommerce-Price-amount,
+.wp-block-query-loop .woocommerce-Price-amount {
+  font-family: var(--wp--preset--font-family--heading);
+}
+
+
+/* ----- 4A.3 - Single product -------------------------------------------
+   Styling that applies to just the single product template */
+
+/* Tighten text, fit picture    */
+.single-product :where(h1, h2, h3, h4, h5, h6, p) {
+  padding-block: 0.25em !important;
+}
+
+/* ----- 4A.4 - Cart, checkout & notices ---------------------------------
+   Styling that applies to cart and checkout */
+
+
+
+
+
 /* ======================================================================
    5. UTILITIES
    SR-only, status colours, notices, dev/test helpers
@@ -1133,10 +1147,7 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 /* !!! END DEV ONLY BLOCK !!! */
 /* ====================================================================== */
 
-/* Temporary Woo gap test 
-[class*="wp-block-woocommerce-"] {
-  --wp--style--block-gap: var(--wp--preset--spacing--xs);
-}*/
+/* WORK IN PROGRESS CODE BELOW THIS LINE */
 
 
 
