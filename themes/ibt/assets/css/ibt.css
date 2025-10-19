@@ -33,7 +33,7 @@ Critical core: ≥ 99.8 % browser coverage.
   Avoid new syntax on a11y and basic site use features.
 
 Nice-to-have layer: ≥ 95 % UK coverage. (e.g. :has(), :where() ) 
-  Must degrade gracefully without support. 
+  Should degrade gracefully without support. 
 
 Experimental (< 95 %) UK coverage: Not permitted.
 
