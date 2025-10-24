@@ -271,8 +271,13 @@ a:has(img):hover::after {
 
 /* ------------------------- 2.2 - Buttons ------------------------------ */
 
-/* Shared geometry and transitions */
-.wp-element-button {
+/* Core + WooCommerce buttons share base geometry */
+.wp-element-button,
+.wc-block-components-button,
+.wc-block-components-product-button__button,
+.single_add_to_cart_button,
+.wc-block-cart__submit-button,
+.wc-block-components-checkout-place-order-button {
   font-family: var(--wp--preset--font-family--title-font);
   font-weight: 600;
   border-radius: 8px;
@@ -291,31 +296,56 @@ a:has(img):hover::after {
     transform var(--transition-fast);
 }
 
-/* Micro-lift for hover */
-.wp-element-button:hover {
+/* Hover micro-lift for all core + Woo buttons */
+.wp-element-button:hover,
+.wc-block-components-button:hover,
+.wc-block-components-product-button__button:hover,
+.single_add_to_cart_button:hover,
+.wc-block-cart__submit-button:hover,
+.wc-block-components-checkout-place-order-button:hover {
   transform: translateY(-1px);
 }
 
-/* Base elevation shadow */
-.wp-element-button {
+/* Base elevation for all core + Woo buttons */
+.wp-element-button,
+.wc-block-components-button,
+.wc-block-components-product-button__button,
+.single_add_to_cart_button,
+.wc-block-cart__submit-button,
+.wc-block-components-checkout-place-order-button {
   box-shadow: var(--wp--preset--shadow--low);
 }
 
-/* Hover elevation shadow & translate */
-.wp-element-button:hover {
+/* Hover elevation for all core + Woo buttons */
+.wp-element-button:hover,
+.wc-block-components-button:hover,
+.wc-block-components-product-button__button:hover,
+.single_add_to_cart_button:hover,
+.wc-block-cart__submit-button:hover,
+.wc-block-components-checkout-place-order-button:hover {
   box-shadow: var(--wp--preset--shadow--medium);
   transform: translateY(-1px);
 }
 
-/* Active (pressed) state shadow & translate */
-.wp-element-button:active {
+/* Pressed state for all core + Woo buttons */
+.wp-element-button:active,
+.wc-block-components-button:active,
+.wc-block-components-product-button__button:active,
+.single_add_to_cart_button:active,
+.wc-block-cart__submit-button:active,
+.wc-block-components-checkout-place-order-button:active {
   box-shadow: var(--wp--preset--shadow--sunken);
   transform: translateY(0);
 }
 
-/* Disabled */
+/* Disabled state for all core + Woo buttons */
 .wp-element-button:disabled,
-.wp-element-button[aria-disabled="true"] {
+.wp-element-button[aria-disabled="true"],
+.wc-block-components-button:disabled,
+.wc-block-components-product-button__button:disabled,
+.single_add_to_cart_button:disabled,
+.wc-block-cart__submit-button:disabled,
+.wc-block-components-checkout-place-order-button:disabled {
   box-shadow: none;
   transform: none;
   cursor: not-allowed;
@@ -338,15 +368,24 @@ a:has(img):hover::after {
   border: 2px solid var(--wp--custom--color--color-primary);
 }
 
-/* Buy Solid */
-.wp-block-button.is-style-buy-solid .wp-element-button {
+/* Buy Solid - includes primary Woo 10.3 buttons */
+.wp-block-button.is-style-buy-solid .wp-element-button,
+.single_add_to_cart_button,
+.wc-block-cart__submit-button,
+.wc-block-components-checkout-place-order-button,
+.wc-block-components-product-button__button,
+.wc-block-components-button.contained,
+.wc-block-mini-cart__footer-checkout {
   background-color: var(--wp--custom--color--color-secondary);
   color: #fff;
   border: 2px solid color-mix(in srgb, var(--wp--custom--color--color-secondary) 85%, black 15%);
 }
 
-/* Buy Outline */
-.wp-block-button.is-style-buy-outline .wp-element-button {
+/* Buy Outline - includes Woo 10.3 secondary buttons */
+.wp-block-button.is-style-buy-outline .wp-element-button,
+.wc-block-components-button.outlined,
+.wc-block-mini-cart__footer-cart,
+.wc-block-cart__submit-button--secondary {
   background-color: color-mix(in srgb, white 50%, transparent);
   color: var(--wp--custom--color--color-secondary);
   border: 2px solid var(--wp--custom--color--color-secondary);
@@ -364,23 +403,41 @@ a:has(img):hover::after {
   border-color: color-mix(in srgb, var(--wp--custom--color--color-primary-hover) 70%, black 35%);
 }
 
-/* Primary Outline */
-.wp-block-button.is-style-primary-outline .wp-element-button:hover {
+/* Primary Outline - includes Woo 10.3 secondary buttons */
+.wp-block-button.is-style-buy-outline .wp-element-button:hover,
+.wc-block-components-button.outlined:hover,
+.wc-block-mini-cart__footer-cart:hover,
+.wc-block-cart__submit-button--secondary:hover {
   background-color: color-mix(in srgb, white 88%, transparent);
   border-color: var(--wp--custom--color--color-primary-hover);
   color: var(--wp--custom--color--color-primary-hover);
 }
-.wp-block-button.is-style-primary-outline .wp-element-button:active {
+.wp-block-button.is-style-buy-outline .wp-element-button:active,
+.wc-block-components-button.outlined:active,
+.wc-block-mini-cart__footer-cart:active,
+.wc-block-cart__submit-button--secondary:active {
   background-color: color-mix(in srgb, white 80%, transparent);
   border-color: color-mix(in srgb, var(--wp--custom--color--color-primary-hover) 80%, black 20%);
 }
 
-/* Buy Solid */
-.wp-block-button.is-style-buy-solid .wp-element-button:hover {
+/* Buy Solid - inlcudes Woo 10.3 primary buttons */
+.wp-block-button.is-style-buy-solid .wp-element-button:hover,
+.single_add_to_cart_button:hover,
+.wc-block-cart__submit-button:hover,
+.wc-block-components-checkout-place-order-button:hover,
+.wc-block-components-product-button__button:hover,
+.wc-block-components-button.contained:hover,
+.wc-block-mini-cart__footer-checkout:hover {
   background-color: var(--wp--custom--color--color-secondary-hover);
   border-color: color-mix(in srgb, var(--wp--custom--color--color-secondary-hover) 70%, black 30%);
 }
-.wp-block-button.is-style-buy-solid .wp-element-button:active {
+.wp-block-button.is-style-buy-solid .wp-element-button:active,
+.single_add_to_cart_button:active,
+.wc-block-cart__submit-button:active,
+.wc-block-components-checkout-place-order-button:active,
+.wc-block-components-product-button__button:active,
+.wc-block-components-button.contained:active,
+.wc-block-mini-cart__footer-checkout:active {
   background-color: color-mix(in srgb, var(--wp--custom--color--color-secondary-hover) 90%, black 10%);
   border-color: color-mix(in srgb, var(--wp--custom--color--color-secondary-hover) 70%, black 35%);
 }
@@ -1042,6 +1099,8 @@ Purpose:
 /* ----- 4A.1 - Global resets, helpers & styling -----------------------
    General resets and styling that applies across Woo store */
 
+/* Woo buttons are styled with general buttons */ 
+
 /* Price – heading font for all Woo contexts */
 .woocommerce-Price-amount {
   font-family: var(--wp--preset--font-family--heading);
@@ -1118,8 +1177,50 @@ Purpose:
 /* Compact text rhythm for single product layout
    Note – reduces vertical gaps from Woo defaults; may relax later via json. */
 .single-product :where(h1, h2, h3, h4, h5, h6, p) {
-  padding-block: 0.25em !important;
+  padding-block: 0.2em !important;
 }
+
+   /* Add gentle padding around main image on single product pages only */
+.single-product div.product div.images {
+  padding: var(--wp--preset--spacing--s);
+}
+
+/* Adjust single product title size */
+.single-product .wc-block-product-title,
+.single-product .wp-block-post-title {
+  font-size: var(--wp--preset--font-size--xl);
+  line-height: 1.1;
+}
+
+.single-product .ibt-author-parastyle {
+  font-size: var(--wp--preset--font-size--m);
+}
+
+.single-product .woocommerce-Price-amount {
+  font-size: var(--wp--preset--font-size--l);
+}
+
+/* Tighten spacing around product price in single product layout */
+.single-product .wp-block-woocommerce-product-price,
+.single-product .wp-block-woocommerce-product-price > .wc-block-components-product-price {
+  margin-block: 0 ;
+  padding-block: 0 ;
+  line-height: 1.0;
+}
+
+/* Add space above Add-to-Cart area to separate it from short description */
+.single-product .wp-block-add-to-cart-form,
+.single-product .wc-block-add-to-cart-form {
+  margin-block-start: var(--wp--preset--spacing--s);
+}
+
+/* Use heading font and medium size for classic Woo quantity input */
+.single-product input.input-text.qty {
+  font-family: var(--wp--preset--font-family--heading);
+  font-size: var(--wp--preset--font-size--m);
+}
+
+
 
 
 /* ----- 4A.4 - Cart, checkout & notices ---------------------------------
@@ -1216,6 +1317,20 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 
 /* WORK IN PROGRESS CODE BELOW THIS LINE */
 
+
+
+/* ============================================================
+   TEMP – WooCommerce Button Mapping Test
+   Purpose: Verify which Woo buttons fall into primary vs secondary groups
+   Remove once mapping confirmed (before production)
+   ============================================================ */
+
+/* ============================================================
+   TEMP – WooCommerce Button Mapping Test (Woo 10.3+)
+   Purpose: visually verify which Woo block buttons map to
+   primary vs secondary groups.
+   !!! REMOVE BEFORE PRODUCTION !!!
+   ============================================================ */
 
 
 
