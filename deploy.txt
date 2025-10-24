@@ -6,3 +6,7 @@ Configure settings/reading (sandbox ref)
 Configure permalinks (sandbox as ref)
 Configure Relevanssi indexing tab (sandbox as ref)
 Appearance → Customize → WooCommerce → Product Images (sandbox ref)
+
+Woo
+Weight kg -> g
+

@@ -469,7 +469,7 @@ a:has(img):hover::after {
 
 /* Warm red. Unique and good contrast on Paper and dark surfaces */
 :focus-visible {
-  outline: 2px solid #C05040; 
+  outline: 2px solid #275A3D; 
   outline-offset: 2px;
 }
 
@@ -1174,15 +1174,44 @@ Purpose:
 /* ----- 4A.3 - Single product -------------------------------------------
    Styling that applies to just the single product template */
 
+/* Remove padding and margin from Woo gallery wrappers and centre image */
+.single-product .wp-block-woocommerce-product-image-gallery,
+.single-product div.product div.images,
+.single-product .woocommerce-product-gallery,
+.single-product .woocommerce-product-gallery__wrapper,
+.single-product .woocommerce-product-gallery__image {
+  padding: 0 !important;
+  margin: 0 !important;
+  float: none !important;
+  display: block;
+  width: 100% !important;
+  text-align: center;
+}
+
+/* Image: full width within frame */
+.single-product .woocommerce-product-gallery__image img {
+  display: block;
+  margin: 0 !important;
+  padding: 0 !important;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Balanced gutter between image and text columns */
+.single-product .wp-block-columns.alignwide {
+  column-gap: var(--wp--preset--spacing--l) !important;
+}
+
+/* Add top margin to image column */
+.single-product .wp-block-columns.alignwide > .wp-block-column:first-child {
+  margin-block-start: var(--wp--preset--spacing--s) !important;
+}
+
 /* Compact text rhythm for single product layout
    Note – reduces vertical gaps from Woo defaults; may relax later via json. */
 .single-product :where(h1, h2, h3, h4, h5, h6, p) {
-  padding-block: 0.2em !important;
-}
-
-   /* Add gentle padding around main image on single product pages only */
-.single-product div.product div.images {
-  padding: var(--wp--preset--spacing--s);
+  padding-block: 0.3rem !important;
+  margin: 0 ;
 }
 
 /* Adjust single product title size */
@@ -1190,22 +1219,29 @@ Purpose:
 .single-product .wp-block-post-title {
   font-size: var(--wp--preset--font-size--xl);
   line-height: 1.1;
+  padding-bottom: 0 !important;
 }
 
+/* Set font size for author */
 .single-product .ibt-author-parastyle {
-  font-size: var(--wp--preset--font-size--m);
-}
-
-.single-product .woocommerce-Price-amount {
   font-size: var(--wp--preset--font-size--l);
 }
 
-/* Tighten spacing around product price in single product layout */
+/* Adjust spacing for Publisher (product_brand) line under Author */
+.single-product .taxonomy-product_brand.wp-block-post-terms {
+  margin-block-start: 0.25rem;
+  margin-block-end: 0.25rem;
+}
+
+/* Typography and spacing for product price */
+.single-product .woocommerce-Price-amount {
+  font-size: var(--wp--preset--font-size--l);
+}
 .single-product .wp-block-woocommerce-product-price,
 .single-product .wp-block-woocommerce-product-price > .wc-block-components-product-price {
-  margin-block: 0 ;
-  padding-block: 0 ;
-  line-height: 1.0;
+  margin-block: 0;
+  padding-block: 0 0.3rem;
+  line-height: 1;
 }
 
 /* Add space above Add-to-Cart area to separate it from short description */
@@ -1220,12 +1256,50 @@ Purpose:
   font-size: var(--wp--preset--font-size--m);
 }
 
+/* Hide category line in single-product.
+Note - may want to turn it back on so left in template. */
+.single-product .taxonomy-product_cat.wp-block-post-terms {
+  display: none !important;
+}
 
+/* Improve readability of classic WooCommerce tab headers */
+.single-product ul.wc-tabs li a {
+  font-size: var(--wp--preset--font-size--xl);
+  font-family: var(--wp--preset--font-family--heading);
+  font-weight: 600;
+  line-height: 1.3;
+}
 
+/* Hide repeated H2 headings inside Woo product tabs */
+.single-product .woocommerce-Tabs-panel > h2:first-child {
+  display: none !important;
+}
+
+/* Add gentle vertical rhythm to paragraphs in the main Description tab */
+.single-product .woocommerce-Tabs-panel--description p {
+  margin-block: 0.5em;
+}
+
+/* Adjust font size of the reviews title for consistency with theme typography */
+.single-product .woocommerce-Reviews-title {
+  font-size: var(--wp--preset--font-size--xl);
+  font-weight: 600;
+  line-height: 1.2;
+  margin-block: var(--wp--preset--spacing--m);
+}
 
 /* ----- 4A.4 - Cart, checkout & notices ---------------------------------
    Styling that applies to cart and checkout */
 
+/* Supress excerpts in mini cart */
+.wc-block-mini-cart__drawer .wc-block-components-product-metadata__description > p { 
+  display: none !important; 
+}
+
+/* Suppress product excerpts in full cart view */
+.wc-block-cart .wc-block-components-product-metadata__description > p {
+  display: none !important;
+}
 
 
 /* ======================================================================
@@ -1331,7 +1405,6 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
    primary vs secondary groups.
    !!! REMOVE BEFORE PRODUCTION !!!
    ============================================================ */
-
 
 
 
