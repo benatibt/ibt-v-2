@@ -540,6 +540,11 @@ textarea:focus-visible {
   pointer-events: none;
 }
 
+/* Highlight cart item count badge in brand blue with white text */
+.wc-block-mini-cart__badge {
+  background-color: var(--wp--preset--color--emphasis-secondary);
+  color: #fff;
+}
 
 /* ----------------------------------------------------------------------
    3.3 – Header Search
@@ -1042,6 +1047,12 @@ Purpose:
   font-family: var(--wp--preset--font-family--heading);
 }
 
+/* Universal spacing for WooCommerce breadcrumbs */
+.wp-block-breadcrumbs,
+.wc-block-breadcrumbs {
+  padding-block-start: var(--wp--preset--spacing--s);
+}
+
 /* ----- WooCommerce links -----
    Product titles use underline on hover only.
    Beats base styling by specificity (and later)
@@ -1076,7 +1087,7 @@ Purpose:
   .wp-block-query-loop
 ) :where(h1, h2, h3, h4, h5, h6, p) {
   margin-block: 0;
-  padding-block: 0.5em;
+  padding-block: 0.1em;
 }
 
 /* Author line – smaller, centred in product grids */
@@ -1085,6 +1096,21 @@ Purpose:
   text-align: center;
 }
 
+/* Use heading font for product prices in grid */
+.wc-block-components-product-price {
+  font-family: var(--wp--preset--font-family--heading);
+}
+
+/* Adjust 'in basket' button text size inside to match geeneral button */
+.wc-block-components-product-button__button.has-small-font-size span[data-wp-text="state.addToCartText"] {
+  font-size: var(--wp--preset--font-size--m);
+  line-height: 1.2;
+}
+
+/* Add space below 'Add to basket' button for visual balance */
+.wc-block-components-product-button {
+  margin-bottom: var(--wp--preset--spacing--s);
+}
 
 /* ----- 4A.3 - Single product -------------------------------------------
    Styling that applies to just the single product template */

@@ -101,10 +101,10 @@ Phase 1 — Core Structure
 Phase 2 — Functionality
 
     2.1 Dev Plugins:
-        WooCommerce
-        Woo Payments (testing mode)
-        The Events Calendar - Free version for listings only
-        MailPoet (Free)
+       X WooCommerce
+       X Woo Payments (testing mode)
+       X The Events Calendar - Free version for listings only
+       X MailPoet (Free)
        X Create Block Theme - Simplifies pattern export. Dev only
 
     2.2 WooCommerce flow:
@@ -208,6 +208,7 @@ Phase 4 - Testing / QA
         Google Product Feed (WooCommerce → Google Merchant integration)
         Solid Security
         Hostinger caching & CDN
+        FileBird Free (for image management)
 
     4.3 Tag v1.0.0 in Git for theme & plugin.
 
