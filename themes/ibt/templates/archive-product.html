@@ -1,57 +1,59 @@
 <!-- wp:template-part {"slug":"header-shop","theme":"ibt"} /-->
 
 <!-- wp:group {"tagName":"main","className":"ibt-rootp-apply","layout":{"type":"constrained"}} -->
-<main class="wp-block-group ibt-rootp-apply">
+<main class="wp-block-group ibt-rootp-apply"><!-- wp:template-part {"slug":"meta-schema","theme":"ibt"} /-->
 
-    <!-- wp:template-part {"slug":"meta-schema","theme":"ibt"} /-->
+<!-- wp:woocommerce/breadcrumbs {"fontSize":"s"} /-->
 
-    <!-- wp:woocommerce/breadcrumbs /-->
-    <!-- wp:query-title {"type":"archive","showPrefix":false,"align":"wide"} /-->
-    <!-- wp:term-description {"align":"wide"} /-->
-    <!-- wp:woocommerce/store-notices /-->
+<!-- wp:query-title {"type":"archive","showPrefix":false,"align":"wide"} /-->
 
-    <!-- wp:group {"className":"alignwide","layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between"}} -->
-    <div class="wp-block-group alignwide">
-        <!-- wp:woocommerce/product-results-count /-->
-        <!-- wp:woocommerce/catalog-sorting /-->
-    </div>
-    <!-- /wp:group -->
+<!-- wp:term-description {"align":"wide"} /-->
 
-    <!-- wp:woocommerce/product-collection {"align":"wide","queryId":5,"query":{"woocommerceAttributes":[],"woocommerceStockStatus":["instock","outofstock","onbackorder"],"taxQuery":[],"isProductCollectionBlock":true,"perPage":10,"pages":0,"offset":0,"postType":"product","order":"asc","orderBy":"title","author":"","search":"","exclude":[],"sticky":"","inherit":true},"displayLayout":{"type":"flex","columns":3,"shrinkColumns":true},"dimensions":{"widthType":"fill"},"queryContextIncludes":["collection"]} -->
-    <div class="wp-block-woocommerce-product-collection alignwide">
+<!-- wp:woocommerce/store-notices /-->
 
-        <!-- wp:woocommerce/product-template -->
-            <!-- wp:woocommerce/product-image {"showSaleBadge":false,"imageSizing":"thumbnail","isDescendentOfQueryLoop":true} -->
-                <!-- wp:woocommerce/product-sale-badge {"isDescendentOfQueryLoop":true,"align":"right"} /-->
-            <!-- /wp:woocommerce/product-image -->
-            <!-- wp:post-title {"textAlign":"center","isLink":true,"style":{"typography":{"lineHeight":"1.4"}},"fontSize":"medium","__woocommerceNamespace":"woocommerce/product-collection/product-title"} /-->
-            <!-- wp:woocommerce/product-price {"isDescendentOfQueryLoop":true,"textAlign":"center","fontSize":"small"} /-->
-            <!-- wp:woocommerce/product-button {"textAlign":"center","isDescendentOfQueryLoop":true,"fontSize":"small"} /-->
-        <!-- /wp:woocommerce/product-template -->
+<!-- wp:group {"className":"alignwide","layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between"}} -->
+<div class="wp-block-group alignwide"><!-- wp:woocommerce/product-results-count /-->
 
-        <!-- wp:query-pagination {"layout":{"type":"flex","justifyContent":"center"}} -->
-            <!-- wp:query-pagination-previous /-->
-            <!-- wp:query-pagination-numbers /-->
-            <!-- wp:query-pagination-next /-->
-        <!-- /wp:query-pagination -->
+<!-- wp:woocommerce/catalog-sorting /--></div>
+<!-- /wp:group -->
 
-        <!-- wp:woocommerce/product-collection-no-results -->
-            <!-- wp:group {"layout":{"type":"flex","orientation":"vertical","justifyContent":"center"}} -->
-            <div class="wp-block-group">
-                <!-- wp:paragraph {"fontSize":"medium"} -->
-                <p class="has-medium-font-size"><strong>No results found</strong></p>
-                <!-- /wp:paragraph -->
-                <!-- wp:paragraph -->
-                <p>You can try <a class="wc-link-clear-any-filters" href="#">clearing any filters</a> or head to our <a class="wc-link-stores-home" href="#">store's home</a>.</p>
-                <!-- /wp:paragraph -->
-            </div>
-            <!-- /wp:group -->
-        <!-- /wp:woocommerce/product-collection-no-results -->
+<!-- wp:woocommerce/product-collection {"queryId":10,"query":{"woocommerceAttributes":[],"woocommerceStockStatus":["instock","outofstock","onbackorder"],"taxQuery":[],"isProductCollectionBlock":true,"perPage":10,"pages":0,"offset":0,"postType":"product","order":"asc","orderBy":"title","author":"","search":"","exclude":[],"sticky":"","inherit":true},"tagName":"div","displayLayout":{"type":"flex","columns":3,"shrinkColumns":true},"dimensions":{"widthType":"fill"},"queryContextIncludes":["collection"],"__privatePreviewState":{"isPreview":false,"previewMessage":"Actual products will vary depending on the page being viewed."},"align":"wide"} -->
+<div class="wp-block-woocommerce-product-collection alignwide"><!-- wp:woocommerce/product-template -->
+<!-- wp:woocommerce/product-image {"showSaleBadge":false,"imageSizing":"thumbnail","isDescendentOfQueryLoop":true,"className":"ibt-product-tnail"} -->
+<!-- wp:woocommerce/product-sale-badge {"isDescendentOfQueryLoop":true,"align":"right"} /-->
+<!-- /wp:woocommerce/product-image -->
 
-    </div>
-    <!-- /wp:woocommerce/product-collection -->
+<!-- wp:post-title {"textAlign":"center","isLink":true,"style":{"typography":{"lineHeight":"1.4"}},"fontSize":"l","__woocommerceNamespace":"woocommerce/product-collection/product-title"} /-->
 
-</main>
+<!-- wp:woocommerce/product-price {"isDescendentOfQueryLoop":true,"textAlign":"center","fontSize":"m","style":{"typography":{"fontStyle":"normal","fontWeight":"600"}}} /-->
+
+<!-- wp:woocommerce/product-button {"textAlign":"center","isDescendentOfQueryLoop":true,"fontSize":"small"} /-->
+<!-- /wp:woocommerce/product-template -->
+
+<!-- wp:query-pagination {"layout":{"type":"flex","justifyContent":"center"}} -->
+<!-- wp:query-pagination-previous /-->
+
+<!-- wp:query-pagination-numbers /-->
+
+<!-- wp:query-pagination-next /-->
+<!-- /wp:query-pagination -->
+
+<!-- wp:woocommerce/product-collection-no-results -->
+<!-- wp:group {"layout":{"type":"flex","orientation":"vertical","justifyContent":"center"}} -->
+<div class="wp-block-group"><!-- wp:paragraph {"fontSize":"medium"} -->
+<p class="has-medium-font-size"><strong>No results found</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>You can try <a class="wc-link-clear-any-filters" href="#">clearing any filters</a> or head to our <a class="wc-link-stores-home" href="#">store's home</a>.</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+<!-- /wp:woocommerce/product-collection-no-results -->
+
+<!-- wp:spacer {"height":"50px"} -->
+<div style="height:50px" aria-hidden="true" class="wp-block-spacer"></div>
+<!-- /wp:spacer --></div>
+<!-- /wp:woocommerce/product-collection --></main>
 <!-- /wp:group -->
 
 <!-- wp:template-part {"slug":"footer-shop","theme":"ibt"} /-->
