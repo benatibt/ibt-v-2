@@ -79,12 +79,8 @@ add_action( 'plugins_loaded', function() {
 		return;
 	}
 
-	// Include our custom taxonomy code.
-	ibt_safe('IBT1-register-taxonomies', function() {
-		require_once __DIR__ . '/includes/register-taxonomy-types.php';
-	});
-
-	// Safe to include our main logic.
+	// Load our included files after Woo check. Fails ungracefully if missing.
+	require_once __DIR__ . '/includes/register-taxonomy-types.php';
 	require_once __DIR__ . '/includes/author-isbn-fields.php';
 } );
 
