@@ -1,0 +1,53 @@
+<!-- === archive-ibt_event.html (minimal test template) === -->
+<!-- Purpose: barebones output for testing event CPT and meta flow -->
+
+<!-- wp:group {"tagName":"main","style":{"spacing":{"padding":{"top":"2rem","bottom":"2rem"}}}} -->
+<main class="ibt-event-archive">
+
+  <!-- wp:heading {"level":1} -->
+  <h1>Event Archive (Test View)</h1>
+  <!-- /wp:heading -->
+
+  <!-- wp:query {"query":{"postType":"ibt_event","perPage":10}} -->
+  <div class="wp-block-query">
+
+    <!-- wp:post-template -->
+    <article class="ibt-event-card">
+
+      <!-- wp:post-title {"isLink":true} /-->
+
+      <!-- wp:paragraph -->
+      <p>
+        <strong>Start:</strong>
+        <!-- wp:post-meta {"metaKey":"ibt_event_start"} /-->
+        <br/>
+        <strong>End:</strong>
+        <!-- wp:post-meta {"metaKey":"ibt_event_end"} /-->
+        <br/>
+        <strong>Venue ID:</strong>
+        <!-- wp:post-meta {"metaKey":"ibt_event_venue_id"} /-->
+        <br/>
+        <strong>Public £:</strong>
+        <!-- wp:post-meta {"metaKey":"ibt_event_price_public"} /-->
+        <br/>
+        <strong>Member £:</strong>
+        <!-- wp:post-meta {"metaKey":"ibt_event_price_member"} /-->
+        <br/>
+        <strong>Featured:</strong>
+        <!-- wp:post-meta {"metaKey":"ibt_event_featured"} /-->
+        <br/>
+        <strong>Notes:</strong>
+        <!-- wp:post-meta {"metaKey":"ibt_event_notes"} /-->
+      </p>
+      <!-- /wp:paragraph -->
+
+    </article>
+    <!-- /wp:post-template -->
+
+    <!-- wp:query-pagination {"paginationArrow":"arrow"} /-->
+
+  </div>
+  <!-- /wp:query -->
+
+</main>
+<!-- /wp:group -->

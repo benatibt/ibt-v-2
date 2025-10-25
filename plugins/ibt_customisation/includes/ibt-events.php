@@ -54,7 +54,7 @@ function ibt_events_register_cpts() {
 		'show_in_menu'       => true,
 		'show_in_rest'       => true,
 		'menu_icon'          => 'dashicons-calendar-alt',
-		'supports'           => array( 'title', 'editor', 'excerpt', 'thumbnail', 'author' ),
+	    'supports'           => array( 'title', 'editor', 'excerpt', 'thumbnail', 'author', 'custom-fields' ),
 		'has_archive'        => 'events', // Archive at /events/
 		'rewrite'            => array(
 			'slug'       => 'events',
@@ -127,7 +127,8 @@ function ibt_events_register_meta() {
 		'single'            => true,
 		'show_in_rest'      => true,
 		'sanitize_callback' => 'sanitize_text_field',
-		'auth_callback'     => function() { return current_user_can( 'edit_posts' ); },
+        'auth_callback'     => '__return_true',
+
 	);
 
 	register_post_meta( 'ibt_event', 'ibt_event_start', $datetime_args );
@@ -234,9 +235,9 @@ function ibt_events_combine_datetime( $date, $time ) {
 function ibt_events_register_detail_meta() {
 
 	$base_args = array(
-		'single'       => true,
-		'show_in_rest' => true,
-		'auth_callback'=> function() { return current_user_can( 'edit_posts' ); },
+		'single'        => true,
+		'show_in_rest'  => true,
+        'auth_callback' => '__return_true',
 	);
 
 	register_post_meta( 'ibt_event', 'ibt_event_venue_id', array_merge(
@@ -362,3 +363,62 @@ function ibt_events_sanitize_price( $val ) {
 	$val = preg_replace( '/[^0-9.]/', '', (string) $val );
 	return substr( $val, 0, 10 ); // prevent absurdly long input
 }
+
+
+
+
+
+
+
+// === 6.0 – Register IBT Event Blocks =======================================
+//
+//  • Registers a shared editor.js handle so PHP-rendered blocks appear in
+//    the block editor inserter.
+//  • Automatically registers every block folder found in includes/blocks/.
+
+add_action( 'init', function() {
+
+	// ----------------------------------------------------------------------
+	// 6.1 – Register shared editor script
+	// ----------------------------------------------------------------------
+	$handle = 'ibt-blocks-editor';
+	$path   = plugin_dir_path( dirname( __FILE__ ) ) . 'includes/blocks/editor.js';
+	$url    = plugin_dir_url( dirname( __FILE__ ) ) . 'includes/blocks/editor.js';
+
+	if ( file_exists( $path ) ) {
+		wp_register_script(
+			$handle,
+			$url,
+			array( 'wp-blocks', 'wp-element', 'wp-editor' ),
+			filemtime( $path ),
+			true
+		);
+	}
+
+	// ----------------------------------------------------------------------
+	// 6.2 – Auto-register all block folders containing block.json
+	// ----------------------------------------------------------------------
+	$blocks_dir = plugin_dir_path( dirname( __FILE__ ) ) . 'includes/blocks/';
+
+	if ( ! is_dir( $blocks_dir ) ) {
+		return;
+	}
+
+	foreach ( glob( $blocks_dir . '*/block.json' ) as $file ) {
+		$block_folder = dirname( $file );
+		register_block_type_from_metadata( $block_folder );
+	}
+});
+
+
+// === 6.1 – Force-load shared editor script in block editor ===============
+//
+// This ensures ibt-blocks-editor runs whenever a block editor is open,
+// even if no IBT blocks are yet inserted.
+
+add_action( 'enqueue_block_editor_assets', function() {
+	if ( wp_script_is( 'ibt-blocks-editor', 'registered' ) ) {
+		wp_enqueue_script( 'ibt-blocks-editor' );
+		error_log( 'IBT-Blocks: editor.js enqueued manually' );
+	}
+});
