@@ -169,3 +169,62 @@ add_action( 'save_post_tribe_venue', function ( $post_id ) {
 	}
 } );
 
+
+/* --------------------------------------------------------------------------
+ * TEC2 – Add accessible "Location (Google Maps)" link after venue section
+ * Uses tribe_template_after_include filter (v6+ compatible)
+ * -------------------------------------------------------------------------- */
+if ( function_exists( 'tribe_get_venue_id' ) ) {
+
+	add_filter( 'tribe_template_after_include', function( $html, $template ) {
+
+		// Only run after the venue template is rendered
+		if ( isset( $template->slug ) && $template->slug === 'modules/meta/venue' ) {
+
+			$venue_id = tribe_get_venue_id();
+			if ( ! $venue_id ) {
+				return $html;
+			}
+
+			$coords = get_post_meta( $venue_id, 'ibt_map_coords', true );
+			if ( empty( $coords ) ) {
+				return $html;
+			}
+
+			$url = 'https://www.google.com/maps/search/?api=1&query=' . rawurlencode( $coords );
+
+			// Append our button directly after the Venue section
+			$html .= '<div class="ibt-event-maplink" style="margin-top:0.75rem;">';
+			$html .= '<a class="wp-element-button" target="_blank" rel="noopener nofollow" href="' . esc_url( $url ) . '" aria-label="' . esc_attr__( 'View location on Google Maps (opens in a new tab)', 'ibt' ) . '">';
+			$html .= esc_html__( 'Location (Google Maps)', 'ibt' );
+			$html .= '</a>';
+			$html .= '</div>';
+		}
+
+		return $html;
+
+	}, 10, 2 );
+}
+
+
+
+
+
+
+
+/* --------------------------------------------------------------------------
+ * TEC3 – Force-disable Google Map output for Events and Venues
+ * just in case someone turns it back on.
+ * -------------------------------------------------------------------------- */
+if ( function_exists( 'tribe_get_option' ) ) {
+
+	add_filter( 'tribe_get_option', function( $value, $option ) {
+		if ( in_array( $option, [ 'embedGoogleMaps', 'showMap', 'showMapLink' ], true ) ) {
+			return false;
+		}
+		return $value;
+	}, 10, 2 );
+
+	add_filter( 'tribe_events_google_maps_api', '__return_false' );
+}
+

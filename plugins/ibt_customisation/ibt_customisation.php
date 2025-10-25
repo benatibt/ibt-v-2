@@ -80,5 +80,6 @@ add_action( 'plugins_loaded', function() {
 	// Load our included files after Woo check. Fails ungracefully if missing.
 	require_once __DIR__ . '/includes/register-taxonomy-types.php';
 	require_once __DIR__ . '/includes/author-isbn-fields.php';
+	require_once __DIR__ . '/includes/ibt-events.php';
 } );
 

@@ -1393,18 +1393,6 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 
 
 
-/* ============================================================
-   TEMP – WooCommerce Button Mapping Test
-   Purpose: Verify which Woo buttons fall into primary vs secondary groups
-   Remove once mapping confirmed (before production)
-   ============================================================ */
-
-/* ============================================================
-   TEMP – WooCommerce Button Mapping Test (Woo 10.3+)
-   Purpose: visually verify which Woo block buttons map to
-   primary vs secondary groups.
-   !!! REMOVE BEFORE PRODUCTION !!!
-   ============================================================ */
 
 
 
