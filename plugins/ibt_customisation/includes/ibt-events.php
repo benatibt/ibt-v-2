@@ -218,3 +218,147 @@ function ibt_events_combine_datetime( $date, $time ) {
 	$ts = strtotime( "$date $time" );
 	return $ts ? date( 'Y-m-d H:i:s', $ts ) : '';
 }
+
+// === 3.0 – Event Details Meta ===
+
+/**
+ * Registers and manages additional event fields:
+ * - ibt_event_venue_id
+ * - ibt_event_price_public
+ * - ibt_event_price_member
+ * - ibt_event_featured
+ * - ibt_event_notes
+ */
+
+// 3.1 – Register meta keys for REST + sanitisation
+function ibt_events_register_detail_meta() {
+
+	$base_args = array(
+		'single'       => true,
+		'show_in_rest' => true,
+		'auth_callback'=> function() { return current_user_can( 'edit_posts' ); },
+	);
+
+	register_post_meta( 'ibt_event', 'ibt_event_venue_id', array_merge(
+		$base_args,
+		array( 'type' => 'integer', 'sanitize_callback' => 'absint' )
+	));
+
+	register_post_meta( 'ibt_event', 'ibt_event_price_public', array_merge(
+		$base_args,
+		array( 'type' => 'string', 'sanitize_callback' => 'ibt_events_sanitize_price' )
+	));
+
+	register_post_meta( 'ibt_event', 'ibt_event_price_member', array_merge(
+		$base_args,
+		array( 'type' => 'string', 'sanitize_callback' => 'ibt_events_sanitize_price' )
+	));
+
+	register_post_meta( 'ibt_event', 'ibt_event_featured', array_merge(
+		$base_args,
+		array( 'type' => 'boolean', 'sanitize_callback' => 'rest_sanitize_boolean' )
+	));
+
+	register_post_meta( 'ibt_event', 'ibt_event_notes', array_merge(
+		$base_args,
+		array( 'type' => 'string', 'sanitize_callback' => 'sanitize_textarea_field' )
+	));
+}
+add_action( 'init', 'ibt_events_register_detail_meta' );
+
+// 3.2 – Add admin meta box
+function ibt_events_add_details_metabox() {
+	add_meta_box(
+		'ibt_event_details',
+		__( 'Event Details', 'ibt-events' ),
+		'ibt_events_render_details_metabox',
+		'ibt_event',
+		'normal',
+		'default'
+	);
+}
+add_action( 'add_meta_boxes', 'ibt_events_add_details_metabox' );
+
+// 3.3 – Render meta box UI
+function ibt_events_render_details_metabox( $post ) {
+
+	wp_nonce_field( 'ibt_events_save_meta', 'ibt_events_meta_nonce' );
+
+	$venue_id   = get_post_meta( $post->ID, 'ibt_event_venue_id', true );
+	$price_pub  = get_post_meta( $post->ID, 'ibt_event_price_public', true );
+	$price_mem  = get_post_meta( $post->ID, 'ibt_event_price_member', true );
+	$featured   = (bool) get_post_meta( $post->ID, 'ibt_event_featured', true );
+	$notes      = get_post_meta( $post->ID, 'ibt_event_notes', true );
+
+	// Fetch venues for dropdown
+	$venues = get_posts( array(
+		'post_type'      => 'ibt_venue',
+		'post_status'    => 'publish',
+		'posts_per_page' => -1,
+		'orderby'        => 'title',
+		'order'          => 'ASC',
+	) );
+
+	echo '<p><strong>' . esc_html__( 'Venue', 'ibt-events' ) . '</strong><br />';
+	echo '<select name="ibt_event_venue_id">';
+	echo '<option value="0">' . esc_html__( '— Select venue —', 'ibt-events' ) . '</option>';
+	foreach ( $venues as $v ) {
+		printf(
+			'<option value="%d" %s>%s</option>',
+			$v->ID,
+			selected( (int) $venue_id, $v->ID, false ),
+			esc_html( $v->post_title )
+		);
+	}
+	echo '</select></p>';
+
+	echo '<p><strong>' . esc_html__( 'Pricing (£)', 'ibt-events' ) . '</strong><br />';
+	echo '<label>' . esc_html__( 'Public:', 'ibt-events' ) . ' ';
+	echo '<input type="text" name="ibt_event_price_public" value="' . esc_attr( $price_pub ) . '" size="8" /></label> ';
+	echo '<label>' . esc_html__( 'Member:', 'ibt-events' ) . ' ';
+	echo '<input type="text" name="ibt_event_price_member" value="' . esc_attr( $price_mem ) . '" size="8" /></label></p>';
+
+	echo '<p><label>';
+	echo '<input type="checkbox" name="ibt_event_featured" value="1" ' . checked( $featured, true, false ) . ' />';
+	echo ' ' . esc_html__( 'Mark as featured event', 'ibt-events' ) . '</label></p>';
+
+	echo '<p><strong>' . esc_html__( 'Notes', 'ibt-events' ) . '</strong><br />';
+	echo '<textarea name="ibt_event_notes" rows="4" style="width:100%;">' . esc_textarea( $notes ) . '</textarea></p>';
+}
+
+// 3.4 – Save handler
+function ibt_events_save_details_meta( $post_id ) {
+
+	// Verify nonce
+	if ( ! isset( $_POST['ibt_events_meta_nonce'] ) ||
+	     ! wp_verify_nonce( $_POST['ibt_events_meta_nonce'], 'ibt_events_save_meta' ) ) {
+		return;
+	}
+
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+		return;
+	}
+	if ( ! current_user_can( 'edit_post', $post_id ) ) {
+		return;
+	}
+
+	// Collect and sanitise
+	$venue_id  = absint( $_POST['ibt_event_venue_id'] ?? 0 );
+	$price_pub = ibt_events_sanitize_price( $_POST['ibt_event_price_public'] ?? '' );
+	$price_mem = ibt_events_sanitize_price( $_POST['ibt_event_price_member'] ?? '' );
+	$featured  = ! empty( $_POST['ibt_event_featured'] ) ? 1 : 0;
+	$notes     = sanitize_textarea_field( $_POST['ibt_event_notes'] ?? '' );
+
+	update_post_meta( $post_id, 'ibt_event_venue_id', $venue_id );
+	update_post_meta( $post_id, 'ibt_event_price_public', $price_pub );
+	update_post_meta( $post_id, 'ibt_event_price_member', $price_mem );
+	update_post_meta( $post_id, 'ibt_event_featured', $featured );
+	update_post_meta( $post_id, 'ibt_event_notes', $notes );
+}
+add_action( 'save_post_ibt_event', 'ibt_events_save_details_meta' );
+
+// 3.5 – Helper: price sanitiser
+function ibt_events_sanitize_price( $val ) {
+	$val = preg_replace( '/[^0-9.]/', '', (string) $val );
+	return substr( $val, 0, 10 ); // prevent absurdly long input
+}
