@@ -28,6 +28,9 @@
  * ---------------------------------------------------------------------
  */
 
+// At very top of ibt_customisation.php
+error_log('ibt_customisation.php loaded');
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -75,6 +78,11 @@ add_action( 'plugins_loaded', function() {
 		}
 		return;
 	}
+
+	// Include our custom taxonomy code.
+	ibt_safe('IBT1-register-taxonomies', function() {
+		require_once __DIR__ . '/includes/register-taxonomy-types.php';
+	});
 
 	// Safe to include our main logic.
 	require_once __DIR__ . '/includes/author-isbn-fields.php';
