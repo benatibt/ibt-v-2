@@ -107,12 +107,19 @@ add_action( 'init', ibt_safe( 'RTT2-register-cpt-library', function() {
 	register_post_type( 'library', $args );
 
 
-// RTT3 - Rename "Posts" to "News" in admin
-add_action( 'init', ibt_safe( 'RTT3-rename-post-labels', function() {
+/* ========================================================================
+ * RTT3 - Rename "Posts" to "News" in admin
+ */
 
-	global $wp_post_types;
-	if ( isset( $wp_post_types['post'] ) ) {
-		$labels = &$wp_post_types['post']->labels;
+ibt_safe( function() {
+	add_action( 'init', function() {
+
+		$post_type = get_post_type_object( 'post' );
+		if ( ! $post_type || empty( $post_type->labels ) ) {
+			return;
+		}
+
+		$labels = $post_type->labels;
 		$labels->name               = __( 'News', 'ibt' );
 		$labels->singular_name      = __( 'News Article', 'ibt' );
 		$labels->add_new            = __( 'Add News Article', 'ibt' );
@@ -126,8 +133,8 @@ add_action( 'init', ibt_safe( 'RTT3-rename-post-labels', function() {
 		$labels->all_items          = __( 'All News', 'ibt' );
 		$labels->menu_name          = __( 'News', 'ibt' );
 		$labels->name_admin_bar     = __( 'News Article', 'ibt' );
-	}
-}), 20 );
 
-}, 10 ) );
+	}, 20 );
+}, 'RTT3', 'Failed to rename Posts labels to News' );
+
 
