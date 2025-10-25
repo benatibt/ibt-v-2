@@ -140,25 +140,14 @@ add_action( 'init', ibt_safe( 'RTT3-rename-post-labels', function() {
 
 ibt_safe( 'TEC1-register-map-coords', function() {
 
-	// Register meta field for Venues
-	register_post_meta(
-		'tribe_venue',
-		'ibt_map_coords',
-		array(
-			'show_in_rest'  => true,
-			'single'        => true,
-			'type'          => 'string',
-			'auth_callback' => '__return_true',
-		)
-	);
-
-	// Add meta box to Venue editor
+	// Add meta box when TEC venues exist
 	add_action( 'add_meta_boxes', function() {
 		add_meta_box(
 			'ibt_map_coords_box',
 			__( 'Map Coordinates (Google Maps)', 'ibt' ),
 			function( $post ) {
 				$value = esc_attr( get_post_meta( $post->ID, 'ibt_map_coords', true ) );
+				wp_nonce_field( 'ibt_save_map_coords', 'ibt_map_coords_nonce' );
 				echo '<p><label for="ibt_map_coords">';
 				echo __( 'Enter coordinates or Plus Code (e.g. 58°05\'29.8"N 6°36\'21.7"W or 39RV+JGF Balallan)', 'ibt' );
 				echo '</label></p>';
@@ -170,8 +159,19 @@ ibt_safe( 'TEC1-register-map-coords', function() {
 		);
 	});
 
-	// Save handler with 120-char cap
+	// Save handler with nonce, permission, and 120-char cap
 	add_action( 'save_post_tribe_venue', function( $post_id ) {
+
+		// Nonce and permission checks
+		if (
+			! isset( $_POST['ibt_map_coords_nonce'] ) ||
+			! wp_verify_nonce( $_POST['ibt_map_coords_nonce'], 'ibt_save_map_coords' ) ||
+			( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) ||
+			! current_user_can( 'edit_post', $post_id )
+		) {
+			return;
+		}
+
 		if ( isset( $_POST['ibt_map_coords'] ) ) {
 			$new_value = substr( trim( sanitize_text_field( wp_unslash( $_POST['ibt_map_coords'] ) ) ), 0, 120 );
 			update_post_meta( $post_id, 'ibt_map_coords', $new_value );
