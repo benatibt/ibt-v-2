@@ -9,9 +9,6 @@
  *   RTT3 - Rename "Posts" to "News" in admin
  */
 
-// At very top of register-taxonomy-types.php
-error_log('register-taxonomy-types.php loaded');
-
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /* ========================================================================

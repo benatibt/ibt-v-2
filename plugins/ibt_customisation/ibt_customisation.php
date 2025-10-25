@@ -28,8 +28,6 @@
  * ---------------------------------------------------------------------
  */
 
-// At very top of ibt_customisation.php
-error_log('ibt_customisation.php loaded');
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
