@@ -130,3 +130,52 @@ add_action( 'init', ibt_safe( 'RTT3-rename-post-labels', function() {
 }), 20 );
 
 }, 10 ) );
+
+
+/* --------------------------------------------------------------------------
+ *  TEC1 – Map Coordinates for Venues
+ *  WHY: Allow editors to store a Google Maps Plus Code or lat/long for venue pages.
+ *  Note – accepts decimal, DMS, or Plus Code; URL encoding handled at output.
+ * -------------------------------------------------------------------------- */
+
+ibt_safe( 'TEC1-register-map-coords', function() {
+
+	// Register meta field for Venues
+	register_post_meta(
+		'tribe_venue',
+		'ibt_map_coords',
+		array(
+			'show_in_rest'  => true,
+			'single'        => true,
+			'type'          => 'string',
+			'auth_callback' => '__return_true',
+		)
+	);
+
+	// Add meta box to Venue editor
+	add_action( 'add_meta_boxes', function() {
+		add_meta_box(
+			'ibt_map_coords_box',
+			__( 'Map Coordinates (Google Maps)', 'ibt' ),
+			function( $post ) {
+				$value = esc_attr( get_post_meta( $post->ID, 'ibt_map_coords', true ) );
+				echo '<p><label for="ibt_map_coords">';
+				echo __( 'Enter coordinates or Plus Code (e.g. 58°05\'29.8"N 6°36\'21.7"W or 39RV+JGF Balallan)', 'ibt' );
+				echo '</label></p>';
+				echo '<input type="text" id="ibt_map_coords" name="ibt_map_coords" value="' . $value . '" style="width:100%;" />';
+			},
+			'tribe_venue',
+			'normal',
+			'default'
+		);
+	});
+
+	// Save handler with 120-char cap
+	add_action( 'save_post_tribe_venue', function( $post_id ) {
+		if ( isset( $_POST['ibt_map_coords'] ) ) {
+			$new_value = substr( trim( sanitize_text_field( wp_unslash( $_POST['ibt_map_coords'] ) ) ), 0, 120 );
+			update_post_meta( $post_id, 'ibt_map_coords', $new_value );
+		}
+	});
+
+});
