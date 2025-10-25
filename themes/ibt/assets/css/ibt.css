@@ -1264,7 +1264,7 @@ Note - may want to turn it back on so left in template. */
 
 /* Improve readability of classic WooCommerce tab headers */
 .single-product ul.wc-tabs li a {
-  font-size: var(--wp--preset--font-size--xl);
+  font-size: var(--wp--preset--font-size--l);
   font-family: var(--wp--preset--font-family--heading);
   font-weight: 600;
   line-height: 1.3;

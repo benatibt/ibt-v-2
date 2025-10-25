@@ -82,4 +82,3 @@ add_action( 'plugins_loaded', function() {
 	// Safe to include our main logic.
 	require_once __DIR__ . '/includes/author-isbn-fields.php';
 } );
-

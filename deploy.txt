@@ -6,6 +6,7 @@ Configure settings/reading (sandbox ref)
 Configure permalinks (sandbox as ref)
 Configure Relevanssi indexing tab (sandbox as ref)
 Appearance → Customize → WooCommerce → Product Images (sandbox ref)
+The Events Calendar - various settings which were not documented. Use sandbox as ref and document
 
 Woo
 Weight kg -> g

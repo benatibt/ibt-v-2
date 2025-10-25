@@ -109,9 +109,9 @@ Phase 2 — Functionality
 
     2.2 WooCommerce flow:
 
-        Shop, cart, checkout pages.
+        X Shop, cart, checkout pages.
         
-        Books - verify core physical product checkout flow
+        X Books - verify core physical product checkout flow
 
         Membership product (one-off, manual renewal).
 
