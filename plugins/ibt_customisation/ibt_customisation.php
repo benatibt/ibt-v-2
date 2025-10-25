@@ -54,9 +54,6 @@ if ( ! function_exists( 'ibt_safe' ) ) {
 }
 
 
-// RTT3 - Load taxonomy & CPT registration (non-Woo dependent)
-require_once __DIR__ . '/includes/register-taxonomy-types.php';
-
 
 /**
  * SETTINGS
@@ -82,3 +79,4 @@ add_action( 'plugins_loaded', function() {
 	// Safe to include our main logic.
 	require_once __DIR__ . '/includes/author-isbn-fields.php';
 } );
+
