@@ -364,61 +364,45 @@ function ibt_events_sanitize_price( $val ) {
 	return substr( $val, 0, 10 ); // prevent absurdly long input
 }
 
-
-
-
-
-
-
-// === 6.0 – Register IBT Event Blocks =======================================
+// === 5.5 – Generic Event-Field Shortcode (Restricted) ======================
 //
-//  • Registers a shared editor.js handle so PHP-rendered blocks appear in
-//    the block editor inserter.
-//  • Automatically registers every block folder found in includes/blocks/.
+//  • Provides [ibt_event_field key="meta_key"] for safe public fields only.
+//  • Whitelisted keys prevent accidental exposure of internal data.
+//  • Returns plain text (escaped) for safe insertion into HTML.
+//
+//  Example:
+//    [ibt_event_field key="ibt_event_start"]
 
-add_action( 'init', function() {
+add_shortcode( 'ibt_event_field', function( $atts ) {
+	$atts = shortcode_atts(
+		array( 'key' => '' ),
+		$atts,
+		'ibt_event_field'
+	);
 
-	// ----------------------------------------------------------------------
-	// 6.1 – Register shared editor script
-	// ----------------------------------------------------------------------
-	$handle = 'ibt-blocks-editor';
-	$path   = plugin_dir_path( dirname( __FILE__ ) ) . 'includes/blocks/editor.js';
-	$url    = plugin_dir_url( dirname( __FILE__ ) ) . 'includes/blocks/editor.js';
-
-	if ( file_exists( $path ) ) {
-		wp_register_script(
-			$handle,
-			$url,
-			array( 'wp-blocks', 'wp-element', 'wp-editor' ),
-			filemtime( $path ),
-			true
-		);
+	$key = $atts['key'];
+	if ( empty( $key ) ) {
+		return '';
 	}
 
-	// ----------------------------------------------------------------------
-	// 6.2 – Auto-register all block folders containing block.json
-	// ----------------------------------------------------------------------
-	$blocks_dir = plugin_dir_path( dirname( __FILE__ ) ) . 'includes/blocks/';
+	// ---- Whitelist of public meta keys ----
+	$allowed_keys = array(
+		'ibt_event_start',
+		'ibt_event_end',
+		'ibt_event_price_public',
+		'ibt_event_price_member',
+		'ibt_event_notes',
+		'ibt_event_online_url',
+	);
 
-	if ( ! is_dir( $blocks_dir ) ) {
-		return;
+	if ( ! in_array( $key, $allowed_keys, true ) ) {
+		return ''; // silently skip unapproved keys
 	}
 
-	foreach ( glob( $blocks_dir . '*/block.json' ) as $file ) {
-		$block_folder = dirname( $file );
-		register_block_type_from_metadata( $block_folder );
-	}
+	$value = get_post_meta( get_the_ID(), $key, true );
+	return esc_html( $value );
 });
 
 
-// === 6.1 – Force-load shared editor script in block editor ===============
-//
-// This ensures ibt-blocks-editor runs whenever a block editor is open,
-// even if no IBT blocks are yet inserted.
 
-add_action( 'enqueue_block_editor_assets', function() {
-	if ( wp_script_is( 'ibt-blocks-editor', 'registered' ) ) {
-		wp_enqueue_script( 'ibt-blocks-editor' );
-		error_log( 'IBT-Blocks: editor.js enqueued manually' );
-	}
-});
+

@@ -1,53 +1,67 @@
-<!-- === archive-ibt_event.html (minimal test template) === -->
-<!-- Purpose: barebones output for testing event CPT and meta flow -->
+<!--
+  archive-ibt_event.html
+  Displays upcoming events with key details pulled via shortcodes.
+  Uses plain HTML/paragraph blocks for compatibility and simplicity.
+-->
 
-<!-- wp:group {"tagName":"main","style":{"spacing":{"padding":{"top":"2rem","bottom":"2rem"}}}} -->
-<main class="ibt-event-archive">
+<!-- wp:group {"align":"wide"} -->
+<div class="wp-block-group">
 
+  <!-- Page heading -->
   <!-- wp:heading {"level":1} -->
-  <h1>Event Archive (Test View)</h1>
+  <h1>Upcoming Events</h1>
   <!-- /wp:heading -->
 
-  <!-- wp:query {"query":{"postType":"ibt_event","perPage":10}} -->
+  <!-- Loop: one per event -->
+  <!-- wp:query {"query":{"perPage":10,"postType":"ibt_event","order":"ASC","orderBy":"meta_value","metaKey":"ibt_event_start"},"isProductCollectionBlock":false} -->
   <div class="wp-block-query">
 
     <!-- wp:post-template -->
-    <article class="ibt-event-card">
 
-      <!-- wp:post-title {"isLink":true} /-->
+      <!-- Event title -->
+      <!-- wp:post-title {"level":2,"isLink":true} /-->
 
-      <!-- wp:paragraph -->
-      <p>
-        <strong>Start:</strong>
-        <!-- wp:post-meta {"metaKey":"ibt_event_start"} /-->
-        <br/>
-        <strong>End:</strong>
-        <!-- wp:post-meta {"metaKey":"ibt_event_end"} /-->
-        <br/>
-        <strong>Venue ID:</strong>
-        <!-- wp:post-meta {"metaKey":"ibt_event_venue_id"} /-->
-        <br/>
-        <strong>Public £:</strong>
-        <!-- wp:post-meta {"metaKey":"ibt_event_price_public"} /-->
-        <br/>
-        <strong>Member £:</strong>
-        <!-- wp:post-meta {"metaKey":"ibt_event_price_member"} /-->
-        <br/>
-        <strong>Featured:</strong>
-        <!-- wp:post-meta {"metaKey":"ibt_event_featured"} /-->
-        <br/>
-        <strong>Notes:</strong>
-        <!-- wp:post-meta {"metaKey":"ibt_event_notes"} /-->
-      </p>
-      <!-- /wp:paragraph -->
+      <!-- Event details -->
+      <!-- wp:group -->
+      <div class="wp-block-group">
 
-    </article>
+        <!-- wp:paragraph -->
+        <p><strong>Starts:</strong> [ibt_event_field key="ibt_event_start"]</p>
+        <!-- /wp:paragraph -->
+
+        <!-- wp:paragraph -->
+        <p><strong>Ends:</strong> [ibt_event_field key="ibt_event_end"]</p>
+        <!-- /wp:paragraph -->
+
+        <!-- wp:paragraph -->
+        <p><strong>Public price:</strong> £[ibt_event_field key="ibt_event_price_public"]</p>
+        <!-- /wp:paragraph -->
+
+        <!-- wp:paragraph -->
+        <p><strong>Member price:</strong> £[ibt_event_field key="ibt_event_price_member"]</p>
+        <!-- /wp:paragraph -->
+
+        <!-- wp:paragraph -->
+        <p><strong>Notes:</strong> [ibt_event_field key="ibt_event_notes"]</p>
+        <!-- /wp:paragraph -->
+
+      </div>
+      <!-- /wp:group -->
+
+      <!-- Divider -->
+      <!-- wp:separator {"opacity":"css"} /-->
+
     <!-- /wp:post-template -->
 
-    <!-- wp:query-pagination {"paginationArrow":"arrow"} /-->
+    <!-- Pagination -->
+    <!-- wp:query-pagination -->
+      <!-- wp:query-pagination-previous /-->
+      <!-- wp:query-pagination-numbers /-->
+      <!-- wp:query-pagination-next /-->
+    <!-- /wp:query-pagination -->
 
   </div>
   <!-- /wp:query -->
 
-</main>
+</div>
 <!-- /wp:group -->
