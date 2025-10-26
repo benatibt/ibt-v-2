@@ -149,21 +149,21 @@ if ( ! function_exists( 'ibt_events_render_list' ) ) {
 							<p class="ibt-event-end"><strong>Ends:</strong> <?php echo esc_html( $end ); ?></p>
 						<?php endif; ?>
 
-						<?php if ( $venue ) : ?>
-							<p class="ibt-event-venue"><strong>Venue:</strong><br><?php echo $venue; ?></p>
-						<?php endif; ?>
-
                         <?php
+                        $venue  = ibt_events_get_field( $post_id, 'ibt_event_venue' );
                         $remote = ibt_events_get_field( $post_id, 'ibt_event_remote' );
-                        if ( $remote ) :
                         ?>
-                            <p class="ibt-event-remote-label"><?php echo $remote; ?></p>
+
+                        <?php if ( $venue ) : ?>
+                            <p class="ibt-event-venue">
+                                <strong>Venue:</strong>
+                                <?php echo esc_html( $venue ); ?>
+                                <?php if ( $remote ) : ?> — Online event<?php endif; ?>
+                            </p>
                         <?php endif; ?>
 
-
-						<?php if ( $map ) : ?>
-							<div class="wp-block-buttons"><?php echo $map; ?></div>
-						<?php endif; ?>
+						<?php if ( $map ) echo $map; ?>
+                        
 					</article>
 
 				<?php endwhile; ?>
