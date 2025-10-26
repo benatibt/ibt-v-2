@@ -451,6 +451,68 @@ add_shortcode( 'ibt_event_field', function( $atts ) {
 });
 
 
+// === 4.1 – Venue Meta Boxes =============================================
+
+// Add meta boxes to the Venue CPT
+add_action( 'add_meta_boxes', function() {
+    add_meta_box(
+        'ibt_venue_details',
+        __( 'Venue Details', 'ibt-events' ),
+        'ibt_venue_details_metabox',
+        'ibt_venue',
+        'normal',
+        'default'
+    );
+});
+
+// Callback to render the meta box fields
+function ibt_venue_details_metabox( $post ) {
+    // Security nonce
+    wp_nonce_field( 'ibt_venue_meta_save', 'ibt_venue_meta_nonce' );
+
+    $address     = get_post_meta( $post->ID, 'ibt_venue_address', true );
+    $maplocation = get_post_meta( $post->ID, 'ibt_venue_maplocation', true );
+    ?>
+
+    <p><label for="ibt_venue_address"><strong><?php _e( 'Venue address', 'ibt-events' ); ?></strong></label></p>
+    <textarea name="ibt_venue_address" id="ibt_venue_address" rows="4" style="width:100%;"><?php echo esc_textarea( $address ); ?></textarea>
+    <p class="description"><?php _e( 'Use one line per address component. These line breaks are preserved for multiline view.', 'ibt-events' ); ?></p>
+
+    <p><label for="ibt_venue_maplocation"><strong><?php _e( 'Map location (lat,long or Plus Code)', 'ibt-events' ); ?></strong></label></p>
+    <input type="text" name="ibt_venue_maplocation" id="ibt_venue_maplocation"
+           value="<?php echo esc_attr( $maplocation ); ?>" style="width:100%;" maxlength="100" />
+    <p class="description"><?php _e( 'Example: 58.091639,-6.606250 or 39RV+JGF Balallan UK', 'ibt-events' ); ?></p>
+
+    <?php
+}
+
+// Save handler
+add_action( 'save_post_ibt_venue', function( $post_id ) {
+    // Verify nonce
+    if ( ! isset( $_POST['ibt_venue_meta_nonce'] ) ||
+         ! wp_verify_nonce( $_POST['ibt_venue_meta_nonce'], 'ibt_venue_meta_save' ) ) {
+        return;
+    }
+
+    // Skip autosaves / revisions
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
+    if ( wp_is_post_revision( $post_id ) ) return;
+
+    // Capability check
+    if ( ! current_user_can( 'edit_post', $post_id ) ) return;
+
+    // Sanitise and save
+    if ( isset( $_POST['ibt_venue_address'] ) ) {
+        update_post_meta( $post_id, 'ibt_venue_address', sanitize_textarea_field( $_POST['ibt_venue_address'] ) );
+    }
+
+    if ( isset( $_POST['ibt_venue_maplocation'] ) ) {
+        $val = substr( sanitize_text_field( $_POST['ibt_venue_maplocation'] ), 0, 100 );
+        update_post_meta( $post_id, 'ibt_venue_maplocation', $val );
+    }
+});
+
+
 
 // === 5.6 – Event Date Formatting Helpers ===================================
 //

@@ -81,5 +81,6 @@ add_action( 'plugins_loaded', function() {
 	require_once __DIR__ . '/includes/register-taxonomy-types.php';
 	require_once __DIR__ . '/includes/author-isbn-fields.php';
 	require_once __DIR__ . '/includes/ibt-events.php';
+	require_once __DIR__ . '/includes/ibt-events-render.php';
 } );
 
