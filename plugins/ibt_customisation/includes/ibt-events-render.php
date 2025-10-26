@@ -41,6 +41,14 @@ if ( ! function_exists( 'ibt_events_get_field' ) ) {
                         nl2br( esc_html( $venue_address ) ) . '</span>';
                 }
 
+                // Online / Remote event flag
+                case 'ibt_event_remote':
+                    $is_remote = (int) get_post_meta( $post_id, 'ibt_event_remote', true );
+                    if ( $is_remote ) {
+                        return '<span class="ibt-event-remote">Online event</span>';
+                    }
+                    return '';
+
                 return $out;
 
 
@@ -58,6 +66,13 @@ if ( ! function_exists( 'ibt_events_get_field' ) ) {
 					esc_url( $url )
 				);
 
+            case 'ibt_event_remote':
+                $is_remote = (int) get_post_meta( $post_id, 'ibt_event_remote', true );
+                if ( $is_remote ) {
+                    return '<span class="ibt-event-remote">Online event</span>';
+                }
+                return '';
+    
 			case 'ibt_event_price_public':
 				return $value !== '' ? '£' . number_format( (float) $value, 2 ) : '';
 
@@ -137,6 +152,14 @@ if ( ! function_exists( 'ibt_events_render_list' ) ) {
 						<?php if ( $venue ) : ?>
 							<p class="ibt-event-venue"><strong>Venue:</strong><br><?php echo $venue; ?></p>
 						<?php endif; ?>
+
+                        <?php
+                        $remote = ibt_events_get_field( $post_id, 'ibt_event_remote' );
+                        if ( $remote ) :
+                        ?>
+                            <p class="ibt-event-remote-label"><?php echo $remote; ?></p>
+                        <?php endif; ?>
+
 
 						<?php if ( $map ) : ?>
 							<div class="wp-block-buttons"><?php echo $map; ?></div>
