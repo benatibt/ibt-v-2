@@ -364,45 +364,132 @@ function ibt_events_sanitize_price( $val ) {
 	return substr( $val, 0, 10 ); // prevent absurdly long input
 }
 
-// === 5.5 – Generic Event-Field Shortcode (Restricted) ======================
+
+// === 5.5 – Generic Event-Field Shortcode (Venue + Map Button) ==============
 //
-//  • Provides [ibt_event_field key="meta_key"] for safe public fields only.
-//  • Whitelisted keys prevent accidental exposure of internal data.
-//  • Returns plain text (escaped) for safe insertion into HTML.
+// Provides [ibt_event_field key="meta_key"] for safe public fields only.
+// Handles date formatting, venue details, and optional Google Maps button.
 //
-//  Example:
-//    [ibt_event_field key="ibt_event_start"]
+// Example usage in templates:
+//   [ibt_event_field key="ibt_event_start"]
+//   [ibt_event_field key="ibt_event_venue"]
+//   [ibt_event_field key="ibt_event_map_button"]
 
 add_shortcode( 'ibt_event_field', function( $atts ) {
-	$atts = shortcode_atts(
-		array( 'key' => '' ),
-		$atts,
-		'ibt_event_field'
-	);
-
-	$key = $atts['key'];
+	$atts = shortcode_atts( array( 'key' => '' ), $atts, 'ibt_event_field' );
+	$key  = $atts['key'];
 	if ( empty( $key ) ) {
 		return '';
 	}
 
-	// ---- Whitelist of public meta keys ----
+	// ---- Determine current post ID safely ----
+	$post_id = get_the_ID();
+	if ( ! $post_id && ( $q = get_queried_object() ) ) {
+		$post_id = $q->ID ?? 0;
+	}
+	if ( ! $post_id ) {
+		return '';
+	}
+
+	// ---- Whitelist of public keys ----
 	$allowed_keys = array(
 		'ibt_event_start',
 		'ibt_event_end',
 		'ibt_event_price_public',
 		'ibt_event_price_member',
-		'ibt_event_notes',
 		'ibt_event_online_url',
+		'ibt_event_venue',
+		'ibt_event_map_button',
 	);
 
 	if ( ! in_array( $key, $allowed_keys, true ) ) {
-		return ''; // silently skip unapproved keys
+		return '';
 	}
 
-	$value = get_post_meta( get_the_ID(), $key, true );
-	return esc_html( $value );
+	switch ( $key ) {
+		// ----- Date fields -----
+		case 'ibt_event_start':
+			$value = get_post_meta( $post_id, 'ibt_event_start', true );
+			$value = ibt_events_format_datetime( $value );
+			return esc_html( $value );
+
+		case 'ibt_event_end':
+			$start = get_post_meta( $post_id, 'ibt_event_start', true );
+			$end   = get_post_meta( $post_id, 'ibt_event_end', true );
+			$value = ibt_events_format_end( $start, $end );
+			return esc_html( $value );
+
+		// ----- Venue details -----
+		case 'ibt_event_venue':
+			$venue_id = (int) get_post_meta( $post_id, 'ibt_event_venue_id', true );
+			if ( ! $venue_id ) return '';
+			$name = get_post_meta( $venue_id, 'ibt_venue_name', true );
+			$addr = get_post_meta( $venue_id, 'ibt_venue_address', true );
+
+			$out = esc_html( $name );
+			if ( $addr ) {
+				$out .= '<br>' . nl2br( esc_html( $addr ) );
+			}
+			return $out;
+
+		// ----- Google Maps button -----
+		case 'ibt_event_map_button':
+			$venue_id = (int) get_post_meta( $post_id, 'ibt_event_venue_id', true );
+			if ( ! $venue_id ) return '';
+			$map = get_post_meta( $venue_id, 'ibt_venue_maplocation', true );
+			if ( empty( $map ) ) return '';
+
+			$url = 'https://www.google.com/maps/search/?api=1&query=' . rawurlencode( $map );
+			return '<a class="wp-block-button__link ibt-button-map" target="_blank" rel="noopener" href="' .
+			       esc_url( $url ) . '">View&nbsp;on&nbsp;Google&nbsp;Maps</a>';
+
+		// ----- Prices & URLs (plain text) -----
+		default:
+			$value = get_post_meta( $post_id, $key, true );
+			return esc_html( $value );
+	}
 });
 
 
 
+// === 5.6 – Event Date Formatting Helpers ===================================
+//
+// Produces human-friendly, UK-style output such as:
+//   12:15 pm on 18 October 25
+//   3:45 pm (on same day shows time only)
 
+if ( ! function_exists( 'ibt_events_format_datetime' ) ) {
+	function ibt_events_format_datetime( $mysql_datetime ) {
+		if ( empty( $mysql_datetime ) ) {
+			return '';
+		}
+
+		// Convert MySQL datetime string to timestamp in site timezone
+		$ts = strtotime( get_date_from_gmt( gmdate( 'Y-m-d H:i:s', strtotime( $mysql_datetime ) ) ) );
+		if ( ! $ts ) {
+			return '';
+		}
+
+		return date_i18n( 'g:ia \o\n j F y', $ts ); // e.g. 12:15 pm on 18 October 25
+	}
+}
+
+if ( ! function_exists( 'ibt_events_format_end' ) ) {
+	function ibt_events_format_end( $start, $end ) {
+		if ( empty( $end ) ) {
+			return '';
+		}
+
+		$start_ts = strtotime( $start );
+		$end_ts   = strtotime( $end );
+		if ( ! $start_ts || ! $end_ts ) {
+			return '';
+		}
+
+		$same_day = ( date( 'Ymd', $start_ts ) === date( 'Ymd', $end_ts ) );
+
+		return $same_day
+			? date_i18n( 'g:ia', $end_ts ) // 3:45 pm
+			: date_i18n( 'g:ia \o\n j F y', $end_ts ); // 3:45 pm on 19 October 25
+	}
+}

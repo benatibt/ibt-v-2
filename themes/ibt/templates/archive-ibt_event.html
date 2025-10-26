@@ -1,67 +1,26 @@
 <!--
   archive-ibt_event.html
-  Displays upcoming events with key details pulled via shortcodes.
-  Uses plain HTML/paragraph blocks for compatibility and simplicity.
+  Hybrid: fully valid block template with embedded PHP include.
+  Allows Site Editor to edit header/footer while keeping custom PHP loop.
 -->
 
-<!-- wp:group {"align":"wide"} -->
-<div class="wp-block-group">
+<!-- wp:template-part {"slug":"header"} /-->
 
-  <!-- Page heading -->
+<!-- wp:group {"align":"wide"} -->
+<div class="wp-block-group alignwide">
+
   <!-- wp:heading {"level":1} -->
   <h1>Upcoming Events</h1>
   <!-- /wp:heading -->
 
-  <!-- Loop: one per event -->
-  <!-- wp:query {"query":{"perPage":10,"postType":"ibt_event","order":"ASC","orderBy":"meta_value","metaKey":"ibt_event_start"},"isProductCollectionBlock":false} -->
-  <div class="wp-block-query">
-
-    <!-- wp:post-template -->
-
-      <!-- Event title -->
-      <!-- wp:post-title {"level":2,"isLink":true} /-->
-
-      <!-- Event details -->
-      <!-- wp:group -->
-      <div class="wp-block-group">
-
-        <!-- wp:paragraph -->
-        <p><strong>Starts:</strong> [ibt_event_field key="ibt_event_start"]</p>
-        <!-- /wp:paragraph -->
-
-        <!-- wp:paragraph -->
-        <p><strong>Ends:</strong> [ibt_event_field key="ibt_event_end"]</p>
-        <!-- /wp:paragraph -->
-
-        <!-- wp:paragraph -->
-        <p><strong>Public price:</strong> £[ibt_event_field key="ibt_event_price_public"]</p>
-        <!-- /wp:paragraph -->
-
-        <!-- wp:paragraph -->
-        <p><strong>Member price:</strong> £[ibt_event_field key="ibt_event_price_member"]</p>
-        <!-- /wp:paragraph -->
-
-        <!-- wp:paragraph -->
-        <p><strong>Notes:</strong> [ibt_event_field key="ibt_event_notes"]</p>
-        <!-- /wp:paragraph -->
-
-      </div>
-      <!-- /wp:group -->
-
-      <!-- Divider -->
-      <!-- wp:separator {"opacity":"css"} /-->
-
-    <!-- /wp:post-template -->
-
-    <!-- Pagination -->
-    <!-- wp:query-pagination -->
-      <!-- wp:query-pagination-previous /-->
-      <!-- wp:query-pagination-numbers /-->
-      <!-- wp:query-pagination-next /-->
-    <!-- /wp:query-pagination -->
-
-  </div>
-  <!-- /wp:query -->
+  <!-- wp:html -->
+  <?php
+    // Include our PHP event loop (safe "black box" the editor ignores)
+    get_template_part( 'template-parts/events-loop' );
+  ?>
+  <!-- /wp:html -->
 
 </div>
 <!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer"} /-->
