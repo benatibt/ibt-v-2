@@ -313,6 +313,16 @@ function ibt_events_render_details_metabox( $post ) {
 	}
 	echo '</select></p>';
 
+	// Online event checkbox (boolean)
+	$remote = get_post_meta( $post->ID, 'ibt_event_remote', true );
+	echo '<p>';
+	echo '<label for="ibt_event_remote">';
+	echo '<input type="checkbox" id="ibt_event_remote" name="ibt_event_remote" value="1" ' . checked( $remote, '1', false ) . ' />';
+	echo ' ' . esc_html__( 'Online event available', 'ibt-events' );
+	echo '</label>';
+	echo '</p>';
+
+
 	echo '<p><strong>' . esc_html__( 'Pricing (£)', 'ibt-events' ) . '</strong><br />';
 	echo '<label>' . esc_html__( 'Public:', 'ibt-events' ) . ' ';
 	echo '<input type="text" name="ibt_event_price_public" value="' . esc_attr( $price_pub ) . '" size="8" /></label> ';
@@ -349,8 +359,10 @@ function ibt_events_save_details_meta( $post_id ) {
 	$price_mem = ibt_events_sanitize_price( $_POST['ibt_event_price_member'] ?? '' );
 	$featured  = ! empty( $_POST['ibt_event_featured'] ) ? 1 : 0;
 	$notes     = sanitize_textarea_field( $_POST['ibt_event_notes'] ?? '' );
+	$remote = ! empty( $_POST['ibt_event_remote'] ) ? '1' : '0';
 
 	update_post_meta( $post_id, 'ibt_event_venue_id', $venue_id );
+	update_post_meta( $post_id, 'ibt_event_remote', $remote );
 	update_post_meta( $post_id, 'ibt_event_price_public', $price_pub );
 	update_post_meta( $post_id, 'ibt_event_price_member', $price_mem );
 	update_post_meta( $post_id, 'ibt_event_featured', $featured );
@@ -397,7 +409,7 @@ add_shortcode( 'ibt_event_field', function( $atts ) {
 		'ibt_event_end',
 		'ibt_event_price_public',
 		'ibt_event_price_member',
-		'ibt_event_online_url',
+		'ibt_event_remote',
 		'ibt_event_venue',
 		'ibt_event_map_button',
 	);

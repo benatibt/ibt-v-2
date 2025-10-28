@@ -19,38 +19,32 @@ if ( ! function_exists( 'ibt_events_get_field' ) ) {
 				$start = get_post_meta( $post_id, 'ibt_event_start', true );
 				return $value ? ibt_events_format_end( $start, $value ) : '';
 
-            case 'ibt_event_venue':
-                $venue_id = (int) get_post_meta( $post_id, 'ibt_event_venue_id', true );
-                if ( ! $venue_id ) {
-                    return '';
-                }
+			case 'ibt_event_venue':
+				$venue_id = (int) get_post_meta( $post_id, 'ibt_event_venue_id', true );
+				if ( ! $venue_id ) {
+					return '';
+				}
 
-                // Fetch the venue post (uses post_title for venue name)
-                $venue_post = get_post( $venue_id );
-                if ( ! $venue_post ) {
-                    return '';
-                }
+				// Fetch the venue post (uses post_title for venue name)
+				$venue_post = get_post( $venue_id );
+				if ( ! $venue_post ) {
+					return '';
+				}
 
-                $venue_name    = $venue_post->post_title;
-                $venue_address = get_post_meta( $venue_id, 'ibt_venue_address', true );
+				$venue_name    = $venue_post->post_title;
+				$venue_address = get_post_meta( $venue_id, 'ibt_venue_address', true );
 
-                // Build output
-                $out  = '<span class="ibt-event-venue-name">' . esc_html( $venue_name ) . '</span>';
-                if ( $venue_address ) {
-                    $out .= '<br><span class="ibt-event-venue-address">' .
-                        nl2br( esc_html( $venue_address ) ) . '</span>';
-                }
+				// Build output
+				$out  = '<span class="ibt-event-venue-name">' . esc_html( $venue_name ) . '</span>';
+				if ( $venue_address ) {
+					$out .= '<br><span class="ibt-event-venue-address">' .
+						nl2br( esc_html( $venue_address ) ) . '</span>';
+				}
+				return $out;
 
-                // Online / Remote event flag
-                case 'ibt_event_remote':
-                    $is_remote = (int) get_post_meta( $post_id, 'ibt_event_remote', true );
-                    if ( $is_remote ) {
-                        return '<span class="ibt-event-remote">Online event</span>';
-                    }
-                    return '';
-
-                return $out;
-
+			case 'ibt_event_remote':
+				$is_remote = (int) get_post_meta( $post_id, 'ibt_event_remote', true );
+				return $is_remote ? '1' : '';
 
 			case 'ibt_event_map_button':
 				$venue_id = get_post_meta( $post_id, 'ibt_event_venue_id', true );
@@ -65,13 +59,6 @@ if ( ! function_exists( 'ibt_events_get_field' ) ) {
 					'<a class="wp-block-button__link ibt-event-map-btn" href="%s" target="_blank" rel="noopener">View on Google Maps</a>',
 					esc_url( $url )
 				);
-
-            case 'ibt_event_remote':
-                $is_remote = (int) get_post_meta( $post_id, 'ibt_event_remote', true );
-                if ( $is_remote ) {
-                    return '<span class="ibt-event-remote">Online event</span>';
-                }
-                return '';
     
 			case 'ibt_event_price_public':
 				return $value !== '' ? '£' . number_format( (float) $value, 2 ) : '';
@@ -148,22 +135,29 @@ if ( ! function_exists( 'ibt_events_render_list' ) ) {
 						<?php if ( $end ) : ?>
 							<p class="ibt-event-end"><strong>Ends:</strong> <?php echo esc_html( $end ); ?></p>
 						<?php endif; ?>
-
+                        
                         <?php
-                        $venue  = ibt_events_get_field( $post_id, 'ibt_event_venue' );
-                        $remote = ibt_events_get_field( $post_id, 'ibt_event_remote' );
-                        ?>
+                        $venue_id = ibt_events_get_field( $post_id, 'ibt_event_venue_id' );
+                        $venue    = $venue_id ? get_the_title( $venue_id ) : '';
+                        $remote   = ibt_events_get_field( $post_id, 'ibt_event_remote' );
 
-                        <?php if ( $venue ) : ?>
+                        if ( $venue ) :
+                            ?>
                             <p class="ibt-event-venue">
                                 <strong>Venue:</strong>
-                                <?php echo esc_html( $venue ); ?>
-                                <?php if ( $remote ) : ?> — Online event<?php endif; ?>
+                                <?php
+                                echo esc_html( $venue );
+                                if ( $remote ) :
+                                    echo ' <span class="ibt-event-online-access">+ Online Access</span>';
+                                endif;
+                                ?>
                             </p>
-                        <?php endif; ?>
+                            <?php
+                        endif;
 
-						<?php if ( $map ) echo $map; ?>
-                        
+
+						if ( $map ) echo $map; ?>
+
 					</article>
 
 				<?php endwhile; ?>
