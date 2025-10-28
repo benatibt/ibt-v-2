@@ -80,7 +80,14 @@ add_action( 'plugins_loaded', function() {
 	// Load our included files after Woo check. Fails ungracefully if missing.
 	require_once __DIR__ . '/includes/register-taxonomy-types.php';
 	require_once __DIR__ . '/includes/author-isbn-fields.php';
-	require_once __DIR__ . '/includes/ibt-events.php';
-	require_once __DIR__ . '/includes/ibt-events-render.php';
-} );
+
+	require_once __DIR__ . '/includes/events/ibt-customisation-events-core.php';
+	require_once __DIR__ . '/includes/events/ibt-customisation-events-rest.php';
+	require_once __DIR__ . '/includes/events/ibt-customisation-events-metabox.php';
+	require_once __DIR__ . '/includes/events/ibt-customisation-events-helpers.php';
+	require_once __DIR__ . '/includes/events/ibt-customisation-events-display-shortcode.php';
+	require_once __DIR__ . '/includes/events/ibt-customisation-events-display-archive.php';
+	require_once __DIR__ . '/includes/events/ibt-customisation-events-display-single.php';
+
+});
 
