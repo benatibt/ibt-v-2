@@ -1,8 +1,6 @@
 <?php
-/**
- * Registers Event and Venue custom post types and taxonomies.
- * Part of Events in the IBT Customisation plugin.
- */
+// Registers the two core custom post types used by the Events module (Events and Venues).
+
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -10,10 +8,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 
-// Registers the two core custom post types used by the Events system.
+// Registers the two core custom post types used by the Events module.
+
 function ibt_events_register_cpts() {
 
-	// CPT: ibt_event
+	// ======= CPT: ibt_event =======
+
 	$event_labels = array(
 		'name'                  => __( 'Events', 'ibt-events' ),
 		'singular_name'         => __( 'Event', 'ibt-events' ),
@@ -47,9 +47,9 @@ function ibt_events_register_cpts() {
 	    'supports'           => array( 'title', 'editor', 'excerpt', 'thumbnail', 'author', 'custom-fields' ),
 		'has_archive'        => 'events',
 		'rewrite'            => array(
-			'slug'       => 'events',
-			'with_front' => false,
-			'feeds'      => false,
+			'slug'           => 'events',
+			'with_front'     => false,
+			'feeds'          => false,
 		),
 		'publicly_queryable' => true,
 		'map_meta_cap'       => true,
@@ -59,7 +59,9 @@ function ibt_events_register_cpts() {
 
 	register_post_type( 'ibt_event', $event_args );
 
-	// CPT: ibt_venue
+
+	// ======= CPT: ibt_venue =======
+
 	$venue_labels = array(
 		'name'               => __( 'Venues', 'ibt-events' ),
 		'singular_name'      => __( 'Venue', 'ibt-events' ),
@@ -86,8 +88,8 @@ function ibt_events_register_cpts() {
 		'has_archive'        => false,
 		'publicly_queryable' => false,
 		'rewrite'            => array(
-			'slug'       => 'venues',
-			'with_front' => false,
+			'slug'           => 'venues',
+			'with_front'     => false,
 		),
 		'map_meta_cap'       => true,
 		'capability_type'    => 'post',
@@ -95,4 +97,5 @@ function ibt_events_register_cpts() {
 
 	register_post_type( 'ibt_venue', $venue_args );
 }
+
 add_action( 'init', 'ibt_events_register_cpts' );

@@ -1,8 +1,6 @@
 <?php
-/**
- * Handles the [ibt_events_list] shortcode for displaying upcoming events.
- * Part of Events in the IBT Customisation plugin.
- */
+// Handles shortcode output for single event fields and for [ibt_events_list] listings.
+
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -51,6 +49,7 @@ add_shortcode( 'ibt_event_field', function( $atts ) {
 	}
 
 	switch ( $key ) {
+        
 		// ----- Date fields -----
 		case 'ibt_event_start':
 			$value = get_post_meta( $post_id, 'ibt_event_start', true );
@@ -108,7 +107,9 @@ add_shortcode( 'ibt_events_list', function( $atts = array() ) {
 
 
 // Query & output a list of events using direct PHP field calls.
-// Used by ibt_events_list
+// Used internally by [ibt_events_list] shortcode. 
+// Could be be called directly from templates - Move to helpers if this happens.
+
 
 if ( ! function_exists( 'ibt_events_render_list' ) ) {
 	function ibt_events_render_list( $args = array() ) {

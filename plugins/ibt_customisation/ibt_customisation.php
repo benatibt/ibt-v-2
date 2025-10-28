@@ -82,7 +82,6 @@ add_action( 'plugins_loaded', function() {
 	require_once __DIR__ . '/includes/author-isbn-fields.php';
 
 	require_once __DIR__ . '/includes/events/ibt-customisation-events-core.php';
-	require_once __DIR__ . '/includes/events/ibt-customisation-events-rest.php';
 	require_once __DIR__ . '/includes/events/ibt-customisation-events-metabox.php';
 	require_once __DIR__ . '/includes/events/ibt-customisation-events-helpers.php';
 	require_once __DIR__ . '/includes/events/ibt-customisation-events-display-shortcode.php';

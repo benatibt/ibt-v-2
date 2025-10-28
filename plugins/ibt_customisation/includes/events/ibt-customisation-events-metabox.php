@@ -1,8 +1,5 @@
 <?php
-/**
- * Adds and manages metaboxes for Events and Venues in the admin editor.
- * Part of Events in the IBT Customisation plugin.
- */
+// Adds and manages metaboxes for Events and Venues in the admin editor.
 
 
 // Exit if accessed directly.
@@ -13,74 +10,57 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // ================================== EVENTS =======================================
 
-// Adds the "Event Date & Time" metabox to the Event editor screen.
-function ibt_events_add_datetime_metabox() {
+// Register the Event Details metabox
+
+add_action( 'add_meta_boxes', 'ibt_events_add_metabox' );
+function ibt_events_add_metabox() {
 	add_meta_box(
-		'ibt_event_datetime',
-		__( 'Event Date & Time', 'ibt-events' ),
-		'ibt_events_render_datetime_metabox',
+		'ibt_event_details',
+		__( 'Event Details', 'ibt-events' ),
+		'ibt_events_render_metabox',
 		'ibt_event',
 		'normal',
 		'default'
 	);
 }
-add_action( 'add_meta_boxes', 'ibt_events_add_datetime_metabox' );
 
 
-// Renders the "Event Date & Time" metabox fields with native date/time inputs.
-function ibt_events_render_datetime_metabox( $post ) {
+// Render the metabox with event fields.
 
+function ibt_events_render_metabox( $post ) {
+
+	// Shared nonce for all event fields
 	wp_nonce_field( 'ibt_events_save_meta', 'ibt_events_meta_nonce' );
 
-	$start = get_post_meta( $post->ID, 'ibt_event_start', true );
-	$end   = get_post_meta( $post->ID, 'ibt_event_end', true );
+	// --- Retrieve stored meta values ---
+	$start     = get_post_meta( $post->ID, 'ibt_event_start', true );
+	$end       = get_post_meta( $post->ID, 'ibt_event_end', true );
+	$venue_id  = get_post_meta( $post->ID, 'ibt_event_venue_id', true );
+	$remote    = get_post_meta( $post->ID, 'ibt_event_remote', true );
+	$price_pub = get_post_meta( $post->ID, 'ibt_event_price_public', true );
+	$price_mem = get_post_meta( $post->ID, 'ibt_event_price_member', true );
+	$featured  = (bool) get_post_meta( $post->ID, 'ibt_event_featured', true );
+	$notes     = get_post_meta( $post->ID, 'ibt_event_notes', true );
 
-	// Split stored datetimes into date/time parts for inputs
+	// Split datetimes into parts for inputs
 	$start_date = $start ? date( 'Y-m-d', strtotime( $start ) ) : '';
 	$start_time = $start ? date( 'H:i',   strtotime( $start ) ) : '';
 	$end_date   = $end   ? date( 'Y-m-d', strtotime( $end ) )   : '';
 	$end_time   = $end   ? date( 'H:i',   strtotime( $end ) )   : '';
 
-	echo '<p><strong>' . esc_html__( 'Start Date & Time', 'ibt-events' ) . '</strong></p>';
-	echo '<p><label>' . esc_html__( 'Date:', 'ibt-events' ) . ' ';
+	// --- 1. Start / End date + time ---
+	echo '<h4>' . esc_html__( 'Event Date & Time', 'ibt-events' ) . '</h4>';
+	echo '<p><label>' . esc_html__( 'Start Date:', 'ibt-events' ) . ' ';
 	echo '<input type="date" name="ibt_event_start_date" value="' . esc_attr( $start_date ) . '" /></label> ';
 	echo '<label>' . esc_html__( 'Time:', 'ibt-events' ) . ' ';
 	echo '<input type="time" name="ibt_event_start_time" value="' . esc_attr( $start_time ) . '" /></label></p>';
 
-	echo '<p><strong>' . esc_html__( 'End Date & Time', 'ibt-events' ) . '</strong></p>';
-	echo '<p><label>' . esc_html__( 'Date:', 'ibt-events' ) . ' ';
+	echo '<p><label>' . esc_html__( 'End Date:', 'ibt-events' ) . ' ';
 	echo '<input type="date" name="ibt_event_end_date" value="' . esc_attr( $end_date ) . '" /></label> ';
 	echo '<label>' . esc_html__( 'Time:', 'ibt-events' ) . ' ';
 	echo '<input type="time" name="ibt_event_end_time" value="' . esc_attr( $end_time ) . '" /></label></p>';
-}
 
-
-// Adds the "Event Details" metabox for entering venue, prices, featured flag, and notes.
-function ibt_events_add_details_metabox() {
-	add_meta_box(
-		'ibt_event_details',
-		__( 'Event Details', 'ibt-events' ),
-		'ibt_events_render_details_metabox',
-		'ibt_event',
-		'normal',
-		'default'
-	);
-}
-add_action( 'add_meta_boxes', 'ibt_events_add_details_metabox' );
-
-
-// Renders the "Event Details" metabox with venue dropdown, pricing, featured flag, and notes.
-function ibt_events_render_details_metabox( $post ) {
-
-	wp_nonce_field( 'ibt_events_save_meta', 'ibt_events_meta_nonce' );
-
-	$venue_id   = get_post_meta( $post->ID, 'ibt_event_venue_id', true );
-	$price_pub  = get_post_meta( $post->ID, 'ibt_event_price_public', true );
-	$price_mem  = get_post_meta( $post->ID, 'ibt_event_price_member', true );
-	$featured   = (bool) get_post_meta( $post->ID, 'ibt_event_featured', true );
-	$notes      = get_post_meta( $post->ID, 'ibt_event_notes', true );
-
-	// Fetch venues for dropdown
+	// --- 2. Venue selector ---
 	$venues = get_posts( array(
 		'post_type'      => 'ibt_venue',
 		'post_status'    => 'publish',
@@ -89,7 +69,7 @@ function ibt_events_render_details_metabox( $post ) {
 		'order'          => 'ASC',
 	) );
 
-	echo '<p><strong>' . esc_html__( 'Venue', 'ibt-events' ) . '</strong><br />';
+	echo '<h4>' . esc_html__( 'Venue', 'ibt-events' ) . '</h4>';
 	echo '<select name="ibt_event_venue_id">';
 	echo '<option value="0">' . esc_html__( '— Select venue —', 'ibt-events' ) . '</option>';
 	foreach ( $venues as $v ) {
@@ -100,110 +80,92 @@ function ibt_events_render_details_metabox( $post ) {
 			esc_html( $v->post_title )
 		);
 	}
-	echo '</select></p>';
+	echo '</select>';
 
-	// Online event checkbox (boolean)
-	$remote = get_post_meta( $post->ID, 'ibt_event_remote', true );
-	echo '<p>';
-	echo '<label for="ibt_event_remote">';
-	echo '<input type="checkbox" id="ibt_event_remote" name="ibt_event_remote" value="1" ' . checked( $remote, '1', false ) . ' />';
+	// --- 3. Online access checkbox ---
+	echo '<p><label for="ibt_event_remote">';
+	echo '<input type="checkbox" id="ibt_event_remote" name="ibt_event_remote" value="1" ' .
+		checked( $remote, '1', false ) . ' />';
 	echo ' ' . esc_html__( 'Online event available', 'ibt-events' );
-	echo '</label>';
-	echo '</p>';
+	echo '</label></p>';
 
-
-	echo '<p><strong>' . esc_html__( 'Pricing (£)', 'ibt-events' ) . '</strong><br />';
-	echo '<label>' . esc_html__( 'Public:', 'ibt-events' ) . ' ';
+	// --- 4. Pricing ---
+	echo '<h4>' . esc_html__( 'Pricing (£)', 'ibt-events' ) . '</h4>';
+	echo '<p><label>' . esc_html__( 'Public:', 'ibt-events' ) . ' ';
 	echo '<input type="text" name="ibt_event_price_public" value="' . esc_attr( $price_pub ) . '" size="8" /></label> ';
 	echo '<label>' . esc_html__( 'Member:', 'ibt-events' ) . ' ';
 	echo '<input type="text" name="ibt_event_price_member" value="' . esc_attr( $price_mem ) . '" size="8" /></label></p>';
 
+	// --- 5. Featured flag ---
 	echo '<p><label>';
-	echo '<input type="checkbox" name="ibt_event_featured" value="1" ' . checked( $featured, true, false ) . ' />';
-	echo ' ' . esc_html__( 'Mark as featured event', 'ibt-events' ) . '</label></p>';
+	echo '<input type="checkbox" name="ibt_event_featured" value="1" ' .
+		checked( $featured, true, false ) . ' />';
+	echo ' ' . esc_html__( 'Mark as featured event', 'ibt-events' );
+	echo '</label></p>';
 
-	echo '<p><strong>' . esc_html__( 'Notes', 'ibt-events' ) . '</strong><br />';
-	echo '<textarea name="ibt_event_notes" rows="4" style="width:100%;">' . esc_textarea( $notes ) . '</textarea></p>';
+	// --- 6. Notes ---
+	echo '<h4>' . esc_html__( 'Notes', 'ibt-events' ) . '</h4>';
+	echo '<textarea name="ibt_event_notes" rows="4" style="width:100%;">' .
+		esc_textarea( $notes ) . '</textarea>';
 }
 
 
+// Handles saving of all event-related meta fields from the admin metabox:
+// date/time, venue, online flag, prices, featured toggle, and notes.
 
+add_action( 'save_post_ibt_event', 'ibt_events_save_all_meta' );
+function ibt_events_save_all_meta( $post_id ) {
 
-
-// Saves start and end datetime values when the Event post is saved.
-function ibt_events_save_datetime_meta( $post_id ) {
-
-	// Verify nonce
+	// --- Verify nonce and permissions ---
 	if ( ! isset( $_POST['ibt_events_meta_nonce'] ) ||
 	     ! wp_verify_nonce( $_POST['ibt_events_meta_nonce'], 'ibt_events_save_meta' ) ) {
 		return;
 	}
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
+	if ( ! current_user_can( 'edit_post', $post_id ) ) return;
 
-	// Skip autosaves
-	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-		return;
-	}
-
-	// Permission check
-	if ( ! current_user_can( 'edit_post', $post_id ) ) {
-		return;
-	}
-
-	// Retrieve and sanitise inputs
+	// --- 1. Date/time ---
 	$start_date = sanitize_text_field( $_POST['ibt_event_start_date'] ?? '' );
 	$start_time = sanitize_text_field( $_POST['ibt_event_start_time'] ?? '' );
 	$end_date   = sanitize_text_field( $_POST['ibt_event_end_date']   ?? '' );
 	$end_time   = sanitize_text_field( $_POST['ibt_event_end_time']   ?? '' );
 
-	// Combine and save
 	$start_combined = ibt_events_combine_datetime( $start_date, $start_time );
 	$end_combined   = ibt_events_combine_datetime( $end_date,   $end_time );
 
 	update_post_meta( $post_id, 'ibt_event_start', $start_combined );
 	update_post_meta( $post_id, 'ibt_event_end',   $end_combined );
-}
-add_action( 'save_post_ibt_event', 'ibt_events_save_datetime_meta' );
 
-
-
-// Saves Event Details fields (venue, prices, featured flag, notes, remote option) on post save.
-function ibt_events_save_details_meta( $post_id ) {
-
-	// Verify nonce
-	if ( ! isset( $_POST['ibt_events_meta_nonce'] ) ||
-	     ! wp_verify_nonce( $_POST['ibt_events_meta_nonce'], 'ibt_events_save_meta' ) ) {
-		return;
-	}
-
-	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-		return;
-	}
-	if ( ! current_user_can( 'edit_post', $post_id ) ) {
-		return;
-	}
-
-	// Collect and sanitise
-	$venue_id  = absint( $_POST['ibt_event_venue_id'] ?? 0 );
-	$price_pub = ibt_events_sanitize_price( $_POST['ibt_event_price_public'] ?? '' );
-	$price_mem = ibt_events_sanitize_price( $_POST['ibt_event_price_member'] ?? '' );
-	$featured  = ! empty( $_POST['ibt_event_featured'] ) ? 1 : 0;
-	$notes     = sanitize_textarea_field( $_POST['ibt_event_notes'] ?? '' );
-	$remote = ! empty( $_POST['ibt_event_remote'] ) ? '1' : '0';
+	// --- 2. Venue & remote flag ---
+	$venue_id = absint( $_POST['ibt_event_venue_id'] ?? 0 );
+	$remote   = ! empty( $_POST['ibt_event_remote'] ) ? '1' : '0';
 
 	update_post_meta( $post_id, 'ibt_event_venue_id', $venue_id );
 	update_post_meta( $post_id, 'ibt_event_remote', $remote );
+
+	// --- 3. Pricing ---
+	$price_pub = ibt_events_sanitize_price( $_POST['ibt_event_price_public'] ?? '' );
+	$price_mem = ibt_events_sanitize_price( $_POST['ibt_event_price_member'] ?? '' );
+
 	update_post_meta( $post_id, 'ibt_event_price_public', $price_pub );
 	update_post_meta( $post_id, 'ibt_event_price_member', $price_mem );
+
+	// --- 4. Featured flag ---
+	$featured = ! empty( $_POST['ibt_event_featured'] ) ? 1 : 0;
 	update_post_meta( $post_id, 'ibt_event_featured', $featured );
+
+	// --- 5. Notes ---
+	$notes = sanitize_textarea_field( $_POST['ibt_event_notes'] ?? '' );
 	update_post_meta( $post_id, 'ibt_event_notes', $notes );
 }
-add_action( 'save_post_ibt_event', 'ibt_events_save_details_meta' );
+
 
 // ================================== VENUE =======================================
 
 // Adds and manages meta boxes for the Venue CPT (address and map location fields).
 
 // Add meta boxes to the Venue CPT
+
 add_action( 'add_meta_boxes', function() {
     add_meta_box(
         'ibt_venue_details',
@@ -216,6 +178,7 @@ add_action( 'add_meta_boxes', function() {
 });
 
 // Callback to render the meta box fields
+
 function ibt_venue_details_metabox( $post ) {
     // Security nonce
     wp_nonce_field( 'ibt_venue_meta_save', 'ibt_venue_meta_nonce' );
@@ -237,6 +200,7 @@ function ibt_venue_details_metabox( $post ) {
 }
 
 // Save handler
+
 add_action( 'save_post_ibt_venue', function( $post_id ) {
     // Verify nonce
     if ( ! isset( $_POST['ibt_venue_meta_nonce'] ) ||

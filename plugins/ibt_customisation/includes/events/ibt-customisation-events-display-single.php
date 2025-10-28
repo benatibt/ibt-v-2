@@ -1,11 +1,9 @@
 <?php
-/**
- * Handles the single event display layout and output.
- * Part of Events in the IBT Customisation plugin.
- */
+// Handles the single event display layout and output.
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// Code to be written!

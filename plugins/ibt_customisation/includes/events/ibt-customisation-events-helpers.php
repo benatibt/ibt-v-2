@@ -1,8 +1,5 @@
 <?php
-/**
- * Contains helper functions for Events and Venues (formatting, logic, etc.).
- * Part of Events in the IBT Customisation plugin.
- */
+// Helper functions for Events and Venues (formatting, sanitising, and display logic).
 
 
 // Exit if accessed directly.
@@ -12,6 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 // Combines separate date and time strings into a single 'Y-m-d H:i:s' format.
+
 function ibt_events_combine_datetime( $date, $time ) {
 	if ( empty( $date ) ) {
 		return '';
@@ -23,6 +21,7 @@ function ibt_events_combine_datetime( $date, $time ) {
 
 
 // Sanitises a price string: strips all but digits and decimal point, limited to 10 characters.
+
 function ibt_events_sanitize_price( $val ) {
 	$val = preg_replace( '/[^0-9.]/', '', (string) $val );
 	return substr( $val, 0, 10 ); // prevent absurdly long input
@@ -31,6 +30,7 @@ function ibt_events_sanitize_price( $val ) {
 
 // Converts a MySQL datetime string into a human-friendly, UK-style format.
 // Example: '2025-10-18 12:15:00' → '12:15 pm on 18 October 25'
+
 if ( ! function_exists( 'ibt_events_format_datetime' ) ) {
 	function ibt_events_format_datetime( $mysql_datetime ) {
 		if ( empty( $mysql_datetime ) ) {
@@ -50,6 +50,7 @@ if ( ! function_exists( 'ibt_events_format_datetime' ) ) {
 
 // Formats an event end time intelligently, showing only the time if on the same day.
 // Example: '3:45 pm' (same day) or '3:45 pm on 19 October 25' (different day)
+
 if ( ! function_exists( 'ibt_events_format_end' ) ) {
 	function ibt_events_format_end( $start, $end ) {
 		if ( empty( $end ) ) {
