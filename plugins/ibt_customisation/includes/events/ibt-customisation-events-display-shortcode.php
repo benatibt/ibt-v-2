@@ -2,10 +2,7 @@
 // Handles shortcode output for single event fields and for [ibt_events_list] listings.
 
 
-// Exit if accessed directly.
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 
 // Provides [ibt_event_field key="meta_key"] for safe public fields only.

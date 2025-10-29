@@ -1,11 +1,7 @@
 <?php
 // Adds and manages metaboxes for Events and Venues in the admin editor.
 
-
-// Exit if accessed directly.
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 
 // Enqueue admin-only CSS for Events & Venues metabox styling

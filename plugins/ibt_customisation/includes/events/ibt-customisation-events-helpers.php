@@ -2,10 +2,7 @@
 // Helper functions for Events and Venues (formatting, sanitising, and display logic).
 
 
-// Exit if accessed directly.
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 
 // Combines separate date and time strings into a single 'Y-m-d H:i:s' format.

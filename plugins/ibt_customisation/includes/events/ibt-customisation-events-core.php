@@ -6,10 +6,7 @@
 // - Any exports and APIs to normalise to UTC on output (single conversion point).
 
 
-// Exit if accessed directly.
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 
 // Registers the two core custom post types used by the Events module.
