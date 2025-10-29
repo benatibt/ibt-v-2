@@ -1,6 +1,10 @@
 <?php
 // Registers the two core custom post types used by the Events module (Events and Venues).
 
+// TIMEZONE POLICY – IBT Events
+// - Stored and displayed in site local time (Europe/London).
+// - Any exports and APIs to normalise to UTC on output (single conversion point).
+
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
