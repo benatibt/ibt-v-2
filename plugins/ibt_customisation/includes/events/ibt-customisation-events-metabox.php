@@ -8,6 +8,30 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 
+// Enqueue admin-only CSS for Events & Venues metabox styling
+// DEV - includes cache buster
+
+add_action( 'admin_enqueue_scripts', function( $hook ) {
+	global $post_type;
+
+	if ( in_array( $post_type, array( 'ibt_event', 'ibt_venue' ), true ) ) {
+		$css_rel  = '/css/ibt-events-admin.css';
+		$css_path = dirname( dirname( __DIR__ ) ) . $css_rel;
+		$css_url  = plugins_url( basename( dirname( dirname( __DIR__ ) ) ) . $css_rel );
+
+		if ( file_exists( $css_path ) ) {
+			wp_enqueue_style(
+				'ibt-events-admin',
+				$css_url,
+				array(),
+				filemtime( $css_path )
+			);
+		}
+	}
+});
+
+
+
 // ================================== EVENTS =======================================
 
 // Register the Event Details metabox
@@ -48,19 +72,9 @@ function ibt_events_render_metabox( $post ) {
 	$end_date   = $end   ? date( 'Y-m-d', strtotime( $end ) )   : '';
 	$end_time   = $end   ? date( 'H:i',   strtotime( $end ) )   : '';
 
-	// --- 1. Start / End date + time ---
-	echo '<h4>' . esc_html__( 'Event Date & Time', 'ibt-events' ) . '</h4>';
-	echo '<p><label>' . esc_html__( 'Start Date:', 'ibt-events' ) . ' ';
-	echo '<input type="date" name="ibt_event_start_date" value="' . esc_attr( $start_date ) . '" /></label> ';
-	echo '<label>' . esc_html__( 'Time:', 'ibt-events' ) . ' ';
-	echo '<input type="time" name="ibt_event_start_time" value="' . esc_attr( $start_time ) . '" /></label></p>';
+	// --- Retrieve dynamic field data before rendering ---
+	$presenter = get_post_meta( $post->ID, 'ibt_event_presenter', true );
 
-	echo '<p><label>' . esc_html__( 'End Date:', 'ibt-events' ) . ' ';
-	echo '<input type="date" name="ibt_event_end_date" value="' . esc_attr( $end_date ) . '" /></label> ';
-	echo '<label>' . esc_html__( 'Time:', 'ibt-events' ) . ' ';
-	echo '<input type="time" name="ibt_event_end_time" value="' . esc_attr( $end_time ) . '" /></label></p>';
-
-	// --- 2. Venue selector ---
 	$venues = get_posts( array(
 		'post_type'      => 'ibt_venue',
 		'post_status'    => 'publish',
@@ -69,51 +83,77 @@ function ibt_events_render_metabox( $post ) {
 		'order'          => 'ASC',
 	) );
 
-	echo '<h4>' . esc_html__( 'Venue', 'ibt-events' ) . '</h4>';
-	echo '<select name="ibt_event_venue_id">';
-	echo '<option value="0">' . esc_html__( '— Select venue —', 'ibt-events' ) . '</option>';
-	foreach ( $venues as $v ) {
-		printf(
-			'<option value="%d" %s>%s</option>',
-			$v->ID,
-			selected( (int) $venue_id, $v->ID, false ),
-			esc_html( $v->post_title )
-		);
-	}
-	echo '</select>';
+	// === Row 1: What (col 1) + Where (col 2) ============================
+	echo '<div class="ibt-event-row">';
 
-	// --- 2b. Presenter ---
-	$presenter = get_post_meta( $post->ID, 'ibt_event_presenter', true );
+		// Column 1 - What
+		echo '<div class="ibt-event-group ibt-event-admin-col1">';
+		echo '<p><strong>' . esc_html__( 'What:', 'ibt-events' ) . '</strong></p>';
+		echo '<p><label>' . esc_html__( 'Presenter:', 'ibt-events' ) . ' ';
+		echo '<input type="text" name="ibt_event_presenter" value="' . esc_attr( $presenter ) . '" style="width:100%;" /></label></p>';
+		echo '<p><label><input type="checkbox" name="ibt_event_featured" value="1" ' .
+			checked( $featured, true, false ) . ' /> ' . esc_html__( 'Featured event', 'ibt-events' ) . '</label></p>';
+		echo '</div>';
 
-	echo '<h4>' . esc_html__( 'Presenter', 'ibt-events' ) . '</h4>';
-	echo '<input type="text" name="ibt_event_presenter" value="' . esc_attr( $presenter ) . '" style="width:100%;" />';
+		// Column 2 - Where
+		echo '<div class="ibt-event-group ibt-event-admin-col2">';
+		echo '<p><strong>' . esc_html__( 'Where:', 'ibt-events' ) . '</strong></p>';
+		echo '<p><label>' . esc_html__( 'Venue:', 'ibt-events' ) . '</label><br>';
+		echo '<select name="ibt_event_venue_id">';
+		echo '<option value="0">' . esc_html__( '— Select venue —', 'ibt-events' ) . '</option>';
+		foreach ( $venues as $v ) {
+			printf(
+				'<option value="%d" %s>%s</option>',
+				$v->ID,
+				selected( (int) $venue_id, $v->ID, false ),
+				esc_html( $v->post_title )
+			);
+		}
+		echo '</select></p>';
+		echo '<p><label><input type="checkbox" id="ibt_event_remote" name="ibt_event_remote" value="1" ' .
+			checked( $remote, '1', false ) . ' /> ' . esc_html__( 'Online event available', 'ibt-events' ) . '</label></p>';
+		echo '</div>';
+
+	echo '</div>'; // end row 1
 
 
-	// --- 3. Online access checkbox ---
-	echo '<p><label for="ibt_event_remote">';
-	echo '<input type="checkbox" id="ibt_event_remote" name="ibt_event_remote" value="1" ' .
-		checked( $remote, '1', false ) . ' />';
-	echo ' ' . esc_html__( 'Online event available', 'ibt-events' );
-	echo '</label></p>';
+	// === Row 2: When (col 1) + Cost (col 2) =============================
+	echo '<div class="ibt-event-row">';
 
-	// --- 4. Pricing ---
-	echo '<h4>' . esc_html__( 'Pricing (£)', 'ibt-events' ) . '</h4>';
-	echo '<p><label>' . esc_html__( 'Public:', 'ibt-events' ) . ' ';
-	echo '<input type="text" name="ibt_event_price_public" value="' . esc_attr( $price_pub ) . '" size="8" /></label> ';
-	echo '<label>' . esc_html__( 'Member:', 'ibt-events' ) . ' ';
-	echo '<input type="text" name="ibt_event_price_member" value="' . esc_attr( $price_mem ) . '" size="8" /></label></p>';
+		// Column 1 - When
+		echo '<div class="ibt-event-group ibt-event-admin-col1">';
+		echo '<p><strong>' . esc_html__( 'When:', 'ibt-events' ) . '</strong></p>';
+		echo '<p><label>' . esc_html__( 'Start Date:', 'ibt-events' ) . ' ';
+		echo '<input type="date" name="ibt_event_start_date" value="' . esc_attr( $start_date ) . '" /></label> ';
+		echo '<label>' . esc_html__( 'Time:', 'ibt-events' ) . ' ';
+		echo '<input type="time" name="ibt_event_start_time" value="' . esc_attr( $start_time ) . '" /></label></p>';
+		echo '<p><label>' . esc_html__( 'End Date:', 'ibt-events' ) . ' ';
+		echo '<input type="date" name="ibt_event_end_date" value="' . esc_attr( $end_date ) . '" /></label> ';
+		echo '<label>' . esc_html__( 'Time:', 'ibt-events' ) . ' ';
+		echo '<input type="time" name="ibt_event_end_time" value="' . esc_attr( $end_time ) . '" /></label></p>';
+		echo '</div>';
 
-	// --- 5. Featured flag ---
-	echo '<p><label>';
-	echo '<input type="checkbox" name="ibt_event_featured" value="1" ' .
-		checked( $featured, true, false ) . ' />';
-	echo ' ' . esc_html__( 'Mark as featured event', 'ibt-events' );
-	echo '</label></p>';
+		// Column 2 - Cost
+		echo '<div class="ibt-event-group ibt-event-admin-col2">';
+		echo '<p><strong>' . esc_html__( 'Cost (£):', 'ibt-events' ) . '</strong></p>';
+		echo '<p><label>' . esc_html__( 'Public:', 'ibt-events' ) . ' ';
+		echo '<input type="text" name="ibt_event_price_public" value="' . esc_attr( $price_pub ) . '" size="8" /></label> ';
+		echo '<label>' . esc_html__( 'Member:', 'ibt-events' ) . ' ';
+		echo '<input type="text" name="ibt_event_price_member" value="' . esc_attr( $price_mem ) . '" size="8" /></label></p>';
+		echo '</div>';
 
-	// --- 6. Notes ---
-	echo '<h4>' . esc_html__( 'Notes', 'ibt-events' ) . '</h4>';
-	echo '<textarea name="ibt_event_notes" rows="4" style="width:100%;">' .
-		esc_textarea( $notes ) . '</textarea>';
+	echo '</div>'; // end row 2
+
+
+	// === Row 3: Notes (full width) ======================================
+	echo '<div class="ibt-event-row">';
+		echo '<div class="ibt-event-group ibt-event-admin-full">';
+		echo '<p><strong>' . esc_html__( 'Internal Notes:', 'ibt-events' ) . '</strong></p>';
+		echo '<textarea name="ibt_event_notes" rows="4" style="width:100%;">' .
+			esc_textarea( $notes ) . '</textarea>';
+		echo '</div>';
+	echo '</div>'; // end row 3
+
 }
 
 

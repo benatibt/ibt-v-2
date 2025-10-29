@@ -1,0 +1,85 @@
+/* ============================================================
+   IBT Events – Admin Layout (two-column responsive grid)
+   ============================================================ */
+
+#ibt_event_details .inside {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* Row container (acts as a grid row) */
+.ibt-event-row {
+  display: contents; /* allows children to flow directly in main grid */
+}
+
+/* Columns */
+.ibt-event-admin-col1 { flex: 1 1 45%; min-width: 20rem; }
+.ibt-event-admin-col2 { flex: 1 1 45%; min-width: 20rem; }
+.ibt-event-admin-full { flex: 1 1 100%; }
+
+
+/* Tighten vertical rhythm inside metabox */
+#ibt_event_details .inside {
+  margin-top: 0.25rem; /* reduce WP default top margin */
+}
+
+#ibt_event_details .inside p {
+  margin-block: 0.25rem; /* shrink default 1em gap above/below */
+}
+
+#ibt_event_details .inside strong {
+  margin-block: 0; /* remove extra gap above group headings */
+}
+
+#ibt_event_details h2.hndle,
+#ibt_event_details h3.hndle {
+  margin-bottom: 0.5rem; /* tighten main metabox title */
+}
+
+
+/* Group styling */
+.ibt-event-group {
+  padding: 0.5rem ;
+  border: 1px solid #ddd;
+}
+
+/* Headings / labels */
+.ibt-event-group strong {
+  display: block;
+  font-weight: 600;
+  padding: 0 ;
+  color: #222;
+}
+
+/* Field sizing */
+.ibt-event-group select,
+.ibt-event-group input[type="text"],
+.ibt-event-group input[type="date"],
+.ibt-event-group input[type="time"] {
+  width: 100%;
+  max-width: 18rem;
+}
+
+.ibt-event-group textarea {
+  margin-top: 0.25rem;
+  width: 100%;
+}
+
+.ibt-event-group label {
+  display: inline-block;
+  font-size: 0.95em;
+}
+
+.ibt-event-group input[type="checkbox"] {
+  vertical-align: middle;
+}
+
+/* Responsive collapse */
+@media (max-width: 782px) {
+  .ibt-event-admin-col1,
+  .ibt-event-admin-col2,
+  .ibt-event-admin-full {
+    flex: 1 1 100%;
+  }
+}
