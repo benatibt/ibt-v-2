@@ -103,3 +103,40 @@ function ibt_events_register_cpts() {
 }
 
 add_action( 'init', 'ibt_events_register_cpts' );
+
+
+/**
+ * Registers Event Type taxonomy for ibt_event.
+ * - Hierarchical (like categories) to allow parent/child types if ever needed.
+ * - show_in_rest true so it appears in the block editor sidebar.
+ */
+function ibt_events_register_taxonomies() {
+	$labels = array(
+		'name'              => __( 'Event Types', 'ibt-events' ),
+		'singular_name'     => __( 'Event Type', 'ibt-events' ),
+		'search_items'      => __( 'Search Event Types', 'ibt-events' ),
+		'all_items'         => __( 'All Event Types', 'ibt-events' ),
+		'edit_item'         => __( 'Edit Event Type', 'ibt-events' ),
+		'update_item'       => __( 'Update Event Type', 'ibt-events' ),
+		'add_new_item'      => __( 'Add New Event Type', 'ibt-events' ),
+		'new_item_name'     => __( 'New Event Type Name', 'ibt-events' ),
+		'menu_name'         => __( 'Event Types', 'ibt-events' ),
+	);
+
+	$args = array(
+		'labels'            => $labels,
+		'hierarchical'      => true, // categories-style
+		'public'            => true,
+		'show_ui'           => true,
+		'show_in_rest'      => true, // needed for editor sidebar panel
+		'show_admin_column' => true,
+		'rewrite'           => array(
+			'slug'       => 'event-type',
+			'with_front' => false,
+		),
+	);
+
+	register_taxonomy( 'ibt_event_type', array( 'ibt_event' ), $args );
+}
+
+add_action( 'init', 'ibt_events_register_taxonomies' );
