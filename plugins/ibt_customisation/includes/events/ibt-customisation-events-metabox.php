@@ -229,7 +229,7 @@ add_action( 'add_meta_boxes', function() {
     );
 });
 
-// Callback to render the meta box fields
+// Callback to render the venue meta box fields
 
 function ibt_venue_details_metabox( $post ) {
     // Security nonce
@@ -260,7 +260,7 @@ function ibt_venue_details_metabox( $post ) {
    
 }
 
-// Save handler
+// Save venue handler
 
 add_action( 'save_post_ibt_venue', function( $post_id ) {
     // Verify nonce
