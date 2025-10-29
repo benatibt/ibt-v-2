@@ -82,6 +82,13 @@ function ibt_events_render_metabox( $post ) {
 	}
 	echo '</select>';
 
+	// --- 2b. Presenter ---
+	$presenter = get_post_meta( $post->ID, 'ibt_event_presenter', true );
+
+	echo '<h4>' . esc_html__( 'Presenter', 'ibt-events' ) . '</h4>';
+	echo '<input type="text" name="ibt_event_presenter" value="' . esc_attr( $presenter ) . '" style="width:100%;" />';
+
+
 	// --- 3. Online access checkbox ---
 	echo '<p><label for="ibt_event_remote">';
 	echo '<input type="checkbox" id="ibt_event_remote" name="ibt_event_remote" value="1" ' .
@@ -143,6 +150,11 @@ function ibt_events_save_all_meta( $post_id ) {
 	update_post_meta( $post_id, 'ibt_event_venue_id', $venue_id );
 	update_post_meta( $post_id, 'ibt_event_remote', $remote );
 
+	// --- 2b. Presenter ---
+	$presenter = sanitize_text_field( $_POST['ibt_event_presenter'] ?? '' );
+	update_post_meta( $post_id, 'ibt_event_presenter', $presenter );
+
+
 	// --- 3. Pricing ---
 	$price_pub = ibt_events_sanitize_price( $_POST['ibt_event_price_public'] ?? '' );
 	$price_mem = ibt_events_sanitize_price( $_POST['ibt_event_price_member'] ?? '' );
@@ -194,9 +206,18 @@ function ibt_venue_details_metabox( $post ) {
     <p><label for="ibt_venue_maplocation"><strong><?php _e( 'Map location (lat,long or Plus Code)', 'ibt-events' ); ?></strong></label></p>
     <input type="text" name="ibt_venue_maplocation" id="ibt_venue_maplocation"
            value="<?php echo esc_attr( $maplocation ); ?>" style="width:100%;" maxlength="100" />
-    <p class="description"><?php _e( 'Example: 58.091639,-6.606250 or 39RV+JGF Balallan UK', 'ibt-events' ); ?></p>
+    <p class="description"><?php _e( 'Example: 58.091639,-6.606250 or 39RV+JGF Balallan UK', 'ibt-events' ); ?></p>  
+	<?php
 
-    <?php
+	// --- Island field ---
+	$island = get_post_meta( $post->ID, 'ibt_venue_island', true );
+	?>
+	<p><label for="ibt_venue_island"><strong><?php _e( 'Island', 'ibt-events' ); ?></strong></label></p>
+	<input type="text" name="ibt_venue_island" id="ibt_venue_island"
+		value="<?php echo esc_attr( $island ); ?>" style="width:100%;" maxlength="100" />
+	<p class="description"><?php _e( 'Short location name for summaries, e.g. "Isle of Lewis".', 'ibt-events' ); ?></p>
+	<?php
+   
 }
 
 // Save handler
@@ -224,5 +245,10 @@ add_action( 'save_post_ibt_venue', function( $post_id ) {
         $val = substr( sanitize_text_field( $_POST['ibt_venue_maplocation'] ), 0, 100 );
         update_post_meta( $post_id, 'ibt_venue_maplocation', $val );
     }
-});
 
+	if ( isset( $_POST['ibt_venue_island'] ) ) {
+    $val = substr( sanitize_text_field( $_POST['ibt_venue_island'] ), 0, 100 );
+    update_post_meta( $post_id, 'ibt_venue_island', $val );
+	}
+
+});
