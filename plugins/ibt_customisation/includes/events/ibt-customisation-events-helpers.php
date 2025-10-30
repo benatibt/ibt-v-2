@@ -92,26 +92,79 @@ if ( ! function_exists( 'ibt_events_get_field' ) ) {
 					return '';
 				}
 
-				// Fetch the venue post (uses post_title for venue name)
-				$venue_post = get_post( $venue_id );
-				if ( ! $venue_post ) {
+				$venue_name = get_the_title( $venue_id );
+				$island     = get_post_meta( $venue_id, 'ibt_venue_island', true );
+
+				if ( $venue_name && $island ) {
+					return sprintf( '%s, %s', $venue_name, $island );
+				} elseif ( $venue_name ) {
+					return $venue_name;
+				} elseif ( $island ) {
+					return $island;
+				}
+				return '';
+
+			case 'ibt_event_venue_name':
+				$venue_id = (int) get_post_meta( $post_id, 'ibt_event_venue_id', true );
+				if ( ! $venue_id ) {
+					return '';
+				}
+				$venue_name = get_the_title( $venue_id );
+				return $venue_name ? $venue_name : '';
+
+			case 'ibt_event_venue_address':
+				$venue_id = (int) get_post_meta( $post_id, 'ibt_event_venue_id', true );
+				if ( ! $venue_id ) {
 					return '';
 				}
 
-				$venue_name    = $venue_post->post_title;
-				$venue_address = get_post_meta( $venue_id, 'ibt_venue_address', true );
-
-				// Build output
-				$out  = '<span class="ibt-event-venue-name">' . esc_html( $venue_name ) . '</span>';
-				if ( $venue_address ) {
-					$out .= '<br><span class="ibt-event-venue-address">' .
-						nl2br( esc_html( $venue_address ) ) . '</span>';
+				$address = get_post_meta( $venue_id, 'ibt_venue_address', true );
+				if ( empty( $address ) ) {
+					return '';
 				}
-				return $out;
+
+				// Convert newlines to <br> for display, escape each line and wrap in <p>
+				// for cleaner formatting and consistent block spacing
+				return '<p>' . nl2br( esc_html( $address ) ) . '</p>';
+
 
 			case 'ibt_event_remote':
 				$is_remote = (int) get_post_meta( $post_id, 'ibt_event_remote', true );
 				return $is_remote ? '1' : '';
+
+			// ----- Prices (formatted with £ symbol) -----
+			case 'ibt_event_price_public':
+			case 'ibt_event_price_member':
+				$value = get_post_meta( $post_id, $key, true );
+				if ( $value === '' ) {
+					return '';
+				}
+				return '£' . number_format( (float) $value, 2 );
+
+			// ----- Presenter -----
+			case 'ibt_event_presenter':
+				$presenter = get_post_meta( $post_id, 'ibt_event_presenter', true );
+				return $presenter ? esc_html( $presenter ) : '';
+
+			// ----- Online / remote flag (block-friendly <p>) -----
+			case 'ibt_event_online':
+				$remote = get_post_meta( $post_id, 'ibt_event_remote', true );
+				if ( $remote && ( $remote === '1' || $remote === 1 || $remote === true ) ) {
+					return '<p>Online - Remote Accessible</p>';
+				}
+				return '';
+			
+			// ----- Event excerpt (short version for listings) -----
+			case 'ibt_event_excerpt':
+				$excerpt = get_the_excerpt( $post_id );
+				if ( empty( $excerpt ) ) {
+					return '';
+				}
+
+				// Trim to ~25 words, add ellipsis
+				$short = wp_trim_words( $excerpt, 25, '…' );
+				return esc_html( $short );
+
 
 			case 'ibt_event_map_button':
 				$venue_id = get_post_meta( $post_id, 'ibt_event_venue_id', true );
@@ -123,7 +176,9 @@ if ( ! function_exists( 'ibt_events_get_field' ) ) {
 				$url = 'https://www.google.com/maps/search/?api=1&query=' . rawurlencode( $maploc );
 
 				return sprintf(
-					'<a class="wp-block-button__link ibt-event-map-btn" href="%s" target="_blank" rel="noopener">View on Google Maps</a>',
+					'<div class="wp-block-button ibt-event-field ibt-event-field--ibt-event-map-button">
+						<a class="wp-block-button__link ibt-event-map-btn" href="%s" target="_blank" rel="noopener">View on Google Maps</a>
+					</div>',
 					esc_url( $url )
 				);
     
