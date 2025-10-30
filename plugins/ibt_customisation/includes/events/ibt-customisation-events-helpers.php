@@ -110,7 +110,7 @@ if ( ! function_exists( 'ibt_events_get_field' ) ) {
 					return '';
 				}
 				$venue_name = get_the_title( $venue_id );
-				return $venue_name ? $venue_name : '';
+				return $venue_name ? esc_html( $venue_name ) : '';
 
 			case 'ibt_event_venue_address':
 				$venue_id = (int) get_post_meta( $post_id, 'ibt_event_venue_id', true );
@@ -182,12 +182,6 @@ if ( ! function_exists( 'ibt_events_get_field' ) ) {
 					esc_url( $url )
 				);
     
-			case 'ibt_event_price_public':
-				return $value !== '' ? '£' . number_format( (float) $value, 2 ) : '';
-
-			case 'ibt_event_price_member':
-				return $value !== '' ? '£' . number_format( (float) $value, 2 ) : '';
-
 			default:
 				return esc_html( $value );
 		}

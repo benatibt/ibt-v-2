@@ -5,12 +5,20 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 
-// Provides [ibt_event_field key="meta_key"] for safe public fields only.
+ // Shortcodes:
+ //
+ // [ibt_event_field key="..."] — Single field output.
+ // Provides [ibt_event_field key="meta_key"] for safe public fields only.
+ // e.g.  [ibt_event_field key="ibt_event_start"]
+ //
+ // [ibt_events_list n="3"]    — Event list output (uses ibt_events_render_list()).
+ // Includes featured events where n>=2. Valid for n=1 to 10. Default 3.
+
+
 // Handles date formatting, venue details, and optional Google Maps button.
 // Outputs a single field per shortcode instance.
 //
 // Example usage in templates:
-//   [ibt_event_field key="ibt_event_start"]
 //   [ibt_event_field key="ibt_event_venue"]
 //   [ibt_event_field key="ibt_event_map_button"]
 
@@ -91,22 +99,14 @@ add_shortcode( 'ibt_event_field', function( $atts ) {
 
 
 
-// Allows [ibt_events_list limit="n"] as a list of n = 1 to 5 events on a page.
-
-add_shortcode( 'ibt_events_list', function( $atts = array() ) {
-	return ibt_events_render_list( shortcode_atts( array(
-		'limit'     => 5,
-		'show_past' => false,
-	), $atts ) );
-});
-
+// Register directly so shortcode attributes are passed intact.
+add_shortcode( 'ibt_events_list', 'ibt_events_render_list' );
 
 
 // Query & output a list of events using direct PHP field calls.
-// Used internally by [ibt_events_list] shortcode. 
-// Could be be called directly from templates - Move to helpers if this happens.
 
 function ibt_events_render_list( $atts = array() ) {
+
 	$atts = shortcode_atts(
 		array(
 			'n' => 3, // number of events to show
@@ -115,13 +115,16 @@ function ibt_events_render_list( $atts = array() ) {
 		'ibt_events_list'
 	);
 
+	// --- Safety clamp for n (1–10) ---
+	$n = max( 1, min( (int) $atts['n'], 10 ) );
+
 	// Set to fixed UK time to avoid issues with server or WP timezone setup.
 	// NOTE: Only suitable for UK deployments (Europe/London DST aware).
 	$now = ( new DateTime( 'now', new DateTimeZone( 'Europe/London' ) ) )->format( 'Y-m-d H:i' );
 
 	$query = new WP_Query( array(
 		'post_type'      => 'ibt_event',
-		'posts_per_page' => (int) $atts['n'],
+		'posts_per_page' => $n,
 		'post_status'    => 'publish',
 		'meta_key'       => 'ibt_event_start',
 		'orderby'        => 'meta_value',
@@ -150,10 +153,13 @@ function ibt_events_render_list( $atts = array() ) {
 		),
 	) );
 
-	// --- Optional featured substitution for lists of 3+ ---
+	// --- Optional featured substitution (n ≥ 2) ---
+	// For n = 1 → show next event only
+	// For n ≥ 2 → include featured substitution logic
 	$posts = $query->posts;
 
-	if ( count( $posts ) >= (int) $atts['n'] ) {
+	if ( $n >= 2 && count( $posts ) > 0 ) {
+
 
 		// Check whether any of the upcoming events are already featured
 		$has_featured = false;
@@ -235,7 +241,7 @@ function ibt_events_render_list( $atts = array() ) {
 		// Excerpt
 		$excerpt = trim( do_shortcode( '[ibt_event_field key="ibt_event_excerpt"]' ) );
 		if ( $excerpt !== '' ) {
-			$out .= $excerpt;
+			$out .= '<p>' . $excerpt . '</p>';
 		}
 
 		// Presenter
