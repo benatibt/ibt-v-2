@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: IBT Customisation
- * Description: Custom functionality for Islands Book Trust (WooCommerce extras, etc.).
+ * Description: Custom functionality for Islands Book Trust. Requires WooCommerce.
  * Version: 0.3.0
  * Author: Ben Sheppard & ChatGPT 5
  * License: GPL-2.0-or-later
