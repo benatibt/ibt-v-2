@@ -1,124 +1,120 @@
 <?php
-// TEMP: route all render errors to WordPress debug.log
-ini_set('display_errors', 0);
-ini_set('log_errors', 1);
-error_reporting(E_ALL);
-ini_set('error_log', WP_CONTENT_DIR . '/debug.log');
+defined( 'ABSPATH' ) || exit;
 
 /**
- * Render callback for IBT Events Archive (blue-box PHP version)
+ * Render callback for IBT Events Archive block
+ *
  * Behaviour:
  *  • Default – upcoming events only (soonest first)
  *  • ?past=1 – include past events (latest first)
  *  • Paginated (10 per page)
  */
 
-defined( 'ABSPATH' ) || exit;
+// Determine mode
+$show_past = isset( $_GET['past'] ) && $_GET['past'] == 1;
+$now       = ( new DateTime( 'now', new DateTimeZone( 'Europe/London' ) ) )->format( 'Y-m-d H:i' );
+$paged     = max( 1, get_query_var( 'paged' ) );
 
-error_log( 'IBT: blue-box render start' );
+// Build query
+$args = [
+	'post_type'      => 'ibt_event',
+	'post_status'    => 'publish',
+	'posts_per_page' => 10,
+	'paged'          => $paged,
+	'meta_key'       => 'ibt_event_start',
+	'orderby'        => 'meta_value',
+];
 
-try {
+if ( $show_past ) {
+	$args['order'] = 'DESC';
+} else {
+	$args['order'] = 'ASC';
+	$args['meta_query'] = [
+		[
+			'key'     => 'ibt_event_end',
+			'value'   => $now,
+			'compare' => '>=',
+			'type'    => 'DATETIME',
+		],
+	];
+}
 
-	ob_start();
+$q = new WP_Query( $args );
 
-	// --- Determine mode ---
-	$show_past = isset( $_GET['past'] ) && $_GET['past'] == 1;
+// Wrapper
+echo '<div class="ibt-events-archive alignwide">';
 
-	// Fixed UK time
-	$now = ( new DateTime( 'now', new DateTimeZone( 'Europe/London' ) ) )->format( 'Y-m-d H:i' );
+// Dynamic heading
+$title_text = $show_past ? __( 'All Events', 'ibt' ) : __( 'Upcoming Events', 'ibt' );
+echo '<h1 class="wp-block-heading ibt-archive-title">' . esc_html( $title_text ) . '</h1>';
+
+// Past/future toggle – as a real core Button block
+if ( $show_past ) {
+	echo do_blocks( '
+		<!-- wp:buttons -->
+		<div class="wp-block-buttons ibt-event-toggle">
+			<!-- wp:button {"className":"ibt-event-toggle-btn"} -->
+			<div class="wp-block-button ibt-event-toggle-btn">
+				<a class="wp-block-button__link" href="' . esc_url( get_post_type_archive_link( 'ibt_event' ) ) . '">
+					' . esc_html__( 'Show upcoming events', 'ibt' ) . '
+				</a>
+			</div>
+			<!-- /wp:button -->
+		</div>
+		<!-- /wp:buttons -->
+	' );
+} else {
+	echo do_blocks( '
+		<!-- wp:buttons -->
+		<div class="wp-block-buttons ibt-event-toggle">
+			<!-- wp:button {"className":"ibt-event-toggle-btn"} -->
+			<div class="wp-block-button ibt-event-toggle-btn">
+				<a class="wp-block-button__link" href="' . esc_url( add_query_arg( 'past', 1, get_post_type_archive_link( 'ibt_event' ) ) ) . '">
+					' . esc_html__( 'Show past events', 'ibt' ) . '
+				</a>
+			</div>
+			<!-- /wp:button -->
+		</div>
+		<!-- /wp:buttons -->
+	' );
+}
+
+// Event list
+if ( $q->have_posts() ) {
+	echo '<div class="ibt-event-list">';
+	while ( $q->have_posts() ) {
+		$q->the_post();
+		echo '<article class="ibt-event-list-item">';
+		echo '<h2 class="ibt-event-title"><a href="' . esc_url( get_permalink() ) . '">' . esc_html( get_the_title() ) . '</a></h2>';
+		the_excerpt();
+
+		$presenter = do_shortcode( '[ibt_event_field key="ibt_event_presenter"]' );
+		$start     = do_shortcode( '[ibt_event_field key="ibt_event_start"]' );
+		$venue     = do_shortcode( '[ibt_event_field key="ibt_event_venue"]' );
+		$online    = do_shortcode( '[ibt_event_field key="ibt_event_online"]' );
+
+		if ( $presenter ) echo '<p><strong>Presenter:</strong> ' . wp_kses_post( $presenter ) . '</p>';
+		if ( $start )     echo '<p><strong>Starts:</strong> ' . wp_kses_post( $start ) . '</p>';
+		if ( $venue )     echo '<p><strong>Venue:</strong> ' . wp_kses_post( $venue ) . '</p>';
+		if ( $online )    echo wp_kses_post( $online );
+
+		echo '</article>';
+	}
+	echo '</div>';
 
 	// Pagination
-	$paged = max( 1, get_query_var( 'paged' ) );
+	echo '<div class="ibt-pagination">';
+	the_posts_pagination( [
+		'mid_size'  => 2,
+		'prev_text' => __( '← Previous', 'ibt' ),
+		'next_text' => __( 'Next →', 'ibt' ),
+	] );
+	echo '</div>';
 
-	// Build query
-	$args = array(
-		'post_type'      => 'ibt_event',
-		'post_status'    => 'publish',
-		'posts_per_page' => 10,
-		'paged'          => $paged,
-		'meta_key'       => 'ibt_event_start',
-		'orderby'        => 'meta_value',
-	);
-
-	if ( $show_past ) {
-		$args['order'] = 'DESC'; // all events, latest first
-	} else {
-		$args['order'] = 'ASC'; // future events, soonest first
-		$args['meta_query'] = array(
-			array(
-				'key'     => 'ibt_event_end',
-				'value'   => $now,
-				'compare' => '>=',
-				'type'    => 'DATETIME',
-			),
-		);
-	}
-
-	$query = new WP_Query( $args );
-	?>
-
-	<div class="ibt-events-archive alignwide">
-		<h1 class="wp-block-heading ibt-archive-title"><?php post_type_archive_title(); ?></h1>
-
-		<p class="ibt-event-toggle">
-			<?php if ( $show_past ) : ?>
-				<a class="wp-block-button__link ibt-button-small"
-				   href="<?php echo esc_url( get_post_type_archive_link( 'ibt_event' ) ); ?>">
-					Show upcoming events
-				</a>
-			<?php else : ?>
-				<a class="wp-block-button__link ibt-button-small"
-				   href="<?php echo esc_url( add_query_arg( 'past', 1, get_post_type_archive_link( 'ibt_event' ) ) ); ?>">
-					Show past events
-				</a>
-			<?php endif; ?>
-		</p>
-
-		<?php if ( $query->have_posts() ) : ?>
-			<div class="ibt-event-list">
-				<?php while ( $query->have_posts() ) : $query->the_post(); ?>
-					<article <?php post_class( 'ibt-event-list-item' ); ?>>
-						<h3 class="ibt-event-title">
-							<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-						</h3>
-
-						<?php the_excerpt(); ?>
-
-						<p><strong>Presenter:</strong>
-							<?php echo do_shortcode( '[ibt_event_field key="ibt_event_presenter"]' ); ?></p>
-						<p><strong>Starts:</strong>
-							<?php echo do_shortcode( '[ibt_event_field key="ibt_event_start"]' ); ?></p>
-						<p><strong>Venue:</strong>
-							<?php echo do_shortcode( '[ibt_event_field key="ibt_event_venue"]' ); ?></p>
-						<?php echo do_shortcode( '[ibt_event_field key="ibt_event_online"]' ); ?>
-					</article>
-				<?php endwhile; ?>
-			</div>
-
-			<div class="ibt-pagination">
-				<?php
-				the_posts_pagination( array(
-					'mid_size'  => 2,
-					'prev_text' => __( '← Previous', 'ibt' ),
-					'next_text' => __( 'Next →', 'ibt' ),
-				) );
-				?>
-			</div>
-		<?php else : ?>
-			<p>No events found.</p>
-		<?php endif; ?>
-
-		<?php wp_reset_postdata(); ?>
-
-		<!-- Spacer for consistent bottom rhythm -->
-		<div style="height:100px" aria-hidden="true" class="wp-block-spacer"></div>
-	</div>
-
-	<?php
-	error_log( 'IBT: blue-box render end, buffer length ' . strlen( ob_get_contents() ) );
-	return ob_get_clean();
-
-} catch ( Throwable $e ) {
-	error_log( 'IBT: render exception - ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine() );
-	echo '<p style="border:2px solid red;">Render exception: ' . esc_html( $e->getMessage() ) . '</p>';
+	wp_reset_postdata();
+} else {
+	echo '<p>' . esc_html__( 'No events found.', 'ibt' ) . '</p>';
 }
+
+echo '</div>'; // .ibt-events-archive
+return '';

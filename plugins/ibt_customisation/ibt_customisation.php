@@ -89,10 +89,10 @@ add_action( 'plugins_loaded', function() {
 	require_once __DIR__ . '/includes/events/ibt-customisation-events-display-single.php';
 
 	//dev
-	require_once __DIR__ . '/blocks/events-archive/index.php';
+	//require_once __DIR__ . '/blocks/events-archive/index.php';
 
 	//dev
-	require_once __DIR__ . '/blocks/events-archive/test-block.php';
+	//require_once __DIR__ . '/blocks/events-archive/test-block.php';
 
 	// Probably staying
 	require_once __DIR__ . '/blocks/events-archive-php/block-register.php';
@@ -107,12 +107,6 @@ add_action( 'plugins_loaded', function() {
 			filemtime( plugin_dir_path( __FILE__ ) . 'blocks/events-archive/editor.js' )
 		);
 });
-
-//dev
-add_action( 'init', function() {
-	remove_filter( 'render_block', 'ibt_highlight_navigation', 10 );
-});
-
 
 });
 
