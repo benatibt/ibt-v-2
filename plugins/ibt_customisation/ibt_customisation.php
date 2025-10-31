@@ -81,32 +81,14 @@ add_action( 'plugins_loaded', function() {
 	require_once __DIR__ . '/includes/register-taxonomy-types.php';
 	require_once __DIR__ . '/includes/author-isbn-fields.php';
 
+	// --- Events module (core CPT + helpers + shortcodes) ---
 	require_once __DIR__ . '/includes/events/ibt-customisation-events-core.php';
 	require_once __DIR__ . '/includes/events/ibt-customisation-events-metabox.php';
 	require_once __DIR__ . '/includes/events/ibt-customisation-events-helpers.php';
 	require_once __DIR__ . '/includes/events/ibt-customisation-events-display-shortcode.php';
-	require_once __DIR__ . '/includes/events/ibt-customisation-events-display-archive.php';
-	require_once __DIR__ . '/includes/events/ibt-customisation-events-display-single.php';
 
-	//dev
-	//require_once __DIR__ . '/blocks/events-archive/index.php';
-
-	//dev
-	//require_once __DIR__ . '/blocks/events-archive/test-block.php';
-
-	// Probably staying
+	// --- Active production block (PHP-rendered Events Archive) ---
 	require_once __DIR__ . '/blocks/events-archive-php/block-register.php';
-	
-	
-	// dev--- Ensure the editor stub for the Events Archive block is loaded in Site Editor ---
-	add_action( 'enqueue_block_editor_assets', function() {
-		wp_enqueue_script(
-			'ibt-events-archive-editor',
-			plugins_url( 'blocks/events-archive/editor.js', __FILE__ ),
-			array( 'wp-blocks', 'wp-element' ),
-			filemtime( plugin_dir_path( __FILE__ ) . 'blocks/events-archive/editor.js' )
-		);
-});
 
 });
 
