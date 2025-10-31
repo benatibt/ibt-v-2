@@ -47,5 +47,12 @@ Fonts: Open-source (OFL/SIL licences) – see /assets/fonts/
 Header search icon: derived from Lucide Icons (MIT licence)
 Other icons: provided by WooCommerce core
 
+--------------------------------------------------------------------
+ACKNOWLEDGEMENT
+--------------------------------------------------------------------
+chatGPT credited as co-author without legal rights for advice, extensive
+coding support and teaching. I couldn't have done it without 'you' in
+the time available.
+
 ====================================================================
 
