@@ -9,8 +9,6 @@ defined( 'ABSPATH' ) || exit;
 add_action( 'init', function() {
     register_block_type( 'ibt/events-archive-php', array(
         'render_callback' => function( $attributes, $content, $block ) {
-            error_log( 'IBT: blue-box events archive render running.' );
-
             ob_start();
             include __DIR__ . '/render.php';
             return ob_get_clean();

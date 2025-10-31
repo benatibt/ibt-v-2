@@ -19,6 +19,8 @@ add_action( 'after_setup_theme', function () {
 	add_editor_style( 'assets/css/ibt.css' );
 	add_theme_support( 'align-wide' );
 	add_theme_support( 'comments' );
+    add_theme_support( 'custom-line-height' );
+    add_theme_support( 'custom-spacing' );
 
 	// WooCommerce basics.
 	add_theme_support( 'woocommerce' );
@@ -58,9 +60,9 @@ add_action( 'wp_enqueue_scripts', function () {
 	wp_enqueue_script(
 		'ibt-header',
 		get_stylesheet_directory_uri() . '/' . $rel,
-		[],     // no dependencies
-		$ver,   // version from filemtime (cache-bust in dev)
-		true    // load in footer
+		[ 'wp-dom-ready' ],  // ensures DOM is loaded before script runs
+		$ver,                // version from filemtime (cache-bust in dev)
+		true                 // load in footer
 	);
 }, 20 );
 
@@ -108,11 +110,13 @@ add_action( 'init', function() {
 //        Woo default meets standards requirements for the cart.
 add_filter( 'render_block', function( $block_content, $block ) {
 	if ( 'woocommerce/customer-account' === $block['blockName'] ) {
-		$block_content = str_replace(
-			'<a',
-			'<a title="Your account" aria-label="Your account"',
-			$block_content
-		);
+		if ( str_contains( $block_content, '<a' ) ) {
+			$block_content = str_replace(
+				'<a',
+				'<a title="Your account" aria-label="Your account"',
+				$block_content
+			);
+		}
 	}
 	return $block_content;
 }, 10, 2 );
