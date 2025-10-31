@@ -1,58 +1,87 @@
 ====================================================================
-Islands Book Trust Theme ( /ibt )
+Islands Book Trust Theme  (/ibt)
 ====================================================================
 
-Developed for Islands Book Trust by Benjamin Sheppard
-WordPress 6.8+  |  WooCommerce compatible  |  Block theme
+Developed for the Islands Book Trust by Ben Sheppard  
+Tested with: WordPress 6.8 | Compatible with WooCommerce 10.3+
 
 --------------------------------------------------------------------
 OVERVIEW
 --------------------------------------------------------------------
-The Islands Book Trust theme is a custom WordPress block theme
-designed to support IBT’s publishing, library, and events activities.
-It provides full site editing support, WooCommerce integration,
-and a clean, accessible design with a customisable colour palette.
+The Islands Book Trust (IBT) theme is a custom WordPress block theme
+built to support IBT’s publishing, reading, and event activities.
+It provides Full Site Editing (FSE) support, WooCommerce integration,
+and a clean, accessible design guided by WCAG AAA/AA standards.
 
-The theme operates independently but can be extended by the
-optional companion plugin “IBT Customisation” which adds
-WooCommerce author and ISBN fields and taxonomy enhancements.
+The theme is designed to work with the companion plugin
+**IBT Customisation**, which adds WooCommerce product fields
+(Author, ISBN), shared taxonomies, and event management features.
+Several theme templates and blocks rely on that plugin for full
+functionality.
+
+--------------------------------------------------------------------
+FEATURES
+--------------------------------------------------------------------
+• Full Site Editing structure (WordPress 6.8+ block system).  
+• Integrated WooCommerce styling for product archives and singles.  
+• Responsive layout with accessible navigation and focus states.  
+• Custom token-based colour palette (Stone/Ocean scheme).  
+• Locally hosted open-source fonts (Source Serif 4 & Source Sans 3).  
+• Optimised header with search and mini-cart support.  
+• Minimal JavaScript footprint and AAA-targeted accessibility design.  
 
 --------------------------------------------------------------------
 STRUCTURE
 --------------------------------------------------------------------
-/templates/       - Core HTML templates
-/parts/           - Template parts (header, footer, sidebar, etc.)
-/assets/css/      - Compiled theme styles (ibt.css)
-/assets/images/   - Branding assets (PNG logos)
-/plugin/          - Companion plugin: ibt_customisation
-theme.json        - Token and global style definitions
-style.css         - Theme metadata, enqueue reference, version info
+ibt/                                     - Theme root  
+│
+├─ /templates/                           - Core HTML templates  
+│     ├─ archive-product.html            - Woo product archive  
+│     ├─ archive-ibt_event.html          - Custom event archive (via plugin)  
+│     ├─ single-product.html             - Woo single product  
+│     ├─ taxonomy-product_attribute.html - Minimal Woo fallback (unused)  
+│     └─ … (standard WordPress templates)  
+│
+├─ /parts/                         - Template parts (header, footer, etc.)  
+│     ├─ header.html  
+│     ├─ footer.html  
+│     └─ meta-schema.html  – Structured data (JSON-LD for Organization + WebSite)  
+│
+├─ /assets/                        - Static theme assets  
+│     ├─ /css/  → ibt.css          - Compiled theme styles (cache-busted in dev)  
+│     ├─ /js/   → ibt-header.js    - Header search and toggle logic  
+│     └─ /fonts/                   - Local font files (OFL-licensed)  
+│
+├─ functions.php                   - Theme setup, enqueue, and helper filters  
+├─ theme.json                      - Tokens, global styles, and presets  
+├─ style.css                       - Theme metadata and version header  
+└─ README.txt                      - This document  
 
-Version: See style.css
+Version: See style.css header  
+
+*Note:* `functions.php` includes a development cache-buster for CSS.
+Replace with standard versioning before production release.
 
 --------------------------------------------------------------------
 LICENSING
 --------------------------------------------------------------------
-Copyright © 2025 Benjamin Sheppard.
-Developed for Islands Book Trust and provided under the
-GNU General Public License v2 or later (GPL-2.0+).
+Copyright © 2025 Ben Sheppard.  
+Developed for the Islands Book Trust and released under the  
+GNU General Public License v2 or later (GPL-2.0+).  
 
-Full licence text: https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
+Full licence text: https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt  
 
-The author retains copyright to the original source code and
-may reuse portions of this work in other projects under
-different licences.
-
-Fonts: Open-source (OFL/SIL licences) – see /assets/fonts/
-Header search icon: derived from Lucide Icons (MIT licence)
-Other icons: provided by WooCommerce core
+Fonts:  
+• Source Sans 3 and Source Serif 4 — Open Font License (OFL/SIL)  
+Icons:  
+• Header search icon — Lucide Icons (MIT)  
+• Additional icons — WooCommerce core  
 
 --------------------------------------------------------------------
 ACKNOWLEDGEMENT
 --------------------------------------------------------------------
-chatGPT credited as co-author without legal rights for advice, extensive
-coding support and teaching. I couldn't have done it without 'you' in
-the time available.
+chatGPT credited as a non-legal co-author for advisory, code-generation,
+and educational support. Development was substantially accelerated by
+its assistance.
 
 ====================================================================
-
