@@ -88,5 +88,31 @@ add_action( 'plugins_loaded', function() {
 	require_once __DIR__ . '/includes/events/ibt-customisation-events-display-archive.php';
 	require_once __DIR__ . '/includes/events/ibt-customisation-events-display-single.php';
 
+	//dev
+	require_once __DIR__ . '/blocks/events-archive/index.php';
+
+	//dev
+	require_once __DIR__ . '/blocks/events-archive/test-block.php';
+
+	// Probably staying
+	require_once __DIR__ . '/blocks/events-archive-php/block-register.php';
+	
+	
+	// dev--- Ensure the editor stub for the Events Archive block is loaded in Site Editor ---
+	add_action( 'enqueue_block_editor_assets', function() {
+		wp_enqueue_script(
+			'ibt-events-archive-editor',
+			plugins_url( 'blocks/events-archive/editor.js', __FILE__ ),
+			array( 'wp-blocks', 'wp-element' ),
+			filemtime( plugin_dir_path( __FILE__ ) . 'blocks/events-archive/editor.js' )
+		);
+});
+
+//dev
+add_action( 'init', function() {
+	remove_filter( 'render_block', 'ibt_highlight_navigation', 10 );
+});
+
+
 });
 

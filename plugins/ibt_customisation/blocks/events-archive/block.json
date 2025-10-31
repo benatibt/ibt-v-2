@@ -1,0 +1,17 @@
+{
+  "apiVersion": 3,
+  "name": "ibt/events-archive",
+  "title": "IBT Events Archive",
+  "category": "design",
+  "icon": "calendar-alt",
+  "description": "Displays a paginated archive of upcoming and past IBT events.",
+  "textdomain": "ibt",
+  "supports": {
+    "align": false,
+    "color": false,
+    "spacing": false,
+    "html": false
+  },
+  "render": "file:./render.php",
+  "editorScript": "file:./editor.js"
+}

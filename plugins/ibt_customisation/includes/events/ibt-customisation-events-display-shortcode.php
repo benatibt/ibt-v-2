@@ -31,12 +31,24 @@ add_shortcode( 'ibt_event_field', function( $atts ) {
 
 	// ---- Determine current post ID safely ----
 	$post_id = get_the_ID();
+
+	// Fallback 1: current queried object
 	if ( ! $post_id && ( $q = get_queried_object() ) ) {
 		$post_id = isset( $q->ID ) ? (int) $q->ID : 0;
 	}
+
+	// Fallback 2: block context (used inside Query Loop / block templates)
+	if ( ! $post_id && function_exists( 'get_block_context' ) ) {
+		$ctx = get_block_context();
+		if ( isset( $ctx['postId'] ) ) {
+			$post_id = (int) $ctx['postId'];
+		}
+	}
+
 	if ( ! $post_id ) {
 		return '';
 	}
+
 
 	// ---- Whitelist of public keys ----
 	$allowed_keys = array(

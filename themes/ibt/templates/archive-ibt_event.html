@@ -1,26 +1,55 @@
-<!--
-  archive-ibt_event.html
-  Hybrid: fully valid block template with embedded PHP include.
-  Allows Site Editor to edit header/footer while keeping custom PHP loop.
--->
+<!-- wp:template-part {"slug":"header","theme":"ibt","area":"header"} /-->
 
-<!-- wp:template-part {"slug":"header"} /-->
+<!-- wp:group {"tagName":"main","layout":{"type":"constrained"}} -->
+<main class="wp-block-group">
 
-<!-- wp:group {"align":"wide"} -->
-<div class="wp-block-group alignwide">
+	<!-- wp:heading {"level":1} -->
+	<h1>Events</h1>
+	<!-- /wp:heading -->
 
-  <!-- wp:heading {"level":1} -->
-  <h1>Upcoming Events</h1>
-  <!-- /wp:heading -->
+	<!-- wp:query -->
+	<div class="wp-block-query">
 
-  <!-- wp:html -->
-  <?php
-    // Include our PHP event loop (safe "black box" the editor ignores)
-    get_template_part( 'template-parts/events-loop' );
-  ?>
-  <!-- /wp:html -->
+		<!-- wp:post-template -->
 
-</div>
+			<!-- wp:group {"className":"ibt-event-archive-item","layout":{"type":"constrained"}} -->
+			<div class="wp-block-group ibt-event-archive-item">
+
+				<!-- wp:post-title {"isLink":true,"level":3} /-->
+
+				<!-- wp:post-excerpt /-->
+
+				<!-- wp:shortcode -->
+				[ibt_event_field key="ibt_event_presenter"]
+				<!-- /wp:shortcode -->
+
+				<!-- wp:shortcode -->
+				[ibt_event_field key="ibt_event_start"]
+				<!-- /wp:shortcode -->
+
+				<!-- wp:shortcode -->
+				[ibt_event_field key="ibt_event_venue"]
+				<!-- /wp:shortcode -->
+
+				<!-- wp:shortcode -->
+				[ibt_event_field key="ibt_event_map_button"]
+				<!-- /wp:shortcode -->
+
+			</div>
+			<!-- /wp:group -->
+
+		<!-- /wp:post-template -->
+
+		<!-- wp:query-pagination {"layout":{"type":"flex","justifyContent":"space-between"}} -->
+			<!-- wp:query-pagination-previous /-->
+			<!-- wp:query-pagination-numbers /-->
+			<!-- wp:query-pagination-next /-->
+		<!-- /wp:query-pagination -->
+
+	</div>
+	<!-- /wp:query -->
+
+</main>
 <!-- /wp:group -->
 
-<!-- wp:template-part {"slug":"footer"} /-->
+<!-- wp:template-part {"slug":"footer","theme":"ibt","area":"footer"} /-->
