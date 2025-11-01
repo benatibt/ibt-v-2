@@ -3,7 +3,6 @@ defined( 'ABSPATH' ) || exit;
 
 /**
  * Render callback for IBT Events Archive block
- *
  * Behaviour:
  *  • Default – upcoming events only (soonest first)
  *  • ?past=1 – include past events (latest first)
@@ -44,63 +43,68 @@ $q = new WP_Query( $args );
 // Wrapper
 echo '<div class="ibt-events-archive alignwide">';
 
-// Dynamic heading
-$title_text = $show_past ? __( 'All Events', 'ibt' ) : __( 'Upcoming Events', 'ibt' );
-echo '<h1 class="wp-block-heading ibt-archive-title">' . esc_html( $title_text ) . '</h1>';
+// --- Heading row with toggle button ---
+$title_text   = $show_past ? __( 'All Events', 'ibt' ) : __( 'Upcoming Events', 'ibt' );
+$toggle_url   = $show_past ? get_post_type_archive_link( 'ibt_event' ) : add_query_arg( 'past', 1, get_post_type_archive_link( 'ibt_event' ) );
+$toggle_label = $show_past ? __( 'Show upcoming events', 'ibt' ) : __( 'Show past events', 'ibt' );
 
-// Past/future toggle – as a real core Button block
-if ( $show_past ) {
+echo '<div class="ibt-archive-header">';
+	echo '<h1 class="wp-block-heading ibt-archive-title">' . esc_html( $title_text ) . '</h1>';
+
 	echo do_blocks( '
-		<!-- wp:buttons -->
-		<div class="wp-block-buttons ibt-event-toggle">
-			<!-- wp:button {"className":"ibt-event-toggle-btn"} -->
-			<div class="wp-block-button ibt-event-toggle-btn">
-				<a class="wp-block-button__link" href="' . esc_url( get_post_type_archive_link( 'ibt_event' ) ) . '">
-					' . esc_html__( 'Show upcoming events', 'ibt' ) . '
-				</a>
+		<!-- wp:buttons {"className":"is-content-justification-center"} -->
+		<div class="wp-block-buttons is-content-justification-center">
+			<!-- wp:button {"className":"is-style-primary-solid ibt-event-toggle-btn"} -->
+			<div class="wp-block-button is-style-primary-solid ibt-event-toggle-btn">
+				<a class="wp-block-button__link wp-element-button" href="' . esc_url( $toggle_url ) . '" style="padding-top:0;padding-bottom:0">'
+					. esc_html( $toggle_label ) .
+				'</a>
 			</div>
 			<!-- /wp:button -->
 		</div>
 		<!-- /wp:buttons -->
 	' );
-} else {
-	echo do_blocks( '
-		<!-- wp:buttons -->
-		<div class="wp-block-buttons ibt-event-toggle">
-			<!-- wp:button {"className":"ibt-event-toggle-btn"} -->
-			<div class="wp-block-button ibt-event-toggle-btn">
-				<a class="wp-block-button__link" href="' . esc_url( add_query_arg( 'past', 1, get_post_type_archive_link( 'ibt_event' ) ) ) . '">
-					' . esc_html__( 'Show past events', 'ibt' ) . '
-				</a>
-			</div>
-			<!-- /wp:button -->
-		</div>
-		<!-- /wp:buttons -->
-	' );
-}
 
-// Event list
+
+echo '</div>'; // .ibt-archive-header
+echo '<hr class="ibt-event-divider-top" />';
+
+// --- Event list ---
 if ( $q->have_posts() ) {
 	echo '<div class="ibt-event-list">';
+
 	while ( $q->have_posts() ) {
 		$q->the_post();
-		echo '<article class="ibt-event-list-item">';
-		echo '<h2 class="ibt-event-title"><a href="' . esc_url( get_permalink() ) . '">' . esc_html( get_the_title() ) . '</a></h2>';
-		the_excerpt();
 
 		$presenter = do_shortcode( '[ibt_event_field key="ibt_event_presenter"]' );
 		$start     = do_shortcode( '[ibt_event_field key="ibt_event_start"]' );
 		$venue     = do_shortcode( '[ibt_event_field key="ibt_event_venue"]' );
 		$online    = do_shortcode( '[ibt_event_field key="ibt_event_online"]' );
 
-		if ( $presenter ) echo '<p><strong>Presenter:</strong> ' . wp_kses_post( $presenter ) . '</p>';
-		if ( $start )     echo '<p><strong>Starts:</strong> ' . wp_kses_post( $start ) . '</p>';
-		if ( $venue )     echo '<p><strong>Venue:</strong> ' . wp_kses_post( $venue ) . '</p>';
-		if ( $online )    echo wp_kses_post( $online );
+		echo '<article class="ibt-event-list-item">';
+		echo '<h2 class="ibt-event-title"><a href="' . esc_url( get_permalink() ) . '">' . esc_html( get_the_title() ) . '</a></h2>';
 
+		// Meta info — native block column layout
+		echo '<div class="wp-block-columns ibt-event-meta" style="align-items:flex-start">';
+			echo '<div class="wp-block-column">';
+				if ( $presenter ) echo '<p><strong>Presenter:</strong> ' . wp_kses_post( $presenter ) . '</p>';
+				if ( $start )     echo '<p><strong>When:</strong> ' . wp_kses_post( $start ) . '</p>';
+			echo '</div>';
+
+			echo '<div class="wp-block-column">';
+				if ( $venue )  echo '<p><strong>Venue:</strong> ' . wp_kses_post( $venue ) . '</p>';
+				if ( $online ) echo '<p class="ibt-event-online">' . wp_kses_post( $online ) . '</p>';
+			echo '</div>';
+		echo '</div>'; // .wp-block-columns
+
+		// Excerpt now below the meta block
+		the_excerpt();
+
+		echo '<hr class="ibt-event-divider" />';
 		echo '</article>';
 	}
-	echo '</div>';
+
+	echo '</div>'; // .ibt-event-list
 
 	// Pagination
 	echo '<div class="ibt-pagination">';

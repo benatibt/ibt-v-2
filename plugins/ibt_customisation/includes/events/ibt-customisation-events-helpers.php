@@ -1,11 +1,26 @@
 <?php
-// Helper functions for Events and Venues (formatting, sanitising, and display logic).
+/* -------------------------------------------------------------------------
+   IBT EVENTS HELPERS
+   -------------------------------------------------------------------------
+   Purpose:
+   - Provide reusable formatting and sanitisation helpers for the Events system.
+   - No HTML layout or WP_Query logic here — these functions are used by
+     display-single.php, display-list.php, and shortcodes.
 
+   Timezone policy:
+   - Datetimes stored and displayed in site local time (Europe/London).
+   - Exports and APIs convert to UTC as a single normalisation step.
+
+   Note:
+   - All functions return strings, never echo.
+   - Escaping is applied where required for direct template output.
+------------------------------------------------------------------------- */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 
-// Combines separate date and time strings into a single 'Y-m-d H:i:s' format.
+// Combine separate date and time inputs into a single MySQL-style 'Y-m-d H:i:s' string.
+// Used when saving event meta to ensure consistent format.
 
 function ibt_events_combine_datetime( $date, $time ) {
 	if ( empty( $date ) ) {
@@ -17,7 +32,8 @@ function ibt_events_combine_datetime( $date, $time ) {
 }
 
 
-// Sanitises a price string: strips all but digits and decimal point, limited to 10 characters.
+// Strip all non-numeric/decimal characters from a price string.
+// Prevents unsafe input before saving to meta.
 
 function ibt_events_sanitize_price( $val ) {
 	$val = preg_replace( '/[^0-9.]/', '', (string) $val );
@@ -25,8 +41,10 @@ function ibt_events_sanitize_price( $val ) {
 }
 
 
-// Converts a MySQL datetime string into a human-friendly, UK-style format.
+// Convert a MySQL datetime string to human-friendly UK format (site local time).
 // Example: '2025-10-18 12:15:00' → '12:15 pm on 18 October 25'
+//
+// Note – Respects site timezone (Europe/London). Do not replace with UTC conversion.
 
 if ( ! function_exists( 'ibt_events_format_datetime' ) ) {
 	function ibt_events_format_datetime( $mysql_datetime ) {
@@ -45,8 +63,9 @@ if ( ! function_exists( 'ibt_events_format_datetime' ) ) {
 }
 
 
-// Formats an event end time intelligently, showing only the time if on the same day.
-// Example: '3:45 pm' (same day) or '3:45 pm on 19 October 25' (different day)
+// Format event end time intelligently.
+// Shows only time if same day, otherwise full date and time.
+// Example: '3:45 pm' (same day) or '3:45 pm on 19 October 25'
 
 if ( ! function_exists( 'ibt_events_format_end' ) ) {
 	function ibt_events_format_end( $start, $end ) {
@@ -69,9 +88,10 @@ if ( ! function_exists( 'ibt_events_format_end' ) ) {
 }
 
 
-
-// Retrieves and formats a given event meta field for display (dates, venue, map, prices, etc.).
-// Returns a ready-to-render string or small HTML fragment depending on field type.
+// Retrieve and format an event meta field for display.
+// Handles special cases (dates, venues, online flag, map button, etc.).
+// Returns a ready-to-render string or url for map location.
+// Called by shortcodes and display templates.
 
 if ( ! function_exists( 'ibt_events_get_field' ) ) {
 	function ibt_events_get_field( $post_id, $key ) {
@@ -146,13 +166,15 @@ if ( ! function_exists( 'ibt_events_get_field' ) ) {
 				$presenter = get_post_meta( $post_id, 'ibt_event_presenter', true );
 				return $presenter ? esc_html( $presenter ) : '';
 
-			// ----- Online / remote flag (block-friendly <p>) -----
+			// ----- Online / remote flag (block-friendly inline) -----
 			case 'ibt_event_online':
 				$remote = get_post_meta( $post_id, 'ibt_event_remote', true );
+
 				if ( $remote && ( $remote === '1' || $remote === 1 || $remote === true ) ) {
-					return '<p>Online - Remote Accessible</p>';
+					return 'Online - Remote Accessible';
+				} else {
+					return ''; // explicit, not null or false
 				}
-				return '';
 			
 			// ----- Event excerpt (short version for listings) -----
 			case 'ibt_event_excerpt':
@@ -167,21 +189,21 @@ if ( ! function_exists( 'ibt_events_get_field' ) ) {
 
 
 			case 'ibt_event_map_button':
+				// Return a Google Maps search URL for the venue's stored map location.
 				$venue_id = get_post_meta( $post_id, 'ibt_event_venue_id', true );
-				if ( ! $venue_id ) return '';
+				if ( ! $venue_id ) {
+					return '';
+				}
 
 				$maploc = get_post_meta( $venue_id, 'ibt_venue_maplocation', true );
-				if ( ! $maploc ) return '';
+				if ( empty( $maploc ) ) {
+					return '';
+				}
 
-				$url = 'https://www.google.com/maps/search/?api=1&query=' . rawurlencode( $maploc );
+				return 'https://www.google.com/maps/search/?api=1&query=' . rawurlencode( $maploc );
 
-				return sprintf(
-					'<div class="wp-block-button ibt-event-field ibt-event-field--ibt-event-map-button">
-						<a class="wp-block-button__link ibt-event-map-btn" href="%s" target="_blank" rel="noopener">View on Google Maps</a>
-					</div>',
-					esc_url( $url )
-				);
     
+			// Fallback – return raw meta value safely escaped for other keys.
 			default:
 				return esc_html( $value );
 		}

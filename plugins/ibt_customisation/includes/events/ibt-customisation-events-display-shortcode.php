@@ -1,26 +1,24 @@
 <?php
 // Handles shortcode output for single event fields and for [ibt_events_list] listings.
+//
+// Shortcodes:
+//
+// [ibt_event_field key="..."] — Single field output.
+// Provides [ibt_event_field key="meta_key"] for safe public fields only.
+// e.g.  [ibt_event_field key="ibt_event_start"]
+//
+// [ibt_events_list n="3"]    — Event list output (uses ibt_events_render_list()).
+// Includes featured events where n>=2. Valid for n=1 to 10. Default 3.
 
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 
- // Shortcodes:
- //
- // [ibt_event_field key="..."] — Single field output.
- // Provides [ibt_event_field key="meta_key"] for safe public fields only.
- // e.g.  [ibt_event_field key="ibt_event_start"]
- //
- // [ibt_events_list n="3"]    — Event list output (uses ibt_events_render_list()).
- // Includes featured events where n>=2. Valid for n=1 to 10. Default 3.
 
 
-// Handles date formatting, venue details, and optional Google Maps button.
-// Outputs a single field per shortcode instance.
-//
-// Example usage in templates:
-//   [ibt_event_field key="ibt_event_venue"]
-//   [ibt_event_field key="ibt_event_map_button"]
+
+// Handles date formatting, venue details, and Google Maps button.
+// Outputs a single field per shortcode instance .
 
 add_shortcode( 'ibt_event_field', function( $atts ) {
 	$atts = shortcode_atts( array( 'key' => '' ), $atts, 'ibt_event_field' );
@@ -84,6 +82,12 @@ add_shortcode( 'ibt_event_field', function( $atts ) {
 
 	// If it's HTML (like the map button), inject the wrapper class into the first tag
 	if ( $is_html ) {
+
+		// Nothing to do if empty or whitespace
+		if ( trim( $value ) === '' ) {
+			return ''; // explicit, avoids <p>''<p> etc.
+		}
+
 		// Already has class attr?
 		if ( preg_match( '/^<([a-z0-9]+)\s+[^>]*class=("|\')(.*?)\2/i', $value ) ) {
 			$value = preg_replace(
@@ -101,8 +105,10 @@ add_shortcode( 'ibt_event_field', function( $atts ) {
 				1
 			);
 		}
+
 		return $value;
 	}
+
 
 	// Plain text → wrap in span
 	return '<span class="' . esc_attr( $class ) . '">' . esc_html( $value ) . '</span>';
@@ -110,12 +116,13 @@ add_shortcode( 'ibt_event_field', function( $atts ) {
 
 
 
-
+// Handle the more complex 'ibt_events_list n=#' case.
 // Register directly so shortcode attributes are passed intact.
 add_shortcode( 'ibt_events_list', 'ibt_events_render_list' );
 
 
-// Query & output a list of events using direct PHP field calls.
+// Query & output for 'ibt_events_list' to return a list of the next n events with featured event logic
+// using direct PHP query and indicidual shortcodes to build the fields.
 
 function ibt_events_render_list( $atts = array() ) {
 
@@ -134,7 +141,8 @@ function ibt_events_render_list( $atts = array() ) {
 	// NOTE: Only suitable for UK deployments (Europe/London DST aware).
 	$now = ( new DateTime( 'now', new DateTimeZone( 'Europe/London' ) ) )->format( 'Y-m-d H:i' );
 
-	$query = new WP_Query( array(
+	// --- Step 1: build $events_main (Next n future events) ---
+	$args_main = array(
 		'post_type'      => 'ibt_event',
 		'posts_per_page' => $n,
 		'post_status'    => 'publish',
@@ -142,103 +150,110 @@ function ibt_events_render_list( $atts = array() ) {
 		'orderby'        => 'meta_value',
 		'order'          => 'ASC',
 		'meta_query'     => array(
-			'relation' => 'AND',
-			// Event must not be past (now <= end OR no end set)
 			array(
-				'relation' => 'OR',
-				array(
-					'key'     => 'ibt_event_end',
-					'value'   => $now,
-					'compare' => '>=',
-					'type'    => 'DATETIME',
-				),
-				array(
-					'key'     => 'ibt_event_end',
-					'compare' => 'NOT EXISTS',
-				),
-				array(
-					'key'     => 'ibt_event_end',
-					'value'   => '',
-					'compare' => '=',
-				),
+				'key'     => 'ibt_event_end',
+				'value'   => $now,
+				'compare' => '>=',
+				'type'    => 'DATETIME',
 			),
 		),
-	) );
+	);
 
-	// --- Optional featured substitution (n ≥ 2) ---
-	// For n = 1 → show next event only
-	// For n ≥ 2 → include featured substitution logic
-	$posts = $query->posts;
+	$query_main   = new WP_Query( $args_main );
+	$events_main  = $query_main->posts;
+	$events_final = array();
 
-	if ( $n >= 2 && count( $posts ) > 0 ) {
+	// --- Step 2: n ≤ 2 → output main list immediately, no featured event logic required ---
+	if ( $n <= 2 ) {
+		$events_final = $events_main;
+		goto render_output;
+	}
 
-
-		// Check whether any of the upcoming events are already featured
-		$has_featured = false;
-		foreach ( $posts as $p ) {
-			if ( get_post_meta( $p->ID, 'ibt_event_featured', true ) ) {
-				$has_featured = true;
-				break;
-			}
-		}
-
-		// If none are featured, fetch the next future featured event
-		if ( ! $has_featured ) {
-			$featured = new WP_Query( array(
-				'post_type'      => 'ibt_event',
-				'posts_per_page' => 1,
-				'post_status'    => 'publish',
-				'meta_query'     => array(
-					'relation' => 'AND',
-					array(
-						'relation' => 'OR',
-						array(
-							'key'     => 'ibt_event_end',
-							'value'   => $now,
-							'compare' => '>=',
-							'type'    => 'DATETIME',
-						),
-						array(
-							'key'     => 'ibt_event_end',
-							'compare' => 'NOT EXISTS',
-						),
-						array(
-							'key'     => 'ibt_event_end',
-							'value'   => '',
-							'compare' => '=',
-						),
-					),
-					array(
-						'key'     => 'ibt_event_featured',
-						'value'   => '1',
-						'compare' => '=',
-					),
-				),
-				'meta_key'  => 'ibt_event_start',
-				'orderby'   => 'meta_value',
-				'order'     => 'ASC',
-			) );
-
-			if ( $featured->have_posts() ) {
-				$featured_post = $featured->posts[0];
-
-				// Replace the last event with the featured one
-				array_pop( $posts );
-				$posts[] = $featured_post;
-
-				// Resort chronologically
-				usort( $posts, function ( $a, $b ) {
-					$a_start = get_post_meta( $a->ID, 'ibt_event_start', true );
-					$b_start = get_post_meta( $b->ID, 'ibt_event_start', true );
-					return strcmp( $a_start, $b_start );
-				} );
-
-				// Replace query posts so the existing loop uses updated list
-				$query->posts = $posts;
-				$query->post_count = count( $posts );
-			}
+	// --- Step 3: check if there is an existing featured event in the query. If yes no feautured event logic required. ---
+	$has_featured = false;
+	foreach ( $events_main as $em ) {
+		if ( get_post_meta( $em->ID, 'ibt_event_featured', true ) ) {
+			$has_featured = true;
+			break;
 		}
 	}
+	if ( $has_featured ) {
+		$events_final = $events_main;
+		goto render_output;
+	}
+
+	// --- Step 4: fetch next future featured event for use in step 5 & 6 ---
+	$args_featured = array(
+		'post_type'      => 'ibt_event',
+		'posts_per_page' => 1,
+		'post_status'    => 'publish',
+		'meta_key'       => 'ibt_event_start',
+		'orderby'        => 'meta_value',
+		'order'          => 'ASC',
+		'meta_query'     => array(
+			array(
+				'key'     => 'ibt_event_end',
+				'value'   => $now,
+				'compare' => '>=',
+				'type'    => 'DATETIME',
+			),
+			array(
+				'key'     => 'ibt_event_featured',
+				'value'   => '1',
+				'compare' => '=',
+			),
+		),
+	);
+	$query_featured = new WP_Query( $args_featured );
+
+	if ( ! $query_featured->have_posts() ) {
+		// Step 5: no future featured events so output main list
+		$events_final = $events_main;
+		goto render_output;
+	}
+
+	// --- Step 6: build $events_final with last event in list substituted for first featured event ---
+	$featured_post = $query_featured->posts[0];
+	$events_final  = $events_main;
+
+	// Replace last event with featured one
+	array_pop( $events_final );
+	$events_final[] = $featured_post;
+
+	// Resort chronologically by start date
+	usort( $events_final, function ( $a, $b ) {
+		return strcmp(
+			get_post_meta( $a->ID, 'ibt_event_start', true ),
+			get_post_meta( $b->ID, 'ibt_event_start', true )
+		);
+	});
+
+	/**
+	 * ------------------------------------------------------------------------
+	 * render_output:
+	 * Unified render exit point for all query paths.
+	 *
+	 * The logic above selects which set of events to render:
+	 *   2 → $events_main (n ≤ 2, skip featured logic)
+	 *   3 → $events_main (already includes a featured event)
+	 *   5 → $events_main (no featured found)
+	 *   6 → $events_final (featured substituted in)
+	 *
+	 * Each path defines $events_final before jumping here.
+	 * We then inject that array back into $query_main->posts so the
+	 * existing render loop below can run unchanged.
+	 *
+	 * Equivalent to: $query = new WP_Query(); $query->posts = $events_final;
+	 * Using goto avoids repeating the 40-line render loop four times.
+	 * ------------------------------------------------------------------------
+	 */
+
+render_output:
+	// Replace query contents so render loop stays the same
+	$query_main->posts      = $events_final;
+	$query_main->post_count = count( $events_final );
+	$query                  = $query_main;
+
 
 
 	$out = '<div class="ibt-event-list">';
@@ -276,8 +291,10 @@ function ibt_events_render_list( $atts = array() ) {
 
 		// Online flag (collapses automatically when empty)
 		$online = do_shortcode( '[ibt_event_field key="ibt_event_online"]' );
-		if ( ! empty( trim( $online ) ) ) {
-			$out .= $online;
+		if ( $online === '' ) {
+			$out = ''; // We want no output.
+		} else {
+			$out .= '<p class="ibt-event-online">' . esc_html( $online ) . '</p>';
 		}
 
 		$out .= '</article>';
