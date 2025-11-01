@@ -144,57 +144,41 @@ function ibt_events_render_list( $atts = array() ) {
 	 */
 
 render_output:
-	// Replace query contents so render loop stays the same
-	$query_main->posts      = $events_final;
-	$query_main->post_count = count( $events_final );
-	$query                  = $query_main;
-
 
     $out = '<div class="ibt-event-list">';
 
-    while ( $query->have_posts() ) {
-        $query->the_post();
-        $post_id = get_the_ID();
+    foreach ( $events_final as $event_post ) {
+        // Prepare global $post so template tags work (get_the_title(), etc.)
+        setup_postdata( $event_post );
+
+        $post_id = $event_post->ID;
 
         $out .= '<article class="ibt-event-list-item">';
-        $out .= '<h3 class="ibt-event-title"><a href="' . esc_url( get_permalink() ) . '">' . esc_html( get_the_title() ) . '</a></h3>';
+        $out .= '<h3 class="ibt-event-title"><a href="' . esc_url( get_permalink( $post_id ) ) . '">' . esc_html( get_the_title( $post_id ) ) . '</a></h3>';
 
-        // Excerpt
-        $excerpt = ibt_events_render_field( $post_id, 'ibt_event_excerpt' );
-        if ( $excerpt !== '' ) {
-            $out .= '<p>' . $excerpt . '</p>';
-        }
-
-        // Presenter
+        // Pull pre-formatted field fragments
+        $excerpt   = ibt_events_render_field( $post_id, 'ibt_event_excerpt' );
         $presenter = ibt_events_render_field( $post_id, 'ibt_event_presenter' );
-        if ( $presenter !== '' ) {
-            $out .= '<p><strong>Presenter:</strong> ' . $presenter . '</p>';
-        }
+        $start     = ibt_events_render_field( $post_id, 'ibt_event_start' );
+        $venue     = ibt_events_render_field( $post_id, 'ibt_event_venue' );
+        $online    = ibt_events_render_field( $post_id, 'ibt_event_online' );
 
-        // Starts
-        $start = ibt_events_render_field( $post_id, 'ibt_event_start' );
-        if ( $start !== '' ) {
-            $out .= '<p><strong>Starts:</strong> ' . $start . '</p>';
-        }
-
-        // Venue
-        $venue = ibt_events_render_field( $post_id, 'ibt_event_venue' );
-        if ( $venue !== '' ) {
-            $out .= '<p><strong>Venue:</strong> ' . $venue . '</p>';
-        }
-
-        // Online flag – already wrapped by field renderer
-        $online = ibt_events_render_field( $post_id, 'ibt_event_online' );
-        if ( $online !== '' ) {
-            $out .= $online;
-        }
-
+        // Append each field to $out
+        if ( $excerpt !== '' )   { $out .= '<p>' . $excerpt . '</p>'; }
+        if ( $presenter !== '' ) { $out .= '<p><strong>Presenter:</strong> ' . $presenter . '</p>'; }
+        if ( $start !== '' )     { $out .= '<p><strong>Starts:</strong> ' . $start . '</p>'; }
+        if ( $venue !== '' )     { $out .= '<p><strong>Venue:</strong> ' . $venue . '</p>'; }
+        if ( $online !== '' )    { $out .= $online; }
+        
         $out .= '</article>';
     }
 
+    // Clean up global $post after setup_postdata()
     wp_reset_postdata();
+
     $out .= '</div>';
 
+    // Return the buffer
+    return $out;
 
-	return $out;
 }
