@@ -1,5 +1,23 @@
 <?php
-// Adds and manages metaboxes for Events and Venues in the admin editor.
+/* -------------------------------------------------------------------------
+   IBT EVENTS ADMIN – METABOXES
+   -------------------------------------------------------------------------
+   Purpose:
+   - Add and manage admin metaboxes for the Events and Venues CPTs.
+   - Handles input and saving for all event-related meta fields:
+       • Date/time, venue, prices, presenter, online flag, featured toggle.
+       • Venue address, island, and map location.
+
+   Notes:
+   - Outputs admin-only UI elements; no front-end display logic here.
+   - Limited sanitisation on save:
+       • Relies on WordPress core nonce and capability checks.
+       • Input context is trusted (admin-only forms).
+       • Additional sanitisation is a nice-to-have improvement when time allows.
+
+   CSS:
+   - Enqueues /css/ibt-events-admin.css for back-end layout styling.
+------------------------------------------------------------------------- */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
