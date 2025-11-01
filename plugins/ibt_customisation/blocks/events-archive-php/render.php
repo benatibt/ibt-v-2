@@ -93,7 +93,7 @@ if ( $q->have_posts() ) {
 
 			echo '<div class="wp-block-column">';
 				if ( $venue )  echo '<p><strong>Venue:</strong> ' . wp_kses_post( $venue ) . '</p>';
-				if ( $online ) echo '<p class="ibt-event-online">' . wp_kses_post( $online ) . '</p>';
+				if ( $online ) echo $online;
 			echo '</div>';
 		echo '</div>'; // .wp-block-columns
 

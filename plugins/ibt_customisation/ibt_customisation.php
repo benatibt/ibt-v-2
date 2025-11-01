@@ -82,12 +82,12 @@ add_action( 'plugins_loaded', function() {
 	require_once __DIR__ . '/includes/author-isbn-fields.php';
 
 	// --- Events module (core CPT + helpers + shortcodes) ---
-	require_once __DIR__ . '/includes/ibt-events-core.php';
-	require_once __DIR__ . '/includes/ibt-events-admin.php';
-	require_once __DIR__ . '/includes/ibt-events-helpers.php';
-	require_once __DIR__ . '/includes/ibt-events-display-field.php';
-	require_once __DIR__ . '/includes/ibt-events-display-list.php';
-	require_once __DIR__ . '/includes/ibt-events-shortcodes.php';
+	require_once __DIR__ . '/includes/events/ibt-events-core.php';
+	require_once __DIR__ . '/includes/events/ibt-events-metabox.php';
+	require_once __DIR__ . '/includes/events/ibt-events-helpers.php';
+	require_once __DIR__ . '/includes/events/ibt-events-display-field.php';
+	require_once __DIR__ . '/includes/events/ibt-events-display-list.php';
+	require_once __DIR__ . '/includes/events/ibt-events-shortcode.php';
 
 	// --- Active production block (PHP-rendered Events Archive) ---
 	require_once __DIR__ . '/blocks/events-archive-php/block-register.php';
