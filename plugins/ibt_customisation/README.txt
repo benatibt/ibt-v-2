@@ -74,7 +74,7 @@ ibt_customisation.php                   – Main plugin loader
 *Note:* The events archive block uses a simplified registration pattern
 where `block-register.php` directly registers the render callback from
 PHP without a full `block.json` / JS build. This is fully
-production-safe under WordPress 6.8+ and avoids Gutenberg build
+production-safe under WordPress 6.8 and avoids Gutenberg build
 dependencies.
 
 --------------------------------------------------------------------
