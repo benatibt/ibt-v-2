@@ -1091,6 +1091,59 @@ Purpose:
   display: block !important;
 }
 
+
+/* ---------------------------------------------------------------------
+                      4.3 - EVENT FORMATTING
+  ---------------------------------------------------------------------- */
+
+/* ----- 4.3.1 EVENT ARCHIVE -----*/
+
+/* Base Reset */
+.ibt-events-archive,
+.ibt-events-archive * {
+  margin: 0;
+  padding: 0;
+  gap: 0;
+  list-style: none;
+}
+.ibt-events-archive {--wp--style--block-gap: 0;}
+
+/* Title/toggle row */
+.ibt-archive-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--wp--preset--spacing--s);
+  padding-top: var(--wp--preset--spacing--l);
+  padding-bottom: var(--wp--preset--spacing--m);
+}
+
+/* Fix width for toggle button */
+.ibt-event-toggle-btn {width: 15rem;}
+
+/* 2/3 width <hr> */
+.ibt-events-archive hr {
+  width: clamp(12rem, 66%, 53rem);
+  margin-inline: auto;
+  margin-block: var(--wp--preset--spacing--s);
+  border: none;
+  border-top: 2px solid var(--wp--preset--color--border-dark, #999);
+}
+
+/* Event heading to H3 size (semantically H2) */
+.ibt-event-title { font-size: var(--wp--preset--font-size--xl);}
+
+/* Paragraph fields and excerpts - tight spacing*/
+.ibt-event-list-item p { padding-block: 0.3rem;}
+
+/* Highlight event-online */
+.ibt-event-field--ibt-event-online {
+  font-weight: 700;
+  color: var(--wp--preset--color--emphasis-accent);
+  font-family: var(--wp--preset--font-family--heading);
+}
+
 /* ---------------------------------------------------------------------
    4A - WooCommerce (Temporary numbering until full refactor.)
    WooCommerce section for all store-related styling.
@@ -1395,58 +1448,6 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 
 
 
-/* ----- Events Archive -----*/
-
-/* Base Reset */
-.ibt-events-archive,
-.ibt-events-archive *,
-.ibt-events-archive ul,
-.ibt-events-archive ol {
-  margin: 0;
-  padding: 0;
-  gap: 0;
-  list-style: none;
-}
-.ibt-events-archive {--wp--style--block-gap: 0;}
-
-/* Title/toggle row */
-.ibt-archive-header {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: var(--wp--preset--spacing--s);
-  padding-top: var(--wp--preset--spacing--l);
-  padding-bottom: var(--wp--preset--spacing--m);
-}
-
-.ibt-event-toggle-btn {
-  width: 15rem;
-}
-
-/* Divider under header */
-.ibt-events-archive hr {
-  width: clamp(12rem, 66%, 50rem);
-  margin-inline: auto;
-  margin-block: var(--wp--preset--spacing--s);
-  border: none;
-  border-top: 2px solid var(--wp--preset--color--border-dark, #999);
-}
-
-.ibt-event-title {
-  font-size: var(--wp--preset--font-size--xl);
-}
-
-/* Paragraph fields and excerpts */
-.ibt-event-list-item p {
-  padding-block: 0.3rem;
-}
-
-.ibt-event-field--ibt-event-online {
-  font-weight: 700;
-  color: var(--wp--preset--color--emphasis-accent);
-  font-family: var(--wp--preset--font-family--heading);
-}
 
 
 /* **********************************************************************

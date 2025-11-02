@@ -1,44 +1,58 @@
 <?php
+/* -------------------------------------------------------------------------
+   IBT EVENTS ARCHIVE – RENDER CALLBACK
+   -------------------------------------------------------------------------
+   Purpose:
+   - Display paginated lists of Events for the /events/ archive block.
+   - Supports toggle between upcoming and past events using ?past=1.
+   - Outputs full markup including headings, buttons, and pagination.
+
+   Notes:
+   - Default mode shows only future events (ordered soonest first).
+   - ?past=1 includes all events (ordered newest first).
+   - Pagination handled via local WP_Query ($q) with temporary $wp_query swap.
+   - Fully compatible with WP 6.8+ block themes; no JavaScript build required.
+------------------------------------------------------------------------- */
+
 defined( 'ABSPATH' ) || exit;
 
-/**
- * Render callback for IBT Events Archive block
- * Behaviour:
- *  • Default – upcoming events only (soonest first)
- *  • ?past=1 – include past events (latest first)
- *  • Paginated (10 per page)
- */
 
 // Determine mode
 $show_past = isset( $_GET['past'] ) && $_GET['past'] == 1;
 $now       = ( new DateTime( 'now', new DateTimeZone( 'Europe/London' ) ) )->format( 'Y-m-d H:i' );
 $paged     = max( 1, get_query_var( 'paged' ) );
 
-// Build query
-$args = [
+// Setup pagination
+$per_page = 10;
+$paged    = max( 1, get_query_var( 'paged' ) );
+
+if ( $show_past ) {
+	// Show past selected. Show all events. Sort descending.
+	$order       = 'DESC';
+	$meta_query  = [];
+} else {
+	// Show future selected. Filter by event_end < now. Sort ascending.
+	$order       = 'ASC';
+	$meta_query  = [[
+		'key'     => 'ibt_event_end',
+		'value'   => $now,
+		'compare' => '>=',
+		'type'    => 'DATETIME',
+	]];
+}
+
+// --- Run query ---
+$q = new WP_Query([
 	'post_type'      => 'ibt_event',
 	'post_status'    => 'publish',
-	'posts_per_page' => 10,
+	'posts_per_page' => $per_page,
 	'paged'          => $paged,
 	'meta_key'       => 'ibt_event_start',
 	'orderby'        => 'meta_value',
-];
+	'order'          => $order,
+	'meta_query'     => $meta_query,
+]);
 
-if ( $show_past ) {
-	$args['order'] = 'DESC';
-} else {
-	$args['order'] = 'ASC';
-	$args['meta_query'] = [
-		[
-			'key'     => 'ibt_event_end',
-			'value'   => $now,
-			'compare' => '>=',
-			'type'    => 'DATETIME',
-		],
-	];
-}
-
-$q = new WP_Query( $args );
 
 // Wrapper
 echo '<div class="ibt-events-archive alignwide">';
@@ -106,14 +120,25 @@ if ( $q->have_posts() ) {
 
 	echo '</div>'; // .ibt-event-list
 
-	// Pagination
+	// --- Pagination ---
+	// Temporarily replace global $wp_query with local query $q during pagination
+	// render so it is based off on filtered query rather than WP default query.
 	echo '<div class="ibt-pagination">';
+	global $wp_query;
+	$backup_wp_query = $wp_query;
+	$wp_query = $q;
+
 	the_posts_pagination( [
 		'mid_size'  => 2,
 		'prev_text' => __( '← Previous', 'ibt' ),
 		'next_text' => __( 'Next →', 'ibt' ),
 	] );
+
+	$wp_query = $backup_wp_query;
+
+	// Render rest of page
 	echo '</div>';
+
 
 	wp_reset_postdata();
 } else {
