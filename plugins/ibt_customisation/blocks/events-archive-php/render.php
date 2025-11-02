@@ -46,7 +46,7 @@ echo '<div class="ibt-events-archive alignwide">';
 // --- Heading row with toggle button ---
 $title_text   = $show_past ? __( 'All Events', 'ibt' ) : __( 'Upcoming Events', 'ibt' );
 $toggle_url   = $show_past ? get_post_type_archive_link( 'ibt_event' ) : add_query_arg( 'past', 1, get_post_type_archive_link( 'ibt_event' ) );
-$toggle_label = $show_past ? __( 'Show upcoming events', 'ibt' ) : __( 'Show past events', 'ibt' );
+$toggle_label = $show_past ? __( 'Show upcoming events', 'ibt' ) : __( 'Include History', 'ibt' );
 
 echo '<div class="ibt-archive-header">';
 	echo '<h1 class="wp-block-heading ibt-archive-title">' . esc_html( $title_text ) . '</h1>';
