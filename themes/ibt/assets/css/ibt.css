@@ -1096,7 +1096,16 @@ Purpose:
                       4.3 - EVENT FORMATTING
   ---------------------------------------------------------------------- */
 
-/* ----- 4.3.1 EVENT ARCHIVE -----*/
+/* ----- 4.3.1 EVENT MULTIPLE VIEWS -----*/
+
+/* Highlight event-online */
+.ibt-event-field--ibt-event-online {
+  font-weight: 700;
+  color: var(--wp--preset--color--emphasis-accent);
+  font-family: var(--wp--preset--font-family--heading);
+}
+
+/* ----- 4.3.2 EVENT ARCHIVE -----*/
 
 /* Base Reset */
 .ibt-events-archive,
@@ -1137,12 +1146,52 @@ Purpose:
 /* Paragraph fields and excerpts - tight spacing*/
 .ibt-event-list-item p { padding-block: 0.3rem;}
 
-/* Highlight event-online */
-.ibt-event-field--ibt-event-online {
-  font-weight: 700;
-  color: var(--wp--preset--color--emphasis-accent);
-  font-family: var(--wp--preset--font-family--heading);
+/* ----- 4.3.2 EVENT ARCHIVE -----*/
+
+/* Bigger font for event-online to make it stand out */
+.single-ibt_event .ibt-event-field--ibt-event-online {
+  font-size: var(--wp--preset--font-size--l);
 }
+
+/* Tighten spacing between Venue name and address */
+.single-ibt_event .ibt-event-field--ibt-event-venue-name p {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+.single-ibt_event .ibt-event-field--ibt-event-venue-address p {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+/* ----- Event List (shortcode) ----- */
+/* Scoped to .ibt-event-list only */
+
+/* Spacing reset for tight layout */
+.ibt-event-list,
+.ibt-event-list * {
+  margin: 0;
+  padding: 0;
+  gap: 0;
+  list-style: none;
+}
+
+
+
+/* Individual event titles (h3) — theme L size */
+.ibt-event-list .ibt-event-title {
+  font-size: var(--wp--preset--font-size--l);
+  margin-top: var(--wp--preset--spacing--s);
+}
+
+/* Card-style frame around the entire list */
+.ibt-event-list {
+  border: 1px solid var(--wp--preset--color--border-dark, #999);
+  border-radius: var(--wp--preset--spacing--xs);
+  padding: var(--wp--preset--spacing--m);
+  background-color: var(--wp--preset--color--surface, #fff);
+  margin-block: var(--wp--preset--spacing--m);
+}
+
 
 /* ---------------------------------------------------------------------
    4A - WooCommerce (Temporary numbering until full refactor.)

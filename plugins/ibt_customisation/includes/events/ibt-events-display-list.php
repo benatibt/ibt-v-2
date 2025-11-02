@@ -145,8 +145,11 @@ function ibt_events_render_list( $atts = array() ) {
 
 render_output:
 
+    // Add div encapsulation and section heading
     $out = '<div class="ibt-event-list">';
+    $out .= '<h2 class="ibt-events-list-heading">' . esc_html__( 'Upcoming Events', 'ibt-events' ) . '</h2>';
 
+    // Loop through query adding html formatted fields to list
     foreach ( $events_final as $event_post ) {
         // Prepare global $post so template tags work (get_the_title(), etc.)
         setup_postdata( $event_post );
@@ -157,18 +160,14 @@ render_output:
         $out .= '<h3 class="ibt-event-title"><a href="' . esc_url( get_permalink( $post_id ) ) . '">' . esc_html( get_the_title( $post_id ) ) . '</a></h3>';
 
         // Pull pre-formatted field fragments
-        $excerpt   = ibt_events_render_field( $post_id, 'ibt_event_excerpt' );
-        $presenter = ibt_events_render_field( $post_id, 'ibt_event_presenter' );
         $start     = ibt_events_render_field( $post_id, 'ibt_event_start' );
         $venue     = ibt_events_render_field( $post_id, 'ibt_event_venue' );
         $online    = ibt_events_render_field( $post_id, 'ibt_event_online' );
 
         // Append each field to $out
-        if ( $excerpt !== '' )   { $out .= '<p>' . $excerpt . '</p>'; }
-        if ( $presenter !== '' ) { $out .= '<p><strong>Presenter:</strong> ' . $presenter . '</p>'; }
-        if ( $start !== '' )     { $out .= '<p><strong>Starts:</strong> ' . $start . '</p>'; }
-        if ( $venue !== '' )     { $out .= '<p><strong>Venue:</strong> ' . $venue . '</p>'; }
+        if ( $start !== '' )     { $out .= '<p><strong>When:</strong> ' . $start . '</p>'; }
         if ( $online !== '' )    { $out .= $online; }
+        if ( $venue !== '' )     { $out .= '<p><strong>Where:</strong> ' . $venue . '</p>'; }
         
         $out .= '</article>';
     }
