@@ -125,7 +125,7 @@ h2 {font-size: var(--wp--preset--font-size--xxl); font-weight: 600 ; padding-top
 h3 {font-size: var(--wp--preset--font-size--xl); font-weight: 600 ; padding-top: var(--wp--preset--spacing--m) ;}
 h4 {font-size: var(--wp--preset--font-size--l); font-weight: 600 ; padding-top: var(--wp--preset--spacing--m) ;}
 h5 {font-size: var(--wp--preset--font-size--m); font-weight: 600 ; padding-top: var(--wp--preset--spacing--s) ;}
-h6 {font-size: var(--wp--preset--font-size--m); font-weight: 450 ; padding-top: var(--wp--preset--spacing--s) ;}
+h6 {font-size: var(--wp--preset--font-size--m); font-weight: 500 ; padding-top: var(--wp--preset--spacing--s) ;}
 
 /* Provide theme style for <hr>, partially supported in json but doing all in one place is cleaner. */
 hr,
@@ -1164,27 +1164,25 @@ Purpose:
 }
 
 /* ----- Event List (shortcode) ----- */
-/* Scoped to .ibt-event-list only */
+/* Scoped to .ibt-events-list-shortcode only */
 
 /* Spacing reset for tight layout */
-.ibt-event-list,
-.ibt-event-list * {
+.ibt-events-list-shortcode,
+.ibt-events-list-shortcode * {
   margin: 0;
   padding: 0;
   gap: 0;
   list-style: none;
 }
 
-
-
 /* Individual event titles (h3) — theme L size */
-.ibt-event-list .ibt-event-title {
+.ibt-events-list-shortcode .ibt-event-title {
   font-size: var(--wp--preset--font-size--l);
   margin-top: var(--wp--preset--spacing--s);
 }
 
 /* Card-style frame around the entire list */
-.ibt-event-list {
+.ibt-events-list-shortcode {
   border: 1px solid var(--wp--preset--color--border-dark, #999);
   border-radius: var(--wp--preset--spacing--xs);
   padding: var(--wp--preset--spacing--m);

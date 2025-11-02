@@ -146,7 +146,7 @@ function ibt_events_render_list( $atts = array() ) {
 render_output:
 
     // Add div encapsulation and section heading
-    $out = '<div class="ibt-event-list">';
+    $out = '<div class="ibt-events-list-shortcode">';
     $out .= '<h2 class="ibt-events-list-heading">' . esc_html__( 'Upcoming Events', 'ibt-events' ) . '</h2>';
 
     // Loop through query adding html formatted fields to list
