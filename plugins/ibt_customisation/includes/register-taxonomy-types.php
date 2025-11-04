@@ -3,10 +3,12 @@
  * IBT Customisation — Register Taxonomy & Types
  * Purpose:
  *   Registers the shared "Topic" taxonomy and "Library" CPT.
+ *   Helper shortcode for human readable post type in search results.
  *
  *   RTT1 - Topic taxonomy
  *   RTT2 - Library CPT
  *   RTT3 - Rename "Posts" to "News" in admin
+ *   RTT4 - Shortcode registration for [ibt_post_type]
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -131,3 +133,32 @@ add_action( 'init', ibt_safe( 'RTT3-rename-post-labels', function() {
 
 }, 10 ) );
 
+
+// -------------------------------------------------------------------------
+// RTT4: [ibt_post_type]
+// Returns a human-readable label for the current post type.
+// Used in search result templates to indicate whether result is a Book,
+// Event, Library article, News item, or Page. Default: Other.
+// -------------------------------------------------------------------------
+
+add_shortcode( 'ibt_post_type', function ( $atts ) {
+
+    $post_id = get_the_ID();
+    if ( ! $post_id ) {
+        return '';
+    }
+
+    $post_type = get_post_type( $post_id );
+
+    $labels = array(
+        'product'   => 'Book',
+        'ibt_event' => 'Event',
+        'library'   => 'Library',
+        'post'      => 'News',
+        'page'      => 'Page'
+    );
+
+    $label = $labels[ $post_type ] ?? 'Other';
+
+    return esc_html( $label );
+});

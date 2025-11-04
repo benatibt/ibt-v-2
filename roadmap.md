@@ -113,9 +113,10 @@ Phase 2 — Functionality
         
         X Books - verify core physical product checkout flow
 
-        Membership product (one-off, manual renewal).
+        X Membership product (one-off, manual renewal).
 
-        Event product type for advance-pay events.
+        Skipped - Event product type for advance-pay events.
+        Same methodology as membership. Use export to give list of tickets.
 
     2.3 Library & Topic:
 
