@@ -1206,10 +1206,11 @@ Purpose:
   font-family: var(--wp--preset--font-family--heading);
 }
 
-/* Universal spacing for WooCommerce breadcrumbs */
+/* Universal spacing & font size for WooCommerce breadcrumbs */
 .wp-block-breadcrumbs,
 .wc-block-breadcrumbs {
   padding-block-start: var(--wp--preset--spacing--s);
+  font-size:  var(--wp--preset--font-size--s) !important;
 }
 
 /* ----- WooCommerce links -----
@@ -1284,17 +1285,42 @@ Purpose:
   margin: 0 !important;
   float: none !important;
   display: block;
-  width: 100% !important;
   text-align: center;
 }
 
-/* Image: full width within frame */
+/* Desktop & tablet only – scale product image to suit medium size screen. */
+@media (min-width: 783px) {
+
+  /* Fluid column width ONLY inside Woo product gallery wrapper */
+  .single-product .product .wp-block-columns > .wp-block-column:first-child {
+      flex: 0 0 clamp(240px, 40vw, 512px) !important;
+      min-width: 0 !important;
+  }
+
+  /* Image fills its (now fluid) column */
+  .single-product .woocommerce-product-gallery__image img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+
+/* Mobile – reduce image size and add vertical separation */
+@media (max-width: 782px) {
+
+  /* Scale down the image to a reasonable size */
 .single-product .woocommerce-product-gallery__image img {
-  display: block;
-  margin: 0 !important;
-  padding: 0 !important;
-  max-width: 100%;
-  height: auto;
+    width: clamp(200px, 70vw, 450px) !important;
+    height: auto;
+    display: block;
+}
+
+  /* We tried to centre the image but gave up... */
+
+  /* Vertically separate image from summary */
+  .single-product .product .wp-block-columns.alignwide {
+      row-gap: var(--wp--preset--spacing--l);
+  }
 }
 
 /* Balanced gutter between image and text columns */
@@ -1361,6 +1387,28 @@ Note - may want to turn it back on so left in template. */
 .single-product .taxonomy-product_cat.wp-block-post-terms {
   display: none !important;
 }
+
+/* Floating frame + centered label for express checkout on SINGLE PRODUCT only */
+.single-product .wcpay-express-checkout-wrapper {
+    position: relative;
+    border: 1px solid var(--wp--preset--color--border-dark, #999);
+    border-radius: 0.5rem;
+    background: var(--color-background, #FAF9F7);
+    padding: 1.25rem 0.75rem 0.75rem;
+    margin-bottom: 1.5rem;
+}
+.single-product .wcpay-express-checkout-wrapper::before {
+    content: "Buy Now";
+    position: absolute;
+    top: -0.65rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-background, #FAF9F7);
+    padding: 0 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
 
 /* Improve readability of classic WooCommerce tab headers */
 .single-product ul.wc-tabs li a {
@@ -1490,6 +1538,7 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 /* ====================================================================== */
 
 /* WORK IN PROGRESS CODE BELOW THIS LINE */
+
 
 
 
