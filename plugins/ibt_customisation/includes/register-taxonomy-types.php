@@ -8,7 +8,7 @@
  *   RTT1 - Topic taxonomy
  *   RTT2 - Library CPT
  *   RTT3 - Rename "Posts" to "News" in admin
- *   RTT4 - Shortcode registration for [ibt_post_type]
+ *   RTT4 - Search sort order (not really taxonomy but fits better here than elsewhere...)
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -135,37 +135,9 @@ add_action( 'init', ibt_safe( 'RTT3-rename-post-labels', function() {
 
 
 // -------------------------------------------------------------------------
-// RTT4: [ibt_post_type]
-// Returns a human-readable label for the current post type.
-// Used in search result templates to indicate whether result is a Book,
-// Event, Library article, News item, or Page. Default: Other.
+// RTT4: Order front-end search results by Relevanssi relevance (keeps block JSON happy)
 // -------------------------------------------------------------------------
 
-
-add_shortcode( 'ibt_post_type', function() {
-    $post_id = get_the_ID();
-    if ( ! $post_id ) {
-        return 'Other';
-    }
-
-    $type = get_post_type( $post_id );
-
-    $map = array(
-        'ibt_event' => 'Event',
-        'product'   => 'Book',
-        'library'   => 'Library',
-        'post'      => 'News',
-        'page'      => 'Page',
-    );
-
-    error_log("IBT Debug FIX: id=$post_id type=$type");
-
-    return $map[ $type ] ?? 'Other';
-});
-
-
-
-// Order front-end search results by Relevanssi relevance (keeps block JSON happy)
 add_action( 'pre_get_posts', function( $q ) {
     if ( $q->is_main_query() && $q->is_search() && ! is_admin() ) {
         $q->set( 'orderby', 'relevance' );
