@@ -1,6 +1,6 @@
 <?php
 /**
- * Register the blue-box version of the IBT Events Archive block.
+ * Register the IBT Events Archive block.
  * Pure PHP registration — no block.json or build step required.
  */
 

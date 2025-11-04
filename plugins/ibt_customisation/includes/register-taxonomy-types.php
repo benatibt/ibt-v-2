@@ -141,24 +141,33 @@ add_action( 'init', ibt_safe( 'RTT3-rename-post-labels', function() {
 // Event, Library article, News item, or Page. Default: Other.
 // -------------------------------------------------------------------------
 
-add_shortcode( 'ibt_post_type', function ( $atts ) {
 
+add_shortcode( 'ibt_post_type', function() {
     $post_id = get_the_ID();
     if ( ! $post_id ) {
-        return '';
+        return 'Other';
     }
 
-    $post_type = get_post_type( $post_id );
+    $type = get_post_type( $post_id );
 
-    $labels = array(
-        'product'   => 'Book',
+    $map = array(
         'ibt_event' => 'Event',
+        'product'   => 'Book',
         'library'   => 'Library',
         'post'      => 'News',
-        'page'      => 'Page'
+        'page'      => 'Page',
     );
 
-    $label = $labels[ $post_type ] ?? 'Other';
+    error_log("IBT Debug FIX: id=$post_id type=$type");
 
-    return esc_html( $label );
+    return $map[ $type ] ?? 'Other';
+});
+
+
+
+// Order front-end search results by Relevanssi relevance (keeps block JSON happy)
+add_action( 'pre_get_posts', function( $q ) {
+    if ( $q->is_main_query() && $q->is_search() && ! is_admin() ) {
+        $q->set( 'orderby', 'relevance' );
+    }
 });

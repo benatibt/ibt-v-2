@@ -79,8 +79,9 @@ add_action( 'plugins_loaded', function() {
 	require_once __DIR__ . '/includes/events/ibt-events-display-list.php';
 	require_once __DIR__ . '/includes/events/ibt-events-shortcode.php';
 
-	// --- Active production block (PHP-rendered Events Archive) ---
+	// --- Active production blocks ---
 	require_once __DIR__ . '/blocks/events-archive-php/block-register.php';
+	require_once __DIR__ . '/blocks/post-type-label/block-register.php';
 
 });
 
