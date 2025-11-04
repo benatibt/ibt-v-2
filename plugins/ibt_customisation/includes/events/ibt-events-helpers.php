@@ -41,10 +41,9 @@ function ibt_events_sanitize_price( $val ) {
 }
 
 
-// Convert a MySQL datetime string to human-friendly UK format (site local time).
-// Example: '2025-10-18 12:15:00' → '12:15 pm on 18 October 25'
-//
-// Note – Respects site timezone (Europe/London). Do not replace with UTC conversion.
+// Convert a MySQL datetime string to a short UK format (site local time).
+// Example: '2025-10-18 12:15:00' → '18th Oct 25 at 12:15 pm'
+// Uses ordinal day and abbreviated month for compact mobile display.
 
 if ( ! function_exists( 'ibt_events_format_datetime' ) ) {
 	function ibt_events_format_datetime( $mysql_datetime ) {
@@ -58,14 +57,14 @@ if ( ! function_exists( 'ibt_events_format_datetime' ) ) {
 			return '';
 		}
 
-		return date_i18n( 'g:ia \o\n j F y', $ts ); // e.g. 12:15 pm on 18 October 25
+		return date_i18n( 'jS M y \a\t g:ia', $ts ); // e.g. 18th Oct 25 at 12:15 pm
 	}
 }
 
 
 // Format event end time intelligently.
 // Shows only time if same day, otherwise full date and time.
-// Example: '3:45 pm' (same day) or '3:45 pm on 19 October 25'
+// Example: '3:45 pm' (same day) or '19th Oct 25 at 3:45 pm'
 
 if ( ! function_exists( 'ibt_events_format_end' ) ) {
 	function ibt_events_format_end( $start, $end ) {
@@ -82,8 +81,8 @@ if ( ! function_exists( 'ibt_events_format_end' ) ) {
 		$same_day = ( date( 'Ymd', $start_ts ) === date( 'Ymd', $end_ts ) );
 
 		return $same_day
-			? date_i18n( 'g:ia', $end_ts ) // 3:45 pm
-			: date_i18n( 'g:ia \o\n j F y', $end_ts ); // 3:45 pm on 19 October 25
+			? date_i18n( 'g:ia', $end_ts )                 // e.g. 3:45 pm
+			: date_i18n( 'jS M y \a\t g:ia', $end_ts );   // e.g. 19th Oct 25 at 3:45 pm
 	}
 }
 

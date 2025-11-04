@@ -23,10 +23,13 @@ add_action( 'after_setup_theme', function () {
     add_theme_support( 'custom-spacing' );
 
 	// WooCommerce basics.
+    // Remove zoom (doesn't suit theme)
+    // Remove slider (single image per product so adds weight without value)
+    // See WOO_FILTERS section for enforecement (otherwise Woo loads them anyway)
 	add_theme_support( 'woocommerce' );
 	//add_theme_support( 'wc-product-gallery-zoom' );
 	add_theme_support( 'wc-product-gallery-lightbox' );
-	add_theme_support( 'wc-product-gallery-slider' );
+	//add_theme_support( 'wc-product-gallery-slider' );
 
 	// Modern HTML5 markup.
 	add_theme_support( 'html5', [
@@ -66,10 +69,23 @@ add_action( 'wp_enqueue_scripts', function () {
 	);
 }, 20 );
 
+// ----- WOO_FILTERS -----
+// Explicit filters because some Woo templates enque even without theme support declaration
 
 // Disable WooCommerce image zoom on single product pages (not needed for book covers).
 add_filter( 'woocommerce_single_product_zoom_enabled', '__return_false', 20 );
 
+// Disable WooCommerce FlexSlider assets on single product pages
+add_action( 'wp_enqueue_scripts', function() {
+	if ( is_product() ) {
+		wp_dequeue_script( 'flexslider' );
+		wp_deregister_script( 'flexslider' );
+		wp_dequeue_style( 'woocommerce_flexslider_css' );
+		wp_deregister_style( 'woocommerce_flexslider_css' );
+	}
+}, 30 );
+
+// ----------------------
 
 //  Register IBT button styles.
 add_action( 'init', function() {
