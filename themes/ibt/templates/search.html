@@ -1,0 +1,29 @@
+<!-- wp:template-part {"slug":"header","theme":"ibt"} /-->
+
+<!-- wp:group {"tagName":"main","className":"ibt-rootp-apply","layout":{"type":"constrained"}} -->
+<main class="wp-block-group ibt-rootp-apply">
+
+    <!-- wp:template-part {"slug":"meta-schema","theme":"ibt"} /-->
+    <!-- wp:query-title {"type":"search","level":1} /-->
+
+    <!-- wp:query {"layout":{"type":"constrained"}} -->
+        <!-- wp:post-template -->
+
+            <!-- wp:paragraph {"className":"ibt-search-type-label"} -->
+            <span class="ibt-search-type-label">[ibt_post_type]</span>
+            <!-- /wp:paragraph -->
+
+            <!-- wp:post-title {"isLink":true} /-->
+            <!-- wp:post-excerpt /-->
+
+        <!-- /wp:post-template -->
+
+        <!-- wp:query-pagination /-->
+    <!-- /wp:query -->
+
+    <!-- wp:template-part {"slug":"pre-footer","theme":"ibt"} /-->
+
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","theme":"ibt"} /-->
