@@ -1540,9 +1540,41 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 /* WORK IN PROGRESS CODE BELOW THIS LINE */
 
 
+/* Search result type badge */
+.ibt-search-type-label {
+  text-align: center;
+  padding: var(--wp--preset--spacing--l) 0;
+  margin: 0; /* remove default heading margin */
+  line-height: 1.2;
+}
 
+/* Search result type column */
+.ibt-search-badge-column {
+  background: var(--wp--preset--color--alt-background);
+  border: 1px solid var(--wp--preset--color--border-dark);
+  border-radius: 10px;
+}
 
-
+/* Convert badge to header on mobile */
+@media (max-width: 782px) {
+  .ibt-search-badge-column {
+    background: var(--wp--preset--color--background);
+    border: none; 
+    border-top: 2px solid var(--wp--preset--color--border-dark);
+    border-radius: 0;
+    margin-bottom: 0;
+  }
+  .ibt-search-type-label {
+    padding: var(--wp--preset--spacing--xs);
+  }
+  .ibt-search-result-column {
+    row-gap: var(--wp--preset--spacing--xs); /* overrides big default blockGap */
+  }
+  .ibt-search-columns {
+    row-gap: 0;
+    
+  }
+}
 
 
 

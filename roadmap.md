@@ -225,6 +225,8 @@ Phase 4 - Testing / QA
         Check each post type, search type and tag type for correct behaviour
         Responsive images & basic font optimisation (subset/preload); quick Lighthouse performance pass.
 
+    4.5c Make a copy and test Royal Mail Integration (plugin prefered for 2 way data)
+
     4.6 If result==flawless 
         Complete content migration
         Add forwards for Shopify URLs
