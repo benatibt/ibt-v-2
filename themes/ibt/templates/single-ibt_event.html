@@ -1,0 +1,71 @@
+<!-- wp:template-part {"slug":"header","theme":"ibt"} /-->
+
+<!-- wp:group {"tagName":"main","className":"ibt-rootp-apply","layout":{"type":"constrained"}} -->
+<main class="wp-block-group ibt-rootp-apply"><!-- wp:template-part {"slug":"meta-schema","theme":"ibt"} /-->
+
+<!-- wp:group {"tagName":"article","align":"wide","style":{"layout":{"contentSize":"var(\u002d\u002dwp\u002d\u002dcustom\u002d\u002dsize\u002d\u002dcontent)"}},"layout":{"type":"default"}} -->
+<article class="wp-block-group alignwide"><!-- wp:post-title {"level":1} /-->
+
+<!-- wp:columns -->
+<div class="wp-block-columns"><!-- wp:column -->
+<div class="wp-block-column"><!-- wp:paragraph -->
+<p><strong>Presenter:</strong> [ibt_event_field key="ibt_event_presenter"]</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p><strong>Starts:</strong> [ibt_event_field key="ibt_event_start"]</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p><strong>Ends:</strong> [ibt_event_field key="ibt_event_end"]</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p><strong>Public Price:</strong> [ibt_event_field key="ibt_event_price_public"]</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p><strong>Members Price:</strong> [ibt_event_field key="ibt_event_price_member"]</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:column -->
+
+<!-- wp:column -->
+<div class="wp-block-column"><!-- wp:paragraph -->
+<p>[ibt_event_field key="ibt_event_online"]</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p><strong>Venue:</strong> [ibt_event_field key="ibt_event_venue_name"]</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>[ibt_event_field key="ibt_event_venue_address"] </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:shortcode -->
+[ibt_event_field key="ibt_event_map_button"]
+<!-- /wp:shortcode --></div>
+<!-- /wp:column --></div>
+<!-- /wp:columns -->
+
+<!-- wp:post-content {"layout":{"type":"default"}} /-->
+
+<!-- wp:post-terms {"term":"category","prefix":"Categories: "} /-->
+
+<!-- wp:post-terms {"term":"post_tag","prefix":"Tags: "} /-->
+
+<!-- wp:spacer {"height":"50px"} -->
+<div style="height:50px" aria-hidden="true" class="wp-block-spacer"></div>
+<!-- /wp:spacer -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center"><a href="/events">Back to Event List</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:spacer -->
+<div style="height:100px" aria-hidden="true" class="wp-block-spacer"></div>
+<!-- /wp:spacer --></article>
+<!-- /wp:group --></main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","theme":"ibt"} /-->
