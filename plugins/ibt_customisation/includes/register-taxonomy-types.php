@@ -8,7 +8,6 @@
  *   RTT1 - Topic taxonomy
  *   RTT2 - Library CPT
  *   RTT3 - Rename "Posts" to "News" in admin
- *   RTT4 - Search sort order (not really taxonomy but fits better here than elsewhere...)
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -129,17 +128,6 @@ add_action( 'init', ibt_safe( 'RTT3-rename-post-labels', function() {
 		$labels->menu_name          = __( 'News', 'ibt' );
 		$labels->name_admin_bar     = __( 'News Article', 'ibt' );
 	}
-}), 20 );
+	}), 20 );
 
 }, 10 ) );
-
-
-// -------------------------------------------------------------------------
-// RTT4: Order front-end search results by Relevanssi relevance (keeps block JSON happy)
-// -------------------------------------------------------------------------
-
-add_action( 'pre_get_posts', function( $q ) {
-    if ( $q->is_main_query() && $q->is_search() && ! is_admin() ) {
-        $q->set( 'orderby', 'relevance' );
-    }
-});

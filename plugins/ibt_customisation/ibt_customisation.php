@@ -19,9 +19,8 @@
  */
 
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+if ( ! defined( 'ABSPATH' ) ) {	exit; }
+
 
 /**
  * Error-handling wrapper: logs but never breaks execution.
@@ -70,6 +69,7 @@ add_action( 'plugins_loaded', function() {
 	// Load our included files after Woo check. Fails ungracefully if missing.
 	require_once __DIR__ . '/includes/register-taxonomy-types.php';
 	require_once __DIR__ . '/includes/author-isbn-fields.php';
+	require_once __DIR__ . '/includes/ibt-utilities.php' ;
 
 	// --- Events module (core CPT + helpers + shortcodes) ---
 	require_once __DIR__ . '/includes/events/ibt-events-core.php';
