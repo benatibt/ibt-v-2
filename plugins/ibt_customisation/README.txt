@@ -2,6 +2,8 @@
 IBT Customisation Plugin  (/ibt_customisation)
 ====================================================================
 
+Version & Change Log: See ibt_customisation.php
+
 Developed for the Islands Book Trust by Ben Sheppard  
 Tested with: WordPress 6.8 | WooCommerce 10.3 | PHP 8.4  
 Requires: WooCommerce (active)

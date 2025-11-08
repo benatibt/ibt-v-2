@@ -2,6 +2,9 @@
 Islands Book Trust Theme  (/ibt)
 ====================================================================
 
+Version: See styles.css
+Change Log: See ibt.css
+
 Developed for the Islands Book Trust by Ben Sheppard  
 Tested with: WordPress 6.8 | WooCommerce 10.3 | PHP 8.4
 

@@ -1,4 +1,30 @@
 <?php
+/* -------------------------------------------------------------------------
+   IBT PRODUCT HELPERS & CUSTOM FIELDS
+   -------------------------------------------------------------------------
+   Purpose:
+   - Adds custom product fields: Author, ISBN, Pages, First Published.
+   - Shows these fields in Product Data (admin), product loops, and
+     Additional Information table on single-product pages.
+   - Provides helper utilities for detecting “Book” products via category.
+
+   Shortcodes:
+   - [ibt_author]        → outputs the author name for the current product
+                           (default level="h2", accept h2|h3|p)
+
+   Notes:
+   - All admin callbacks wrapped with ibt_safe() → logs, never fatal.
+   - Only visible when product is in Books or descendant category.
+   - Display functions return strings (never echo) unless Woo hook requires echo.
+   - Cached helpers: no repeated taxonomy queries.
+
+   Dependencies:
+   - IBT_BOOKS_CATEGORY_SLUG (constant in main plugin)
+   - WooCommerce active
+
+   Safety:
+   - If Woo inactive, missing product, or invalid category: silent no-op.
+------------------------------------------------------------------------- */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
@@ -46,7 +72,7 @@ add_action( 'woocommerce_product_options_general_product_data', ibt_safe('AIF1-a
 	echo '<div class="options_group ibt-book-only-fields" style="display:none">';
 
 	woocommerce_wp_text_input( array(
-		'id'          => '_ibt_subtitle',
+		'id'          => '_ibt_subtitle', 	// Stored in `_ibt_subtitle` for legacy compatibility
 		'label'       => __( 'Author', 'ibt' ),
 		'placeholder' => __( 'e.g. John MacLeod', 'ibt' ),
 		'desc_tip'    => true,
@@ -114,9 +140,18 @@ add_action( 'woocommerce_process_product_meta', ibt_safe('AIF2-admin-save-fields
 	}
 
 	if ( isset( $_POST['_ibt_pages'] ) ) {
-		$pages = absint( $_POST['_ibt_pages'] );
-		update_post_meta( $post_id, '_ibt_pages', $pages );
+		// Trim whitespace and normalise input
+		$raw   = trim( wp_unslash( $_POST['_ibt_pages'] ) );
+		$pages = absint( $raw ); // Non-numeric → 0
+
+		// If user entered 0, blank, or non-numeric → store empty string
+		if ( $raw === '' || $pages === 0 ) {
+			update_post_meta( $post_id, '_ibt_pages', '' );
+		} else {
+			update_post_meta( $post_id, '_ibt_pages', $pages );
+		}
 	}
+
 
 	if ( isset( $_POST['_ibt_first_published'] ) ) {
 		$year_raw = sanitize_text_field( wp_unslash( $_POST['_ibt_first_published'] ) );
