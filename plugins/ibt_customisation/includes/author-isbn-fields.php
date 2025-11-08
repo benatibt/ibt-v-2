@@ -62,6 +62,32 @@ add_action( 'woocommerce_product_options_general_product_data', ibt_safe('AIF1-a
 		'type'        => 'text',
 	) );
 
+	woocommerce_wp_text_input( array(
+		'id'          => '_ibt_pages',
+		'label'       => __( 'Pages', 'ibt' ),
+		'placeholder' => __( 'e.g. 224', 'ibt' ),
+		'desc_tip'    => true,
+		'description' => __( 'Optional. Total number of pages.', 'ibt' ),
+		'type'        => 'number',
+		'custom_attributes' => array(
+			'min' => '1',
+			'step' => '1',
+		),
+	) );
+
+	woocommerce_wp_text_input( array(
+		'id'          => '_ibt_first_published',
+		'label'       => __( 'First Published', 'ibt' ),
+		'placeholder' => __( 'e.g. 1962', 'ibt' ),
+		'desc_tip'    => true,
+		'description' => __( 'Optional. Four-digit year.', 'ibt' ),
+		'type'        => 'number',
+		'custom_attributes' => array(
+			'min'  => '1',
+			'step' => '1',
+		),
+	) );
+
 	echo '</div>';
 } ) );
 
@@ -86,6 +112,20 @@ add_action( 'woocommerce_process_product_meta', ibt_safe('AIF2-admin-save-fields
 			sanitize_text_field( wp_unslash( $_POST['_ibt_isbn'] ) )
 		);
 	}
+
+	if ( isset( $_POST['_ibt_pages'] ) ) {
+		$pages = absint( $_POST['_ibt_pages'] );
+		update_post_meta( $post_id, '_ibt_pages', $pages );
+	}
+
+	if ( isset( $_POST['_ibt_first_published'] ) ) {
+		$year_raw = sanitize_text_field( wp_unslash( $_POST['_ibt_first_published'] ) );
+		$year     = preg_match( '/^\d{4}$/', $year_raw ) ? $year_raw : '';
+		update_post_meta( $post_id, '_ibt_first_published', $year );
+	}
+
+
+
 } ) );
 
 /**
@@ -178,36 +218,59 @@ add_action( 'woocommerce_after_shop_loop_item_title', function() {
 
 
 /**
- * FRONT: ISBN in Additional Information table
+ * FRONT: Book meta (ISBN, Pages, First Published) in Additional Information table
  */
-add_filter( 'woocommerce_display_product_attributes', ibt_safe( 'AIF4-front-isbn-filter', function( $attrs, $product = null ) {
+add_filter( 'woocommerce_display_product_attributes', ibt_safe( 'AIF4-front-bookmeta-filter', function( $attrs, $product = null ) {
 
-	// Woo 10.2+ sometimes omits $product; recover it safely.
+	// Woo sometimes omits $product; recover it safely.
 	if ( ! ( $product instanceof WC_Product ) ) {
 		global $product;
 		$product = $product instanceof WC_Product ? $product : wc_get_product( get_the_ID() );
 	}
 	if ( ! ( $product instanceof WC_Product ) ) {
-		return $attrs; // Can't proceed safely.
+		return $attrs;
 	}
 
-	$isbn = get_post_meta( $product->get_id(), '_ibt_isbn', true );
-	if ( $isbn === '' ) return $attrs;
-
+	// Only show for books or descendant categories
 	$books_ids = ibt_get_books_and_descendant_ids();
 	if ( empty( $books_ids ) ) return $attrs;
 
 	$terms = wp_get_post_terms( $product->get_id(), 'product_cat', array( 'fields' => 'ids' ) );
 	if ( is_wp_error( $terms ) || ! array_intersect( $books_ids, $terms ) ) return $attrs;
 
-	$row = array( 'label' => __( 'ISBN', 'ibt' ), 'value' => esc_html( $isbn ) );
-	if ( is_array( $attrs ) && array_keys( $attrs ) !== range( 0, count( $attrs ) - 1 ) ) {
-		$attrs = array( 'ibt_isbn' => $row ) + $attrs;
-	} else {
-		array_unshift( $attrs, $row );
+	// --- ISBN (optional) ---
+	$isbn = get_post_meta( $product->get_id(), '_ibt_isbn', true );
+	if ( $isbn !== '' ) {
+		$row = array( 'label' => __( 'ISBN', 'ibt' ), 'value' => esc_html( $isbn ) );
+		if ( is_array( $attrs ) && array_keys( $attrs ) !== range( 0, count( $attrs ) - 1 ) ) {
+			$attrs = array( 'ibt_isbn' => $row ) + $attrs;
+		} else {
+			array_unshift( $attrs, $row );
+		}
 	}
+
+	// --- Pages ---
+	$pages = get_post_meta( $product->get_id(), '_ibt_pages', true );
+	if ( $pages ) {
+		$attrs[] = array(
+			'label' => __( 'Pages', 'ibt' ),
+			'value' => esc_html( $pages ),
+		);
+	}
+
+	// --- First Published ---
+	$year = get_post_meta( $product->get_id(), '_ibt_first_published', true );
+	if ( $year ) {
+		$attrs[] = array(
+			'label' => __( 'First published', 'ibt' ),
+			'value' => esc_html( $year ),
+		);
+	}
+
 	return $attrs;
+
 }), 10, 2 );
+
 
 
 

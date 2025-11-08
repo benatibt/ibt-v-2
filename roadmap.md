@@ -235,6 +235,9 @@ Phase 4 - Testing / QA
         fix in sandbox
         goto start of phase 4
 
+    4.9 Title (short): Schema.org enhancements for Books
+        Detail (already stored): Map _ibt_pages → numberOfPages and _ibt_first_published → datePublished using woocommerce_structured_data_product filter.
+
 Optional refinements for later
     Automated membership renewals (Woo Subscriptions or Paid Memberships Pro).
     Event booking plugin if attendance grows.
