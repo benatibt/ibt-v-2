@@ -26,35 +26,40 @@ FEATURES
 --------------------------------------------------------------------
 • **Events system**  
   – Shortcode for inserting event lists on any page:  
-    `[ibt_events_list n="3"]`  
+        [ibt_events_list n="3"]  
   – Field shortcode for use in block templates:  
-    `[ibt_event_field key="..."]`  
+        [ibt_event_field key="..."]  
   – Archive view provided by a PHP-rendered dynamic block.  
   – Single-event view via block template and shortcodes.  
   – Google Maps button using latitude/longitude or Plus Codes.  
   – Metabox-based admin interface for events and venues.  
 
 • **WooCommerce product extensions**  
-  – Adds custom *Author* and *ISBN* fields to Products.  
-  – Outputs these fields in product loops and single-product views.  
+  – Adds custom Author, ISBN, Pages, and First Published fields to Products.  
+  – Outputs data in product loops and the single-product page.  
+  – Fields appear in the Additional Information table when present.
 
 • **Content model enhancements**  
   – Registers a “Library” Custom Post Type for non-commercial articles.  
   – Registers a shared hierarchical “Topic” taxonomy used by:  
-    • WooCommerce Products (Books)  
-    • Library CPT  
-    • Standard Posts (optional future use).  
+        • WooCommerce Products (Books)  
+        • Library CPT  
+        • Standard Posts (optional future use)
+  – Default posts retitled to "News" in admin.
 
-Requires WooCommerce to be active.
+• **Search improvements (Relevanssi)**  
+  – Front-end search results are ordered by relevance.
 
 --------------------------------------------------------------------
 STRUCTURE
 --------------------------------------------------------------------
-ibt_customisation.php                   – Main plugin loader  
+ibt_customisation.php                    – Main plugin loader  
 │
 ├─ /includes/                           – Supporting modules  
 │    ├─ register-taxonomy-types.php     – Registers Library CPT and Topic taxonomy  
-│    ├─ author-isbn-fields.php          – Adds Author and ISBN fields to WooCommerce  
+│    ├─ author-isbn-fields.php          – Adds Author, ISBN, Pages, First Published  
+│    ├─ ibt-utilities.php               – Misc utilities (search ordering, etc.)
+│
 │    ├─ /events/                        – Event subsystem  
 │         ├─ ibt-events-core.php            – Registers CPTs and venue CPT  
 │         ├─ ibt-events-admin.php           – Admin metaboxes  
@@ -80,12 +85,12 @@ dependencies.
 --------------------------------------------------------------------
 LICENSING
 --------------------------------------------------------------------
-Copyright © 2025 Ben Sheppard.  
+Copyright © 2025 Ben Sheppard.
 Developed for the Islands Book Trust and released under the GNU
-General Public License v2 or later (GPL-2.0+).  
+General Public License v2 or later (GPL-2.0+).
 
 Full license text:  
-https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt  
+https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
 
 The author retains copyright to the original source code and may
 reuse portions of this work in other projects under different licences.
@@ -93,7 +98,7 @@ reuse portions of this work in other projects under different licences.
 --------------------------------------------------------------------
 ACKNOWLEDGEMENT
 --------------------------------------------------------------------
-chatGPT credited as a non-legal co-author for advisory, code generation,
+ChatGPT credited as a non-legal co-author for advisory, code generation,
 and educational support. Development was substantially accelerated and
 improved by its assistance.
 ====================================================================

@@ -15,8 +15,9 @@ and a clean, accessible design guided by WCAG AAA standards.
 
 The theme is designed to work with the companion plugin
 **IBT Customisation**, which adds WooCommerce product fields (Author,
-ISBN), shared taxonomies, and event-management features. Several
-templates and blocks rely on that plugin for full functionality.
+ISBN, Pages, First Published), shared taxonomies, and event-management
+features. Several templates and blocks rely on that plugin for full
+functionality.
 
 --------------------------------------------------------------------
 FEATURES
@@ -35,12 +36,11 @@ STRUCTURE
 ibt/                                     - Theme root  
 │
 ├─ /templates/                           - Core HTML templates  
-│     ├─ archive-ibt_event.html          - Custom event archive
-│     │                                    (plugin-rendered)  
+│     ├─ archive-ibt_event.html          - Custom event archive (plugin-rendered)  
 │     ├─ archive-product.html            - WooCommerce product archive  
 │     ├─ single-product.html             - WooCommerce single product  
 │     ├─ product-search-results.html     - Custom search results template  
-│     ├─ coming-soon.html                - Temporary splash template  
+│     ├─ coming-soon.html                - Site Maintenance Template  
 │     ├─ order-confirmation.html         - Woo checkout confirmation  
 │     ├─ page-cart.html / page-checkout.html / my-account.html  
 │     ├─ taxonomy-product_attribute.html - Minimal Woo fallback (unused)  
@@ -76,20 +76,21 @@ FONTS
   Source Serif 4 Italic (quotes / emphasis).  
 • Locally hosted variable fonts in WOFF2 format subset to Latin and  
   Latin Extended-A (English & Gaelic) for reduced payload.  
-• Loaded with font-display: swap and metric overrides for stable  
+• Loaded with `font-display: swap` and metric overrides for stable  
   fallback and accessible rendering.
 
 --------------------------------------------------------------------
 LICENSING
 --------------------------------------------------------------------
 Copyright © 2025 Ben Sheppard.  
-Developed for the Islands Book Trust and released under the GNU General  
+Developed for the Islands Book Trust and released under the GNU General
 Public License v2 or later (GPL-2.0+).  
 
 Full licence text: https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt  
 
 Fonts  
 • All OFL / SIL-licensed — see font folders for licence details.  
+
 Icons:  
 • Header search icon — Lucide Icons (MIT)  
 • Additional icons — WooCommerce core  
@@ -97,7 +98,7 @@ Icons:
 --------------------------------------------------------------------
 ACKNOWLEDGEMENT
 --------------------------------------------------------------------
-chatGPT credited as a non-legal co-author for advisory, code generation,  
-and educational support. Development was substantially accelerated and  
+chatGPT credited as a non-legal co-author for advisory, code generation,
+and educational support. Development was substantially accelerated and
 improved by its assistance.
 ====================================================================
