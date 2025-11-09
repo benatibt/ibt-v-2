@@ -28,9 +28,10 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-/**
- * Helpers
- */
+// -------------------------------------------------------------
+//                           HELPERS
+// -------------------------------------------------------------
+
 function ibt_get_books_term() {
 	static $term = null;
 	if ( $term === null ) {
@@ -63,9 +64,11 @@ function ibt_get_books_and_descendant_ids() {
 	return $cache = $ids;
 }
 
-/**
- * ADMIN: Add custom fields to Product Data → General (guarded)
- */
+
+// -------------------------------------------------------------
+// ADMIN - Add custom fields to Product Data → General (guarded)
+// -------------------------------------------------------------
+
 add_action( 'woocommerce_product_options_general_product_data', ibt_safe('AIF1-admin-add-fields', function() {
 	if ( ! current_user_can( 'edit_products' ) ) return;
 
@@ -117,9 +120,11 @@ add_action( 'woocommerce_product_options_general_product_data', ibt_safe('AIF1-a
 	echo '</div>';
 } ) );
 
-/**
- * ADMIN: Save fields (guarded)
- */
+
+// -------------------------------------------------------------
+//            ADMIN: Save fields (guarded)
+// -------------------------------------------------------------
+
 add_action( 'woocommerce_process_product_meta', ibt_safe('AIF2-admin-save-fields', function( $post_id ) {
 	if ( ! current_user_can( 'edit_products' ) ) return;
 
@@ -163,9 +168,11 @@ add_action( 'woocommerce_process_product_meta', ibt_safe('AIF2-admin-save-fields
 
 } ) );
 
-/**
- * ADMIN: Toggle field visibility when category changes
- */
+
+// -------------------------------------------------------------
+//     ADMIN: Toggle field visibility when category changes
+// -------------------------------------------------------------
+
 add_action( 'admin_enqueue_scripts', ibt_safe('AIF3-admin-books-toggle', function( $hook_suffix = '' ) {
 	if ( ! current_user_can( 'edit_products' ) ) return;
 
@@ -199,10 +206,12 @@ add_action( 'admin_enqueue_scripts', ibt_safe('AIF3-admin-books-toggle', functio
 	wp_add_inline_script( 'ibt-admin-books-toggle', $inline, 'after' );
 } ) );
 
-/**
- * FRONT: Core rendering function (used by shortcode and hooks)
- * Outputs Author field; shortcode uses <h2>, loop hook overrides to <h3>.
- */
+
+// -----------------------------------------------------------------------
+//  FRONT: Core rendering function (used by shortcode and hooks)
+//  Outputs Author field; shortcode uses <h2>, loop hook overrides to <h3>.
+// ------------------------------------------------------------------------
+
 function ibt_render_author( $atts = array(), $content = null ) {
 	global $product;
 	if ( ! ( $product instanceof WC_Product ) ) return '';
@@ -235,10 +244,11 @@ function ibt_render_author( $atts = array(), $content = null ) {
 }
 
 
-/**
- * FRONT: Show author in product loops (shop, category, related, etc.)
- * Shortcode has issues resolving product so old school approach.
- */
+// -------------------------------------------------------------------
+// FRONT: Show author in product loops (shop, category, related, etc.)
+// Shortcode has issues resolving product so old school approach.
+// -------------------------------------------------------------------
+
 add_action( 'woocommerce_after_shop_loop_item_title', function() {
 	global $product;
 	if ( ! ( $product instanceof WC_Product ) ) {
@@ -252,9 +262,10 @@ add_action( 'woocommerce_after_shop_loop_item_title', function() {
 }, 6 );
 
 
-/**
- * FRONT: Book meta (ISBN, Pages, First Published) in Additional Information table
- */
+// --------------------------------------------------------------------------------
+// FRONT: Book meta (ISBN, Pages, First Published) in Additional Information table
+// --------------------------------------------------------------------------------
+
 add_filter( 'woocommerce_display_product_attributes', ibt_safe( 'AIF4-front-bookmeta-filter', function( $attrs, $product = null ) {
 
 	// Woo sometimes omits $product; recover it safely.
@@ -307,9 +318,8 @@ add_filter( 'woocommerce_display_product_attributes', ibt_safe( 'AIF4-front-book
 }), 10, 2 );
 
 
+// -------------------------------------------------------------
+//       SHORTCODE: [ibt_author]
+// -------------------------------------------------------------
 
-
-/**
- * SHORTCODE: [ibt_author]
- */
 add_shortcode( 'ibt_author', 'ibt_render_author' );
