@@ -554,8 +554,8 @@ textarea:focus-visible {
 
 /* Fix logo column width (inline style override from block editor). */
 .ibt-header-inner > .wp-block-column:first-child {
-  flex-basis: 85px !important;
-  max-width: 85px;
+  flex-basis: 160px !important;  /*TEST was 85*/
+  max-width: 160px;
 }
 
 /* ----- 3.2.C - Utility icons ----- */
