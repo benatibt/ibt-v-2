@@ -4,13 +4,6 @@
  * DEV VERSION WITH CACHE BUSTER - CHANGE BEFORE RELEASE
  * ====================================================== */
 
-// DEV ONLY - Define a version for cache-busting.
-if ( ! defined( 'IBT_VERSION' ) ) {
-	$theme = wp_get_theme( get_template() );
-	$ver   = $theme ? $theme->get( 'Version' ) : null;
-	define( 'IBT_VERSION', $ver ?: time() );
-}
-
 // Core supports and editor styles.
 add_action( 'after_setup_theme', function () {
 	add_theme_support( 'wp-block-styles' );
@@ -227,10 +220,19 @@ function ibt_highlight_navigation($content, $block) {
 }
 
 /* ========================================================
-   DEV ASSET LOADER (ACTIVE)
+   DEV ASSET LOADER (ACTIVE IN DEV)
    Loads ibt.css and ibt-editor.css with cache-busting
    Loads ibt-header.js with cache-busting
+   DELETE WHOLE BLOCK AND UNCOMMENT 
+   PRODUCTION ASSET LOADER FOR RELEASE
    ======================================================== */
+
+// Define a version for cache-busting.
+if ( ! defined( 'IBT_VERSION' ) ) {
+	$theme = wp_get_theme( get_template() );
+	$ver   = $theme ? $theme->get( 'Version' ) : null;
+	define( 'IBT_VERSION', $ver ?: time() );
+}
 
 add_action( 'after_setup_theme', function () {
     add_theme_support( 'editor-styles' );
@@ -269,13 +271,20 @@ add_action( 'wp_enqueue_scripts', function () {
 
 
 /* ========================================================
-   PROD ASSET LOADER (DISABLED)
+   PRODUCTION ASSET LOADER
    Enable ONLY in release branches
    Loads ibt.min.css + ibt-editor.css (versioned)
    Loads ibt-header.js (versioned)
    ======================================================== */
 
 /*
+// Define a version based on current version in style.css
+if ( ! defined( 'IBT_VERSION' ) ) {
+    $theme = wp_get_theme( get_template() );
+    define( 'IBT_VERSION', $theme ? $theme->get( 'Version' ) : '0.0.0' );
+}
+
+
 add_action( 'after_setup_theme', function () {
     add_theme_support( 'editor-styles' );
     add_editor_style( [ 'assets/css/ibt.min.css', 'assets/css/ibt-editor.css' ] );
