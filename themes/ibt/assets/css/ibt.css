@@ -1085,11 +1085,7 @@ Purpose:
   }
 }
 
-/* Site Editor - Show both so they can be editied. */
-.editor-styles-wrapper .ibt-sideb-sideb,
-.editor-styles-wrapper .ibt-sideb-mobile {
-  display: block !important;
-}
+/* ibt-editor.css makes both desktop and mobile vestions visible in editor only */
 
 
 /* ---------------------------------------------------------------------
@@ -1475,11 +1471,7 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 }
 
 /* Editor-only: force both nav variants visible in Site Editor
-   (keeps blocks selectable while editing) */
-.editor-styles-wrapper .ibt-header-nav-dual .ibt-header-nav-desktop,
-.editor-styles-wrapper .ibt-header-nav-dual .ibt-header-nav-mobile {
-  display: block !important;
-}
+   (keeps blocks selectable while editing) - Now in ibt-editor.css */
 
 
 /* ======================================================================

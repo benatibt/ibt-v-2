@@ -1,0 +1,19 @@
+/* CSS that applies only in site editor, not front end
+   Sections numbers common with ibt.css for easy cross reference */
+
+
+/* 4.2 - SINGLE POST WITH SIDEBAR */
+
+/* Site Editor - Show desktop and mobile versions of sidebar so they can be editied. */
+.editor-styles-wrapper .ibt-sideb-sideb,
+.editor-styles-wrapper .ibt-sideb-mobile {
+  display: block !important;
+}
+
+/* 5.0 UTILITIES */
+
+/* Site Editor - Show desktop and mobile versions of header menu so they can be editied. */
+.editor-styles-wrapper .ibt-header-nav-dual .ibt-header-nav-desktop,
+.editor-styles-wrapper .ibt-header-nav-dual .ibt-header-nav-mobile {
+  display: block !important;
+}

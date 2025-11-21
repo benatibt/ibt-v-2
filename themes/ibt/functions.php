@@ -15,8 +15,7 @@ if ( ! defined( 'IBT_VERSION' ) ) {
 add_action( 'after_setup_theme', function () {
 	add_theme_support( 'wp-block-styles' );
 	add_theme_support( 'responsive-embeds' );
-	add_theme_support( 'editor-styles' );
-	add_editor_style( 'assets/css/ibt.css' );
+	// theme supports editor styles. Handled in dev/prod block at end of file.
 	add_theme_support( 'align-wide' );
 	add_theme_support( 'comments' );
     add_theme_support( 'custom-line-height' );
@@ -36,38 +35,6 @@ add_action( 'after_setup_theme', function () {
 		'comment-form', 'comment-list', 'search-form', 'gallery', 'caption', 'style', 'script'
 	] );
 } );
-
-
-// Load ibt.css with cache buster version number.
-// DEV ONLY - Replace with normal enque
-add_action( 'wp_enqueue_scripts', function () {
-	$rel  = 'assets/css/ibt.css';
-	$path = get_stylesheet_directory() . '/' . $rel;
-	$ver  = file_exists( $path ) ? filemtime( $path ) : IBT_VERSION;
-
-	wp_enqueue_style(
-		'islands-book-trust',
-		get_stylesheet_directory_uri() . '/' . $rel,
-		[],
-		$ver
-	);
-}, 20 );
-
-
-// Load ibt-header.js for header search toggle
-add_action( 'wp_enqueue_scripts', function () {
-	$rel  = 'assets/js/ibt-header.js';
-	$path = get_stylesheet_directory() . '/' . $rel;
-	$ver  = file_exists( $path ) ? filemtime( $path ) : IBT_VERSION;
-
-	wp_enqueue_script(
-		'ibt-header',
-		get_stylesheet_directory_uri() . '/' . $rel,
-		[ 'wp-dom-ready' ],  // ensures DOM is loaded before script runs
-		$ver,                // version from filemtime (cache-bust in dev)
-		true                 // load in footer
-	);
-}, 20 );
 
 // ----- WOO_FILTERS -----
 // Explicit filters because some Woo templates enque even without theme support declaration
@@ -258,3 +225,81 @@ function ibt_highlight_navigation($content, $block) {
 
     return $content;
 }
+
+/* ========================================================
+   DEV ASSET LOADER (ACTIVE)
+   Loads ibt.css and ibt-editor.css with cache-busting
+   Loads ibt-header.js with cache-busting
+   ======================================================== */
+
+add_action( 'after_setup_theme', function () {
+    add_theme_support( 'editor-styles' );
+    add_editor_style( [ 'assets/css/ibt.css', 'assets/css/ibt-editor.css' ] );
+} );
+
+add_action( 'wp_enqueue_scripts', function () {
+
+    // ----- Front-end CSS (ibt.css with cache-buster) -----
+    $css_rel  = 'assets/css/ibt.css';
+    $css_path = get_stylesheet_directory() . '/' . $css_rel;
+    $css_ver  = file_exists( $css_path ) ? filemtime( $css_path ) : IBT_VERSION;
+
+    wp_enqueue_style(
+        'ibt-theme',
+        get_stylesheet_directory_uri() . '/' . $css_rel,
+        [],
+        $css_ver
+    );
+
+    // ----- Header JS (cache-buster) -----
+    $js_rel  = 'assets/js/ibt-header.js';
+    $js_path = get_stylesheet_directory() . '/' . $js_rel;
+    $js_ver  = file_exists( $js_path ) ? filemtime( $js_path ) : IBT_VERSION;
+
+    wp_enqueue_script(
+        'ibt-header',
+        get_stylesheet_directory_uri() . '/' . $js_rel,
+        [ 'wp-dom-ready' ],
+        $js_ver,
+        true
+    );
+
+}, 20 );
+
+
+
+/* ========================================================
+   PROD ASSET LOADER (DISABLED)
+   Enable ONLY in release branches
+   Loads ibt.min.css + ibt-editor.css (versioned)
+   Loads ibt-header.js (versioned)
+   ======================================================== */
+
+/*
+add_action( 'after_setup_theme', function () {
+    add_theme_support( 'editor-styles' );
+    add_editor_style( [ 'assets/css/ibt.min.css', 'assets/css/ibt-editor.css' ] );
+} );
+
+add_action( 'wp_enqueue_scripts', function () {
+
+    // ----- Front-end CSS (ibt.min.css, versioned) -----
+    wp_enqueue_style(
+        'ibt-theme',
+        get_stylesheet_directory_uri() . '/assets/css/ibt.min.css',
+        [],
+        IBT_VERSION
+    );
+
+    // ----- Header JS (versioned) -----
+    wp_enqueue_script(
+        'ibt-header',
+        get_stylesheet_directory_uri() . '/assets/js/ibt-header.js',
+        [ 'wp-dom-ready' ],
+        IBT_VERSION,
+        true
+    );
+
+}, 20 );
+*/
+
