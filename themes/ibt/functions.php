@@ -3,6 +3,10 @@
  * ibt — Theme functions
  * ====================================================== */
 
+// Retrieve current version.
+$theme = wp_get_theme( get_template() );
+define( 'IBT_VERSION', $theme->get( 'Version' ) );
+
 // Core supports and editor styles.
 add_action( 'after_setup_theme', function () {
 	add_theme_support( 'wp-block-styles' );
