@@ -1,15 +1,7 @@
 <?php
 /**======================================================
  * ibt — Theme functions
- * DEV VERSION WITH CACHE BUSTER - CHANGE BEFORE RELEASE
  * ====================================================== */
-
-// DEV ONLY - Define a version for cache-busting.
-if ( ! defined( 'IBT_VERSION' ) ) {
-	$theme = wp_get_theme( get_template() );
-	$ver   = $theme ? $theme->get( 'Version' ) : null;
-	define( 'IBT_VERSION', $ver ?: time() );
-}
 
 // Core supports and editor styles.
 add_action( 'after_setup_theme', function () {
@@ -226,47 +218,6 @@ function ibt_highlight_navigation($content, $block) {
     return $content;
 }
 
-/* ========================================================
-   DEV ASSET LOADER (ACTIVE)
-   Loads ibt.css and ibt-editor.css with cache-busting
-   Loads ibt-header.js with cache-busting
-   ======================================================== */
-
-add_action( 'after_setup_theme', function () {
-    add_theme_support( 'editor-styles' );
-    add_editor_style( [ 'assets/css/ibt.css', 'assets/css/ibt-editor.css' ] );
-} );
-
-add_action( 'wp_enqueue_scripts', function () {
-
-    // ----- Front-end CSS (ibt.css with cache-buster) -----
-    $css_rel  = 'assets/css/ibt.css';
-    $css_path = get_stylesheet_directory() . '/' . $css_rel;
-    $css_ver  = file_exists( $css_path ) ? filemtime( $css_path ) : IBT_VERSION;
-
-    wp_enqueue_style(
-        'ibt-theme',
-        get_stylesheet_directory_uri() . '/' . $css_rel,
-        [],
-        $css_ver
-    );
-
-    // ----- Header JS (cache-buster) -----
-    $js_rel  = 'assets/js/ibt-header.js';
-    $js_path = get_stylesheet_directory() . '/' . $js_rel;
-    $js_ver  = file_exists( $js_path ) ? filemtime( $js_path ) : IBT_VERSION;
-
-    wp_enqueue_script(
-        'ibt-header',
-        get_stylesheet_directory_uri() . '/' . $js_rel,
-        [ 'wp-dom-ready' ],
-        $js_ver,
-        true
-    );
-
-}, 20 );
-
-
 
 /* ========================================================
    PROD ASSET LOADER (DISABLED)
@@ -275,7 +226,7 @@ add_action( 'wp_enqueue_scripts', function () {
    Loads ibt-header.js (versioned)
    ======================================================== */
 
-/*
+
 add_action( 'after_setup_theme', function () {
     add_theme_support( 'editor-styles' );
     add_editor_style( [ 'assets/css/ibt.min.css', 'assets/css/ibt-editor.css' ] );
@@ -301,5 +252,4 @@ add_action( 'wp_enqueue_scripts', function () {
     );
 
 }, 20 );
-*/
 
