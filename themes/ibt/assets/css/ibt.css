@@ -902,223 +902,255 @@ textarea:focus-visible {
    3.6 – Footer
    ---------------------------------------------------------------------- */
 
+/* ---------- Base format - all versions --------- */
+
+/* --- Base spacing --- */
+
+/* Set small default <p> spacing */
+.ibt-footer p {
+    margin: 0;
+    padding-top: var(--wp--preset--spacing--xxs);
+    padding-bottom: var(--wp--preset--spacing--xxs);
+}
+
+/* --- Base formatting --- */
+
 /* Outer wrapper */
 .ibt-footer {
     background: var(--wp--custom--color--color-footer-bg);
     border-top: 1px solid var(--wp--custom--color--color-footer-border);
-    padding-top: var(--spacing-s);
-    padding-bottom: var(--spacing-s);
+    padding-top:  var(--wp--preset--spacing--s);
+    padding-bottom:  var(--wp--preset--spacing--xs);
 }
 
-/* Wide inner wrapper: constrain spacing without breaking alignwide */
-.ibt-footer .alignwide {
-    padding-top: var(--spacing-xs);
-    padding-bottom: var(--spacing-xs);
-}
-
-/* Typography defaults in footer */
+/* Everything in footer uses the title font */
 .ibt-footer p,
-.ibt-footer a {
+.ibt-footer a,
+.ibt-footer span,
+.ibt-footer li {
     font-family: var(--wp--preset--font-family--title-font);
     line-height: 1.4;
-    text-decoration: none;
 }
 
-.ibt-footer a:hover,
-.ibt-footer a:focus {
-    text-decoration: underline;
+/* Legal + copyright = small */
+.ibt-footer-legal,
+.ibt-footer-copyright {
+    font-size: var(--wp--preset--font-size--s);
 }
 
+/* --- Social Icons --- */
 
-/* --------------------------------------------------------------
-   Column behaviour
-   Desktop = 4 columns (default Gutenberg)
-   Tablet = 3 columns (Column 3 hidden)
-   Mobile = stacked
-   -------------------------------------------------------------- */
-
-/* Base: show all */
-.ibt-footer-col-1,
-.ibt-footer-col-2,
-.ibt-footer-col-3,
-.ibt-footer-col-4 {
-    display: block;
+/* Give icons same space as <p> */
+.ibt-footer-social-icons {
+  padding-top: var(--wp--preset--spacing--xxs);
+  padding-bottom: var(--wp--preset--spacing--xxs);
 }
 
-/* Tablet: hide entire contact column */
-@media (max-width: 1023px) and (min-width: 768px) {
-    .ibt-footer-col-3 {
-        display: none !important;
-    }
+/* Smooth animations for all social-hover effects incl WP default */
+.ibt-footer-social-icons > li {
+    transition: all var(--transition-fast, 0.2s ease-in-out) ;
 }
 
+/* IBT brand colour by default; reveal bright social brand colours only on hover */
+.ibt-footer-social-icons > li:not(:hover) {
+    background-color: var(--wp--custom--color--color-footer-text);
+}
 
-/* --------------------------------------------------------------
-   Visibility of duplicates
-   -------------------------------------------------------------- */
+/* ---------- Desktop version --------- */
 
-/* Desktop default: show Column 3 items, hide duplicates in other columns */
-@media (min-width: 1024px) {
+@media (min-width: 1200px) {
 
-    /* Hide duplicates in Column 2 */
+    /* Hide fields which are not required for desktop view */
     .ibt-footer-tel-c2,
-    .ibt-footer-email-c2 {
-        display: none !important;
-    }
-
-    /* Hide tablet/mobile CTAs in Column 4 */
+    .ibt-footer-email-c2,
     .ibt-footer-contact-tablet,
     .ibt-footer-contact-mobile,
     .ibt-footer-backtotop-c4 {
         display: none !important;
     }
+
+    /* Convert footer columns into a predictable flex row */
+    .ibt-footer .wp-block-columns {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: var(--wp--preset--spacing--s); /* override Gutenberg block-gap */
+    }
+
+    /* Column 1 – Logo (fixed width) */
+    .ibt-footer-col-1 {
+        flex: 0 0 180px !important;
+    }
+
+    /* Column 4 – Social + legal (fixed width) */
+    .ibt-footer-col-4 {
+        flex: 0 0 280px !important;
+    }
+
+    /* Columns 2 & 3 – Flexible equal-width middle columns */
+    .ibt-footer-col-2,
+    .ibt-footer-col-3 {
+        flex: 1 1 0 !important;
+        min-width: 0; /* prevents content forcing overflow */
+    }
+
+    /* Column 2 left padding so text doesn't collide with logo */
+    .ibt-footer-col-2 {
+        padding-left: var(--wp--preset--spacing--s) ;
+    }
+
+    /* Desktop – add small breathing room around the Contact Us block to balance columns */
+    .ibt-footer-col-3 .wp-block-buttons.ibt-footer-contact-us {
+        margin-top: var(--wp--preset--spacing--xs);
+        margin-bottom: var(--wp--preset--spacing--xs);
+    }
 }
 
-/* Tablet 768–1023px: hide column 3 originals, show duplicates */
-@media (max-width: 1023px) and (min-width: 768px) {
+/* ---------- Tablet version --------- */
 
-    /* Hide Column 3 originals */
-    .ibt-footer-tel-c3,
-    .ibt-footer-email-c3,
-    .ibt-footer-contact-desktop,
-    .ibt-footer-backtotop-c3 {
-        display: none !important;
-    }
+@media (min-width: 799px) and (max-width: 1199px) {
 
-    /* Show Column 2 duplicates for tablet */
-    .ibt-footer-tel-c2,
-    .ibt-footer-email-c2 {
-        display: block !important;
-    }
-
-    /* Show Column 4 tablet CTA + back-to-top */
-    .ibt-footer-contact-tablet,
-    .ibt-footer-backtotop-c4 {
-        display: block !important;
-    }
-
-    /* Hide mobile CTA */
-    .ibt-footer-contact-mobile {
-        display: none !important;
-    }
-}
-
-/* Mobile <768px: stack everything, show only mobile-friendly versions */
-@media (max-width: 767px) {
-
-    /* Hide column 3 entirely */
+    /* Hide Column 3 entirely for tablet */
     .ibt-footer-col-3 {
         display: none !important;
     }
 
-    /* Show mobile CTA, hide tablet + desktop */
+    /* Hide desktop + mobile items */
+    .ibt-footer-contact-desktop,
+    .ibt-footer-contact-mobile,
+    .ibt-footer-backtotop-c3,
+    .ibt-footer-backtotop-c4  {
+        display: none !important;
+    }
+
+    /* Show tablet variants + duplicates needed on tablet */
+    .ibt-footer-tel-c2,
+    .ibt-footer-email-c2,
+    .ibt-footer-contact-tablet {
+        display: block !important;
+    }
+
+    /* Convert footer to 3-column flex layout (1,2,4) */
+    .ibt-footer .wp-block-columns {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: var(--wp--preset--spacing--s);
+    }
+
+    /* Column 1 – Logo (same fixed width as desktop) */
+    .ibt-footer-col-1 {
+        flex: 0 0 180px !important;
+    }
+
+    /* Column 4 – Social + legal (fluid width 200px → 280px) */
+    .ibt-footer-col-4 {
+        flex: 0 0 clamp(200px, calc(20vw + 40px), 280px) !important;
+    }
+
+    /* Column 2 – Only flexible middle column on tablet */
+    .ibt-footer-col-2 {
+        flex: 1 1 0 !important;
+        min-width: 0; /* prevents content forcing overflow */
+        padding-left: var(--wp--preset--spacing--s) ;
+    }
+
+    /* Tablet – add breathing room around tablet Contact Us block */
+    .ibt-footer-col-4 .wp-block-buttons.ibt-footer-contact-us {
+        margin-top: var(--wp--preset--spacing--s) ;
+        margin-bottom: var(--wp--preset--spacing--s);
+    }
+}
+
+/* ---------- Mobile version --------- */
+@media (max-width: 798px) {
+
+    /* Stack columns */
+    .ibt-footer .wp-block-columns {
+        display: block !important;
+        flex-wrap: unset !important;
+        gap: 0 !important;
+    }
+
+    /* All columns take full width (before hiding) */
+    .ibt-footer-col-1,
+    .ibt-footer-col-2,
+    .ibt-footer-col-3,
+    .ibt-footer-col-4 {
+        width: 100% !important;
+        flex: none !important;
+    }
+
+    /* ------------ HIDE unwanted content ------------ */
+
+    /* Hide entire Column 2 (address, charity, dup contact) */
+    .ibt-footer-col-2 {
+        display: none !important;
+    }
+
+    /* Hide entire Column 3 (desktop contact block, dup contact, back to top) */
+    .ibt-footer-col-3 {
+        display: none !important;
+    }
+
+    /* Hide desktop/tablet CTAs */
+    .ibt-footer-contact-desktop,
+    .ibt-footer-contact-tablet {
+        display: none !important;
+    }
+
+    /* Hide tel/email */
+    .ibt-footer-tel-c2,
+    .ibt-footer-email-c2,
+    .ibt-footer-tel-c3,
+    .ibt-footer-email-c3 {
+        display: none !important;
+    }
+
+    /* --- SHOW desired mobile items --- */
+
+    /* Mobile Contact Us button */
     .ibt-footer-contact-mobile {
         display: block !important;
     }
-    .ibt-footer-contact-tablet,
-    .ibt-footer-contact-desktop {
-        display: none !important;
-    }
 
-    /* Hide most duplicates unless desired */
-    .ibt-footer-tel-c2,
-    .ibt-footer-email-c2 {
-        display: none !important;
-    }
-
-    /* Mobile back to top (c4 version) */
+    /* Back to top (Column 4 version) */
     .ibt-footer-backtotop-c4 {
         display: block !important;
     }
-}
 
-
-/* --------------------------------------------------------------
-   Logo Behaviour
-   -------------------------------------------------------------- */
-
-.ibt-footer-col-1 img {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-    max-width: 180px; /* Keeps desktop neat */
-}
-
-@media (max-width: 1023px) {
+    /* Reduce logo size and centre it */
     .ibt-footer-col-1 img {
-        max-width: 150px;
+        max-width: 130px !important;
+    }
+    .ibt-footer-col-1 {
+        text-align: center !important;
+    }
+
+    /* Centre all column 4 content */
+    .ibt-footer-col-4 {
+        text-align: center !important;
+    }
+
+    /* Centre buttons (Gutenberg buttons are flex containers) */
+    .ibt-footer-col-4 .wp-block-buttons {
+        justify-content: center !important;
+    }
+
+    /* Convert socials from space-between to sensible gap */
+    .ibt-footer-social-icons {
+        justify-content: center ;
+        gap: var(--wp--preset--spacing--s) ;
+    }
+
+    /* Add small breathing room around the Contact Us block */
+    .ibt-footer-col-4 .wp-block-buttons.ibt-footer-contact-us {
+        margin-top: var(--wp--preset--spacing--s) ;
+        margin-bottom: var(--wp--preset--spacing--s) ;
     }
 }
-
-@media (max-width: 767px) {
-    .ibt-footer-col-1 img {
-        max-width: 120px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-}
-
-
-/* --------------------------------------------------------------
-   Social Icons
-   -------------------------------------------------------------- */
-
-.ibt-social-icons a svg {
-    width: 32px;
-    height: 32px;
-    fill: var(--wp--custom--color--color-footer-text); /* Drab base */
-    transition: fill var(--transition-fast, 0.2s ease-in-out);
-}
-
-/* Hover/active on ALL devices */
-.ibt-social-icons a:hover svg,
-.ibt-social-icons a:focus svg,
-.ibt-social-icons a:active svg {
-    /* Brand-accurate colours */
-}
-
-.ibt-social-icons a[href*="facebook"] svg      { --brand-colour: #1877F2; }
-.ibt-social-icons a[href*="youtube"] svg       { --brand-colour: #FF0000; }
-.ibt-social-icons a[href*="whatsapp"] svg      { --brand-colour: #25D366; }
-.ibt-social-icons a[href*="instagram"] svg     { --brand-colour: #E1306C; /* Accessible alt */ }
-
-/* Apply brand colour on hover */
-.ibt-social-icons a:hover svg,
-.ibt-social-icons a:focus svg,
-.ibt-social-icons a:active svg {
-    fill: var(--brand-colour);
-}
-
-
-/* --------------------------------------------------------------
-   Legal + Text tone
-   -------------------------------------------------------------- */
-
-.ibt-footer-legal a,
-.ibt-footer-copyright,
-.ibt-footer-address,
-.ibt-footer-charity {
-    color: var(--wp--custom--color--color-footer-text);
-}
-
-.ibt-footer-legal a:hover,
-.ibt-footer-name a:hover {
-    color: var(--wp--custom--color--color-accent);
-    text-decoration: underline;
-}
-
-
-/* --------------------------------------------------------------
-   CTA buttons for consistency
-   -------------------------------------------------------------- */
-
-.ibt-footer-contact-us .wp-element-button {
-    padding: 0.5rem 1.2rem;
-    border-radius: 0.25rem;
-    font-size: var(--wp--preset--font-size--s);
-}
-
-
 
 
 /* ======================================================================
@@ -1761,6 +1793,7 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
     
   }
 }
+
 
 
 

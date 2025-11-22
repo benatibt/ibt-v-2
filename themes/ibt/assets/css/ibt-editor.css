@@ -10,6 +10,45 @@
   display: block !important;
 }
 
+/* 4.3 - FOOTER - DISPLAY ALL VERSIONS OF FIELDS */
+
+/* Core footer columns */
+.editor-styles-wrapper .ibt-footer .ibt-footer-col-1,
+.editor-styles-wrapper .ibt-footer .ibt-footer-col-2,
+.editor-styles-wrapper .ibt-footer .ibt-footer-col-3,
+.editor-styles-wrapper .ibt-footer .ibt-footer-col-4,
+
+/* Name / address / charity */
+.editor-styles-wrapper .ibt-footer .ibt-footer-name,
+.editor-styles-wrapper .ibt-footer .ibt-footer-address,
+.editor-styles-wrapper .ibt-footer .ibt-footer-charity,
+
+/* Contact details (both column versions) */
+.editor-styles-wrapper .ibt-footer .ibt-footer-tel-c2,
+.editor-styles-wrapper .ibt-footer .ibt-footer-email-c2,
+.editor-styles-wrapper .ibt-footer .ibt-footer-tel-c3,
+.editor-styles-wrapper .ibt-footer .ibt-footer-email-c3,
+
+/* Contact button wrappers + variants */
+.editor-styles-wrapper .ibt-footer .ibt-footer-contact-us,
+.editor-styles-wrapper .ibt-footer .ibt-footer-contact-desktop,
+.editor-styles-wrapper .ibt-footer .ibt-footer-contact-tablet,
+.editor-styles-wrapper .ibt-footer .ibt-footer-contact-mobile,
+
+/* Back-to-top variants */
+.editor-styles-wrapper .ibt-footer .ibt-footer-backtotop-c3,
+.editor-styles-wrapper .ibt-footer .ibt-footer-backtotop-c4,
+
+/* Social + legal + copyright */
+.editor-styles-wrapper .ibt-footer .ibt-footer-social-icons,
+.editor-styles-wrapper .ibt-footer .ibt-footer-legal,
+.editor-styles-wrapper .ibt-footer .ibt-footer-copyright {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+
 /* 5.0 UTILITIES */
 
 /* Site Editor - Show desktop and mobile versions of header menu so they can be editied. */
