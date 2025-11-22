@@ -219,6 +219,36 @@ function ibt_highlight_navigation($content, $block) {
     return $content;
 }
 
+
+/**
+ * IBT Favicons — inject favicon & app icon metadata into <head>.
+ * Keeps icons portable across sandbox, staging and production.
+ */
+add_action( 'wp_head', function () {
+
+    $base = get_stylesheet_directory_uri() . '/assets/icons';
+
+    ?>
+    <!-- IBT Favicons -->
+    <link rel="icon" href="<?php echo esc_url( $base . '/favicon.ico' ); ?>" sizes="any">
+    <link rel="icon" href="<?php echo esc_url( $base . '/favicon.svg' ); ?>" type="image/svg+xml">
+    <link rel="icon" href="<?php echo esc_url( $base . '/favicon-32.png' ); ?>" sizes="32x32" type="image/png">
+    <link rel="icon" href="<?php echo esc_url( $base . '/favicon-96.png' ); ?>" sizes="96x96" type="image/png">
+    <link rel="icon" href="<?php echo esc_url( $base . '/favicon-192.png' ); ?>" sizes="192x192" type="image/png">
+    <link rel="apple-touch-icon" href="<?php echo esc_url( $base . '/apple-touch-icon.png' ); ?>">
+    <meta name="theme-color" content="#ffffff">
+    <!-- End IBT Favicons -->
+    <?php
+});
+
+/**
+ * Disable WordPress’s default Site Icon injection.
+ * We provide our own favicon tags above.
+ */
+add_filter( 'site_icon_meta_tags', '__return_empty_array' );
+
+
+
 /* ========================================================
    DEV ASSET LOADER (ACTIVE IN DEV)
    Loads ibt.css and ibt-editor.css with cache-busting
