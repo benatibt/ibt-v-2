@@ -230,12 +230,13 @@ add_action( 'wp_head', function () {
 
     ?>
     <!-- IBT Favicons -->
-    <link rel="icon" href="<?php echo esc_url( $base . '/favicon.ico' ); ?>" sizes="any">
+    <link rel="icon" href="<?php echo esc_url( $base . '/favicon.ico' ); ?>" sizes="any" type="image/x-icon">
     <link rel="icon" href="<?php echo esc_url( $base . '/favicon.svg' ); ?>" type="image/svg+xml">
     <link rel="icon" href="<?php echo esc_url( $base . '/favicon-32.png' ); ?>" sizes="32x32" type="image/png">
     <link rel="icon" href="<?php echo esc_url( $base . '/favicon-96.png' ); ?>" sizes="96x96" type="image/png">
     <link rel="icon" href="<?php echo esc_url( $base . '/favicon-192.png' ); ?>" sizes="192x192" type="image/png">
     <link rel="apple-touch-icon" href="<?php echo esc_url( $base . '/apple-touch-icon.png' ); ?>">
+    <link rel="manifest" href="<?php echo esc_url( $base . '/site.webmanifest' ); ?>">
     <meta name="theme-color" content="#ffffff">
     <!-- End IBT Favicons -->
     <?php
