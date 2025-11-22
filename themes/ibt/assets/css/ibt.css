@@ -902,28 +902,222 @@ textarea:focus-visible {
    3.6 – Footer
    ---------------------------------------------------------------------- */
 
-/* ----- Footer links -----
-   Inherit colour, no underline by default, underline only on hover.
-   Excludes buttons and WooCommerce fragments. High specificity so it
-   cleanly overrides base link rules. */
-
-/* Base state */
-.ibt-footer a:not(.wp-element-button):not(.wp-block-button__link):not(.button):not(:where(.woocommerce *)) {
-  color: inherit;
-  text-decoration: none ;
-  transition:
-    text-underline-offset var(--transition-base),
-    text-decoration-thickness var(--transition-base);
+/* Outer wrapper */
+.ibt-footer {
+    background: var(--wp--custom--color--color-footer-bg);
+    border-top: 1px solid var(--wp--custom--color--color-footer-border);
+    padding-top: var(--spacing-s);
+    padding-bottom: var(--spacing-s);
 }
 
-/* Hover */
-.ibt-footer a:not(.wp-element-button):not(.wp-block-button__link):not(.button):not(:where(.woocommerce *)):hover {
-  text-decoration: underline;
-  text-underline-offset: 0.2em;
-  transition:
-    text-underline-offset var(--transition-base),
-    text-decoration-thickness var(--transition-base);
+/* Wide inner wrapper: constrain spacing without breaking alignwide */
+.ibt-footer .alignwide {
+    padding-top: var(--spacing-xs);
+    padding-bottom: var(--spacing-xs);
 }
+
+/* Typography defaults in footer */
+.ibt-footer p,
+.ibt-footer a {
+    font-family: var(--wp--preset--font-family--title-font);
+    line-height: 1.4;
+    text-decoration: none;
+}
+
+.ibt-footer a:hover,
+.ibt-footer a:focus {
+    text-decoration: underline;
+}
+
+
+/* --------------------------------------------------------------
+   Column behaviour
+   Desktop = 4 columns (default Gutenberg)
+   Tablet = 3 columns (Column 3 hidden)
+   Mobile = stacked
+   -------------------------------------------------------------- */
+
+/* Base: show all */
+.ibt-footer-col-1,
+.ibt-footer-col-2,
+.ibt-footer-col-3,
+.ibt-footer-col-4 {
+    display: block;
+}
+
+/* Tablet: hide entire contact column */
+@media (max-width: 1023px) and (min-width: 768px) {
+    .ibt-footer-col-3 {
+        display: none !important;
+    }
+}
+
+
+/* --------------------------------------------------------------
+   Visibility of duplicates
+   -------------------------------------------------------------- */
+
+/* Desktop default: show Column 3 items, hide duplicates in other columns */
+@media (min-width: 1024px) {
+
+    /* Hide duplicates in Column 2 */
+    .ibt-footer-tel-c2,
+    .ibt-footer-email-c2 {
+        display: none !important;
+    }
+
+    /* Hide tablet/mobile CTAs in Column 4 */
+    .ibt-footer-contact-tablet,
+    .ibt-footer-contact-mobile,
+    .ibt-footer-backtotop-c4 {
+        display: none !important;
+    }
+}
+
+/* Tablet 768–1023px: hide column 3 originals, show duplicates */
+@media (max-width: 1023px) and (min-width: 768px) {
+
+    /* Hide Column 3 originals */
+    .ibt-footer-tel-c3,
+    .ibt-footer-email-c3,
+    .ibt-footer-contact-desktop,
+    .ibt-footer-backtotop-c3 {
+        display: none !important;
+    }
+
+    /* Show Column 2 duplicates for tablet */
+    .ibt-footer-tel-c2,
+    .ibt-footer-email-c2 {
+        display: block !important;
+    }
+
+    /* Show Column 4 tablet CTA + back-to-top */
+    .ibt-footer-contact-tablet,
+    .ibt-footer-backtotop-c4 {
+        display: block !important;
+    }
+
+    /* Hide mobile CTA */
+    .ibt-footer-contact-mobile {
+        display: none !important;
+    }
+}
+
+/* Mobile <768px: stack everything, show only mobile-friendly versions */
+@media (max-width: 767px) {
+
+    /* Hide column 3 entirely */
+    .ibt-footer-col-3 {
+        display: none !important;
+    }
+
+    /* Show mobile CTA, hide tablet + desktop */
+    .ibt-footer-contact-mobile {
+        display: block !important;
+    }
+    .ibt-footer-contact-tablet,
+    .ibt-footer-contact-desktop {
+        display: none !important;
+    }
+
+    /* Hide most duplicates unless desired */
+    .ibt-footer-tel-c2,
+    .ibt-footer-email-c2 {
+        display: none !important;
+    }
+
+    /* Mobile back to top (c4 version) */
+    .ibt-footer-backtotop-c4 {
+        display: block !important;
+    }
+}
+
+
+/* --------------------------------------------------------------
+   Logo Behaviour
+   -------------------------------------------------------------- */
+
+.ibt-footer-col-1 img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    max-width: 180px; /* Keeps desktop neat */
+}
+
+@media (max-width: 1023px) {
+    .ibt-footer-col-1 img {
+        max-width: 150px;
+    }
+}
+
+@media (max-width: 767px) {
+    .ibt-footer-col-1 img {
+        max-width: 120px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+
+/* --------------------------------------------------------------
+   Social Icons
+   -------------------------------------------------------------- */
+
+.ibt-social-icons a svg {
+    width: 32px;
+    height: 32px;
+    fill: var(--wp--custom--color--color-footer-text); /* Drab base */
+    transition: fill var(--transition-fast, 0.2s ease-in-out);
+}
+
+/* Hover/active on ALL devices */
+.ibt-social-icons a:hover svg,
+.ibt-social-icons a:focus svg,
+.ibt-social-icons a:active svg {
+    /* Brand-accurate colours */
+}
+
+.ibt-social-icons a[href*="facebook"] svg      { --brand-colour: #1877F2; }
+.ibt-social-icons a[href*="youtube"] svg       { --brand-colour: #FF0000; }
+.ibt-social-icons a[href*="whatsapp"] svg      { --brand-colour: #25D366; }
+.ibt-social-icons a[href*="instagram"] svg     { --brand-colour: #E1306C; /* Accessible alt */ }
+
+/* Apply brand colour on hover */
+.ibt-social-icons a:hover svg,
+.ibt-social-icons a:focus svg,
+.ibt-social-icons a:active svg {
+    fill: var(--brand-colour);
+}
+
+
+/* --------------------------------------------------------------
+   Legal + Text tone
+   -------------------------------------------------------------- */
+
+.ibt-footer-legal a,
+.ibt-footer-copyright,
+.ibt-footer-address,
+.ibt-footer-charity {
+    color: var(--wp--custom--color--color-footer-text);
+}
+
+.ibt-footer-legal a:hover,
+.ibt-footer-name a:hover {
+    color: var(--wp--custom--color--color-accent);
+    text-decoration: underline;
+}
+
+
+/* --------------------------------------------------------------
+   CTA buttons for consistency
+   -------------------------------------------------------------- */
+
+.ibt-footer-contact-us .wp-element-button {
+    padding: 0.5rem 1.2rem;
+    border-radius: 0.25rem;
+    font-size: var(--wp--preset--font-size--s);
+}
+
 
 
 
