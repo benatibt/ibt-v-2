@@ -1512,9 +1512,15 @@ Purpose:
   padding-block: 0.1em;
 }
 
+/* Reduce font size for title */
+ .wc-block-product .wp-block-post-title {
+  font-size: var(--wp--preset--font-size--m) !important;
+ }
+
 /* Author line – smaller, centred in product grids */
 .wc-block-product .ibt-author-parastyle {
-  font-size: var(--wp--preset--font-size--m);
+  font-size: var(--wp--preset--font-size--s);
+  font-weight: 400;
   text-align: center;
 }
 
