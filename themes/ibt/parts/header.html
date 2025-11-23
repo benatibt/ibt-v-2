@@ -1,14 +1,9 @@
 <!-- wp:group {"tagName":"header","align":"full","className":"ibt-header ibt-header-sticky ibt-rootp-apply has-border-color","layout":{"type":"default"}} -->
 <header class="wp-block-group alignfull ibt-header ibt-header-sticky ibt-rootp-apply has-border-color"><!-- wp:columns {"verticalAlignment":"center","isStackedOnMobile":false,"className":"ibt-header-inner"} -->
 <div class="wp-block-columns are-vertically-aligned-center is-not-stacked-on-mobile ibt-header-inner"><!-- wp:column {"verticalAlignment":"center","width":"200px"} -->
-<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:200px">
-  <!-- wp:html -->
-<img class="ibt-header-logo-img"
-     src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/islands-book-trust-header-logo.webp' ); ?>"
-     alt="Islands Book Trust Home Page"
-     width="200">
-<!-- /wp:html -->
-</div>
+<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:200px"><!-- wp:image {"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/themes/ibt/assets/img/islands-book-trust-header-logo.webp" alt=""/></figure>
+<!-- /wp:image --></div>
 <!-- /wp:column -->
 
 <!-- wp:column {"verticalAlignment":"center"} -->
@@ -29,7 +24,7 @@
 <!-- wp:html -->
 <div class="ibt-header-wooicons">
   <button class="ibt-header-search-toggle ibt-icon-button"
-          ariat-expanded="false"
+          aria-expanded="false"
           aria-controls="ibt-search-input"
           aria-label="Open site search"
           title="Search">
