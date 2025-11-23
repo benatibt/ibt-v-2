@@ -1782,23 +1782,6 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 /* ======================================================================
    7. DEV – WIP CODE
    ====================================================================== */
-/* !!!!!! THIS BLOCK SHOULD BE COMMENTED OUT IN PRODUCTION !!!!!!
-   DEV ONLY - Make any use of default button styles extremely obvious in dev. 
-   When this is 'turned off' reasonable defaults come from theme.json   */
-
-.is-style-fill .wp-element-button,
-.is-style-outline .wp-element-button {
-  background-color: hotpink !important;
-  color: magenta !important;
-  border-color: yellow !important;
-}
-/* !!! END DEV ONLY BLOCK !!! */
-/* ====================================================================== */
-
-/* WORK IN PROGRESS CODE BELOW THIS LINE */
-
-
-
 
 
 
