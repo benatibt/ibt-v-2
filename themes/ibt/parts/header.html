@@ -1,7 +1,14 @@
 <!-- wp:group {"tagName":"header","align":"full","className":"ibt-header ibt-header-sticky ibt-rootp-apply has-border-color","layout":{"type":"default"}} -->
 <header class="wp-block-group alignfull ibt-header ibt-header-sticky ibt-rootp-apply has-border-color"><!-- wp:columns {"verticalAlignment":"center","isStackedOnMobile":false,"className":"ibt-header-inner"} -->
-<div class="wp-block-columns are-vertically-aligned-center is-not-stacked-on-mobile ibt-header-inner"><!-- wp:column {"verticalAlignment":"center","width":"85px"} -->
-<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:85px"><!-- wp:site-logo {"width":90,"align":"center"} /--></div>
+<div class="wp-block-columns are-vertically-aligned-center is-not-stacked-on-mobile ibt-header-inner"><!-- wp:column {"verticalAlignment":"center","width":"200px"} -->
+<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:200px">
+  <!-- wp:html -->
+<img class="ibt-header-logo-img"
+     src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/islands-book-trust-header-logo.webp' ); ?>"
+     alt="Islands Book Trust Home Page"
+     width="200">
+<!-- /wp:html -->
+</div>
 <!-- /wp:column -->
 
 <!-- wp:column {"verticalAlignment":"center"} -->
@@ -22,7 +29,7 @@
 <!-- wp:html -->
 <div class="ibt-header-wooicons">
   <button class="ibt-header-search-toggle ibt-icon-button"
-          aria-expanded="false"
+          ariat-expanded="false"
           aria-controls="ibt-search-input"
           aria-label="Open site search"
           title="Search">
@@ -34,7 +41,6 @@
     </svg>
   </button>
 </div>
-
 <!-- /wp:html -->
 
 <!-- wp:woocommerce/customer-account {"displayStyle":"icon_only","iconClass":"wc-block-customer-account__account-icon","className":"ibt-header-wooicons ibt-icon-button"} /-->
@@ -44,9 +50,9 @@
 <!-- /wp:group -->
 
 <!-- wp:group {"metadata":{"name":"nav-row"},"className":"ibt-header-row2 ibt-header-nav-dual","layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"right"}} -->
-<div class="wp-block-group ibt-header-row2 ibt-header-nav-dual"><!-- wp:navigation {"ref":239,"openSubmenusOnClick":true,"overlayMenu":"never","className":"wp-block-navigation ibt-header-nav ibt-header-nav-desktop","style":{"spacing":{"blockGap":"var:preset|spacing|xxs"}},"layout":{"type":"flex","justifyContent":"right","flexWrap":"wrap","orientation":"horizontal"},"ariaLabel":"Primary navigation (desktop)"} /-->
+<div class="wp-block-group ibt-header-row2 ibt-header-nav-dual"><!-- wp:navigation {"ref":95,"openSubmenusOnClick":true,"overlayMenu":"never","className":"wp-block-navigation ibt-header-nav ibt-header-nav-desktop","style":{"spacing":{"blockGap":"var:preset|spacing|xxs"}},"layout":{"type":"flex","justifyContent":"right","flexWrap":"wrap","orientation":"horizontal"},"ariaLabel":"Primary navigation (desktop)"} /-->
 
-<!-- wp:navigation {"ref":239,"textColor":"emphasis-primary","openSubmenusOnClick":true,"overlayMenu":"always","className":"wp-block-navigation ibt-header-nav ibt-header-nav-mobile","ariaLabel":"Primary navigation (mobile)"} /--></div>
+<!-- wp:navigation {"ref":95,"textColor":"emphasis-primary","openSubmenusOnClick":true,"overlayMenu":"always","className":"wp-block-navigation ibt-header-nav ibt-header-nav-mobile","ariaLabel":"Primary navigation (mobile)"} /--></div>
 <!-- /wp:group --></div>
 <!-- /wp:group --></div>
 <!-- /wp:column --></div>
