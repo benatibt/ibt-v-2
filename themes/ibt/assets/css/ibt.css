@@ -467,7 +467,7 @@ a:has(img):hover::after {
 
 /* --------- 2.3 Focus Visible default -------- */
 
-/* Warm red. Unique and good contrast on Paper and dark surfaces */
+/* Unique and good contrast on Paper and dark surfaces */
 :focus-visible {
   outline: 2px solid #275A3D; 
   outline-offset: 2px;
@@ -482,204 +482,131 @@ textarea:focus-visible {
   outline-offset: 3px; /* small buffer from native borders */
 }
 
-/* ======================================================================
+/* ----------------------------------------------------------------------
    3. HEADER, NAV & FOOTER
-   Sticky, navigation, utility icons,  search, footer
-   ====================================================================== */
-
-/* ----------------------------------------------------------------------
-   The IBT header contains *TWO SEPARATE* Navigation block instances to 
-   allow breakpoint control and avoid limitations of WP’s overlay toggle.
-   ----------------------------------------------------------------------*/
-
-/* ----------------------------------------------------------------------
-   3.1 – Sticky Header
+   Sticky header, navigation, utility icons, search
    ---------------------------------------------------------------------- */
-/* Keep header stuck to top with admin-bar offset for logged-in users.
-   Note – Adjust --ibt-adminbar-offset if WordPress changes bar height. */
 
-:root { --ibt-adminbar-offset: 0px; }
-.admin-bar { --ibt-adminbar-offset: 32px; }
+
+/* ---------- 3.1 – Sticky Header ---------- */
+/* Admin bar offset */
+:root { --ibt-adminbar-offset: 0px; }               /* No admin bar */
+.admin-bar { --ibt-adminbar-offset: 32px; }         /* WP desktop admin bar */
 
 @media (max-width: 782px) {
-  .admin-bar { --ibt-adminbar-offset: 46px; }
+  .admin-bar { --ibt-adminbar-offset: 46px; }       /* WP “mobile” admin bar */
 }
 
-.ibt-header-sticky,
-.wp-block-template-part:has(> .ibt-header-sticky) {
-  position: sticky;
-  top: var(--ibt-adminbar-offset);
-  z-index: 50;
-}
+/* Sticky header enabled only on viewports ≥ 500px */
+@media (min-height: 500px) {
 
-.wp-block-template-part:has(> .ibt-header-sticky) { z-index: 49; }
-
-/* ---- Responsive: short viewport height ----
-   Disable sticky header on small viewports to prevent content loss. */
-@media (max-height: 600px) {
   .ibt-header-sticky,
   .wp-block-template-part:has(> .ibt-header-sticky) {
-    position: static !important;
-    top: auto !important;
+    position: sticky;
+    top: var(--ibt-adminbar-offset);
+    z-index: 50;
   }
+
+  .wp-block-template-part:has(> .ibt-header-sticky) { z-index: 49; } /* wrapper sits under header */
+
 }
 
 
-/* ----------------------------------------------------------------------
-   3.2 – Header Styling
-   ---------------------------------------------------------------------- */
+/* ----------  3.2 – Header Base Layout ---------- */
 
-/* ----- 3.2.A - Base container -----
-   Handles header background, border, and general layout. */
+/* ----- 3.2.A — Header container ----- */
 
-/* Provide base styling and layout for the header container. */
 .ibt-header {
   background-color: var(--wp--custom--color--color-header-bg);
   color: var(--wp--preset--color--emphasis-primary);
-  border: none;
 }
 
-/* Center header content and constrain width to wide container. */
 .ibt-header-inner {
   box-sizing: border-box;
-  width: 100%;
   max-width: var(--wp--style--global--wide-size);
   margin-inline: auto;
   padding-block: 0;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-top: 15px;                     /* Add a little space above card index nav */
 }
 
+/* -----3.2.B — Logo ----- */
 
-/* ----- 3.2.B - Logo and column layout -----
-   Manage logo column width, alignment and spacing. */
-
-/* Fix logo column width (inline style override from block editor). */
-.ibt-header-inner > .wp-block-column:first-child {
-  flex-basis: 160px !important;  /*TEST was 85*/
-  max-width: 160px;
+.ibt-header-logo img {
+  height: 40px;                           /* fixed desktop/mobile height */
+  width: calc(40px * 3.57);               /* maintain native aspect ratio */
+  object-fit: contain;                    /* avoid distortion */
+  display: block;                         /* removes inline-gap artefacts */
 }
 
-/* ----- 3.2.C - Utility icons ----- */
-/* Style search, account and cart icons as consistent 44×44 px tap targets. */
+.ibt-header-logo { align-self: center; }  /* Centre logo vertically */
 
-.ibt-header-wooicons {
+/* ----- 3.2.C — Utility Icons (search, account, cart) ----- */
+
+/* Consistent 44px tap-targets for all header icons */
+.ibt-icon-button {
   width: 44px;
   height: 44px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--wp--preset--color--emphasis-primary);
   border: 2px solid transparent;
   border-radius: 6px;
-  transition: color var(--transition-base), border-color var(--transition-base);
-  cursor: pointer;
-  min-width: 49px;
-  min-height: 49px;
-}
-
-.ibt-header-wooicons > a,
-.ibt-header-wooicons > button {
-  background: none;        /* remove UA button fill */
-  border: none;            /* remove default borders */
+  background: none;
   padding: 0;
   margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.25rem;
-  height: 2.25rem;
+  color: var(--wp--preset--color--emphasis-primary);
   cursor: pointer;
+  transition: color var(--transition-base), border-color var(--transition-base);
 }
 
-.ibt-header-wooicons svg {
+.ibt-icon-button svg {
   width: 24px;
   height: 24px;
   display: block;
   pointer-events: none;
 }
 
-/* Highlight cart item count badge in brand blue with white text */
+/* Hover / focus style (light touch, consistent with nav tabs) */
+.ibt-icon-button:hover,
+.ibt-icon-button:focus-visible {
+  border-color: var(--color-header-tab-border);
+  color: black;
+}
+
+/* WooCommerce mini-cart badge */
 .wc-block-mini-cart__badge {
   background-color: var(--wp--preset--color--emphasis-secondary);
   color: #fff;
 }
 
-/* ----------------------------------------------------------------------
-   3.3 – Header Search
-   ---------------------------------------------------------------------- */
-/* Handle search toggle and field behaviour controlled by ibt-header.js. */
-
-.ibt-header-search-field { display: none; }
-
+/* Reset default WP button styles for search inner button */
 .ibt-header-search-toggle {
-  background: none;
-  border: none;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.25rem;
-  height: 2.25rem;
-  cursor: pointer;
+  background-color: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
 }
 
-/* Show search field when header JS adds .is-open. */
-.ibt-header-search.is-open .ibt-header-search-field {
-  display: grid;
-  align-items: center;
-  height: var(--wp--custom--search--height);
-  width: 280px;
-}
+/* ---------- 3.3 – Header Search ---------- */
 
-.ibt-header-search.is-open .ibt-header-search-field input[type="search"] {
-  width: 100%;
-  box-sizing: border-box;
-  padding: var(--wp--custom--search--padding--top)
-           var(--wp--custom--search--padding--right)
-           var(--wp--custom--search--padding--bottom)
-           var(--wp--custom--search--padding--left);
-  border: 2px solid var(--wp--custom--color--color-header-border);
-  border-radius: var(--wp--custom--search--border--radius);
-  background: #fff;
-  font-size: var(--wp--preset--font-size--s);
-  line-height: 1.4;
-}
+/* No current css */
 
-.ibt-header-search.is-open .ibt-header-search-field input[type="search"]:focus-visible {
-  outline: none;
-}
+/* ---------- 3.4 – Desktop Navigation (Card-index style) ---------- */
 
-/* ---- Responsive: narrow screens (≤600 px) ----
-   Shrink search box for smaller layouts. */
-@media (max-width: 600px) {
-  .ibt-header-search.is-open .ibt-header-search-field { width: 140px; }
-}
+/* ----- 3.4.A — Desktop navigation layout & tap targets ----- */
+/* Keep nav horizontal, no wrapping, bottom-aligned for card-index tabs. */
 
-/* ---- Responsive: very narrow screens (≤410 px) ----
-   Hide account + cart icons to make space for open search. */
-@media (max-width: 410px) {
-  .ibt-header:has(.ibt-header-search.is-open)
-    .ibt-header-icons [data-block-name="woocommerce/customer-account"],
-  .ibt-header:has(.ibt-header-search.is-open)
-    .ibt-header-icons [data-block-name="woocommerce/mini-cart"] {
-    display: none;
-  }
-}
-
-
-/* ----------------------------------------------------------------------
-   3.4 – Desktop Navigation
-   ---------------------------------------------------------------------- */
-
-/* ----- 3.4.A Layout and tap targets -----
-   Keep nav horizontal, evenly spaced, and AAA-compliant for touch. */
-
-.ibt-header-nav-dual .ibt-header-nav-desktop .wp-block-navigation__container {
+.ibt-header-nav-desktop .wp-block-navigation__container {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: center;
 }
 
+/* Ensure all clickable nav items meet AAA vertical size and align bottom */
 .ibt-header-nav-desktop .wp-block-navigation__container
   .wp-block-navigation-item__content,
 .ibt-header-nav-desktop .wp-block-navigation__submenu-container
@@ -687,35 +614,38 @@ textarea:focus-visible {
   display: flex;
   align-items: center;
   line-height: 1.2;
-  min-height: 48px; /* AAA baseline */
+  min-height: 48px; /* AAA target */
   padding-top: 0;
   padding-bottom: 0;
 }
 
-/* Equal horizontal padding for all clickable elements. */
+/* Equal horizontal padding for top-level + submenu items */
 .ibt-header-nav-desktop :is(
   a.wp-block-navigation-item__content,
   button.wp-block-navigation-item__content,
   button.wp-block-navigation-submenu__toggle,
   button.wp-block-navigation-item__content.wp-block-navigation-submenu__toggle
 ) {
-  padding-left:  clamp(7px, 1.81vw - 7.1px, 20px);
-  padding-right: clamp(7px, 1.81vw - 7.1px, 20px);
+    padding-left:  clamp(2px, 1.333vw - 8.666px, 15px);
+    padding-right: clamp(2px, 1.333vw - 8.666px, 15px);
 }
 
-/* Compact gap between items (replaces blockGap in header.html). */
-.ibt-header .ibt-header-nav-dual .ibt-header-nav-desktop {
-  gap: 6px;
+/* Compact gap between tabs, and pull items down by 2px to sit on header base */
+.ibt-header-nav-desktop {
+  display: flex;        /* ensures tab strip keeps full row behaviour */
+  gap: clamp(1px, 0.666vw - 4.333px, 4px);
+  margin-bottom: -2px;  /* anchors card-index tabs visually */
 }
 
-/* ----- 3.4.B Typography and scaling-----
-   Adjust text size smoothly with viewport width. */
 
-.ibt-header-nav-desktop .wp-block-navigation__container {
-  font-size: clamp(17.6px, 0.4vw + 14.4px, 24px);
+/* ----- 3.4.B — Desktop nav typography ----- */
+
+/* Smooth scaling, semi-bold, small positive tracking */
+.ibt-header-nav-desktop .wp-block-navigation-item__content {
+  font-size: clamp(14px, 1.5vw + 4px, 22px);
   line-height: 1.4;
   letter-spacing: 0.01em;
-  font-weight: 600; /* semi-bold */
+  font-weight: 600;
 }
 
 /* ----- 3.4.C Borders and default state -----
@@ -731,13 +661,6 @@ textarea:focus-visible {
               background-color var(--transition-base);
 }
 
-
-
-
-/* =====================================================================
-   IBT Header Navigation – Active / Ancestor Styling (Top-level only)
-   ===================================================================== */
-
 /* Local test palette (override later with theme tokens) */
 .ibt-header-nav-desktop {
   --color-header-tab-default: #DCD6CF;  /* normal tab fill */
@@ -747,6 +670,10 @@ textarea:focus-visible {
   --color-header-tab-border:  #4A443E;  /* active/ancestor border */
   --color-header-tab-soft:    #8D8780;  /* subtle border for inactive */
 }
+
+
+
+
 
 /* Default / Inactive */
 .ibt-header-nav-desktop .wp-block-navigation-item__content {
@@ -819,13 +746,13 @@ textarea:focus-visible {
 }
 
 /* Default visibility — desktop nav active, mobile turned off */
-.ibt-header-nav-dual .ibt-header-nav-desktop { display: block; }
-.ibt-header-nav-dual .ibt-header-nav-mobile  { display: none; }
+.ibt-header-nav-desktop { display: block; }
+.ibt-header-nav-mobile  { display: none; }
 
 
-/* ----------------------------------------------------------------------
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
    3.5 – Mobile Navigation
-   ---------------------------------------------------------------------- */
+   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 
 /* Collapse all submenus by default and only reveal those opened by WordPress. */
 .ibt-header-nav-mobile .wp-block-navigation__responsive-container.is-menu-open
@@ -891,12 +818,23 @@ textarea:focus-visible {
   background-color: var(--wp--custom--color--color-header-bg) !important;
 }
 
-/* ---- Responsive: narrow screens (≤799 px) ----
-   Swap desktop / mobile nav elements. */
-@media (max-width: 799px) {
-  .ibt-header-nav-dual .ibt-header-nav-desktop { display: none; }
-  .ibt-header-nav-dual .ibt-header-nav-mobile  { display: block; }
+
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+   3.6 – Responsive Breakpoints
+   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+/* Desktop: ≥800px */
+@media (min-width: 800px) {
+  header .ibt-header-nav-mobile { display: none !important; }
+  header .ibt-header-nav-desktop { display: flex !important; }
 }
+
+/* Mobile: ≤799px */
+@media (max-width: 799px) {
+  header .ibt-header-nav-desktop { display: none !important; }
+  header .ibt-header-nav-mobile { display: block !important; }
+}
+
 
 /* ----------------------------------------------------------------------
    3.6 – Footer
@@ -1760,8 +1698,8 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 /* --- Prevent print layout issues (sticky header, double nav) --- */
 @media print {
   /* Show desktop navigation and hide mobile navigation */
-  .ibt-header-nav-dual .ibt-header-nav-desktop { display: block !important; }
-  .ibt-header-nav-dual .ibt-header-nav-mobile  { display: none !important; }
+  .ibt-header-nav-desktop { display: block !important; }
+  .ibt-header-nav-mobile  { display: none !important; }
 
   /* Disable sticky positioning for header and its template wrapper */
   .ibt-header-sticky,
