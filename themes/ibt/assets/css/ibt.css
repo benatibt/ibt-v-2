@@ -651,93 +651,100 @@ textarea:focus-visible {
 /* ----- 3.4.C Borders and default state -----
    Prepare for tab-index styling (3.4 d). */
 
-.ibt-header-nav-desktop .wp-block-navigation-item__content {
-  border: 2px solid transparent;
-  border-radius: 6px 6px 0 0;
-  border-bottom: none; /* tab illusion */
-  background-color: var(--wp--custom--color--color-header-bg);
+/* Local test palette (override later with theme tokens) */
+.ibt-header-nav-desktop {
+  --color-header-tab-default:  #DCD6CF;  /* inactive / neutral tab */
+  --color-header-tab-related:  #EBE8E3;  /* ancestor / section parent */
+  --color-header-tab-active:   #FAF9F7;  /* current page */
+  --color-header-tab-hover:    #FAF9F7;  /* hover state */
+  --color-header-tab-border:   #4A443E;  /* strong border */
+  --color-header-tab-soft:     #8D8780;  /* subtle default border */
+}
+
+/* Base tab styling — top level only */
+.ibt-header-nav-desktop > ul > li > a.wp-block-navigation-item__content,
+.ibt-header-nav-desktop > ul > li > button.wp-block-navigation-item__content {
+  border: 1px solid var(--color-header-tab-soft);
+  border-bottom: none;                 /* card-index illusion */
+  border-radius: 6px 6px 0 0;          /* top-only rounding */
+  background-color: var(--color-header-tab-default);
   transition: border-color var(--transition-base),
               color var(--transition-base),
               background-color var(--transition-base);
 }
 
-/* Local test palette (override later with theme tokens) */
-.ibt-header-nav-desktop {
-  --color-header-tab-default: #DCD6CF;  /* normal tab fill */
-  --color-header-tab-related: #EBE8E3;  /* ancestor section */
-  --color-header-tab-active:  #FAF9F7;  /* current page */
-  --color-header-tab-hover:   #FAF9F7;  /* hover */
-  --color-header-tab-border:  #4A443E;  /* active/ancestor border */
-  --color-header-tab-soft:    #8D8780;  /* subtle border for inactive */
-}
-
-
-
-
-
-/* Default / Inactive */
+/* Default / Inactive state overrides */
 .ibt-header-nav-desktop .wp-block-navigation-item__content {
-  background-color: var(--color-header-tab-default);
-  border: 1px solid var(--color-header-tab-soft);
-  border-bottom: none;
-  color: var(--wp--preset--color--emphasis-primary);
+  color: var(--wp--preset--color--emphasis-primary); /* text remains standard */
+  /* background + border defined in C-1 */
 }
 
-/* === Top-level only: Active & Ancestor =============================== */
+/* ----- Top Level Menu Highlighting ----- */
 
-/* Exact page match (active) */
+/* Active tab (exact page match) */
 .ibt-header-nav-desktop
   > ul > li > a.wp-block-navigation-item__content[data-ibt-state="active"] {
   background-color: var(--color-header-tab-active);
   border-color: var(--color-header-tab-border);
-  border-bottom: none;
   color: black;
 }
 
-/* Section parent (ancestor) */
+/* Ancestor tab (section parent) */
 .ibt-header-nav-desktop
   > ul > li > a.wp-block-navigation-item__content[data-ibt-state="ancestor"] {
   background-color: var(--color-header-tab-related);
   border-color: var(--color-header-tab-border);
-  border-bottom: none;
   color: black;
 }
 
-/* === Submenu parent highlight via :has() ============================= */
-
-/* Highlight parent button when any child is active or ancestor */
+/* Top-level submenu parent highlight */
 .ibt-header-nav-desktop
-  > ul > li.has-child:has(a.wp-block-navigation-item__content[data-ibt-state="active"]) > button.wp-block-navigation-item__content,
-.ibt-header-nav-desktop
-  > ul > li.has-child:has(a.wp-block-navigation-item__content[data-ibt-state="ancestor"]) > button.wp-block-navigation-item__content {
+  > ul > li[data-ibt-state="ancestor"]
+  > button.wp-block-navigation-item__content {
   background-color: var(--color-header-tab-related);
   border-color: var(--color-header-tab-border);
-  border-bottom: none;
   color: black;
 }
 
-/* === Hover / Focus ======================== */
+/* ----- Hover ----- */
 
-.ibt-header-nav-desktop
-  a.wp-block-navigation-item__content:not([data-ibt-state="active"]):hover,
-.ibt-header-nav-desktop
-  a.wp-block-navigation-item__content:not([data-ibt-state="active"]):focus-visible,
-.ibt-header-nav-desktop
-  button.wp-block-navigation-item__content:not([data-ibt-state="active"]):hover,
-.ibt-header-nav-desktop
-  button.wp-block-navigation-item__content:not([data-ibt-state="active"]):focus-visible {
-  background-color: var(--color-header-tab-hover);
-  border-color: var(--color-header-tab-border);
-  border-bottom: none;
+/* Hover state (all tabs) */
+.ibt-header-nav-desktop a.wp-block-navigation-item__content:hover,
+.ibt-header-nav-desktop button.wp-block-navigation-item__content:hover {
+  background-color: var(--color-header-tab-hover) !important;
+  border-color: var(--color-header-tab-border) !important;
   color: black;
 }
 
+/* ----- 3.4.D - Submenu ----- */
 
-/* ----- 3.4.D - Submenu containers -----
-   Match header background for drop-downs. */
+/* Container */
 .ibt-header-nav-desktop .wp-block-navigation__submenu-container {
-  background-color: var(--wp--custom--color--color-header-bg) !important;
-  border-radius: 6px;
+  background-color: var(--color-header-tab-default);
+  border: 1px solid var(--color-header-tab-soft) !important;
+  border-top: none;                     /* attaches to parent tab */
+  border-bottom: none;                  /* double border with items */
+  margin-top: -1px;                     /* fixes seam under tab */
+  overflow: visible;                    /* safari fix */
+  z-index: 60;                          /* required */
+  position: relative;
+}
+
+/* Sub menu items */
+.ibt-header-nav-desktop
+  .wp-block-navigation__submenu-container
+  li > a.wp-block-navigation-item__content {
+
+  background-color: var(--color-header-tab-default);
+  color: var(--wp--preset--color--emphasis-primary);
+  border: none;
+  border-bottom: 1px solid var(--color-header-tab-soft);
+  border-radius: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  transition: border-color var(--transition-base),
+              color var(--transition-base),
+              background-color var(--transition-base);
 }
 
 /* Remove automatic ▼ icon from desktop nav items to avoid styling problems.*/
