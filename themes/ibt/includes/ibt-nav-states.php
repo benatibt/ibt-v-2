@@ -113,36 +113,47 @@ function ibt_nav_detect_current_path() {
 /**
  * 2. Apply section aliases
  *
- * IBT 2025 — no alias rules currently required.
- * This function remains for future IA adjustments.
+ * ----------------------------------------------
+ * This function rewrites certain request paths
+ * so that navigation tab highlighting works even
+ * when CPTs or posts use a different URL base
+ * from their archive.
+ *
+ * Current aliases:
+ *   • /news-article/* → /news/*
+ *
+ * This allows:
+ *   /news                 → exact match
+ *   /news-article/post    → ancestor of News
  */
 function ibt_nav_apply_alias( $path ) {
 
-    /*
-    // Example alias rule for future use:
-    //
-    // '/library/archive' → '/library'
-    //
-    // $aliases = [
-    //     '/library/archive' => '/library',
-    // ];
-    //
-    // foreach ( $aliases as $from => $to ) {
-    //
-    //     // Exact alias match
-    //     if ( $path === $from ) {
-    //         return $to;
-    //     }
-    //
-    //     // Prefix match (e.g. /library/archive/abc → /library/abc)
-    //     if ( str_starts_with( $path, $from . '/' ) ) {
-    //         $rest = substr( $path, strlen( $from ) );
-    //         return rtrim( $to . $rest, '/' ) ?: '/';
-    //     }
-    // }
-    */
+    // Define alias rules: FROM => TO
+    $aliases = [
+        '/news-article' => '/news',
+    ];
 
-    // No aliasing applied — return path unchanged.
+    foreach ( $aliases as $from => $to ) {
+
+        // Exact alias match
+        if ( $path === $from ) {
+            return $to;
+        }
+
+        // Prefix match (e.g. /news-article/foo → /news/foo)
+        if ( str_starts_with( $path, $from . '/' ) ) {
+
+            // Extract the remainder of the path after the alias source
+            $rest = substr( $path, strlen( $from ) );
+
+            // Build new path: /news + /foo  → /news/foo
+            $new = rtrim( $to . $rest, '/' );
+
+            return $new === '' ? '/' : $new;
+        }
+    }
+
+    // No alias applied
     return $path;
 }
 
