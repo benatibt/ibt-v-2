@@ -1104,6 +1104,25 @@ textarea:focus-visible {
    ====================================================================== */
 
 /* ---------------------------------------------------------------------
+   4.0 Ensure minimum page height so footer does not float up page
+   Applies to all pages.
+
+   Note - Scroll bar visible when WP admin bar is visible. Can be 
+   eliminated but doesn't show for users so kept it simple.
+   -------------------------------------------------------------------- */
+
+.wp-site-blocks {
+  min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+.wp-site-blocks > main {
+	flex: 1;
+}
+
+
+/* ---------------------------------------------------------------------
    4.1 Root Padding System
   
    WordPress core "root-padding" is unpredictable, varies by context,
