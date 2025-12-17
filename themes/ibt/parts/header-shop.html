@@ -1,55 +1,44 @@
-<!-- wp:group {"tagName":"header","align":"full","className":"ibt-header ibt-header-sticky ibt-rootp-apply has-border-color","layout":{"type":"default"}} -->
-<header class="wp-block-group alignfull ibt-header ibt-header-sticky ibt-rootp-apply has-border-color"><!-- wp:columns {"verticalAlignment":"center","isStackedOnMobile":false,"className":"ibt-header-inner"} -->
-<div class="wp-block-columns are-vertically-aligned-center is-not-stacked-on-mobile ibt-header-inner"><!-- wp:column {"verticalAlignment":"center","width":"200px"} -->
-<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:200px"><!-- wp:image {"lightbox":{"enabled":false},"sizeSlug":"large","linkDestination":"custom"} -->
-<figure class="wp-block-image size-large"><a href="/"><img src="/wp-content/themes/ibt/assets/img/islands-book-trust-header-logo.webp" alt="Islands Book Trust Home"/></a></figure>
-<!-- /wp:image --></div>
-<!-- /wp:column -->
+<!-- wp:group {"tagName":"header","align":"full","className":"ibt-header ibt-header-sticky ibt-rootp-apply","layout":{"type":"default"}} -->
+<header class="wp-block-group alignfull ibt-header ibt-header-sticky ibt-rootp-apply"><!-- wp:group {"align":"wide","className":"ibt-header-inner","layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between","verticalAlignment":"bottom"}} -->
+<div class="wp-block-group alignwide ibt-header-inner"><!-- wp:image {"lightbox":{"enabled":false},"sizeSlug":"full","linkDestination":"custom","className":"ibt-header-logo"} -->
+<figure class="wp-block-image size-full ibt-header-logo"><a href="/"><img src="/wp-content/themes/ibt/assets/img/islands-book-trust-header-logo.webp" alt="Islands Book Trust Home"/></a></figure>
+<!-- /wp:image -->
 
-<!-- wp:column {"verticalAlignment":"center"} -->
-<div class="wp-block-column is-vertically-aligned-center"><!-- wp:group {"align":"full","layout":{"type":"flex","orientation":"vertical","justifyContent":"stretch"}} -->
-<div class="wp-block-group alignfull"><!-- wp:group {"metadata":{"name":"utility-row"},"className":"ibt-header-row1","layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"right"}} -->
-<div class="wp-block-group ibt-header-row1"><!-- wp:group {"metadata":{"name":"utility-icons"},"className":"ibt-header-icons","layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"right"}} -->
-<div class="wp-block-group ibt-header-icons"><!-- wp:html -->
-<div class="ibt-header-search">
-                <div class="ibt-header-search-field">
-                  <form role="search" method="get" class="ibt-search-form" action="/">
-                    <label for="ibt-search-input" class="screen-reader-text">Search the site</label>
-                    <input id="ibt-search-input" class="ibt-search-input" type="search" name="s" placeholder="Search…" />
-                  </form>
-                </div>
-              </div>
-<!-- /wp:html -->
+<!-- wp:group {"className":"ibt-header-right","layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"right","verticalAlignment":"bottom"}} -->
+<div class="wp-block-group ibt-header-right"><!-- wp:navigation {"ref":95,"openSubmenusOnClick":true,"overlayMenu":"never","className":"wp-block-navigation ibt-header-nav ibt-header-nav-desktop","ariaLabel":"Primary navigation (desktop)"} /-->
 
 <!-- wp:html -->
-<div class="ibt-header-wooicons">
-  <button class="ibt-header-search-toggle ibt-icon-button"
-          aria-expanded="false"
-          aria-controls="ibt-search-input"
-          aria-label="Open site search"
-          title="Search">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-         viewBox="0 0 24 24" fill="none" stroke="currentColor"
-         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="11" cy="11"r="6"></circle>
-      <line x1="16" y1="16" x2="21" y2="21"></line>
-    </svg>
-  </button>
+<!-- wp:html -->
+<div class="ibt-icon-button ibt-header-search">
+	<a
+		href="/search/"
+		class="ibt-header-search-link"
+		aria-label="Search the site"
+		title="Search"
+	>
+		<svg xmlns="http://www.w3.org/2000/svg"
+		     width="24" height="24"
+		     viewBox="0 0 24 24"
+		     fill="none"
+		     stroke="currentColor"
+		     stroke-width="2"
+		     stroke-linecap="round"
+		     stroke-linejoin="round"
+		     aria-hidden="true">
+			<circle cx="11" cy="11" r="6"></circle>
+			<line x1="16" y1="16" x2="21" y2="21"></line>
+		</svg>
+	</a>
 </div>
+<!-- /wp:html -->
+
 <!-- /wp:html -->
 
 <!-- wp:woocommerce/customer-account {"displayStyle":"icon_only","iconClass":"wc-block-customer-account__account-icon","className":"ibt-header-wooicons ibt-icon-button"} /-->
 
-<!-- wp:woocommerce/mini-cart {"className":"ibt-header-wooicons ibt-icon-button"} /--></div>
-<!-- /wp:group --></div>
-<!-- /wp:group -->
+<!-- wp:woocommerce/mini-cart {"className":"ibt-header-wooicons ibt-icon-button"} /-->
 
-<!-- wp:group {"metadata":{"name":"nav-row"},"className":"ibt-header-row2 ibt-header-nav-dual","layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"right"}} -->
-<div class="wp-block-group ibt-header-row2 ibt-header-nav-dual"><!-- wp:navigation {"ref":95,"openSubmenusOnClick":true,"overlayMenu":"never","className":"wp-block-navigation ibt-header-nav ibt-header-nav-desktop","style":{"spacing":{"blockGap":"var:preset|spacing|xxs"}},"layout":{"type":"flex","justifyContent":"right","flexWrap":"wrap","orientation":"horizontal"},"ariaLabel":"Primary navigation (desktop)"} /-->
-
-<!-- wp:navigation {"ref":95,"textColor":"emphasis-primary","openSubmenusOnClick":true,"overlayMenu":"always","className":"wp-block-navigation ibt-header-nav ibt-header-nav-mobile","ariaLabel":"Primary navigation (mobile)"} /--></div>
+<!-- wp:navigation {"ref":95,"openSubmenusOnClick":true,"overlayMenu":"always","className":"wp-block-navigation ibt-header-nav ibt-header-nav-mobile","ariaLabel":"Primary navigation (mobile)"} /--></div>
 <!-- /wp:group --></div>
-<!-- /wp:group --></div>
-<!-- /wp:column --></div>
-<!-- /wp:columns --></header>
+<!-- /wp:group --></header>
 <!-- /wp:group -->

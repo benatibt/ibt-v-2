@@ -8,12 +8,12 @@
 <div class="wp-block-group ibt-header-right"><!-- wp:navigation {"ref":95,"openSubmenusOnClick":true,"overlayMenu":"never","className":"wp-block-navigation ibt-header-nav ibt-header-nav-desktop","ariaLabel":"Primary navigation (desktop)"} /-->
 
 <!-- wp:html -->
+<!-- wp:html -->
 <div class="ibt-icon-button ibt-header-search">
-	<button
-		class="ibt-header-search-toggle"
-		type="button"
-		aria-expanded="false"
-		aria-label="Open site search"
+	<a
+		href="/search/"
+		class="ibt-header-search-link"
+		aria-label="Search the site"
 		title="Search"
 	>
 		<svg xmlns="http://www.w3.org/2000/svg"
@@ -23,12 +23,14 @@
 		     stroke="currentColor"
 		     stroke-width="2"
 		     stroke-linecap="round"
-		     stroke-linejoin="round">
+		     stroke-linejoin="round"
+		     aria-hidden="true">
 			<circle cx="11" cy="11" r="6"></circle>
 			<line x1="16" y1="16" x2="21" y2="21"></line>
 		</svg>
-	</button>
+	</a>
 </div>
+<!-- /wp:html -->
 
 <!-- /wp:html -->
 
