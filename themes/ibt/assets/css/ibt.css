@@ -1156,6 +1156,25 @@ textarea:focus-visible {
   box-sizing: content-box;
 }
 
+/* ---------------------------------------------------------------------
+    4.1A - Pagination tap targets (core queries + WooCommerce).
+
+   Note – vertical size is biased larger (AAA) as space allows;
+   horizontal size is capped (AA) to avoid excess wrapping on 
+   dense pagination. 
+   ---------------------------------------------------------------------*/
+.wp-block-query-pagination a,
+.wp-block-query-pagination span,
+.woocommerce-pagination .page-numbers a,
+.woocommerce-pagination .page-numbers span {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 44px;
+	min-width: 24px;
+	padding: 0.2em; /* Small horizontal and vertical breething room */
+}
+
 
 /* ---------------------------------------------------------------------
     4.2 - SINGLE POST WITH SIDEBAR
@@ -1380,6 +1399,11 @@ Purpose:
 /* ---------------------------------------------------------------------
                 4.4 - SEARCH RESULT FORMATTING
   ---------------------------------------------------------------------- */
+
+/* Give search form breathing room before results */
+.ibt-search-form {
+	margin-bottom: var(--wp--preset--spacing--l);
+}
 
 /* Search result type badge */
 .ibt-search-type-label {

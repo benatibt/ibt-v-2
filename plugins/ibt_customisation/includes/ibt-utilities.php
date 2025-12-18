@@ -57,3 +57,53 @@ add_action( 'init', function() {
         })
     );
 });
+
+// -------------------------------------------------------------------------
+// 3. Suppress past Events from Relevanssi search results.
+//    Mirrors default Events archive behaviour (future events only).
+// -------------------------------------------------------------------------
+
+add_action( 'init', function() {
+
+	// If Relevanssi is not active, exit safely.
+	if ( ! function_exists( 'relevanssi_do_query' ) ) {
+		return;
+	}
+
+	add_filter(
+		'relevanssi_match',
+		ibt_safe( 'relevanssi-events', function( $match ) {
+
+			if ( empty( $match->doc ) ) {
+				return $match;
+			}
+
+			// Only apply to IBT Events.
+			if ( get_post_type( $match->doc ) !== 'ibt_event' ) {
+				return $match;
+			}
+
+			$event_end = get_post_meta( $match->doc, 'ibt_event_end', true );
+			if ( empty( $event_end ) ) {
+				// No end date – leave searchable.
+				return $match;
+			}
+
+			// Mirror Events archive timezone + comparison.
+			try {
+				$now = new DateTime( 'now', new DateTimeZone( 'Europe/London' ) );
+				$end = new DateTime( $event_end, new DateTimeZone( 'Europe/London' ) );
+			} catch ( Exception $e ) {
+				// Defensive: if parsing fails, do not suppress.
+				return $match;
+			}
+
+			// Past event → suppress from search.
+			if ( $end < $now ) {
+				return false;
+			}
+
+			return $match;
+		})
+	);
+});
