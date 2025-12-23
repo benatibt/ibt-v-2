@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 /* ========================================================================
  * RTT1 - Register Taxonomy: topic (non-hierarchical)
- * Shared between Library (CPT) and Woo Products.
+ * Shared between Library (CPT), Woo Products, News and Events.
  * ===================================================================== */
 add_action( 'init', ibt_safe( 'RTT1-register-taxonomy-topic', function() {
 
@@ -40,14 +40,21 @@ add_action( 'init', ibt_safe( 'RTT1-register-taxonomy-topic', function() {
 		'show_ui'           => true,
 		'show_in_menu'      => true,
 		'show_in_nav_menus' => true,
-		'show_admin_column' => true,
+		'show_admin_column' => false,
 		'show_in_rest'      => true,
 		'hierarchical'      => false,
 		'query_var'         => true,
-		'rewrite'           => array( 'slug' => 'topic' ),
+		'rewrite' => array(
+			'slug'       => 'topic',
+			'with_front' => false,
+		)
 	);
 
-	register_taxonomy( 'topic', array( 'library', 'product' ), $args );
+	register_taxonomy(
+	'topic',
+	array( 'library', 'product', 'post', 'ibt_event' ),
+	$args
+);
 
 }, 9 ) );
 
