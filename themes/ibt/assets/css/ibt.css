@@ -25,18 +25,19 @@
   without the overhead of separate documents. 
 
 --------- 0.0 - CSS ADOPTION POLICY -------- 
+
 Given IBT's older demographic site must operate for out of date browsers
 but we do not want to limit styling for the majority of our audience. The
 following pragmatic guidelines on UK CSS feature support apply as a guide.
 
-Critical core: ≥ 99.8 % browser coverage.
+Critical core: ≥ ~99.8 % browser coverage.
   Site must fully function even with no advanced CSS.
   Avoid new syntax on a11y and basic site use features.
 
-Nice-to-have layer: ≥ 95 % UK coverage. (e.g. :has(), :where() ) 
+Nice-to-have layer: ≥ ~95 % UK coverage. (e.g. :has(), :where() ) 
   Should degrade gracefully without support. 
 
-Experimental (< 95 %) UK coverage: Not permitted.
+Experimental (< ~95 %) UK coverage: Not permitted.
 
    
 --------- 0.1 - TOKEN & NAMING SYSTEM --------
