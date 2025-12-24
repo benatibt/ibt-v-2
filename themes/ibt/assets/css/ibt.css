@@ -1440,6 +1440,27 @@ Purpose:
   }
 }
 
+/* ---------------------------------------------------------------------
+   4.5 - TAXONOMY TOPIC RESULTS FORMATTING 
+   --------------------------------------------------------------------- */
+
+/* Adds static text to Topic archive title (avoids duplicate H1) */
+.ibt-topic-title::before {
+	content: "Results for topic: ";
+}
+
+/* Format group around tags - border and spacing */
+.ibt-topic-tags-group {
+	border: 1px solid var(--wp--custom--color--ui-border-soft, rgba(92, 85, 78, 0.25));
+	border-radius: 0.375rem; /* 6px */
+	padding-inline: var(--wp--preset--spacing--xs);
+	margin-bottom: var(--wp--preset--spacing--m);
+}
+
+/* Tighten spacing betweeb tag title and tags */
+.ibt-topic-tags-title {
+  padding-bottom: 0;
+}
 
 /* ---------------------------------------------------------------------
    4A - WooCommerce (Temporary numbering until full refactor.)
@@ -1792,24 +1813,7 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {scroll-margin-top: 102px;}
 /* WORK IN PROGRESS CODE BELOW THIS LINE */
 
 
-/* Taxonomy Topic Results */
 
-/* Adds visual context to Topic archive titles without creating extra headings */
-.ibt-topic-title::before {
-	content: "Results for topic: ";
-}
-
-.ibt-topic-tags-group {
-	border: 1px solid var(--wp--custom--color--ui-border-soft, rgba(92, 85, 78, 0.25));
-	border-radius: 0.375rem; /* 6px */
-	padding-inline: var(--wp--preset--spacing--xs);
-	margin-bottom: var(--wp--preset--spacing--m);
-}
-
-/* Tighten spacing */
-.ibt-topic-tags-title {
-  padding-bottom: 0;
-}
 
 /* **********************************************************************
    END IBT THEME CSS
